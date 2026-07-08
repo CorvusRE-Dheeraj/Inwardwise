@@ -2,34 +2,34 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useMemo, useState } from "react";
 import {
-  ArrowLeft, ArrowRight, Check, CheckCircle2, ChevronDown, Compass, Download, Edit3,
-  Filter, Goal as GoalIcon, Layers, Sparkles, Telescope, AlertTriangle, ShieldCheck,
+  ArrowLeft, ArrowRight, Check, CheckCircle2, ChevronDown, Compass, Edit3,
+  Filter, Layers, ShieldAlert, Sparkles, ScissorsLineDashed, ListChecks, Download,
 } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
 import {
-  CATEGORIES, CHALLENGE_QUESTIONS, STAGES, detectBiases, extractPseudoObjective,
-  generateBoundary, generateGoals, generateHigherObjective, generateOptions, newDecision,
-  saveDecision, scoreConfidence, scoreRegret, simulate, type DecisionState, type StageId,
+  CATEGORIES, STEPS, abstractObjective, combineAnswers, detectBiases,
+  extractObjective, generateBoundary, generateSolutions, newDecision, saveDecision,
+  splitBoundary, suggestPieceAnswer, suggestTimeframe,
+  type DecisionState, type StepId,
 } from "@/lib/ooi-framework";
 
 export const Route = createFileRoute("/decision")({
   head: () => ({
     meta: [
       { title: "New Decision — OOOI" },
-      { name: "description", content: "Walk through the 10-stage OOOI decision workflow." },
+      { name: "description", content: "Walk through the 7-step OOOI decision workflow — from raw situation to a boundary-driven solution." },
     ],
   }),
   component: DecisionWizard,
 });
 
-const SITUATION_EXAMPLES = ["Divorce", "Career", "Business", "Parenting", "Finance", "Health"];
+const SITUATION_EXAMPLES = ["Marriage", "Career", "Business", "Friendship", "Finance", "Parenting"];
 
 function DecisionWizard() {
   const [state, setState] = useState<DecisionState>(() => newDecision());
-  const stageIdx = STAGES.findIndex((s) => s.id === state.stage);
-  const progress = ((stageIdx + 1) / STAGES.length) * 100;
+  const stepIdx = STEPS.findIndex((s) => s.id === state.step);
+  const progress = ((stepIdx + 1) / STEPS.length) * 100;
 
-  // Autosave
   useEffect(() => {
     const t = setTimeout(() => saveDecision(state), 500);
     return () => clearTimeout(t);
@@ -37,82 +37,71 @@ function DecisionWizard() {
 
   const update = (patch: Partial<DecisionState>) => setState((s) => ({ ...s, ...patch }));
   const go = (dir: 1 | -1) => {
-    const next = STAGES[stageIdx + dir];
-    if (next) update({ stage: next.id });
+    const next = STEPS[stepIdx + dir];
+    if (next) update({ step: next.id });
   };
 
-  // Lazy generation when entering a stage
+  // Progressive generation on entry
   useEffect(() => {
-    if (state.stage === "pseudo" && !state.pseudoObjective)
-      update({ pseudoObjective: extractPseudoObjective(state.situation) });
-    if (state.stage === "biases" && state.biases.length === 0)
-      update({ biases: detectBiases(state) });
-    if (state.stage === "higher" && !state.higherObjective)
-      update({ higherObjective: generateHigherObjective(state.pseudoObjective) });
-    if (state.stage === "boundary" && !state.boundary)
-      update({ boundary: generateBoundary(state.higherObjective) });
-    if (state.stage === "goals" && state.goals.length === 0)
-      update({ goals: generateGoals(state.higherObjective) });
-    if (state.stage === "options" && state.options.length === 0)
-      update({ options: generateOptions(state.higherObjective) });
-    if (state.stage === "simulation" && state.chosenOption !== null && state.simulations.length === 0) {
-      const opt = state.options[state.chosenOption];
+    if (state.step === "objective" && !state.objective)
+      update({ objective: extractObjective(state.situation) });
+    if (state.step === "solutions" && state.solutions.length === 0)
+      update({ solutions: generateSolutions(state.situation, state.objective) });
+    if (state.step === "refine" && state.refine.biases.length === 0)
+      update({ refine: { ...state.refine, biases: detectBiases(state) } });
+    if (state.step === "abstracted" && !state.abstracted)
       update({
-        simulations: simulate(opt, state.higherObjective),
-        regret: scoreRegret(opt),
-        confidence: scoreConfidence(opt),
+        abstracted: abstractObjective(state.objective, state.situation),
+        timeframe: state.timeframe || suggestTimeframe(state.situation),
       });
-    }
+    if (state.step === "boundary" && !state.boundary)
+      update({ boundary: generateBoundary(state.abstracted, state.timeframe) });
+    if (state.step === "outin" && state.pieces.length === 0)
+      update({ pieces: splitBoundary(state.boundary) });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state.stage]);
+  }, [state.step]);
 
   const canAdvance = useMemo(() => {
-    switch (state.stage) {
-      case "situation": return state.situation.trim().length > 10;
-      case "pseudo": return !!state.pseudoObjective.trim();
-      case "challenge": return Object.values(state.challengeAnswers).filter((v) => v?.trim()).length >= 2;
-      case "biases": return state.biases.length > 0;
-      case "higher": return !!state.higherObjective.trim();
-      case "boundary": return !!state.boundary.trim();
-      case "goals": return state.goals.length > 0;
-      case "options": return state.chosenOption !== null;
-      case "simulation": return state.simulations.length > 0;
-      case "commit": return state.commitment.trim().length > 5;
+    switch (state.step) {
+      case "situation":  return state.situation.trim().length > 10;
+      case "objective":  return state.objective.trim().length > 3;
+      case "solutions":  return state.chosenSolutionOutcome !== null;
+      case "refine":     return state.refine.negativeOutcomes.trim().length > 4;
+      case "abstracted": return state.abstracted.trim().length > 5;
+      case "boundary":   return state.boundary.trim().length > 10;
+      case "outin":      return state.pieces.some((p) => p.answer.trim().length > 0);
     }
   }, [state]);
 
   return (
     <AppShell>
       <div className="grid gap-8 lg:grid-cols-[260px_1fr]">
-        <StageRail current={state.stage} onSelect={(s) => update({ stage: s })} state={state} />
+        <StepRail current={state.step} onSelect={(s) => update({ step: s })} />
 
         <div>
-          <ProgressBar value={progress} stage={state.stage} />
+          <ProgressBar value={progress} step={state.step} />
 
           <AnimatePresence mode="wait">
             <motion.div
-              key={state.stage}
+              key={state.step}
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
               className="mt-6"
             >
-              {state.stage === "situation" && <SituationStep state={state} update={update} />}
-              {state.stage === "pseudo" && <PseudoStep state={state} update={update} />}
-              {state.stage === "challenge" && <ChallengeStep state={state} update={update} />}
-              {state.stage === "biases" && <BiasesStep state={state} update={update} />}
-              {state.stage === "higher" && <HigherStep state={state} update={update} />}
-              {state.stage === "boundary" && <BoundaryStep state={state} update={update} />}
-              {state.stage === "goals" && <GoalsStep state={state} update={update} />}
-              {state.stage === "options" && <OptionsStep state={state} update={update} />}
-              {state.stage === "simulation" && <SimulationStep state={state} update={update} />}
-              {state.stage === "commit" && <CommitStep state={state} update={update} />}
+              {state.step === "situation"  && <SituationStep  state={state} update={update} />}
+              {state.step === "objective"  && <ObjectiveStep  state={state} update={update} />}
+              {state.step === "solutions"  && <SolutionsStep  state={state} update={update} />}
+              {state.step === "refine"     && <RefineStep     state={state} update={update} />}
+              {state.step === "abstracted" && <AbstractedStep state={state} update={update} />}
+              {state.step === "boundary"   && <BoundaryStep   state={state} update={update} />}
+              {state.step === "outin"      && <OutInStep      state={state} update={update} />}
             </motion.div>
           </AnimatePresence>
 
           <NavBar
-            stageIdx={stageIdx}
+            stepIdx={stepIdx}
             canAdvance={!!canAdvance}
             onBack={() => go(-1)}
             onNext={() => go(1)}
@@ -123,14 +112,14 @@ function DecisionWizard() {
   );
 }
 
-// ─── Layout primitives ────────────────────────────────────────────────────
+// ─── Layout ───────────────────────────────────────────────────────────────
 
-function ProgressBar({ value, stage }: { value: number; stage: StageId }) {
-  const current = STAGES.find((s) => s.id === stage)!;
+function ProgressBar({ value, step }: { value: number; step: StepId }) {
+  const current = STEPS.find((s) => s.id === step)!;
   return (
     <div className="glass rounded-2xl p-4">
       <div className="flex items-center justify-between text-xs text-muted-foreground">
-        <span>Stage {current.index} of {STAGES.length} · {current.label}</span>
+        <span>Step {current.index} of {STEPS.length} · {current.label}</span>
         <span>{Math.round(value)}%</span>
       </div>
       <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-foreground/5">
@@ -145,19 +134,17 @@ function ProgressBar({ value, stage }: { value: number; stage: StageId }) {
   );
 }
 
-function StageRail({
-  current, onSelect, state,
-}: { current: StageId; onSelect: (s: StageId) => void; state: DecisionState }) {
+function StepRail({ current, onSelect }: { current: StepId; onSelect: (s: StepId) => void }) {
   return (
     <aside className="lg:sticky lg:top-28 lg:self-start">
       <div className="glass rounded-3xl p-4">
         <div className="px-2 pb-3 text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
-          Decision Flow
+          OOOI · 7 steps
         </div>
         <ol className="space-y-0.5">
-          {STAGES.map((s) => {
-            const idx = STAGES.findIndex((x) => x.id === s.id);
-            const currentIdx = STAGES.findIndex((x) => x.id === current);
+          {STEPS.map((s) => {
+            const idx = STEPS.findIndex((x) => x.id === s.id);
+            const currentIdx = STEPS.findIndex((x) => x.id === current);
             const done = idx < currentIdx;
             const active = s.id === current;
             return (
@@ -187,24 +174,24 @@ function StageRail({
       <div className="glass mt-3 rounded-3xl p-4 text-xs text-muted-foreground">
         <div className="mb-1.5 flex items-center gap-1.5 text-foreground">
           <Sparkles className="h-3.5 w-3.5" />
-          <span className="text-xs font-medium">Why this works</span>
+          <span className="text-xs font-medium">Spend 50% here</span>
         </div>
-        The AI refuses to answer your question until your real objective is named, challenged,
-        and bounded.
+        The framework insists you spend as much time defining the objective and boundary
+        as you spend solving. Steps 1–6 refine the question; step 7 finally answers it.
       </div>
     </aside>
   );
 }
 
 function NavBar({
-  stageIdx, canAdvance, onBack, onNext,
-}: { stageIdx: number; canAdvance: boolean; onBack: () => void; onNext: () => void }) {
-  const last = stageIdx === STAGES.length - 1;
+  stepIdx, canAdvance, onBack, onNext,
+}: { stepIdx: number; canAdvance: boolean; onBack: () => void; onNext: () => void }) {
+  const last = stepIdx === STEPS.length - 1;
   return (
     <div className="mt-8 flex items-center justify-between">
       <button
         onClick={onBack}
-        disabled={stageIdx === 0}
+        disabled={stepIdx === 0}
         className="glass inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-sm transition hover:bg-foreground/5 disabled:opacity-40"
       >
         <ArrowLeft className="h-4 w-4" /> Back
@@ -229,30 +216,37 @@ function NavBar({
   );
 }
 
-function StageCard({
-  icon: Icon, eyebrow, title, children,
-}: { icon: React.ComponentType<{ className?: string }>; eyebrow: string; title: string; children: React.ReactNode }) {
+function StepCard({
+  icon: Icon, eyebrow, title, subtitle, children,
+}: {
+  icon: React.ComponentType<{ className?: string }>;
+  eyebrow: string; title: string; subtitle?: string; children: React.ReactNode;
+}) {
   return (
     <div className="glass-strong rounded-3xl p-7 md:p-10">
       <div className="flex items-center gap-2 text-xs uppercase tracking-[0.18em] text-muted-foreground">
-        <Icon className="h-3.5 w-3.5 text-accent" />
-        {eyebrow}
+        <Icon className="h-3.5 w-3.5 text-accent" /> {eyebrow}
       </div>
       <h2 className="font-display mt-3 text-3xl md:text-4xl">{title}</h2>
+      {subtitle && <p className="mt-2 text-sm text-muted-foreground">{subtitle}</p>}
       <div className="mt-6">{children}</div>
     </div>
   );
 }
 
-// ─── Stage 1: Situation ───────────────────────────────────────────────────
+interface StepProps { state: DecisionState; update: (p: Partial<DecisionState>) => void }
+
+// ─── Step 1 · Situation ───────────────────────────────────────────────────
 
 function SituationStep({ state, update }: StepProps) {
   return (
-    <StageCard icon={Compass} eyebrow="Stage 1 · Raw situation" title="What happened?">
-      <p className="mb-4 text-sm text-muted-foreground">
-        Describe the situation as it is — facts, feelings, friction. This is the raw input, not yet an objective.
-      </p>
-      <div className="mb-4 flex flex-wrap gap-2">
+    <StepCard
+      icon={Compass}
+      eyebrow={STEPS[0].eyebrow}
+      title="Declare your need"
+      subtitle="Situation, event, or pseudo-objective. Loosely defined is fine — this is raw input."
+    >
+      <div className="mb-4 flex flex-wrap items-center gap-2">
         <span className="text-xs text-muted-foreground">Category:</span>
         <CategoryPicker value={state.category} onChange={(v) => update({ category: v })} />
       </div>
@@ -260,7 +254,7 @@ function SituationStep({ state, update }: StepProps) {
         value={state.situation}
         onChange={(e) => update({ situation: e.target.value })}
         rows={8}
-        placeholder="Three months ago I…"
+        placeholder="My spouse and I have been arguing for years. We have two children and I am considering divorce, but I don't want to hurt the kids. What should I do?"
         className="w-full resize-none rounded-2xl border border-glass-border bg-background/40 p-4 text-base outline-none transition focus:border-accent"
       />
       <div className="mt-4 flex flex-wrap gap-2">
@@ -268,14 +262,14 @@ function SituationStep({ state, update }: StepProps) {
         {SITUATION_EXAMPLES.map((e) => (
           <button
             key={e}
-            onClick={() => update({ situation: state.situation + (state.situation ? "\n" : "") + `Context: ${e}. ` })}
+            onClick={() => update({ category: e === "Marriage" ? "Marriage" : e })}
             className="glass rounded-full px-3 py-1 text-xs transition hover:bg-foreground/5"
           >
             {e}
           </button>
         ))}
       </div>
-    </StageCard>
+    </StepCard>
   );
 }
 
@@ -305,298 +299,318 @@ function CategoryPicker({ value, onChange }: { value: string; onChange: (v: stri
   );
 }
 
-// ─── Stage 2: Pseudo Objective ────────────────────────────────────────────
+// ─── Step 2 · Objective ───────────────────────────────────────────────────
 
-function PseudoStep({ state, update }: StepProps) {
+function ObjectiveStep({ state, update }: StepProps) {
   return (
-    <StageCard icon={Edit3} eyebrow="Stage 2 · Surface intent" title="The pseudo-objective hiding inside the situation">
+    <StepCard
+      icon={Edit3}
+      eyebrow={STEPS[1].eyebrow}
+      title="What exactly do you want?"
+      subtitle="Not the situation, not a complaint — the concrete thing you want. This is still low-level; we will abstract it later."
+    >
       <div className="grid gap-4 md:grid-cols-2">
         <div>
           <div className="text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Situation</div>
-          <div className="mt-2 max-h-48 overflow-auto rounded-2xl bg-foreground/[0.03] p-4 text-sm leading-relaxed">
+          <div className="mt-2 max-h-64 overflow-auto rounded-2xl bg-foreground/[0.03] p-4 text-sm leading-relaxed">
             {state.situation}
           </div>
         </div>
         <div>
-          <div className="text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Pseudo Objective</div>
+          <div className="text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Objective</div>
           <textarea
-            rows={4}
-            value={state.pseudoObjective}
-            onChange={(e) => update({ pseudoObjective: e.target.value })}
+            rows={5}
+            value={state.objective}
+            onChange={(e) => update({ objective: e.target.value })}
+            placeholder="I want to…"
             className="mt-2 w-full resize-none rounded-2xl border border-glass-border bg-background/40 p-4 text-base outline-none focus:border-accent"
           />
           <p className="mt-3 text-xs text-muted-foreground">
-            This is not your real objective yet — it's the first surface phrasing. We'll challenge it next.
+            Warning: the objective almost always changes by step 5. Don't over-attach.
           </p>
         </div>
       </div>
-    </StageCard>
+    </StepCard>
   );
 }
 
-// ─── Stage 3: Challenge ───────────────────────────────────────────────────
+// ─── Step 3 · Solutions ───────────────────────────────────────────────────
 
-function ChallengeStep({ state, update }: StepProps) {
+function SolutionsStep({ state, update }: StepProps) {
   return (
-    <StageCard icon={AlertTriangle} eyebrow="Stage 3 · Challenge the objective" title="The AI refuses to accept this objective at face value">
-      <div className="space-y-3">
-        {CHALLENGE_QUESTIONS.map((q, i) => (
-          <div key={i} className="glass rounded-2xl p-4">
-            <div className="text-sm font-medium">{q}</div>
-            <textarea
-              rows={2}
-              placeholder="Your honest answer…"
-              value={state.challengeAnswers[q] ?? ""}
-              onChange={(e) => update({ challengeAnswers: { ...state.challengeAnswers, [q]: e.target.value } })}
-              className="mt-2 w-full resize-none rounded-xl bg-background/40 p-3 text-sm outline-none transition focus:bg-background/60"
-            />
-          </div>
-        ))}
-      </div>
-      <p className="mt-4 text-xs text-muted-foreground">
-        Answer at least two. Skipping all of them defeats the framework.
-      </p>
-    </StageCard>
-  );
-}
-
-// ─── Stage 4: Biases ──────────────────────────────────────────────────────
-
-function BiasesStep({ state }: StepProps) {
-  return (
-    <StageCard icon={ShieldCheck} eyebrow="Stage 4 · Hidden biases" title="What may be steering this without your knowing">
-      <div className="grid gap-3 sm:grid-cols-2">
-        {state.biases.map((b, i) => (
-          <motion.div
-            key={b.name}
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.05 }}
-            className="glass relative overflow-hidden rounded-2xl p-5"
-          >
-            <div className="flex items-start justify-between gap-3">
-              <div>
-                <div className="text-xs text-muted-foreground">Bias detected</div>
-                <div className="mt-1 font-medium">{b.name}</div>
-              </div>
-              <div className="text-right">
-                <div className="text-[10px] text-muted-foreground">Likelihood</div>
-                <div className="text-sm font-medium">{Math.round(b.weight * 100)}%</div>
-              </div>
-            </div>
-            <p className="mt-3 text-sm text-muted-foreground">{b.reason}</p>
-            <div className="mt-4 h-1 overflow-hidden rounded-full bg-foreground/5">
-              <div className="h-full bg-accent" style={{ width: `${b.weight * 100}%` }} />
-            </div>
-          </motion.div>
-        ))}
-      </div>
-    </StageCard>
-  );
-}
-
-// ─── Stage 5: Higher Objective ────────────────────────────────────────────
-
-function HigherStep({ state, update }: StepProps) {
-  return (
-    <StageCard icon={Sparkles} eyebrow="Stage 5 · Reframe upward" title="The higher-level objective behind this">
-      <div className="grid gap-4 md:grid-cols-[1fr_auto_1fr] md:items-center">
-        <div className="glass rounded-2xl p-5">
-          <div className="text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Original</div>
-          <div className="mt-2 text-sm">{state.pseudoObjective}</div>
-        </div>
-        <div className="text-center text-muted-foreground">→</div>
-        <div className="glass-strong rounded-2xl border-2 border-accent/40 p-5">
-          <div className="text-[10px] uppercase tracking-[0.16em] text-accent">Higher Objective</div>
-          <textarea
-            rows={4}
-            value={state.higherObjective}
-            onChange={(e) => update({ higherObjective: e.target.value })}
-            className="mt-2 w-full resize-none rounded-xl bg-transparent text-sm outline-none"
-          />
-        </div>
-      </div>
-    </StageCard>
-  );
-}
-
-// ─── Stage 6: Boundary ────────────────────────────────────────────────────
-
-function BoundaryStep({ state, update }: StepProps) {
-  return (
-    <StageCard icon={Filter} eyebrow="Stage 6 · Boundary" title="The objective boundary you'll evaluate inside">
-      <div className="rounded-3xl border-2 border-dashed border-accent/40 bg-accent/5 p-6">
-        <div className="text-[10px] uppercase tracking-[0.16em] text-accent">Boundary Statement</div>
-        <textarea
-          rows={4}
-          value={state.boundary}
-          onChange={(e) => update({ boundary: e.target.value })}
-          className="mt-3 w-full resize-none rounded-xl bg-transparent text-base outline-none"
-        />
-      </div>
-      <p className="mt-4 text-xs text-muted-foreground">
-        A clear boundary makes the decision tractable. Edit until it feels honest.
-      </p>
-    </StageCard>
-  );
-}
-
-// ─── Stage 7: Goals ───────────────────────────────────────────────────────
-
-function GoalsStep({ state }: StepProps) {
-  return (
-    <StageCard icon={GoalIcon} eyebrow="Stage 7 · Break into goals" title="Five goals to make the objective testable">
-      <div className="grid gap-3">
-        {state.goals.map((g, i) => (
-          <div key={i} className="glass rounded-2xl p-5">
-            <div className="flex items-center gap-3">
-              <span className="grid h-7 w-7 place-items-center rounded-full bg-foreground text-xs text-background">{i + 1}</span>
-              <div className="font-medium">{g.title}</div>
-            </div>
-            <div className="mt-3 grid gap-3 text-sm md:grid-cols-4">
-              <Field label="Purpose">{g.purpose}</Field>
-              <Field label="Success Criteria">{g.criteria}</Field>
-              <Field label="Measurement">{g.measurement}</Field>
-              <Field label="Timeframe">{g.timeframe}</Field>
-            </div>
-          </div>
-        ))}
-      </div>
-    </StageCard>
-  );
-}
-
-function Field({ label, children }: { label: string; children: React.ReactNode }) {
-  return (
-    <div>
-      <div className="text-[10px] uppercase tracking-[0.14em] text-muted-foreground">{label}</div>
-      <div className="mt-1 text-muted-foreground">{children}</div>
-    </div>
-  );
-}
-
-// ─── Stage 8: Options ─────────────────────────────────────────────────────
-
-function OptionsStep({ state, update }: StepProps) {
-  return (
-    <StageCard icon={Layers} eyebrow="Stage 8 · Decision paths" title="Not one answer — four branches to weigh">
+    <StepCard
+      icon={Layers}
+      eyebrow={STEPS[2].eyebrow}
+      title="What outcomes are actually on offer?"
+      subtitle="A solution is the final outcome — not the objective, not the tactic. Pick the outcome you are aiming for."
+    >
       <div className="grid gap-3 md:grid-cols-2">
-        {state.options.map((o, i) => {
-          const chosen = state.chosenOption === i;
+        {state.solutions.map((s, i) => {
+          const chosen = state.chosenSolutionOutcome === i;
           return (
             <button
-              key={o.label}
-              onClick={() => update({ chosenOption: i, simulations: [] })}
+              key={s.label}
+              onClick={() => update({ chosenSolutionOutcome: i })}
               className={`glass rounded-2xl p-5 text-left transition ${
                 chosen ? "ring-2 ring-accent" : "hover:bg-foreground/[0.04]"
               }`}
             >
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <span className="grid h-7 w-7 place-items-center rounded-full bg-foreground text-xs text-background">{o.label}</span>
-                  <div className="font-medium">{o.title}</div>
+                  <span className="grid h-7 w-7 place-items-center rounded-full bg-foreground text-xs text-background">{s.label}</span>
+                  <div className="font-medium">{s.title}</div>
                 </div>
-                <div className="text-xs text-muted-foreground">P {Math.round(o.probability * 100)}%</div>
+                <span
+                  className={`rounded-full px-2 py-0.5 text-[10px] uppercase tracking-wider ${
+                    s.desirable ? "bg-emerald-400/10 text-emerald-400" : "bg-rose-400/10 text-rose-400"
+                  }`}
+                >
+                  {s.desirable ? "Acceptable" : "Avoid"}
+                </span>
               </div>
-              <div className="mt-3 grid gap-2 text-xs md:grid-cols-2">
-                <ListBlock label="Advantages" items={o.advantages} tone="pos" />
-                <ListBlock label="Disadvantages" items={o.disadvantages} tone="neg" />
-                <ListBlock label="Risks" items={o.risks} tone="warn" />
-                <ListBlock label="Stakeholders" items={o.stakeholders} tone="muted" />
-              </div>
+              <p className="mt-3 text-sm text-muted-foreground">{s.detail}</p>
             </button>
           );
         })}
       </div>
-      <p className="mt-4 text-xs text-muted-foreground">Select one path to simulate.</p>
-    </StageCard>
+    </StepCard>
   );
 }
 
-function ListBlock({ label, items, tone }: { label: string; items: string[]; tone: "pos" | "neg" | "warn" | "muted" }) {
-  const dot = { pos: "bg-emerald-400", neg: "bg-rose-400", warn: "bg-amber-400", muted: "bg-foreground/40" }[tone];
+// ─── Step 4 · Refine (Bias & Fear) ────────────────────────────────────────
+
+function RefineStep({ state, update }: StepProps) {
+  const setRefine = (patch: Partial<DecisionState["refine"]>) =>
+    update({ refine: { ...state.refine, ...patch } });
+
   return (
-    <div>
-      <div className="text-[10px] uppercase tracking-[0.14em] text-muted-foreground">{label}</div>
-      <ul className="mt-1.5 space-y-1">
-        {items.map((it, i) => (
-          <li key={i} className="flex items-start gap-1.5 text-muted-foreground">
-            <span className={`mt-1.5 h-1 w-1 shrink-0 rounded-full ${dot}`} /> {it}
+    <StepCard
+      icon={ShieldAlert}
+      eyebrow={STEPS[3].eyebrow}
+      title="Face what you don't want to look at"
+      subtitle="This is the step most people skip. Say the negative outcomes out loud. Then decide what you'd do if they happen."
+    >
+      <div className="grid gap-4">
+        <div className="glass rounded-2xl p-5">
+          <div className="text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
+            Negative outcomes you've been avoiding thinking about
+          </div>
+          <textarea
+            rows={4}
+            value={state.refine.negativeOutcomes}
+            onChange={(e) => setRefine({ negativeOutcomes: e.target.value })}
+            placeholder="Kids affected by separation. Financial stress. Social stigma. Wasted years if I stay."
+            className="mt-2 w-full resize-none rounded-xl bg-background/40 p-3 text-sm outline-none focus:bg-background/60"
+          />
+        </div>
+
+        <div className="glass rounded-2xl p-5">
+          <div className="text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
+            What you'd actually do if the worst outcome happened
+          </div>
+          <textarea
+            rows={3}
+            value={state.refine.fearsFaced}
+            onChange={(e) => setRefine({ fearsFaced: e.target.value })}
+            placeholder="Build a 6-month savings cushion. Line up a lawyer. Talk to the kids' school counselor."
+            className="mt-2 w-full resize-none rounded-xl bg-background/40 p-3 text-sm outline-none focus:bg-background/60"
+          />
+        </div>
+
+        <div className="glass rounded-2xl p-5">
+          <div className="text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
+            Ego check
+          </div>
+          <textarea
+            rows={2}
+            value={state.refine.egoCheck}
+            onChange={(e) => setRefine({ egoCheck: e.target.value })}
+            placeholder="Is any part of this driven by wanting to be right, wanting to win, or wanting to be seen a certain way?"
+            className="mt-2 w-full resize-none rounded-xl bg-background/40 p-3 text-sm outline-none focus:bg-background/60"
+          />
+        </div>
+
+        <div>
+          <div className="mb-3 text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
+            Biases likely at work
+          </div>
+          <div className="grid gap-3 sm:grid-cols-2">
+            {state.refine.biases.map((b, i) => (
+              <motion.div
+                key={b.name}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.05 }}
+                className="glass rounded-2xl p-4"
+              >
+                <div className="flex items-start justify-between gap-2">
+                  <div className="font-medium text-sm">{b.name}</div>
+                  <div className="text-[10px] text-muted-foreground">{Math.round(b.weight * 100)}%</div>
+                </div>
+                <p className="mt-2 text-xs text-muted-foreground">{b.reason}</p>
+                <div className="mt-3 h-1 overflow-hidden rounded-full bg-foreground/5">
+                  <div className="h-full bg-accent" style={{ width: `${b.weight * 100}%` }} />
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </StepCard>
+  );
+}
+
+// ─── Step 5 · Abstracted Objective ────────────────────────────────────────
+
+function AbstractedStep({ state, update }: StepProps) {
+  return (
+    <StepCard
+      icon={Sparkles}
+      eyebrow={STEPS[4].eyebrow}
+      title="One level higher"
+      subtitle="Strip low-level words. Reframe upward. Make it measurable and time-bound."
+    >
+      <div className="grid gap-4 md:grid-cols-[1fr_auto_1fr] md:items-stretch">
+        <div className="glass rounded-2xl p-5">
+          <div className="text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Original objective</div>
+          <div className="mt-2 text-sm">{state.objective || "—"}</div>
+        </div>
+        <div className="grid place-items-center text-muted-foreground">→</div>
+        <div className="glass-strong rounded-2xl border-2 border-accent/40 p-5">
+          <div className="text-[10px] uppercase tracking-[0.16em] text-accent">Abstracted objective</div>
+          <textarea
+            rows={5}
+            value={state.abstracted}
+            onChange={(e) => update({ abstracted: e.target.value })}
+            className="mt-2 w-full resize-none rounded-xl bg-transparent text-sm outline-none"
+          />
+        </div>
+      </div>
+
+      <div className="mt-4 flex items-center gap-3">
+        <div className="text-[10px] uppercase tracking-[0.14em] text-muted-foreground">Timeframe</div>
+        <div className="flex gap-2">
+          {["1 month", "3 months", "6 months", "12 months"].map((t) => (
+            <button
+              key={t}
+              onClick={() => update({ timeframe: t })}
+              className={`rounded-full px-3 py-1 text-xs transition ${
+                state.timeframe === t
+                  ? "bg-foreground text-background"
+                  : "glass hover:bg-foreground/5"
+              }`}
+            >
+              {t}
+            </button>
+          ))}
+        </div>
+      </div>
+    </StepCard>
+  );
+}
+
+// ─── Step 6 · Boundary ────────────────────────────────────────────────────
+
+function BoundaryStep({ state, update }: StepProps) {
+  return (
+    <StepCard
+      icon={Filter}
+      eyebrow={STEPS[5].eyebrow}
+      title="Cast the net"
+      subtitle="A 1–3 sentence boundary that CONTAINS the solution. Every word matters — you'll answer each in the next step."
+    >
+      <div className="rounded-3xl border-2 border-dashed border-accent/40 bg-accent/5 p-6">
+        <div className="text-[10px] uppercase tracking-[0.16em] text-accent">Boundary statement</div>
+        <textarea
+          rows={5}
+          value={state.boundary}
+          onChange={(e) => {
+            const boundary = e.target.value;
+            update({ boundary, pieces: splitBoundary(boundary) });
+          }}
+          className="mt-3 w-full resize-none rounded-xl bg-transparent text-base leading-relaxed outline-none"
+        />
+      </div>
+      <div className="mt-4 grid gap-3 md:grid-cols-2">
+        <div className="glass rounded-2xl p-4 text-xs text-muted-foreground">
+          <div className="mb-1 font-medium text-foreground">Wider net</div>
+          The broader (and higher) your boundary, the safer that the answer lies inside it — but the longer it takes to find.
+        </div>
+        <div className="glass rounded-2xl p-4 text-xs text-muted-foreground">
+          <div className="mb-1 font-medium text-foreground">Watch the words</div>
+          If a word (like "monitor" or "compatible") doesn't earn its place, cut it. Every word becomes work in step 7.
+        </div>
+      </div>
+    </StepCard>
+  );
+}
+
+// ─── Step 7 · Out-In ──────────────────────────────────────────────────────
+
+function OutInStep({ state, update }: StepProps) {
+  const setPiece = (i: number, answer: string) => {
+    const pieces = state.pieces.map((p, idx) => (idx === i ? { ...p, answer } : p));
+    update({ pieces, combinedSolution: combineAnswers(pieces) });
+  };
+  const fillSuggested = () => {
+    const pieces = state.pieces.map((p) =>
+      p.answer.trim() ? p : { ...p, answer: suggestPieceAnswer(p.fragment) },
+    );
+    update({ pieces, combinedSolution: combineAnswers(pieces) });
+  };
+
+  return (
+    <StepCard
+      icon={ScissorsLineDashed}
+      eyebrow={STEPS[6].eyebrow}
+      title="Break the boundary. Answer each piece."
+      subtitle="Split the boundary into fragments. Solve each fragment inwards without introducing new words. Combine into the final solution."
+    >
+      <div className="mb-5 flex items-center justify-between">
+        <div className="glass rounded-full px-3 py-1 text-xs text-muted-foreground">
+          {state.pieces.length} fragments extracted from your boundary
+        </div>
+        <button
+          onClick={fillSuggested}
+          className="glass inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs transition hover:bg-foreground/5"
+        >
+          <Sparkles className="h-3 w-3 text-accent" /> Suggest answers
+        </button>
+      </div>
+
+      <ol className="space-y-3">
+        {state.pieces.map((p, i) => (
+          <li key={i} className="glass rounded-2xl p-4">
+            <div className="flex items-start gap-3">
+              <span className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-foreground text-[10px] text-background">
+                {String.fromCharCode(65 + i)}
+              </span>
+              <div className="flex-1">
+                <div className="text-sm italic text-foreground/90">"{p.fragment}"</div>
+                <textarea
+                  rows={2}
+                  value={p.answer}
+                  onChange={(e) => setPiece(i, e.target.value)}
+                  placeholder="Answer inwards — concrete action, measurement, deadline."
+                  className="mt-2 w-full resize-none rounded-xl bg-background/40 p-3 text-sm outline-none focus:bg-background/60"
+                />
+              </div>
+            </div>
           </li>
         ))}
-      </ul>
-    </div>
-  );
-}
+      </ol>
 
-// ─── Stage 9: Simulation ──────────────────────────────────────────────────
-
-function SimulationStep({ state }: StepProps) {
-  const opt = state.chosenOption !== null ? state.options[state.chosenOption] : null;
-  return (
-    <StageCard icon={Telescope} eyebrow="Stage 9 · Decision simulation" title={`Project Option ${opt?.label ?? ""} forward`}>
-      <div className="mb-6 grid gap-3 md:grid-cols-2">
-        <Meter label="Confidence" value={state.confidence} tone="pos" />
-        <Meter label="Regret Probability" value={state.regret} tone="warn" />
+      <div className="mt-6 rounded-3xl border border-accent/30 bg-accent/5 p-5">
+        <div className="flex items-center gap-2 text-[10px] uppercase tracking-[0.16em] text-accent">
+          <ListChecks className="h-3.5 w-3.5" /> Combined solution
+        </div>
+        <pre className="mt-3 whitespace-pre-wrap font-sans text-sm leading-relaxed">
+          {state.combinedSolution || "Fill the fragments above — your combined solution appears here."}
+        </pre>
       </div>
-      <div className="grid gap-3 md:grid-cols-3">
-        {state.simulations.map((s) => (
-          <div key={s.horizon} className="glass rounded-2xl p-5">
-            <div className="text-[10px] uppercase tracking-[0.16em] text-muted-foreground">After</div>
-            <div className="font-display mt-1 text-2xl">{s.horizon}</div>
-            <div className="mt-4 space-y-2 text-sm">
-              <Row k="Emotion" v={s.emotion} />
-              <Row k="Financial" v={s.financial} />
-              <Row k="Relationships" v={s.relationships} />
-              <Row k="Career" v={s.career} />
-              <Row k="Health" v={s.health} />
-            </div>
-          </div>
-        ))}
-      </div>
-    </StageCard>
-  );
-}
 
-function Row({ k, v }: { k: string; v: string }) {
-  return (
-    <div className="flex items-start justify-between gap-3 border-t border-glass-border pt-2 first:border-0 first:pt-0">
-      <span className="text-xs text-muted-foreground">{k}</span>
-      <span className="text-right text-foreground/90">{v}</span>
-    </div>
-  );
-}
-
-function Meter({ label, value, tone }: { label: string; value: number; tone: "pos" | "warn" }) {
-  const bar = tone === "pos" ? "bg-emerald-400" : "bg-amber-400";
-  return (
-    <div className="glass rounded-2xl p-5">
-      <div className="flex items-center justify-between">
-        <div className="text-xs text-muted-foreground">{label}</div>
-        <div className="font-display text-xl">{value}%</div>
-      </div>
-      <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-foreground/5">
-        <motion.div initial={{ width: 0 }} animate={{ width: `${value}%` }} transition={{ duration: 0.7 }} className={`h-full ${bar}`} />
-      </div>
-    </div>
-  );
-}
-
-// ─── Stage 10: Commit ─────────────────────────────────────────────────────
-
-function CommitStep({ state, update }: StepProps) {
-  const opt = state.chosenOption !== null ? state.options[state.chosenOption] : null;
-  return (
-    <StageCard icon={CheckCircle2} eyebrow="Stage 10 · Opt-in commitment" title="I consciously choose…">
-      <textarea
-        rows={5}
-        placeholder={`I consciously choose Option ${opt?.label ?? "X"} — ${opt?.title ?? ""} — because…`}
-        value={state.commitment}
-        onChange={(e) => update({ commitment: e.target.value })}
-        className="w-full resize-none rounded-2xl border border-glass-border bg-background/40 p-5 text-base outline-none focus:border-accent"
-      />
-      <div className="mt-6 grid gap-3 md:grid-cols-4">
-        {["Decision Summary PDF", "Action Plan", "Reflection Journal", "30-Day Checklist"].map((t) => (
+      <div className="mt-6 grid gap-3 md:grid-cols-3">
+        {["Decision Summary PDF", "Action Plan", "30-Day Checklist"].map((t) => (
           <button
             key={t}
             onClick={() => window.print()}
@@ -607,8 +621,6 @@ function CommitStep({ state, update }: StepProps) {
           </button>
         ))}
       </div>
-    </StageCard>
+    </StepCard>
   );
 }
-
-interface StepProps { state: DecisionState; update: (p: Partial<DecisionState>) => void }

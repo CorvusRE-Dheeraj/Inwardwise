@@ -1,16 +1,16 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
-import { ArrowRight, Brain, Compass, Filter, Goal, Layers, ShieldCheck, Sparkles, Telescope } from "lucide-react";
+import { ArrowRight, Brain, Compass, Filter, Layers, ScissorsLineDashed, ShieldAlert, Sparkles, Edit3 } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
-import { STAGES } from "@/lib/ooi-framework";
+import { STEPS } from "@/lib/ooi-framework";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Think Better. Decide Better. — OOOI" },
-      { name: "description", content: "An AI decision intelligence platform that refines your objective before answering. Built on the Objective-Oriented Out-In framework." },
+      { name: "description", content: "Objective Oriented Out-In: an AI decision engine that refuses to answer until your real objective is defined, challenged, and bounded." },
       { property: "og:title", content: "Think Better. Decide Better. — OOOI" },
-      { property: "og:description", content: "Most people rush to solutions. OOOI helps you discover the right objective first." },
+      { property: "og:description", content: "Spend 50% of the time refining the objective. Then the answer is inside the boundary." },
     ],
   }),
   component: Landing,
@@ -36,8 +36,8 @@ function Landing() {
             <em className="italic text-muted-foreground">Decide Better.</em>
           </h1>
           <p className="mx-auto mt-6 max-w-xl text-balance text-base text-muted-foreground md:text-lg">
-            Most people rush to solutions. This platform helps you discover the right objective —
-            before searching for answers.
+            The Objective Oriented Out-In framework. Refine the objective, cast a wide boundary,
+            then work inwards. The answer is always inside the net.
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <Link
@@ -55,14 +55,13 @@ function Landing() {
           </div>
         </motion.div>
 
-        {/* Decorative orbiting glass cards */}
         <div className="pointer-events-none relative mx-auto mt-14 hidden h-[260px] max-w-4xl md:block">
           {[
-            { i: Compass, t: "Objective", x: "5%", y: "10%" },
-            { i: Filter, t: "Boundary", x: "78%", y: "0%" },
-            { i: Layers, t: "Options", x: "60%", y: "60%" },
-            { i: Telescope, t: "Simulation", x: "20%", y: "55%" },
-            { i: ShieldCheck, t: "Commitment", x: "42%", y: "10%" },
+            { i: Compass, t: "Situation", x: "5%", y: "10%" },
+            { i: Edit3, t: "Objective", x: "78%", y: "0%" },
+            { i: ShieldAlert, t: "Bias & Fear", x: "60%", y: "60%" },
+            { i: Filter, t: "Boundary", x: "20%", y: "55%" },
+            { i: ScissorsLineDashed, t: "Out-In", x: "42%", y: "10%" },
           ].map(({ i: Icon, t, x, y }, idx) => (
             <motion.div
               key={t}
@@ -79,28 +78,28 @@ function Landing() {
         </div>
       </section>
 
-      {/* 10-stage map */}
+      {/* 7-step map */}
       <section className="mt-20">
         <div className="mb-8 flex items-end justify-between">
           <div>
             <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground">The OOOI Method</p>
-            <h2 className="font-display mt-2 text-3xl md:text-4xl">Ten stages from situation to commitment</h2>
+            <h2 className="font-display mt-2 text-3xl md:text-4xl">Seven steps from situation to solution</h2>
           </div>
           <Link to="/decision" className="hidden text-sm text-muted-foreground hover:text-foreground md:inline">
             Begin →
           </Link>
         </div>
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
-          {STAGES.map((s, i) => (
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-7">
+          {STEPS.map((s, i) => (
             <motion.div
               key={s.id}
               initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.04 }}
+              transition={{ delay: i * 0.05 }}
               className="glass rounded-2xl p-4"
             >
-              <div className="text-xs text-muted-foreground">Stage {s.index}</div>
+              <div className="text-xs text-muted-foreground">Step {s.index}</div>
               <div className="mt-1 font-medium">{s.label}</div>
               <div className="mt-1 text-xs text-muted-foreground">{s.short}</div>
             </motion.div>
@@ -111,9 +110,9 @@ function Landing() {
       {/* Pillars */}
       <section className="mt-20 grid gap-4 md:grid-cols-3">
         {[
-          { i: Brain, t: "Refines your objective", d: "The AI never jumps to advice. It questions the question first." },
-          { i: Sparkles, t: "Surfaces hidden biases", d: "Confirmation, loss aversion, ego — named before they steer you." },
-          { i: Goal, t: "Simulates the outcome", d: "Project the choice forward 1 month, 1 year, 5 years before you commit." },
+          { i: Brain, t: "Refines the objective", d: "The AI won't answer until you've abstracted the objective one level higher." },
+          { i: ShieldAlert, t: "Faces bias & fear", d: "Confirmation, loss aversion, ego, sunk cost — named before they steer you." },
+          { i: Layers, t: "Bounds then solves", d: "Cast a wide net first. Break each word of the boundary into an answer." },
         ].map(({ i: Icon, t, d }) => (
           <div key={t} className="glass-strong rounded-3xl p-6">
             <div className="grid h-10 w-10 place-items-center rounded-xl bg-foreground/5">
@@ -127,10 +126,12 @@ function Landing() {
 
       <section className="mt-20">
         <div className="glass-strong relative overflow-hidden rounded-3xl p-10 text-center">
-          <h3 className="font-display text-3xl md:text-4xl">A better question beats a faster answer.</h3>
-          <p className="mx-auto mt-3 max-w-xl text-sm text-muted-foreground">
-            Start a structured decision in under a minute.
-          </p>
+          <div className="mx-auto flex max-w-md items-center justify-center gap-2 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+            <Sparkles className="h-3 w-3 text-accent" /> The rule
+          </div>
+          <h3 className="font-display mt-3 text-3xl md:text-4xl">
+            Spend 50% of the time on the question. The answer will be inside the boundary.
+          </h3>
           <Link
             to="/decision"
             className="mt-6 inline-flex items-center gap-2 rounded-full bg-foreground px-5 py-3 text-sm font-medium text-background"
