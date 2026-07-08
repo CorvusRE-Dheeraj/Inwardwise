@@ -2,7 +2,10 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Star, Clock, CheckCircle2, BarChart3, Plus, Sparkles } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
-import { loadDecisions, type DecisionState, STAGES } from "@/lib/ooi-framework";
+import {
+  loadDecisions, decisionTitle, isComplete, STEPS,
+  type DecisionState,
+} from "@/lib/ooi-framework";
 
 export const Route = createFileRoute("/dashboard")({
   head: () => ({ meta: [{ title: "Dashboard — OOOI" }] }),
@@ -13,14 +16,13 @@ function Dashboard() {
   const [decisions, setDecisions] = useState<DecisionState[]>([]);
   useEffect(() => { setDecisions(loadDecisions()); }, []);
 
-  const completed = decisions.filter((d) => d.stage === "commit" && d.commitment.trim());
-  const inProgress = decisions.filter((d) => !(d.stage === "commit" && d.commitment.trim()));
-  const avgConfidence = completed.length
-    ? Math.round(completed.reduce((a, d) => a + d.confidence, 0) / completed.length)
-    : 0;
+  const completed = decisions.filter(isComplete);
+  const inProgress = decisions.filter((d) => !isComplete(d));
 
   const biasCounts: Record<string, number> = {};
-  decisions.forEach((d) => d.biases.forEach((b) => { biasCounts[b.name] = (biasCounts[b.name] ?? 0) + 1; }));
+  decisions.forEach((d) => d.refine?.biases?.forEach((b) => {
+    biasCounts[b.name] = (biasCounts[b.name] ?? 0) + 1;
+  }));
   const topBiases = Object.entries(biasCounts).sort((a, b) => b[1] - a[1]).slice(0, 5);
 
   const categoryCounts: Record<string, number> = {};
@@ -43,7 +45,7 @@ function Dashboard() {
         <Stat icon={BarChart3} label="Total" value={decisions.length} />
         <Stat icon={CheckCircle2} label="Completed" value={completed.length} />
         <Stat icon={Clock} label="In progress" value={inProgress.length} />
-        <Stat icon={Sparkles} label="Avg. confidence" value={`${avgConfidence}%`} />
+        <Stat icon={Sparkles} label="Steps averaged" value={decisions.length ? Math.round(decisions.reduce((a, d) => a + (STEPS.findIndex((s) => s.id === d.step) + 1), 0) / decisions.length) : 0} />
       </div>
 
       <div className="mt-10 grid gap-6 lg:grid-cols-[1.5fr_1fr]">
@@ -103,8 +105,8 @@ function Stat({ icon: Icon, label, value }: { icon: React.ComponentType<{ classN
 }
 
 function DecisionRow({ d }: { d: DecisionState }) {
-  const stage = STAGES.find((s) => s.id === d.stage)!;
-  const pct = Math.round((stage.index / STAGES.length) * 100);
+  const step = STEPS.find((s) => s.id === d.step)!;
+  const pct = Math.round((step.index / STEPS.length) * 100);
   return (
     <li className="glass rounded-2xl p-4">
       <div className="flex items-center justify-between gap-4">
@@ -115,10 +117,10 @@ function DecisionRow({ d }: { d: DecisionState }) {
             <span className="text-[10px] text-muted-foreground">{new Date(d.updatedAt).toLocaleDateString()}</span>
           </div>
           <div className="mt-1 truncate font-medium">
-            {d.higherObjective || d.pseudoObjective || d.situation.slice(0, 80) || "Untitled decision"}
+            {decisionTitle(d)}
           </div>
           <div className="mt-2 flex items-center gap-3 text-xs text-muted-foreground">
-            <span>Stage {stage.index} · {stage.label}</span>
+            <span>Step {step.index} · {step.label}</span>
             <div className="h-1 w-32 overflow-hidden rounded-full bg-foreground/5">
               <div className="h-full bg-accent" style={{ width: `${pct}%` }} />
             </div>
