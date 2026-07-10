@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { ArrowRight, Brain, Compass, Filter, Layers, ScissorsLineDashed, ShieldAlert, Sparkles, Edit3 } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
-import { STEPS } from "@/lib/ooi-framework";
+import { STAGES } from "@/lib/ooi-stages";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -90,7 +90,7 @@ function Landing() {
           </Link>
         </div>
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-7">
-          {STEPS.map((s, i) => (
+          {STAGES.map((s, i) => (
             <motion.div
               key={s.id}
               initial={{ opacity: 0, y: 12 }}
@@ -99,8 +99,8 @@ function Landing() {
               transition={{ delay: i * 0.05 }}
               className="glass rounded-2xl p-4"
             >
-              <div className="text-xs text-muted-foreground">Step {s.index}</div>
-              <div className="mt-1 font-medium">{s.label}</div>
+              <div className="text-xs text-muted-foreground">Stage {s.n}</div>
+              <div className="mt-1 font-medium">{s.name}</div>
               <div className="mt-1 text-xs text-muted-foreground">{s.short}</div>
             </motion.div>
           ))}
