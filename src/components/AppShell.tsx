@@ -22,8 +22,8 @@ export function AppShell({ children }: { children: ReactNode }) {
             <span className="grid h-8 w-8 place-items-center rounded-full bg-foreground text-background">
               <Brain className="h-4 w-4" />
             </span>
-            <span className="font-display text-lg leading-none">OOOI</span>
-            <span className="ml-2 hidden text-[10px] uppercase tracking-[0.18em] text-muted-foreground sm:inline">
+            <span className="font-display text-base leading-none md:text-lg">Objective Solution Framework</span>
+            <span className="ml-2 hidden text-[10px] uppercase tracking-[0.18em] text-muted-foreground lg:inline">
               Decision Intelligence
             </span>
           </Link>
