@@ -23,9 +23,6 @@ export function AppShell({ children }: { children: ReactNode }) {
               <Brain className="h-4 w-4" />
             </span>
             <span className="font-display text-base leading-none md:text-lg">Objective Solution Framework</span>
-            <span className="ml-2 hidden text-[10px] uppercase tracking-[0.18em] text-muted-foreground lg:inline">
-              Decision Intelligence
-            </span>
           </Link>
           <nav className="hidden items-center gap-1 md:flex">
             {nav.map((n) => {
@@ -65,12 +62,10 @@ export function AppShell({ children }: { children: ReactNode }) {
       <main className="mx-auto w-[min(1200px,calc(100%-2rem))] py-10 md:py-16">{children}</main>
 
       <footer className="mx-auto w-[min(1200px,calc(100%-2rem))] pb-10 pt-8">
-        <div className="glass flex flex-col items-start justify-between gap-3 rounded-2xl px-5 py-4 text-xs text-muted-foreground md:flex-row md:items-center">
-          <div className="flex items-center gap-2">
-            <LayoutDashboard className="h-3.5 w-3.5" />
-            <span>Objective Solution Framework</span>
-          </div>
-          <div>Built for clarity, not for chat.</div>
+        <div className="glass flex flex-col items-center justify-center gap-2 rounded-2xl px-5 py-4 text-xs text-muted-foreground md:flex-row md:gap-3">
+          <span>Facilitated by AI.</span>
+          <span className="hidden md:inline">·</span>
+          <span>7 Stage Decision Intelligence Philosophy</span>
         </div>
       </footer>
     </div>
