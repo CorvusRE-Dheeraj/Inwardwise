@@ -7,10 +7,10 @@ import { STAGES } from "@/lib/ooi-stages";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Think Better. Decide Better. — OOOI" },
-      { name: "description", content: "Objective Oriented Out-In: an AI decision engine that refuses to answer until your real objective is defined, challenged, and bounded." },
-      { property: "og:title", content: "Think Better. Decide Better. — OOOI" },
-      { property: "og:description", content: "Spend 50% of the time refining the objective. Then the answer is inside the boundary." },
+      { title: "Decide Confidently — Objective Solution Framework" },
+      { name: "description", content: "Remove Bias, Fear, and Ego out of Your Decisions." },
+      { property: "og:title", content: "Decide Confidently — Objective Solution Framework" },
+      { property: "og:description", content: "Remove Bias, Fear, and Ego out of Your Decisions." },
     ],
   }),
   component: Landing,
@@ -31,13 +31,10 @@ function Landing() {
             Not a chatbot. A decision engine.
           </div>
           <h1 className="font-display mt-6 text-5xl leading-[1.02] sm:text-6xl md:text-7xl">
-            <span className="text-gradient">Think Better.</span>
-            <br />
-            <em className="italic text-muted-foreground">Decide Better.</em>
+            <span className="text-gradient">Decide Confidently</span>
           </h1>
           <p className="mx-auto mt-6 max-w-xl text-balance text-base text-muted-foreground md:text-lg">
-            The Objective Oriented Out-In framework. Refine the objective, cast a wide boundary,
-            then work inwards. The answer is always inside the net.
+            Remove Bias, Fear, and Ego out of Your Decisions
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <Link
@@ -57,11 +54,11 @@ function Landing() {
 
         <div className="pointer-events-none relative mx-auto mt-14 hidden h-[260px] max-w-4xl md:block">
           {[
-            { i: Compass, t: "Situation", x: "5%", y: "10%" },
-            { i: Edit3, t: "Objective", x: "78%", y: "0%" },
-            { i: ShieldAlert, t: "Bias & Fear", x: "60%", y: "60%" },
-            { i: Filter, t: "Boundary", x: "20%", y: "55%" },
-            { i: ScissorsLineDashed, t: "Out-In", x: "42%", y: "10%" },
+            { i: Compass, t: "Describe Your Situation", x: "5%", y: "10%" },
+            { i: Edit3, t: "Remove Conflicting Goals", x: "78%", y: "0%" },
+            { i: ShieldAlert, t: "Remove Biases · Act Fearless", x: "60%", y: "60%" },
+            { i: Filter, t: "Cast Wide Solutions Net", x: "20%", y: "55%" },
+            { i: ScissorsLineDashed, t: "Create an Objective", x: "42%", y: "10%" },
           ].map(({ i: Icon, t, x, y }, idx) => (
             <motion.div
               key={t}
@@ -82,7 +79,7 @@ function Landing() {
       <section className="mt-20">
         <div className="mb-8 flex items-end justify-between">
           <div>
-            <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground">The OOOI Method</p>
+            <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground">Objective Solution Framework</p>
             <h2 className="font-display mt-2 text-3xl md:text-4xl">Seven steps from situation to solution</h2>
           </div>
           <Link to="/decision" className="hidden text-sm text-muted-foreground hover:text-foreground md:inline">

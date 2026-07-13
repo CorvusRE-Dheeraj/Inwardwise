@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Brain, Moon, Sun, LayoutDashboard, Sparkles } from "lucide-react";
+import { Brain, Moon, Sun, Sparkles } from "lucide-react";
 import type { ReactNode } from "react";
 import { useTheme } from "@/lib/theme";
 
