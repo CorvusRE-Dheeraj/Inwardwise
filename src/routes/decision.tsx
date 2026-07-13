@@ -22,11 +22,11 @@ const searchSchema = z.object({ id: z.string().optional() });
 export const Route = createFileRoute("/decision")({
   head: () => ({
     meta: [
-      { title: "New Decision — OOOI" },
+      { title: "New Decision — Objective Solution Framework" },
       {
         name: "description",
         content:
-          "A conversational facilitator that walks you through the 7-stage Objective-Oriented Out-In framework before any recommendation is given.",
+          "A conversational facilitator that walks you through the 7-stage Objective Solution Framework before any recommendation is given.",
       },
     ],
   }),
@@ -126,7 +126,7 @@ function DecisionChat() {
       <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
         <div>
           <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground">
-            Facilitated by AI · OOOI 7-Stage Framework
+            Facilitated by AI · 7-Stage Objective Solution Framework
           </p>
           <h1 className="font-display mt-1 text-3xl md:text-4xl">Structured decision session</h1>
         </div>

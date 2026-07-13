@@ -31,7 +31,9 @@ function Landing() {
             Not a chatbot. A decision engine.
           </div>
           <h1 className="font-display mt-6 text-5xl leading-[1.02] sm:text-6xl md:text-7xl">
-            <span className="text-gradient">Decide Confidently</span>
+            <span className="text-gradient">Think Better.</span>
+            <br />
+            <em className="italic text-muted-foreground">Decide Confidently</em>
           </h1>
           <p className="mx-auto mt-6 max-w-xl text-balance text-base text-muted-foreground md:text-lg">
             Remove Bias, Fear, and Ego out of Your Decisions
