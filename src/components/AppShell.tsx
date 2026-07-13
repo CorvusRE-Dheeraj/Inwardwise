@@ -68,7 +68,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         <div className="glass flex flex-col items-start justify-between gap-3 rounded-2xl px-5 py-4 text-xs text-muted-foreground md:flex-row md:items-center">
           <div className="flex items-center gap-2">
             <LayoutDashboard className="h-3.5 w-3.5" />
-            <span>OOOI · Objective-Oriented Out-In Framework</span>
+            <span>Objective Solution Framework</span>
           </div>
           <div>Built for clarity, not for chat.</div>
         </div>
