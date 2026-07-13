@@ -6,7 +6,7 @@ import { STAGES } from "@/lib/ooi-stages";
 import { deleteSession, loadSessions, type DecisionSession } from "@/lib/ooi-storage";
 
 export const Route = createFileRoute("/dashboard")({
-  head: () => ({ meta: [{ title: "Dashboard — OOOI" }] }),
+  head: () => ({ meta: [{ title: "Dashboard — Objective Solution Framework" }] }),
   component: Dashboard,
 });
 

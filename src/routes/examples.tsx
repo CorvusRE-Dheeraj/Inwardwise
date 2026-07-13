@@ -5,8 +5,8 @@ import { AppShell } from "@/components/AppShell";
 export const Route = createFileRoute("/examples")({
   head: () => ({
     meta: [
-      { title: "Examples — OOOI" },
-      { name: "description", content: "Four real OOOI walk-throughs from the framework — marriage, career, friendship, and forgiveness — end-to-end across all 7 steps." },
+      { title: "Examples — Objective Solution Framework" },
+      { name: "description", content: "Four real Objective Solution Framework walk-throughs — marriage, career, friendship, and forgiveness — end-to-end across all 7 steps." },
     ],
   }),
   component: Examples,
@@ -142,7 +142,7 @@ function Examples() {
         <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground">Examples</p>
         <h1 className="font-display mt-2 text-4xl md:text-5xl">From rushed answer to right objective</h1>
         <p className="mt-3 max-w-2xl text-muted-foreground">
-          Four cases from the OOOI framework, walked end-to-end across all seven steps.
+          Four cases from the Objective Solution Framework, walked end-to-end across all seven steps.
         </p>
       </div>
 
@@ -154,7 +154,7 @@ function Examples() {
 
       <div className="mt-12 text-center">
         <Link to="/decision" className="inline-flex items-center gap-2 rounded-full bg-foreground px-5 py-3 text-sm text-background">
-          Run OOOI on your own situation <ArrowRight className="h-4 w-4" />
+          Run the framework on your own situation <ArrowRight className="h-4 w-4" />
         </Link>
       </div>
     </AppShell>
