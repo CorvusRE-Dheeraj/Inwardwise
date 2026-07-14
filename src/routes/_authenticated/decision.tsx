@@ -53,7 +53,7 @@ const STARTERS = [
 ];
 
 function DecisionChat() {
-  const { id: routeId } = useSearch({ from: "/decision" });
+  const { id: routeId } = useSearch({ from: "/_authenticated/decision" });
 
   const [session, setSession] = useState<DecisionSession>(() => {
     if (typeof window !== "undefined" && routeId) {
