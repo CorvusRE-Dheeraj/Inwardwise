@@ -1,5 +1,5 @@
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
-import { Brain, Moon, Sun, Sparkles, LogOut, LogIn } from "lucide-react";
+import { Brain, Moon, Sun, Sparkles, LogOut, LogIn, Shield } from "lucide-react";
 import { useEffect, useState, type ReactNode } from "react";
 import { useTheme } from "@/lib/theme";
 import { supabase } from "@/integrations/supabase/client";

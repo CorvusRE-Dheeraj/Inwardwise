@@ -19,6 +19,7 @@ import { Route as ApiTranscribeRouteImport } from './routes/api/transcribe'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
 import { Route as AuthenticatedDecisionRouteImport } from './routes/_authenticated/decision'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 
 const HistoryRoute = HistoryRouteImport.update({
   id: '/history',
@@ -69,12 +70,18 @@ const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/examples': typeof ExamplesRoute
   '/history': typeof HistoryRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/decision': typeof AuthenticatedDecisionRoute
   '/api/chat': typeof ApiChatRoute
@@ -86,6 +93,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/examples': typeof ExamplesRoute
   '/history': typeof HistoryRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/decision': typeof AuthenticatedDecisionRoute
   '/api/chat': typeof ApiChatRoute
@@ -99,6 +107,7 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/examples': typeof ExamplesRoute
   '/history': typeof HistoryRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/decision': typeof AuthenticatedDecisionRoute
   '/api/chat': typeof ApiChatRoute
@@ -112,6 +121,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/examples'
     | '/history'
+    | '/admin'
     | '/dashboard'
     | '/decision'
     | '/api/chat'
@@ -123,6 +133,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/examples'
     | '/history'
+    | '/admin'
     | '/dashboard'
     | '/decision'
     | '/api/chat'
@@ -135,6 +146,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/examples'
     | '/history'
+    | '/_authenticated/admin'
     | '/_authenticated/dashboard'
     | '/_authenticated/decision'
     | '/api/chat'
@@ -225,15 +237,24 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedDecisionRoute: typeof AuthenticatedDecisionRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminRoute: AuthenticatedAdminRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedDecisionRoute: AuthenticatedDecisionRoute,
 }
