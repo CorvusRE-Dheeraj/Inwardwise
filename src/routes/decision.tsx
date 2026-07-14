@@ -3,7 +3,17 @@ import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport, type UIMessage } from "ai";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { ArrowUp, Check, Loader2, RotateCcw, Square, Sparkles } from "lucide-react";
+import {
+  ArrowUp,
+  Check,
+  Loader2,
+  Mic,
+  Pause,
+  Play,
+  RotateCcw,
+  Square,
+  Sparkles,
+} from "lucide-react";
 import { z } from "zod";
 import { AppShell } from "@/components/AppShell";
 import { STAGES, parseStageTag, stripStageTag } from "@/lib/ooi-stages";
@@ -16,6 +26,7 @@ import {
   saveSession,
   type DecisionSession,
 } from "@/lib/ooi-storage";
+import { startRecording, synthesizeSpeech, transcribe, type Recorder } from "@/lib/voice";
 
 const searchSchema = z.object({ id: z.string().optional() });
 
