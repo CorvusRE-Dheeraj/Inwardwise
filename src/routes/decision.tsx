@@ -242,13 +242,35 @@ function DecisionChat() {
                   }
                 }}
                 placeholder={
-                  messages.length === 0
-                    ? "Describe the situation you're facing…"
-                    : "Reply to the facilitator. Enter to send, Shift+Enter for new line."
+                  isRecording
+                    ? "Listening…"
+                    : isTranscribing
+                      ? "Transcribing…"
+                      : messages.length === 0
+                        ? "Describe the situation you are facing"
+                        : "Reply to the facilitator. Enter to send, Shift+Enter for new line."
                 }
                 rows={2}
-                className="min-h-10 max-h-48 flex-1 resize-none bg-transparent px-3 py-2 text-sm outline-none placeholder:text-muted-foreground"
+                className="min-h-10 max-h-48 flex-1 resize-none bg-transparent px-3 py-2 text-sm text-foreground caret-accent outline-none placeholder:text-accent/70"
               />
+              <button
+                type="button"
+                onClick={toggleRecording}
+                disabled={isBusy || isTranscribing}
+                aria-label={isRecording ? "Stop recording" : "Speak"}
+                title={isRecording ? "Stop recording" : "Speak"}
+                className={`grid h-10 w-10 place-items-center rounded-xl transition disabled:opacity-40 ${
+                  isRecording
+                    ? "bg-accent text-background animate-pulse"
+                    : "bg-foreground/10 text-foreground hover:bg-foreground/20"
+                }`}
+              >
+                {isTranscribing ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  <Mic className="h-4 w-4" />
+                )}
+              </button>
               {isBusy ? (
                 <button
                   type="button"
@@ -270,7 +292,11 @@ function DecisionChat() {
               )}
             </form>
             <div className="mt-2 flex items-center justify-between text-[10px] text-muted-foreground">
-              <span>Autosaved locally · The facilitator will not recommend until all 7 stages complete.</span>
+              <span>
+                {voiceError
+                  ? voiceError
+                  : "Autosaved locally · Speak or type. The facilitator will not recommend until all 7 stages complete."}
+              </span>
               {messages.length > 0 && (
                 <button
                   onClick={() => regenerate()}
