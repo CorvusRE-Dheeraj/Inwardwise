@@ -9,12 +9,20 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as HistoryRouteImport } from './routes/history'
 import { Route as ExamplesRouteImport } from './routes/examples'
 import { Route as DecisionRouteImport } from './routes/decision'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiTtsRouteImport } from './routes/api/tts'
+import { Route as ApiTranscribeRouteImport } from './routes/api/transcribe'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
 
+const HistoryRoute = HistoryRouteImport.update({
+  id: '/history',
+  path: '/history',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ExamplesRoute = ExamplesRouteImport.update({
   id: '/examples',
   path: '/examples',
@@ -35,6 +43,16 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiTtsRoute = ApiTtsRouteImport.update({
+  id: '/api/tts',
+  path: '/api/tts',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiTranscribeRoute = ApiTranscribeRouteImport.update({
+  id: '/api/transcribe',
+  path: '/api/transcribe',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiChatRoute = ApiChatRouteImport.update({
   id: '/api/chat',
   path: '/api/chat',
@@ -46,14 +64,20 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof DashboardRoute
   '/decision': typeof DecisionRoute
   '/examples': typeof ExamplesRoute
+  '/history': typeof HistoryRoute
   '/api/chat': typeof ApiChatRoute
+  '/api/transcribe': typeof ApiTranscribeRoute
+  '/api/tts': typeof ApiTtsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
   '/decision': typeof DecisionRoute
   '/examples': typeof ExamplesRoute
+  '/history': typeof HistoryRoute
   '/api/chat': typeof ApiChatRoute
+  '/api/transcribe': typeof ApiTranscribeRoute
+  '/api/tts': typeof ApiTtsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -61,14 +85,42 @@ export interface FileRoutesById {
   '/dashboard': typeof DashboardRoute
   '/decision': typeof DecisionRoute
   '/examples': typeof ExamplesRoute
+  '/history': typeof HistoryRoute
   '/api/chat': typeof ApiChatRoute
+  '/api/transcribe': typeof ApiTranscribeRoute
+  '/api/tts': typeof ApiTtsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/dashboard' | '/decision' | '/examples' | '/api/chat'
+  fullPaths:
+    | '/'
+    | '/dashboard'
+    | '/decision'
+    | '/examples'
+    | '/history'
+    | '/api/chat'
+    | '/api/transcribe'
+    | '/api/tts'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/dashboard' | '/decision' | '/examples' | '/api/chat'
-  id: '__root__' | '/' | '/dashboard' | '/decision' | '/examples' | '/api/chat'
+  to:
+    | '/'
+    | '/dashboard'
+    | '/decision'
+    | '/examples'
+    | '/history'
+    | '/api/chat'
+    | '/api/transcribe'
+    | '/api/tts'
+  id:
+    | '__root__'
+    | '/'
+    | '/dashboard'
+    | '/decision'
+    | '/examples'
+    | '/history'
+    | '/api/chat'
+    | '/api/transcribe'
+    | '/api/tts'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -76,11 +128,21 @@ export interface RootRouteChildren {
   DashboardRoute: typeof DashboardRoute
   DecisionRoute: typeof DecisionRoute
   ExamplesRoute: typeof ExamplesRoute
+  HistoryRoute: typeof HistoryRoute
   ApiChatRoute: typeof ApiChatRoute
+  ApiTranscribeRoute: typeof ApiTranscribeRoute
+  ApiTtsRoute: typeof ApiTtsRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/history': {
+      id: '/history'
+      path: '/history'
+      fullPath: '/history'
+      preLoaderRoute: typeof HistoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/examples': {
       id: '/examples'
       path: '/examples'
@@ -109,6 +171,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/tts': {
+      id: '/api/tts'
+      path: '/api/tts'
+      fullPath: '/api/tts'
+      preLoaderRoute: typeof ApiTtsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/transcribe': {
+      id: '/api/transcribe'
+      path: '/api/transcribe'
+      fullPath: '/api/transcribe'
+      preLoaderRoute: typeof ApiTranscribeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/chat': {
       id: '/api/chat'
       path: '/api/chat'
@@ -124,7 +200,10 @@ const rootRouteChildren: RootRouteChildren = {
   DashboardRoute: DashboardRoute,
   DecisionRoute: DecisionRoute,
   ExamplesRoute: ExamplesRoute,
+  HistoryRoute: HistoryRoute,
   ApiChatRoute: ApiChatRoute,
+  ApiTranscribeRoute: ApiTranscribeRoute,
+  ApiTtsRoute: ApiTtsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
