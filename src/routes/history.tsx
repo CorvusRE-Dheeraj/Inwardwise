@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, ExternalLink, Linkedin } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
-import alexPortrait from "@/assets/alex-freeman.jpg";
+import alexPortrait from "@/assets/alex-freeman.jpg.asset.json";
 
 export const Route = createFileRoute("/history")({
   head: () => ({
