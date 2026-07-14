@@ -41,7 +41,9 @@ export function AppShell({ children }: { children: ReactNode }) {
     { to: "/dashboard", label: "Dashboard" },
     { to: "/examples", label: "Examples" },
     { to: "/history", label: "History" },
+    ...(isAdmin ? [{ to: "/admin" as const, label: "Admin" }] : []),
   ];
+  void Shield;
 
   async function signOut() {
     await supabase.auth.signOut();
