@@ -30,7 +30,7 @@ import { startRecording, synthesizeSpeech, transcribe, type Recorder } from "@/l
 
 const searchSchema = z.object({ id: z.string().optional() });
 
-export const Route = createFileRoute("/decision")({
+export const Route = createFileRoute("/_authenticated/decision")({
   head: () => ({
     meta: [
       { title: "New Decision — Objective Solution Framework" },
@@ -53,7 +53,7 @@ const STARTERS = [
 ];
 
 function DecisionChat() {
-  const { id: routeId } = useSearch({ from: "/decision" });
+  const { id: routeId } = useSearch({ from: "/_authenticated/decision" });
 
   const [session, setSession] = useState<DecisionSession>(() => {
     if (typeof window !== "undefined" && routeId) {

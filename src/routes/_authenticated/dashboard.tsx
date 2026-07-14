@@ -5,7 +5,7 @@ import { AppShell } from "@/components/AppShell";
 import { STAGES } from "@/lib/ooi-stages";
 import { deleteSession, loadSessions, type DecisionSession } from "@/lib/ooi-storage";
 
-export const Route = createFileRoute("/dashboard")({
+export const Route = createFileRoute("/_authenticated/dashboard")({
   head: () => ({ meta: [{ title: "Dashboard — Objective Solution Framework" }] }),
   component: Dashboard,
 });

@@ -1,11 +1,25 @@
-import { Link, useRouterState } from "@tanstack/react-router";
-import { Brain, Moon, Sun, Sparkles } from "lucide-react";
-import type { ReactNode } from "react";
+import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
+import { Brain, Moon, Sun, Sparkles, LogOut, LogIn } from "lucide-react";
+import { useEffect, useState, type ReactNode } from "react";
 import { useTheme } from "@/lib/theme";
+import { supabase } from "@/integrations/supabase/client";
+import type { User } from "@supabase/supabase-js";
 
 export function AppShell({ children }: { children: ReactNode }) {
   const { theme, toggle } = useTheme();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const navigate = useNavigate();
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data }) => setUser(data.user ?? null));
+    const { data: sub } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === "SIGNED_IN" || event === "SIGNED_OUT" || event === "USER_UPDATED" || event === "INITIAL_SESSION") {
+        setUser(session?.user ?? null);
+      }
+    });
+    return () => sub.subscription.unsubscribe();
+  }, []);
 
   const nav = [
     { to: "/", label: "Home" },
@@ -14,6 +28,11 @@ export function AppShell({ children }: { children: ReactNode }) {
     { to: "/examples", label: "Examples" },
     { to: "/history", label: "History" },
   ];
+
+  async function signOut() {
+    await supabase.auth.signOut();
+    navigate({ to: "/auth", replace: true });
+  }
 
   return (
     <div className="relative min-h-screen">
@@ -49,6 +68,24 @@ export function AppShell({ children }: { children: ReactNode }) {
             >
               {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
             </button>
+            {user ? (
+              <button
+                onClick={signOut}
+                className="hidden items-center gap-1.5 rounded-full border border-glass-border px-3.5 py-2 text-xs text-muted-foreground transition hover:text-foreground sm:flex"
+                title={user.email ?? "Signed in"}
+              >
+                <LogOut className="h-3.5 w-3.5" />
+                Sign out
+              </button>
+            ) : (
+              <Link
+                to="/auth"
+                className="hidden items-center gap-1.5 rounded-full border border-glass-border px-3.5 py-2 text-xs text-muted-foreground transition hover:text-foreground sm:flex"
+              >
+                <LogIn className="h-3.5 w-3.5" />
+                Sign in
+              </Link>
+            )}
             <Link
               to="/decision"
               className="hidden items-center gap-1.5 rounded-full bg-foreground px-4 py-2 text-xs font-medium text-background transition hover:opacity-90 sm:flex"
