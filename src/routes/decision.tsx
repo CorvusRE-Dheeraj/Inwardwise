@@ -178,7 +178,7 @@ function DecisionChat() {
       <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
         <div>
           <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground">
-            Facilitated by AI · 7-Stage Objective Solution Framework
+            Facilitated by AI · 7 Stage Decision Intelligence Philosophy
           </p>
           <h1 className="font-display mt-1 text-3xl md:text-4xl">Structured decision session</h1>
         </div>
