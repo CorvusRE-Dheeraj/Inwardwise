@@ -28,7 +28,7 @@ function History() {
 
         <div className="mt-8 flex flex-col items-center gap-6 sm:flex-row sm:items-end">
           <img
-            src={alexPortrait}
+            src={alexPortrait.url}
             alt="Alex Freeman, Ph.D."
             width={160}
             height={160}
