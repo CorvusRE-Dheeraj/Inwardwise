@@ -511,14 +511,14 @@ function EmptyIntro({ onPick }: { onPick: (t: string) => void }) {
   return (
     <div className="mx-auto max-w-xl py-8 text-center">
       <div className="glass mx-auto inline-flex items-center gap-2 rounded-full px-3 py-1 text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
-        Not a chatbot · A facilitator
+        Not a Chatbot · A Decision Intelligence Philosophy
       </div>
       <h2 className="font-display mt-4 text-2xl md:text-3xl">
-        Describe the situation you're facing.
+        Describe the situation you are facing
       </h2>
       <p className="mt-2 text-sm text-muted-foreground">
-        The facilitator will not answer directly. It will guide you through 7 stages — starting with facts,
-        never with recommendations.
+        Speak or type. The facilitator will not answer directly. It will guide you through 7 stages —
+        starting with facts, never with recommendations.
       </p>
       <div className="mt-6 grid gap-2 sm:grid-cols-2">
         {STARTERS.map((s) => (
@@ -531,6 +531,9 @@ function EmptyIntro({ onPick }: { onPick: (t: string) => void }) {
           </button>
         ))}
       </div>
+      <h3 className="font-display mt-10 text-2xl leading-tight text-accent md:text-3xl">
+        Your confidentiality is never compromised! That's our promise!
+      </h3>
     </div>
   );
 }
