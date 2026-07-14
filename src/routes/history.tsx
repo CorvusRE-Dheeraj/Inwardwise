@@ -38,7 +38,7 @@ function History() {
           <div>
             <div className="font-display text-2xl">Alex Freeman, Ph.D.</div>
             <p className="mt-1 text-sm text-muted-foreground">
-              Research scientist · Decision-intelligence philosopher
+              Research Scientist and Philosopher
             </p>
             <div className="mt-3 flex flex-wrap gap-2">
               <a
