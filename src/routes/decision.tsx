@@ -532,7 +532,9 @@ function EmptyIntro({ onPick }: { onPick: (t: string) => void }) {
         ))}
       </div>
       <h3 className="font-display mt-10 text-2xl leading-tight text-accent md:text-3xl">
-        Your confidentiality is never compromised! That's our promise!
+        Your confidentiality is never compromised!
+        <br />
+        That's our promise!
       </h3>
     </div>
   );
