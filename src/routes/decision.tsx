@@ -3,7 +3,17 @@ import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport, type UIMessage } from "ai";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { ArrowUp, Check, Loader2, RotateCcw, Square, Sparkles } from "lucide-react";
+import {
+  ArrowUp,
+  Check,
+  Loader2,
+  Mic,
+  Pause,
+  Play,
+  RotateCcw,
+  Square,
+  Sparkles,
+} from "lucide-react";
 import { z } from "zod";
 import { AppShell } from "@/components/AppShell";
 import { STAGES, parseStageTag, stripStageTag } from "@/lib/ooi-stages";
@@ -16,6 +26,7 @@ import {
   saveSession,
   type DecisionSession,
 } from "@/lib/ooi-storage";
+import { startRecording, synthesizeSpeech, transcribe, type Recorder } from "@/lib/voice";
 
 const searchSchema = z.object({ id: z.string().optional() });
 
@@ -103,6 +114,44 @@ function DecisionChat() {
 
   const isBusy = status === "streaming" || status === "submitted";
 
+  // Voice input.
+  const recorderRef = useRef<Recorder | null>(null);
+  const [isRecording, setIsRecording] = useState(false);
+  const [isTranscribing, setIsTranscribing] = useState(false);
+  const [voiceError, setVoiceError] = useState<string | null>(null);
+
+  const toggleRecording = async () => {
+    setVoiceError(null);
+    if (isRecording && recorderRef.current) {
+      const rec = recorderRef.current;
+      recorderRef.current = null;
+      setIsRecording(false);
+      setIsTranscribing(true);
+      try {
+        const blob = await rec.stop();
+        const text = await transcribe(blob);
+        if (text.trim()) {
+          // Auto-send the transcribed message so the exchange stays conversational.
+          sendMessage({ text: text.trim() });
+        }
+      } catch (err) {
+        setVoiceError(err instanceof Error ? err.message : "Voice input failed.");
+      } finally {
+        setIsTranscribing(false);
+      }
+      return;
+    }
+    try {
+      const rec = await startRecording();
+      recorderRef.current = rec;
+      setIsRecording(true);
+    } catch (err) {
+      setVoiceError(
+        err instanceof Error ? err.message : "Microphone access was denied.",
+      );
+    }
+  };
+
   const submit = (text?: string) => {
     const value = (text ?? input).trim();
     if (!value || isBusy) return;
@@ -111,6 +160,9 @@ function DecisionChat() {
   };
 
   const resetConversation = () => {
+    recorderRef.current?.cancel();
+    recorderRef.current = null;
+    setIsRecording(false);
     const fresh = newSession(category);
     setSession(fresh);
     setMessages([]);
@@ -126,7 +178,7 @@ function DecisionChat() {
       <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
         <div>
           <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground">
-            Facilitated by AI · 7-Stage Objective Solution Framework
+            Facilitated by AI · 7 Stage Decision Intelligence Philosophy
           </p>
           <h1 className="font-display mt-1 text-3xl md:text-4xl">Structured decision session</h1>
         </div>
@@ -190,13 +242,35 @@ function DecisionChat() {
                   }
                 }}
                 placeholder={
-                  messages.length === 0
-                    ? "Describe the situation you're facing…"
-                    : "Reply to the facilitator. Enter to send, Shift+Enter for new line."
+                  isRecording
+                    ? "Listening…"
+                    : isTranscribing
+                      ? "Transcribing…"
+                      : messages.length === 0
+                        ? "Describe the situation you are facing"
+                        : "Reply to the facilitator. Enter to send, Shift+Enter for new line."
                 }
                 rows={2}
-                className="min-h-10 max-h-48 flex-1 resize-none bg-transparent px-3 py-2 text-sm outline-none placeholder:text-muted-foreground"
+                className="min-h-10 max-h-48 flex-1 resize-none bg-transparent px-3 py-2 text-sm text-foreground caret-accent outline-none placeholder:text-accent/70"
               />
+              <button
+                type="button"
+                onClick={toggleRecording}
+                disabled={isBusy || isTranscribing}
+                aria-label={isRecording ? "Stop recording" : "Speak"}
+                title={isRecording ? "Stop recording" : "Speak"}
+                className={`grid h-10 w-10 place-items-center rounded-xl transition disabled:opacity-40 ${
+                  isRecording
+                    ? "bg-accent text-background animate-pulse"
+                    : "bg-foreground/10 text-foreground hover:bg-foreground/20"
+                }`}
+              >
+                {isTranscribing ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  <Mic className="h-4 w-4" />
+                )}
+              </button>
               {isBusy ? (
                 <button
                   type="button"
@@ -218,7 +292,11 @@ function DecisionChat() {
               )}
             </form>
             <div className="mt-2 flex items-center justify-between text-[10px] text-muted-foreground">
-              <span>Autosaved locally · The facilitator will not recommend until all 7 stages complete.</span>
+              <span>
+                {voiceError
+                  ? voiceError
+                  : "Autosaved locally · Speak or type. The facilitator will not recommend until all 7 stages complete."}
+              </span>
               {messages.length > 0 && (
                 <button
                   onClick={() => regenerate()}
@@ -292,6 +370,45 @@ function MessageBubble({ m }: { m: UIMessage }) {
   const text = !isUser ? stripStageTag(raw) : raw;
   const stage = stageN ? STAGES.find((s) => s.n === stageN) : null;
 
+  const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [ttsError, setTtsError] = useState<string | null>(null);
+
+  useEffect(() => {
+    return () => {
+      audio?.pause();
+      if (audio) URL.revokeObjectURL(audio.src);
+    };
+  }, [audio]);
+
+  const togglePlayback = async () => {
+    setTtsError(null);
+    if (audio && isPlaying) {
+      audio.pause();
+      return;
+    }
+    if (audio) {
+      audio.play().catch(() => setTtsError("Playback failed."));
+      return;
+    }
+    setIsLoading(true);
+    try {
+      const blob = await synthesizeSpeech(text);
+      const url = URL.createObjectURL(blob);
+      const el = new Audio(url);
+      el.onplay = () => setIsPlaying(true);
+      el.onpause = () => setIsPlaying(false);
+      el.onended = () => setIsPlaying(false);
+      setAudio(el);
+      await el.play();
+    } catch (err) {
+      setTtsError(err instanceof Error ? err.message : "Playback failed.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 6 }}
@@ -314,6 +431,27 @@ function MessageBubble({ m }: { m: UIMessage }) {
           }`}
         >
           <FormattedText text={text} />
+          {!isUser && text.trim().length > 0 && (
+            <div className="mt-3 flex items-center gap-2 border-t border-glass-border pt-2 text-[10px] text-muted-foreground">
+              <button
+                type="button"
+                onClick={togglePlayback}
+                disabled={isLoading}
+                className="inline-flex items-center gap-1.5 rounded-full border border-glass-border px-2.5 py-1 transition hover:bg-foreground/5 disabled:opacity-40"
+                aria-label={isPlaying ? "Pause playback" : "Play aloud"}
+              >
+                {isLoading ? (
+                  <Loader2 className="h-3 w-3 animate-spin" />
+                ) : isPlaying ? (
+                  <Pause className="h-3 w-3" />
+                ) : (
+                  <Play className="h-3 w-3" />
+                )}
+                {isPlaying ? "Pause" : "Play aloud"}
+              </button>
+              {ttsError && <span className="text-destructive/80">{ttsError}</span>}
+            </div>
+          )}
         </div>
       </div>
     </motion.div>
@@ -373,14 +511,14 @@ function EmptyIntro({ onPick }: { onPick: (t: string) => void }) {
   return (
     <div className="mx-auto max-w-xl py-8 text-center">
       <div className="glass mx-auto inline-flex items-center gap-2 rounded-full px-3 py-1 text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
-        Not a chatbot · A facilitator
+        Not a Chatbot · A Decision Intelligence Philosophy
       </div>
       <h2 className="font-display mt-4 text-2xl md:text-3xl">
-        Describe the situation you're facing.
+        Describe the situation you are facing
       </h2>
       <p className="mt-2 text-sm text-muted-foreground">
-        The facilitator will not answer directly. It will guide you through 7 stages — starting with facts,
-        never with recommendations.
+        Speak or type. The facilitator will not answer directly. It will guide you through 7 stages —
+        starting with facts, never with recommendations.
       </p>
       <div className="mt-6 grid gap-2 sm:grid-cols-2">
         {STARTERS.map((s) => (
@@ -393,6 +531,9 @@ function EmptyIntro({ onPick }: { onPick: (t: string) => void }) {
           </button>
         ))}
       </div>
+      <h3 className="font-display mt-10 text-2xl leading-tight text-accent md:text-3xl">
+        Your confidentiality is never compromised! That's our promise!
+      </h3>
     </div>
   );
 }

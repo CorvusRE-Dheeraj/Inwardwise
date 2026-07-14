@@ -12,6 +12,7 @@ export function AppShell({ children }: { children: ReactNode }) {
     { to: "/decision", label: "New Decision" },
     { to: "/dashboard", label: "Dashboard" },
     { to: "/examples", label: "Examples" },
+    { to: "/history", label: "History" },
   ];
 
   return (
