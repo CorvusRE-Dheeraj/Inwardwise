@@ -370,6 +370,45 @@ function MessageBubble({ m }: { m: UIMessage }) {
   const text = !isUser ? stripStageTag(raw) : raw;
   const stage = stageN ? STAGES.find((s) => s.n === stageN) : null;
 
+  const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [ttsError, setTtsError] = useState<string | null>(null);
+
+  useEffect(() => {
+    return () => {
+      audio?.pause();
+      if (audio) URL.revokeObjectURL(audio.src);
+    };
+  }, [audio]);
+
+  const togglePlayback = async () => {
+    setTtsError(null);
+    if (audio && isPlaying) {
+      audio.pause();
+      return;
+    }
+    if (audio) {
+      audio.play().catch(() => setTtsError("Playback failed."));
+      return;
+    }
+    setIsLoading(true);
+    try {
+      const blob = await synthesizeSpeech(text);
+      const url = URL.createObjectURL(blob);
+      const el = new Audio(url);
+      el.onplay = () => setIsPlaying(true);
+      el.onpause = () => setIsPlaying(false);
+      el.onended = () => setIsPlaying(false);
+      setAudio(el);
+      await el.play();
+    } catch (err) {
+      setTtsError(err instanceof Error ? err.message : "Playback failed.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 6 }}
@@ -392,6 +431,27 @@ function MessageBubble({ m }: { m: UIMessage }) {
           }`}
         >
           <FormattedText text={text} />
+          {!isUser && text.trim().length > 0 && (
+            <div className="mt-3 flex items-center gap-2 border-t border-glass-border pt-2 text-[10px] text-muted-foreground">
+              <button
+                type="button"
+                onClick={togglePlayback}
+                disabled={isLoading}
+                className="inline-flex items-center gap-1.5 rounded-full border border-glass-border px-2.5 py-1 transition hover:bg-foreground/5 disabled:opacity-40"
+                aria-label={isPlaying ? "Pause playback" : "Play aloud"}
+              >
+                {isLoading ? (
+                  <Loader2 className="h-3 w-3 animate-spin" />
+                ) : isPlaying ? (
+                  <Pause className="h-3 w-3" />
+                ) : (
+                  <Play className="h-3 w-3" />
+                )}
+                {isPlaying ? "Pause" : "Play aloud"}
+              </button>
+              {ttsError && <span className="text-destructive/80">{ttsError}</span>}
+            </div>
+          )}
         </div>
       </div>
     </motion.div>
