@@ -3,6 +3,28 @@ import { convertToModelMessages, streamText, type UIMessage } from "ai";
 import { createLovableAiGatewayProvider } from "@/lib/ai-gateway.server";
 import { OOOI_SYSTEM_PROMPT } from "@/lib/ooi-system-prompt";
 
+async function logDecisionRequest(request: Request, messageCount: number) {
+  try {
+    const auth = request.headers.get("authorization");
+    if (!auth?.startsWith("Bearer ")) return;
+    const token = auth.slice(7);
+    if (token.split(".").length !== 3) return;
+
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { data: userData } = await supabaseAdmin.auth.getUser(token);
+    const userId = userData.user?.id;
+    if (!userId) return;
+
+    await supabaseAdmin.from("activity_events").insert({
+      user_id: userId,
+      event_type: "decision_request",
+      metadata: { messageCount },
+    });
+  } catch (err) {
+    console.error("[chat] failed to log activity", err);
+  }
+}
+
 export const Route = createFileRoute("/api/chat")({
   server: {
     handlers: {
@@ -17,6 +39,9 @@ export const Route = createFileRoute("/api/chat")({
 
         const { messages } = (await request.json()) as { messages: UIMessage[] };
         const gateway = createLovableAiGatewayProvider(key);
+
+        // Fire-and-forget activity log
+        void logDecisionRequest(request, messages?.length ?? 0);
 
         const result = streamText({
           model: gateway("google/gemini-3-flash-preview"),
