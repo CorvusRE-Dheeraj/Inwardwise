@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, ExternalLink, Linkedin } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
-import alexPortrait from "@/assets/alex-freeman.jpg";
+import alexPortrait from "@/assets/alex-freeman.jpg.asset.json";
 
 export const Route = createFileRoute("/history")({
   head: () => ({
@@ -28,7 +28,7 @@ function History() {
 
         <div className="mt-8 flex flex-col items-center gap-6 sm:flex-row sm:items-end">
           <img
-            src={alexPortrait}
+            src={alexPortrait.url}
             alt="Alex Freeman, Ph.D."
             width={160}
             height={160}
@@ -38,7 +38,7 @@ function History() {
           <div>
             <div className="font-display text-2xl">Alex Freeman, Ph.D.</div>
             <p className="mt-1 text-sm text-muted-foreground">
-              Research scientist · Decision-intelligence philosopher
+              Research Scientist and Philosopher
             </p>
             <div className="mt-3 flex flex-wrap gap-2">
               <a
