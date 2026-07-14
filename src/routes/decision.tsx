@@ -114,6 +114,44 @@ function DecisionChat() {
 
   const isBusy = status === "streaming" || status === "submitted";
 
+  // Voice input.
+  const recorderRef = useRef<Recorder | null>(null);
+  const [isRecording, setIsRecording] = useState(false);
+  const [isTranscribing, setIsTranscribing] = useState(false);
+  const [voiceError, setVoiceError] = useState<string | null>(null);
+
+  const toggleRecording = async () => {
+    setVoiceError(null);
+    if (isRecording && recorderRef.current) {
+      const rec = recorderRef.current;
+      recorderRef.current = null;
+      setIsRecording(false);
+      setIsTranscribing(true);
+      try {
+        const blob = await rec.stop();
+        const text = await transcribe(blob);
+        if (text.trim()) {
+          // Auto-send the transcribed message so the exchange stays conversational.
+          sendMessage({ text: text.trim() });
+        }
+      } catch (err) {
+        setVoiceError(err instanceof Error ? err.message : "Voice input failed.");
+      } finally {
+        setIsTranscribing(false);
+      }
+      return;
+    }
+    try {
+      const rec = await startRecording();
+      recorderRef.current = rec;
+      setIsRecording(true);
+    } catch (err) {
+      setVoiceError(
+        err instanceof Error ? err.message : "Microphone access was denied.",
+      );
+    }
+  };
+
   const submit = (text?: string) => {
     const value = (text ?? input).trim();
     if (!value || isBusy) return;
@@ -122,6 +160,9 @@ function DecisionChat() {
   };
 
   const resetConversation = () => {
+    recorderRef.current?.cancel();
+    recorderRef.current = null;
+    setIsRecording(false);
     const fresh = newSession(category);
     setSession(fresh);
     setMessages([]);
