@@ -28,12 +28,12 @@ function Landing() {
         >
           <div className="glass mx-auto inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs text-muted-foreground">
             <span className="h-1.5 w-1.5 rounded-full bg-accent" />
-            Not a chatbot. A decision engine.
+            Not a Chatbot · A Decision Intelligence Philosophy
           </div>
           <h1 className="font-display mt-6 text-5xl leading-[1.02] sm:text-6xl md:text-7xl">
-            <span className="text-gradient">Think Better.</span>
+            <span className="text-gradient">Life is About</span>
             <br />
-            <em className="italic text-muted-foreground">Decide Confidently</em>
+            <em className="italic text-muted-foreground">Only Few Decisions</em>
           </h1>
           <p className="mx-auto mt-6 max-w-xl text-balance text-base text-muted-foreground md:text-lg">
             Remove Bias, Fear, and Ego out of Your Decisions
