@@ -11,12 +11,12 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as HistoryRouteImport } from './routes/history'
 import { Route as ExamplesRouteImport } from './routes/examples'
-import { Route as DecisionRouteImport } from './routes/decision'
-import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiTtsRouteImport } from './routes/api/tts'
 import { Route as ApiTranscribeRouteImport } from './routes/api/transcribe'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
+import { Route as AuthenticatedDecisionRouteImport } from './routes/_authenticated/decision'
+import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 
 const HistoryRoute = HistoryRouteImport.update({
   id: '/history',
@@ -26,16 +26,6 @@ const HistoryRoute = HistoryRouteImport.update({
 const ExamplesRoute = ExamplesRouteImport.update({
   id: '/examples',
   path: '/examples',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DecisionRoute = DecisionRouteImport.update({
-  id: '/decision',
-  path: '/decision',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DashboardRoute = DashboardRouteImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -58,23 +48,33 @@ const ApiChatRoute = ApiChatRouteImport.update({
   path: '/api/chat',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedDecisionRoute = AuthenticatedDecisionRouteImport.update({
+  id: '/_authenticated/decision',
+  path: '/decision',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
+  id: '/_authenticated/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/dashboard': typeof DashboardRoute
-  '/decision': typeof DecisionRoute
   '/examples': typeof ExamplesRoute
   '/history': typeof HistoryRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/decision': typeof AuthenticatedDecisionRoute
   '/api/chat': typeof ApiChatRoute
   '/api/transcribe': typeof ApiTranscribeRoute
   '/api/tts': typeof ApiTtsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/dashboard': typeof DashboardRoute
-  '/decision': typeof DecisionRoute
   '/examples': typeof ExamplesRoute
   '/history': typeof HistoryRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/decision': typeof AuthenticatedDecisionRoute
   '/api/chat': typeof ApiChatRoute
   '/api/transcribe': typeof ApiTranscribeRoute
   '/api/tts': typeof ApiTtsRoute
@@ -82,10 +82,10 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/dashboard': typeof DashboardRoute
-  '/decision': typeof DecisionRoute
   '/examples': typeof ExamplesRoute
   '/history': typeof HistoryRoute
+  '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/decision': typeof AuthenticatedDecisionRoute
   '/api/chat': typeof ApiChatRoute
   '/api/transcribe': typeof ApiTranscribeRoute
   '/api/tts': typeof ApiTtsRoute
@@ -94,30 +94,30 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/dashboard'
-    | '/decision'
     | '/examples'
     | '/history'
+    | '/dashboard'
+    | '/decision'
     | '/api/chat'
     | '/api/transcribe'
     | '/api/tts'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/dashboard'
-    | '/decision'
     | '/examples'
     | '/history'
+    | '/dashboard'
+    | '/decision'
     | '/api/chat'
     | '/api/transcribe'
     | '/api/tts'
   id:
     | '__root__'
     | '/'
-    | '/dashboard'
-    | '/decision'
     | '/examples'
     | '/history'
+    | '/_authenticated/dashboard'
+    | '/_authenticated/decision'
     | '/api/chat'
     | '/api/transcribe'
     | '/api/tts'
@@ -125,10 +125,10 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  DashboardRoute: typeof DashboardRoute
-  DecisionRoute: typeof DecisionRoute
   ExamplesRoute: typeof ExamplesRoute
   HistoryRoute: typeof HistoryRoute
+  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedDecisionRoute: typeof AuthenticatedDecisionRoute
   ApiChatRoute: typeof ApiChatRoute
   ApiTranscribeRoute: typeof ApiTranscribeRoute
   ApiTtsRoute: typeof ApiTtsRoute
@@ -148,20 +148,6 @@ declare module '@tanstack/react-router' {
       path: '/examples'
       fullPath: '/examples'
       preLoaderRoute: typeof ExamplesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/decision': {
-      id: '/decision'
-      path: '/decision'
-      fullPath: '/decision'
-      preLoaderRoute: typeof DecisionRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/dashboard': {
-      id: '/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof DashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -192,15 +178,29 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiChatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/decision': {
+      id: '/_authenticated/decision'
+      path: '/decision'
+      fullPath: '/decision'
+      preLoaderRoute: typeof AuthenticatedDecisionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/dashboard': {
+      id: '/_authenticated/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  DashboardRoute: DashboardRoute,
-  DecisionRoute: DecisionRoute,
   ExamplesRoute: ExamplesRoute,
   HistoryRoute: HistoryRoute,
+  AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedDecisionRoute: AuthenticatedDecisionRoute,
   ApiChatRoute: ApiChatRoute,
   ApiTranscribeRoute: ApiTranscribeRoute,
   ApiTtsRoute: ApiTtsRoute,

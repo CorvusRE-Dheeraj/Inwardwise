@@ -30,7 +30,7 @@ import { startRecording, synthesizeSpeech, transcribe, type Recorder } from "@/l
 
 const searchSchema = z.object({ id: z.string().optional() });
 
-export const Route = createFileRoute("/decision")({
+export const Route = createFileRoute("/_authenticated/decision")({
   head: () => ({
     meta: [
       { title: "New Decision — Objective Solution Framework" },
