@@ -9,7 +9,9 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TestimonialsRouteImport } from './routes/testimonials'
 import { Route as HistoryRouteImport } from './routes/history'
+import { Route as FeedbackRouteImport } from './routes/feedback'
 import { Route as ExamplesRouteImport } from './routes/examples'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
@@ -21,9 +23,19 @@ import { Route as AuthenticatedDecisionRouteImport } from './routes/_authenticat
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 
+const TestimonialsRoute = TestimonialsRouteImport.update({
+  id: '/testimonials',
+  path: '/testimonials',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const HistoryRoute = HistoryRouteImport.update({
   id: '/history',
   path: '/history',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FeedbackRoute = FeedbackRouteImport.update({
+  id: '/feedback',
+  path: '/feedback',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ExamplesRoute = ExamplesRouteImport.update({
@@ -80,7 +92,9 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/examples': typeof ExamplesRoute
+  '/feedback': typeof FeedbackRoute
   '/history': typeof HistoryRoute
+  '/testimonials': typeof TestimonialsRoute
   '/admin': typeof AuthenticatedAdminRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/decision': typeof AuthenticatedDecisionRoute
@@ -92,7 +106,9 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/examples': typeof ExamplesRoute
+  '/feedback': typeof FeedbackRoute
   '/history': typeof HistoryRoute
+  '/testimonials': typeof TestimonialsRoute
   '/admin': typeof AuthenticatedAdminRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/decision': typeof AuthenticatedDecisionRoute
@@ -106,7 +122,9 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/examples': typeof ExamplesRoute
+  '/feedback': typeof FeedbackRoute
   '/history': typeof HistoryRoute
+  '/testimonials': typeof TestimonialsRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/decision': typeof AuthenticatedDecisionRoute
@@ -120,7 +138,9 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/examples'
+    | '/feedback'
     | '/history'
+    | '/testimonials'
     | '/admin'
     | '/dashboard'
     | '/decision'
@@ -132,7 +152,9 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/examples'
+    | '/feedback'
     | '/history'
+    | '/testimonials'
     | '/admin'
     | '/dashboard'
     | '/decision'
@@ -145,7 +167,9 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/auth'
     | '/examples'
+    | '/feedback'
     | '/history'
+    | '/testimonials'
     | '/_authenticated/admin'
     | '/_authenticated/dashboard'
     | '/_authenticated/decision'
@@ -159,7 +183,9 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
   ExamplesRoute: typeof ExamplesRoute
+  FeedbackRoute: typeof FeedbackRoute
   HistoryRoute: typeof HistoryRoute
+  TestimonialsRoute: typeof TestimonialsRoute
   ApiChatRoute: typeof ApiChatRoute
   ApiTranscribeRoute: typeof ApiTranscribeRoute
   ApiTtsRoute: typeof ApiTtsRoute
@@ -167,11 +193,25 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/testimonials': {
+      id: '/testimonials'
+      path: '/testimonials'
+      fullPath: '/testimonials'
+      preLoaderRoute: typeof TestimonialsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/history': {
       id: '/history'
       path: '/history'
       fullPath: '/history'
       preLoaderRoute: typeof HistoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/feedback': {
+      id: '/feedback'
+      path: '/feedback'
+      fullPath: '/feedback'
+      preLoaderRoute: typeof FeedbackRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/examples': {
@@ -267,7 +307,9 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
   ExamplesRoute: ExamplesRoute,
+  FeedbackRoute: FeedbackRoute,
   HistoryRoute: HistoryRoute,
+  TestimonialsRoute: TestimonialsRoute,
   ApiChatRoute: ApiChatRoute,
   ApiTranscribeRoute: ApiTranscribeRoute,
   ApiTtsRoute: ApiTtsRoute,
@@ -275,3 +317,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
