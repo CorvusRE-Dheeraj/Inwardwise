@@ -4,9 +4,26 @@ import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 export const claimAdminIfNone = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
-    const { data, error } = await context.supabase.rpc("claim_admin_if_none");
-    if (error) throw new Error(error.message);
-    return { isAdmin: data === true };
+    // Check via user context first (RLS: user can see own roles)
+    const { data: alreadyAdmin } = await context.supabase.rpc("has_role", {
+      _user_id: context.userId,
+      _role: "admin",
+    });
+    if (alreadyAdmin === true) return { isAdmin: true };
+
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { count, error: countErr } = await supabaseAdmin
+      .from("user_roles")
+      .select("*", { count: "exact", head: true })
+      .eq("role", "admin");
+    if (countErr) throw new Error(countErr.message);
+    if ((count ?? 0) > 0) return { isAdmin: false };
+
+    const { error: insErr } = await supabaseAdmin
+      .from("user_roles")
+      .insert({ user_id: context.userId, role: "admin" });
+    if (insErr) throw new Error(insErr.message);
+    return { isAdmin: true };
   });
 
 export const isCurrentUserAdmin = createServerFn({ method: "GET" })
