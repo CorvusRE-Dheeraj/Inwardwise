@@ -7,9 +7,9 @@ import { STAGES } from "@/lib/ooi-stages";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Decide Confidently — Objective Solution Framework" },
+      { title: "Decision Philosophy" },
       { name: "description", content: "Remove Bias, Fear, and Ego out of Your Decisions." },
-      { property: "og:title", content: "Decide Confidently — Objective Solution Framework" },
+      { property: "og:title", content: "Decision Philosophy" },
       { property: "og:description", content: "Remove Bias, Fear, and Ego out of Your Decisions." },
     ],
   }),
