@@ -81,7 +81,7 @@ function Landing() {
       <section className="mt-20">
         <div className="mb-8 flex items-end justify-between">
           <div>
-            <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground">Objective Solution Framework</p>
+            <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground">Decision Philosophy</p>
             <h2 className="font-display mt-2 text-3xl md:text-4xl">Seven steps from situation to solution</h2>
           </div>
           <Link to="/decision" className="hidden text-sm text-muted-foreground hover:text-foreground md:inline">
