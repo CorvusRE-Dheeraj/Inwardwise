@@ -60,7 +60,7 @@ export function AppShell({ children }: { children: ReactNode }) {
             <span className="grid h-8 w-8 place-items-center rounded-full bg-foreground text-background">
               <Brain className="h-4 w-4" />
             </span>
-            <span className="font-display text-base leading-none md:text-lg">Objective Solution Framework</span>
+            <span className="font-display text-base leading-none md:text-lg">Decision Philosophy</span>
           </Link>
           <nav className="hidden items-center gap-1 md:flex">
             {nav.map((n) => {
