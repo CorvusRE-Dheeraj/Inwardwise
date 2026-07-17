@@ -1,0 +1,1 @@
+CREATE POLICY "Users can view their own activity" ON public.activity_events FOR SELECT TO authenticated USING (auth.uid() = user_id);
