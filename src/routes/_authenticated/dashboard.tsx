@@ -31,12 +31,12 @@ function Dashboard() {
 
   return (
     <AppShell>
-      <div className="flex items-end justify-between">
-        <div>
+      <div className="flex flex-wrap items-end justify-between gap-3">
+        <div className="min-w-0">
           <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground">Dashboard</p>
-          <h1 className="font-display mt-2 text-4xl">Your decisions</h1>
+          <h1 className="font-display mt-2 text-3xl sm:text-4xl">Your decisions</h1>
         </div>
-        <Link to="/decision" className="inline-flex items-center gap-2 rounded-full bg-foreground px-4 py-2 text-sm text-background">
+        <Link to="/decision" className="inline-flex shrink-0 items-center gap-2 rounded-full bg-foreground px-4 py-2 text-sm text-background">
           <Plus className="h-4 w-4" /> New decision
         </Link>
       </div>
