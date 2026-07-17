@@ -38,6 +38,36 @@ export type Database = {
         }
         Relationships: []
       }
+      feedback: {
+        Row: {
+          author_name: string | null
+          created_at: string
+          id: string
+          improved: string | null
+          paid: string | null
+          recommend: string | null
+          suggestions: string | null
+        }
+        Insert: {
+          author_name?: string | null
+          created_at?: string
+          id?: string
+          improved?: string | null
+          paid?: string | null
+          recommend?: string | null
+          suggestions?: string | null
+        }
+        Update: {
+          author_name?: string | null
+          created_at?: string
+          id?: string
+          improved?: string | null
+          paid?: string | null
+          recommend?: string | null
+          suggestions?: string | null
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string
