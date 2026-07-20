@@ -58,7 +58,7 @@ function Testimonials() {
     let cancelled = false;
     supabase
       .from("feedback")
-      .select("id, author_name, improved, paid, recommend, suggestions, created_at")
+      .select("id, improved, paid, recommend, suggestions, created_at")
       .order("created_at", { ascending: false })
       .limit(100)
       .then(({ data }) => {
