@@ -258,7 +258,7 @@ function DecisionChat() {
   };
 
 
-  const canDownload = currentStage >= 7;
+  const canDownload = currentStage >= 8;
 
   return (
     <AppShell>
