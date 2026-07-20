@@ -22,7 +22,6 @@ export const Route = createFileRoute("/testimonials")({
 
 type FeedbackRow = {
   id: string;
-  author_name: string | null;
   improved: string | null;
   paid: string | null;
   recommend: string | null;
