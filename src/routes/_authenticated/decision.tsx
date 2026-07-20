@@ -273,6 +273,27 @@ function DecisionChat() {
                 <Loader2 className="h-3.5 w-3.5 animate-spin" /> Facilitator is thinking…
               </div>
             )}
+            {canDownload && messages.length > 0 && (
+              <motion.div
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="glass-strong mt-4 rounded-2xl border border-accent/40 p-5 text-center"
+              >
+                <div className="mb-1 text-[10px] uppercase tracking-[0.18em] text-accent">
+                  All 7 stages complete
+                </div>
+                <h3 className="font-display text-xl">Your decision session is ready</h3>
+                <p className="mx-auto mt-1 max-w-md text-xs text-muted-foreground">
+                  Download the full transcript — every stage's questions, your answers, and the facilitator's recommendation.
+                </p>
+                <button
+                  onClick={downloadSession}
+                  className="mt-4 inline-flex items-center gap-2 rounded-full bg-accent px-5 py-2.5 text-sm font-medium text-background transition hover:opacity-90"
+                >
+                  <Download className="h-4 w-4" /> Download whole session (.md)
+                </button>
+              </motion.div>
+            )}
           </div>
 
           <div className="border-t border-glass-border p-3 md:p-4">
