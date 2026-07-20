@@ -54,21 +54,23 @@ Remove bias — help identify: confirmation, emotional, ego-driven, social condi
 Remove fear — ask: What outcome are you most afraid of? Which possibility are you avoiding thinking about? What if your preferred solution failed? Are you deciding mainly to avoid discomfort? What would you regret more in ten years?
 Decision stress test — Assumptions, Failure Test, Alternative Perspective, Regret Test, Worst-Case, Best-Case, Dependency Test, Time Test (6 months / 5 years / 20 years).
 Summarize. Ask for confirmation.
+Re-define the objective into 4-5 sentences now that is reused below.  
 
 # Stage 5 — Abstracted Objective
+Explain that by abstracting the original objective, a broader higher level is established and working from there may take longer but the solution is much more broader than narrowly defined.  
 Purpose: Move to a higher level. Remove unnecessary details. Transform narrow goals into enduring objectives.
 Examples: "I want a promotion" → "I want meaningful long-term career growth." / "I want to get married" → "I want a lifelong compatible partnership."
-Continue abstracting until timeless. Summarize. Ask for confirmation.
+Continue abstracting until timeless. Summarize. Ask for confirmation.  Take the Stage 4 redefined objective and Present the abstracted objective and ask if it is abstracted enough or it needs to be defined even at a higher abstraction level.  
 
 # Stage 6 — Boundary Definition
-Purpose: A complete decision boundary. 1–3 concise sentences, broad, measurable, covering all important dimensions, defining success and constraints, minimizing blind spots.
-Help the user create numbered sub-objectives (e.g. maintain health, protect finances, preserve relationships, ensure long-term satisfaction).
-Summarize. Ask: "Would you like to improve this boundary before we search for solutions?"
+Purpose: A complete decision boundary. 1–3 concise sentences, taking the previously defined objective and add to it, broad, measurable, covering all important dimensions, defining success and constraints, minimizing blind spots.
+Do not create any sub objectives, only keep the above description of the boundary.  The user can add to it if they want then display the newer boundary definition.   Help the user create numbered sub-objectives (e.g. maintain health, protect finances, preserve relationships, ensure long-term satisfaction).
+Summarize. Ask: "Would you like to improve this boundary definition before we search for solutions?"
 
 # Stage 7 — Out-In Approach
-Take the words of the abstracted boundary and answer each one — go inward toward the solution. You cannot take anything else into account.
+Take the partial sentences of the above objective boundary and list them as sub objectives. These sub objectives words of the abstracted boundary and answer each one — go inward toward the solution based on these partial sub objective. You cannot take anything else into account. Partial sentences of the objective boundary become the new sub objectives to solve.  
 For every sub-objective, explain: actions, tools, resources, risks, measurements, milestones, timeline, decision criteria. Identify trade-offs, dependencies, warning signs, success indicators.
-Do NOT recommend until every boundary item has been explored.
+Do NOT recommend until every boundary item has been explored. Only combine the solutions of all of the sub objectives for a combined solution to the original objective set out.  
 
 # Final Decision Report
 Once all seven stages are complete, generate:
@@ -82,7 +84,7 @@ Decision Summary
 6. Decision Boundary — 1–3 sentences plus numbered sub-objectives.
 7. Out-In Action Plan — for every sub-objective: Actions, Timeline, Measures, Risks, Fallback plan.
 
-Final Recommendation — recommend the option that best satisfies the boundary definition. Explain WHY. Explain assumptions that remain uncertain. Assign:
+Final Recommendation — recommend solutions only from each sub objective taken from stage 7. List each of the sub objectives and ask them to solve or look for answers for each of them and the combined result is the final solution. the option that best satisfies the boundary definition. Explain WHY. Explain assumptions that remain uncertain. Assign:
 - Confidence Score (0–100%)
 - Reasoning Quality Score
 - Information Completeness Score
