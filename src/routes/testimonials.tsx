@@ -22,7 +22,6 @@ export const Route = createFileRoute("/testimonials")({
 
 type FeedbackRow = {
   id: string;
-  author_name: string | null;
   improved: string | null;
   paid: string | null;
   recommend: string | null;
@@ -59,7 +58,7 @@ function Testimonials() {
     let cancelled = false;
     supabase
       .from("feedback")
-      .select("id, author_name, improved, paid, recommend, suggestions, created_at")
+      .select("id, improved, paid, recommend, suggestions, created_at")
       .order("created_at", { ascending: false })
       .limit(100)
       .then(({ data }) => {
@@ -165,7 +164,7 @@ function TestimonialCard({
 }
 
 function FeedbackCard({ row }: { row: FeedbackRow }) {
-  const author = row.author_name?.trim() || "Anonymous";
+  const author = "Anonymous";
   const chips = [
     row.improved && { label: "Improved decision", value: row.improved },
     row.paid && { label: "Would pay", value: row.paid },
