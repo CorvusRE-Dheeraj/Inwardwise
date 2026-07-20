@@ -258,7 +258,7 @@ function DecisionChat() {
   };
 
 
-  const canDownload = currentStage >= 7;
+  const canDownload = currentStage >= 8;
 
   return (
     <AppShell>
@@ -285,7 +285,7 @@ function DecisionChat() {
             <button
               onClick={downloadSession}
               className="glass inline-flex items-center gap-1.5 rounded-full border border-accent/40 px-3 py-1.5 text-xs text-accent hover:bg-accent/10"
-              title="Download full session (all 7 stages)"
+              title="Download full session (all 8 stages)"
             >
               <Download className="h-3.5 w-3.5" /> Download session
             </button>
@@ -325,7 +325,7 @@ function DecisionChat() {
                 className="glass-strong mt-4 rounded-2xl border border-accent/40 p-5 text-center"
               >
                 <div className="mb-1 text-[10px] uppercase tracking-[0.18em] text-accent">
-                  All 7 stages complete
+                  All 8 stages complete
                 </div>
                 <h3 className="font-display text-xl">Your decision session is ready</h3>
                 <p className="mx-auto mt-1 max-w-md text-xs text-muted-foreground">
@@ -412,7 +412,7 @@ function DecisionChat() {
               <span>
                 {voiceError
                   ? voiceError
-                  : "Autosaved locally · Speak or type. The facilitator will not recommend until all 7 stages complete."}
+                  : "Autosaved locally · Speak or type. The facilitator will not recommend until all 8 stages complete."}
               </span>
               {messages.length > 0 && (
                 <button
@@ -474,7 +474,7 @@ function StageRail({ current }: { current: number }) {
         })}
       </ol>
       <p className="mt-4 rounded-xl border border-glass-border bg-foreground/[0.02] p-3 text-[10px] leading-relaxed text-muted-foreground">
-        The facilitator asks 2–5 questions per stage and waits for your confirmation before advancing. Recommendations only come after Stage 7.
+        The facilitator asks 2–5 questions per stage and waits for your confirmation before advancing. Recommendations only come after Stage 8.
       </p>
     </aside>
   );
@@ -634,7 +634,7 @@ function EmptyIntro({ onPick }: { onPick: (t: string) => void }) {
         Describe the situation you are facing
       </h2>
       <p className="mt-2 text-sm text-muted-foreground">
-        Speak or type. The facilitator will not answer directly. It will guide you through 7 stages —
+        Speak or type. The facilitator will not answer directly. It will guide you through 8 stages —
         starting with facts, never with recommendations.
       </p>
       <div className="mt-6 grid gap-2 sm:grid-cols-2">

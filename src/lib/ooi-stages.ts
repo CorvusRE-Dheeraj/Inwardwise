@@ -16,7 +16,8 @@ export const STAGES: Stage[] = [
   { n: 4, id: "refined",    name: "Refined Objective",   short: "Remove bias & fear",                            purpose: "Name biases and fears. Stress-test the objective." },
   { n: 5, id: "abstracted", name: "Abstracted Objective", short: "Self-reflection",                               purpose: "Abstract the objective until it becomes timeless." },
   { n: 6, id: "boundary",   name: "Boundary",            short: "Cast a wider net to capture the right solution", purpose: "Define a 1–3 sentence boundary with numbered sub-objectives." },
-  { n: 7, id: "outin",      name: "Out-In",              short: "Move inwards to get to the solution",           purpose: "Take each part of the boundary and answer it. Then recommend." },
+  { n: 7, id: "outin",      name: "Out-In",              short: "Move inwards to get to the solution",           purpose: "Take each part of the boundary and answer it." },
+  { n: 8, id: "solutions",  name: "Solution Synthesis",  short: "Concrete solutions per sub-objective",          purpose: "For each boundary sentence, propose concrete solutions, then combine into the final recommendation." },
 ];
 
 const STAGE_REGEX = /\[STAGE:\s*(\d)\s*[—\-–:]\s*([^\]]+)\]/i;
@@ -25,7 +26,7 @@ export function parseStageTag(text: string): number | null {
   const m = text.match(STAGE_REGEX);
   if (!m) return null;
   const n = parseInt(m[1], 10);
-  return n >= 1 && n <= 7 ? n : null;
+  return n >= 1 && n <= 8 ? n : null;
 }
 
 export function stripStageTag(text: string): string {
