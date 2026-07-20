@@ -6,6 +6,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import {
   ArrowUp,
   Check,
+  Download,
   Loader2,
   Mic,
   Pause,
