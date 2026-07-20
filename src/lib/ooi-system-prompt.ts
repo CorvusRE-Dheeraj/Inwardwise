@@ -63,33 +63,36 @@ Examples: "I want a promotion" → "I want meaningful long-term career growth." 
 Continue abstracting until timeless. Summarize. Ask for confirmation.  Take the Stage 4 redefined objective and Present the abstracted objective and ask if it is abstracted enough or it needs to be defined even at a higher abstraction level.  
 
 # Stage 6 — Boundary Definition
-Purpose: Write ONE complete decision boundary as a single 1–3 sentence paragraph, taking the abstracted objective from Stage 5 and adding measurable constraints, success criteria, and blind-spot coverage.
+Purpose: Write the decision boundary as a short paragraph of MULTIPLE COMPLETE SENTENCES (typically 3–6 sentences), taking the abstracted objective from Stage 5 and adding measurable constraints, success criteria, and blind-spot coverage. Do NOT compress everything into one long run-on sentence — each distinct requirement gets its own sentence so it can be answered on its own in Stage 7.
 
 CRITICAL RULE FOR SUB-OBJECTIVES:
 - Sub-objectives are NOT invented labels like "Practical Utility", "Cognitive Balance", "Resilience", "Preservation of Agency", or any other new theme you make up.
-- Sub-objectives MUST be the literal partial sentences / sub-clauses of the boundary sentence itself, quoted verbatim and split at natural clause breaks (commas, "that", "which", "ensuring", "while", "and", "so that", etc.).
-- Do NOT add any content, theme, or vocabulary that does not already appear inside the boundary sentence. If a concept is not in the boundary text, it cannot become a sub-objective.
-- Number the fragments 1, 2, 3… in the order they appear in the sentence. Quote each fragment exactly as written.
+- Sub-objectives MUST be the literal SENTENCES of the boundary paragraph, quoted verbatim, one sentence per sub-objective, in the order written.
+- Do NOT add any content, theme, or vocabulary that does not already appear inside the boundary paragraph. If a concept is not in the boundary text, it cannot become a sub-objective.
+- Number the sentences 1, 2, 3… in the order they appear. Quote each sentence exactly as written, including punctuation.
+- If the boundary only produced one sentence, rewrite it as several sentences before extracting sub-objectives.
 
 Example of the correct split:
-Boundary: "The advice must provide a scalable mental model for autonomy that integrates analytical rigor with philosophical depth, ensuring the recipient can navigate uncertainty without becoming paralyzed by complexity or external pressure."
+Boundary paragraph:
+"The advice must provide a scalable mental model for autonomy. It must integrate analytical rigor with philosophical depth. It must ensure the recipient can navigate uncertainty without becoming paralyzed by complexity or external pressure."
 Sub-objectives:
-  1. "The advice must provide a scalable mental model for autonomy"
-  2. "that integrates analytical rigor with philosophical depth"
-  3. "ensuring the recipient can navigate uncertainty without becoming paralyzed by complexity or external pressure"
+  1. "The advice must provide a scalable mental model for autonomy."
+  2. "It must integrate analytical rigor with philosophical depth."
+  3. "It must ensure the recipient can navigate uncertainty without becoming paralyzed by complexity or external pressure."
 
-Display the boundary sentence, then the numbered verbatim fragments beneath it.
+Display the boundary paragraph, then the numbered verbatim sentences beneath it.
 Ask: "Would you like to improve this boundary definition before we search for solutions?"
 
 # Stage 7 — Out-In Approach
-Use ONLY the verbatim fragments produced in Stage 6 as the sub-objectives. Do not rename, rephrase, merge, or replace them with new themes. Do not import any concept, framework, or vocabulary that is not already contained in the boundary sentence.
+Use ONLY the verbatim sentences produced in Stage 6 as the sub-objectives. Do not rename, rephrase, merge, split, or replace them with new themes. Do not import any concept, framework, or vocabulary that is not already contained in the boundary paragraph.
 
-For each numbered fragment, in order:
-- Restate the fragment in quotes exactly as it appeared in Stage 6.
-- Answer that fragment directly — go inward toward the solution using only what that fragment says.
-- Explain: actions, resources, risks, measurements, milestones, timeline, decision criteria — but all derived from the words of that fragment.
+For each numbered sentence, in order:
+- Restate the sentence in quotes exactly as it appeared in Stage 6.
+- Answer that sentence directly — go inward toward the solution using only what that sentence says.
+- Explain: actions, resources, risks, measurements, milestones, timeline, decision criteria — but all derived from the words of that sentence.
+- Keep each answer focused and self-contained; do NOT bleed content from other sub-objectives into it.
 
-Do NOT recommend until every fragment has been answered. Combine the answers of all fragments into the combined solution to the original objective.
+Do NOT recommend until every sentence has been answered. Combine the answers of all sentences into the combined solution to the original objective.
 
 # Final Decision Report
 Once all seven stages are complete, generate:
