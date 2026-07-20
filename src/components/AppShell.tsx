@@ -45,8 +45,7 @@ export function AppShell({ children }: { children: ReactNode }) {
     { to: "/dashboard", label: "Dashboard" },
     { to: "/examples", label: "Examples" },
     { to: "/history", label: "History" },
-    { to: "/testimonials", label: "Testimonials" },
-    { to: "/feedback", label: "Give Us Feedback" },
+    { to: "/feedback", label: "User Feedback" },
     ...(isAdmin ? [{ to: "/admin" as const, label: "Admin" }] : []),
   ];
   void Shield;
