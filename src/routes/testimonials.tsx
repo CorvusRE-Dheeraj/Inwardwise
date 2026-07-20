@@ -164,7 +164,7 @@ function TestimonialCard({
 }
 
 function FeedbackCard({ row }: { row: FeedbackRow }) {
-  const author = row.author_name?.trim() || "Anonymous";
+  const author = "Anonymous";
   const chips = [
     row.improved && { label: "Improved decision", value: row.improved },
     row.paid && { label: "Would pay", value: row.paid },
