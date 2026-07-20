@@ -174,7 +174,8 @@ function DecisionChat() {
     }
   };
 
-  const downloadSession = () => {
+  const downloadSession = async () => {
+    const { jsPDF } = await import("jspdf");
     const stageAt = (idx: number) => {
       for (let i = idx; i >= 0; i--) {
         const msg = messages[i];
@@ -187,31 +188,75 @@ function DecisionChat() {
     };
     const title = deriveTitle(messages) || session.title;
     const dateStr = new Date(session.updatedAt).toLocaleString();
-    const lines: string[] = [];
-    lines.push(`# ${title}`, ``, `Category: ${category}`, `Saved: ${dateStr}`, ``, `---`, ``);
+
+    const doc = new jsPDF({ unit: "pt", format: "letter" });
+    const pageW = doc.internal.pageSize.getWidth();
+    const pageH = doc.internal.pageSize.getHeight();
+    const margin = 54;
+    const maxW = pageW - margin * 2;
+    let y = margin;
+
+    const ensureSpace = (needed: number) => {
+      if (y + needed > pageH - margin) {
+        doc.addPage();
+        y = margin;
+      }
+    };
+    const writeBlock = (
+      text: string,
+      opts: { size?: number; style?: "normal" | "bold" | "italic"; color?: [number, number, number]; gap?: number } = {},
+    ) => {
+      const { size = 11, style = "normal", color = [30, 30, 30], gap = 6 } = opts;
+      doc.setFont("helvetica", style);
+      doc.setFontSize(size);
+      doc.setTextColor(color[0], color[1], color[2]);
+      const lines = doc.splitTextToSize(text, maxW) as string[];
+      const lineH = size * 1.35;
+      for (const line of lines) {
+        ensureSpace(lineH);
+        doc.text(line, margin, y);
+        y += lineH;
+      }
+      y += gap;
+    };
+
+    writeBlock(title, { size: 20, style: "bold", gap: 8 });
+    writeBlock(`Category: ${category}`, { size: 10, color: [110, 110, 110], gap: 2 });
+    writeBlock(`Saved: ${dateStr}`, { size: 10, color: [110, 110, 110], gap: 12 });
+    ensureSpace(2);
+    doc.setDrawColor(210);
+    doc.line(margin, y, pageW - margin, y);
+    y += 16;
+
     messages.forEach((m, i) => {
       const raw = extractText(m).trim();
       if (!raw) return;
       if (m.role === "assistant") {
         const n = parseStageTag(raw) ?? stageAt(i);
         const stage = n ? STAGES.find((s) => s.n === n) : null;
-        const header = stage ? `## Stage ${stage.n} — ${stage.name} · Facilitator` : `## Facilitator`;
-        lines.push(header, ``, stripStageTag(raw), ``);
+        const header = stage ? `Stage ${stage.n} — ${stage.name} · Facilitator` : `Facilitator`;
+        writeBlock(header, { size: 12, style: "bold", color: [20, 90, 190], gap: 4 });
+        writeBlock(stripStageTag(raw), { size: 11, gap: 12 });
       } else {
-        lines.push(`### You`, ``, raw, ``);
+        writeBlock(`You`, { size: 12, style: "bold", color: [40, 40, 40], gap: 4 });
+        writeBlock(raw, { size: 11, gap: 12 });
       }
     });
-    const blob = new Blob([lines.join("\n")], { type: "text/markdown;charset=utf-8" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
+
+    const total = doc.getNumberOfPages();
+    for (let p = 1; p <= total; p++) {
+      doc.setPage(p);
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(9);
+      doc.setTextColor(150);
+      doc.text(`${p} / ${total}`, pageW - margin, pageH - 24, { align: "right" });
+      doc.text("Decision Philosophy — Objective Solution Framework", margin, pageH - 24);
+    }
+
     const safe = title.replace(/[^a-z0-9\-_. ]/gi, "").slice(0, 60).trim() || "decision-session";
-    a.href = url;
-    a.download = `${safe}.md`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+    doc.save(`${safe}.pdf`);
   };
+
 
   const canDownload = currentStage >= 7;
 
