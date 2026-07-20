@@ -335,7 +335,7 @@ function DecisionChat() {
                   onClick={downloadSession}
                   className="mt-4 inline-flex items-center gap-2 rounded-full bg-accent px-5 py-2.5 text-sm font-medium text-background transition hover:opacity-90"
                 >
-                  <Download className="h-4 w-4" /> Download whole session (.md)
+                  <Download className="h-4 w-4" /> Download whole session (PDF)
                 </button>
               </motion.div>
             )}
