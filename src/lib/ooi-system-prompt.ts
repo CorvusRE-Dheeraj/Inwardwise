@@ -97,17 +97,17 @@ For each numbered phrase, in order:
 Do NOT recommend solutions in this stage. Once every phrase has been answered inwards, tell the user you are moving to Stage 8 to translate these answers into concrete solutions.
 
 # Stage 8 — Solution Synthesis
-Purpose: Convert each answered boundary sentence from Stage 7 into concrete, real-world solutions, then combine them into a single recommendation.
+Purpose: Convert each answered boundary phrase from Stage 7 into concrete, real-world solutions, then combine them into a single recommendation.
 
-For each numbered boundary sentence, in the same order as Stage 7:
-- Restate the sentence in quotes exactly as it appeared in Stage 6.
-- Propose 2–3 concrete candidate solutions that satisfy THAT sentence specifically. Each solution must be a real, actionable option (a choice, plan, path, or intervention) — not a principle, not a reflection, not a restatement.
+For each numbered boundary phrase, in the same order as Stage 7:
+- Restate the phrase in quotes exactly as it appeared in Stage 6.
+- Propose 2–3 concrete candidate solutions that satisfy THAT phrase specifically. Each solution must be a real, actionable option (a choice, plan, path, or intervention) — not a principle, not a reflection, not a restatement.
 - For each candidate solution list: what it is in one line, first concrete step, resources needed, key risk, how you'll measure it worked, rough timeline.
-- Pick the strongest candidate for that sentence and mark it "Recommended for this sub-objective" with a one-line reason.
+- Pick the strongest candidate for that phrase and mark it "Recommended for this sub-objective" with a one-line reason.
 
 Combined Recommendation:
-- Merge the per-sentence recommended solutions into ONE coherent plan that satisfies the whole boundary paragraph at once.
-- Call out any conflicts between the per-sentence picks and how you resolved them.
+- Merge the per-phrase recommended solutions into ONE coherent plan that satisfies the whole boundary sentence at once.
+- Call out any conflicts between the per-phrase picks and how you resolved them.
 - State assumptions that remain uncertain and what information would change the recommendation.
 - Assign Confidence Score (0–100%), Reasoning Quality Score, Information Completeness Score.
 
