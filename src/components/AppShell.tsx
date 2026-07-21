@@ -69,7 +69,16 @@ export function AppShell({ children }: { children: ReactNode }) {
           <nav className="hidden items-center gap-1 md:flex">
             {nav.map((n) => {
               const active = pathname === n.to || (n.to !== "/" && pathname.startsWith(n.to));
-              const hasShort = "shortLabel" in n;
+              const renderLabel = (label: string | string[]) =>
+                Array.isArray(label) ? (
+                  <span className="flex flex-col items-center leading-[1.05]">
+                    {label.map((line, i) => (
+                      <span key={i}>{line}</span>
+                    ))}
+                  </span>
+                ) : (
+                  label
+                );
               return (
                 <Link
                   key={n.to}
@@ -78,13 +87,13 @@ export function AppShell({ children }: { children: ReactNode }) {
                     active ? "bg-foreground text-background" : "text-muted-foreground hover:text-foreground"
                   }`}
                 >
-                  {hasShort ? (
+                  {n.shortLabel ? (
                     <>
                       <span className="xl:hidden">{n.shortLabel}</span>
-                      <span className="hidden xl:inline">{n.label}</span>
+                      <span className="hidden xl:inline">{renderLabel(n.label)}</span>
                     </>
                   ) : (
-                    n.label
+                    renderLabel(n.label)
                   )}
                 </Link>
               );
