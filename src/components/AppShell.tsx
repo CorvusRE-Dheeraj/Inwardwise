@@ -45,8 +45,8 @@ export function AppShell({ children }: { children: ReactNode }) {
     { to: "/dashboard", label: "Dashboard" },
     { to: "/examples", label: "Examples" },
     { to: "/history", label: "History" },
-    { to: "/science", label: "Science and Philosophy" },
-    { to: "/feedback", label: "User Feedback" },
+    { to: "/science", label: "Science and Philosophy", shortLabel: "Science" },
+    { to: "/feedback", label: "User Feedback", shortLabel: "Feedback" },
     ...(isAdmin ? [{ to: "/admin" as const, label: "Admin" }] : []),
   ];
   void Shield;
@@ -64,20 +64,28 @@ export function AppShell({ children }: { children: ReactNode }) {
             <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-foreground text-background">
               <Brain className="h-4 w-4" />
             </span>
-            <span className="font-display truncate text-base leading-none md:text-lg">Decision Philosophy</span>
+            <span className="font-display whitespace-nowrap text-base leading-none md:text-lg">Decision Philosophy</span>
           </Link>
           <nav className="hidden items-center gap-1 md:flex">
             {nav.map((n) => {
               const active = pathname === n.to || (n.to !== "/" && pathname.startsWith(n.to));
+              const hasShort = "shortLabel" in n;
               return (
                 <Link
                   key={n.to}
                   to={n.to}
-                  className={`rounded-full px-3.5 py-1.5 text-sm transition ${
+                  className={`rounded-full px-2.5 py-1.5 text-sm transition lg:px-3.5 ${
                     active ? "bg-foreground text-background" : "text-muted-foreground hover:text-foreground"
                   }`}
                 >
-                  {n.label}
+                  {hasShort ? (
+                    <>
+                      <span className="xl:hidden">{n.shortLabel}</span>
+                      <span className="hidden xl:inline">{n.label}</span>
+                    </>
+                  ) : (
+                    n.label
+                  )}
                 </Link>
               );
             })}
