@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TestimonialsRouteImport } from './routes/testimonials'
+import { Route as ScienceRouteImport } from './routes/science'
 import { Route as HistoryRouteImport } from './routes/history'
 import { Route as FeedbackRouteImport } from './routes/feedback'
 import { Route as ExamplesRouteImport } from './routes/examples'
@@ -26,6 +27,11 @@ import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/
 const TestimonialsRoute = TestimonialsRouteImport.update({
   id: '/testimonials',
   path: '/testimonials',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ScienceRoute = ScienceRouteImport.update({
+  id: '/science',
+  path: '/science',
   getParentRoute: () => rootRouteImport,
 } as any)
 const HistoryRoute = HistoryRouteImport.update({
@@ -94,6 +100,7 @@ export interface FileRoutesByFullPath {
   '/examples': typeof ExamplesRoute
   '/feedback': typeof FeedbackRoute
   '/history': typeof HistoryRoute
+  '/science': typeof ScienceRoute
   '/testimonials': typeof TestimonialsRoute
   '/admin': typeof AuthenticatedAdminRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
@@ -108,6 +115,7 @@ export interface FileRoutesByTo {
   '/examples': typeof ExamplesRoute
   '/feedback': typeof FeedbackRoute
   '/history': typeof HistoryRoute
+  '/science': typeof ScienceRoute
   '/testimonials': typeof TestimonialsRoute
   '/admin': typeof AuthenticatedAdminRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
@@ -124,6 +132,7 @@ export interface FileRoutesById {
   '/examples': typeof ExamplesRoute
   '/feedback': typeof FeedbackRoute
   '/history': typeof HistoryRoute
+  '/science': typeof ScienceRoute
   '/testimonials': typeof TestimonialsRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
@@ -140,6 +149,7 @@ export interface FileRouteTypes {
     | '/examples'
     | '/feedback'
     | '/history'
+    | '/science'
     | '/testimonials'
     | '/admin'
     | '/dashboard'
@@ -154,6 +164,7 @@ export interface FileRouteTypes {
     | '/examples'
     | '/feedback'
     | '/history'
+    | '/science'
     | '/testimonials'
     | '/admin'
     | '/dashboard'
@@ -169,6 +180,7 @@ export interface FileRouteTypes {
     | '/examples'
     | '/feedback'
     | '/history'
+    | '/science'
     | '/testimonials'
     | '/_authenticated/admin'
     | '/_authenticated/dashboard'
@@ -185,6 +197,7 @@ export interface RootRouteChildren {
   ExamplesRoute: typeof ExamplesRoute
   FeedbackRoute: typeof FeedbackRoute
   HistoryRoute: typeof HistoryRoute
+  ScienceRoute: typeof ScienceRoute
   TestimonialsRoute: typeof TestimonialsRoute
   ApiChatRoute: typeof ApiChatRoute
   ApiTranscribeRoute: typeof ApiTranscribeRoute
@@ -198,6 +211,13 @@ declare module '@tanstack/react-router' {
       path: '/testimonials'
       fullPath: '/testimonials'
       preLoaderRoute: typeof TestimonialsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/science': {
+      id: '/science'
+      path: '/science'
+      fullPath: '/science'
+      preLoaderRoute: typeof ScienceRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/history': {
@@ -309,6 +329,7 @@ const rootRouteChildren: RootRouteChildren = {
   ExamplesRoute: ExamplesRoute,
   FeedbackRoute: FeedbackRoute,
   HistoryRoute: HistoryRoute,
+  ScienceRoute: ScienceRoute,
   TestimonialsRoute: TestimonialsRoute,
   ApiChatRoute: ApiChatRoute,
   ApiTranscribeRoute: ApiTranscribeRoute,
