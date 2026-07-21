@@ -156,7 +156,15 @@ export function AppShell({ children }: { children: ReactNode }) {
                       active ? "bg-foreground text-background" : "text-foreground/80 hover:bg-foreground/5"
                     }`}
                   >
-                    {n.label}
+                    {Array.isArray(n.label) ? (
+                      <span className="flex flex-col leading-[1.1]">
+                        {n.label.map((line, i) => (
+                          <span key={i}>{line}</span>
+                        ))}
+                      </span>
+                    ) : (
+                      n.label
+                    )}
                   </Link>
                 );
               })}
