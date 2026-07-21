@@ -1,0 +1,1 @@
+DROP POLICY IF EXISTS "Public can read feedback via safe view" ON public.feedback; REVOKE SELECT ON public.feedback FROM anon;
