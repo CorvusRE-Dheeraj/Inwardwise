@@ -39,13 +39,13 @@ export function AppShell({ children }: { children: ReactNode }) {
   // Close mobile menu on route change
   useEffect(() => { setMenuOpen(false); }, [pathname]);
 
-  const nav = [
+  const nav: Array<{ to: string; label: string | string[]; shortLabel?: string }> = [
     { to: "/", label: "Home" },
-    { to: "/decision", label: "New Decision" },
+    { to: "/decision", label: ["New", "Decision"] },
     { to: "/dashboard", label: "Dashboard" },
     { to: "/examples", label: "Examples" },
     { to: "/history", label: "History" },
-    { to: "/science", label: "Science and Philosophy", shortLabel: "Science" },
+    { to: "/science", label: ["Science and", "Philosophy"], shortLabel: "Science" },
     { to: "/feedback", label: "User Feedback", shortLabel: "Feedback" },
     ...(isAdmin ? [{ to: "/admin" as const, label: "Admin" }] : []),
   ];
@@ -69,7 +69,16 @@ export function AppShell({ children }: { children: ReactNode }) {
           <nav className="hidden items-center gap-1 md:flex">
             {nav.map((n) => {
               const active = pathname === n.to || (n.to !== "/" && pathname.startsWith(n.to));
-              const hasShort = "shortLabel" in n;
+              const renderLabel = (label: string | string[]) =>
+                Array.isArray(label) ? (
+                  <span className="flex flex-col items-center leading-[1.05]">
+                    {label.map((line, i) => (
+                      <span key={i}>{line}</span>
+                    ))}
+                  </span>
+                ) : (
+                  label
+                );
               return (
                 <Link
                   key={n.to}
@@ -78,13 +87,13 @@ export function AppShell({ children }: { children: ReactNode }) {
                     active ? "bg-foreground text-background" : "text-muted-foreground hover:text-foreground"
                   }`}
                 >
-                  {hasShort ? (
+                  {n.shortLabel ? (
                     <>
                       <span className="xl:hidden">{n.shortLabel}</span>
-                      <span className="hidden xl:inline">{n.label}</span>
+                      <span className="hidden xl:inline">{renderLabel(n.label)}</span>
                     </>
                   ) : (
-                    n.label
+                    renderLabel(n.label)
                   )}
                 </Link>
               );
@@ -147,7 +156,15 @@ export function AppShell({ children }: { children: ReactNode }) {
                       active ? "bg-foreground text-background" : "text-foreground/80 hover:bg-foreground/5"
                     }`}
                   >
-                    {n.label}
+                    {Array.isArray(n.label) ? (
+                      <span className="flex flex-col leading-[1.1]">
+                        {n.label.map((line, i) => (
+                          <span key={i}>{line}</span>
+                        ))}
+                      </span>
+                    ) : (
+                      n.label
+                    )}
                   </Link>
                 );
               })}
