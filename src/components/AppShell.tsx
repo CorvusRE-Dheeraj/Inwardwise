@@ -39,7 +39,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   // Close mobile menu on route change
   useEffect(() => { setMenuOpen(false); }, [pathname]);
 
-  const nav = [
+  const nav: Array<{ to: string; label: string | string[]; shortLabel?: string }> = [
     { to: "/", label: "Home" },
     { to: "/decision", label: ["New", "Decision"] },
     { to: "/dashboard", label: "Dashboard" },
