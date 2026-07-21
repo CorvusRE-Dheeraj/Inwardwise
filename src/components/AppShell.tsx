@@ -41,11 +41,11 @@ export function AppShell({ children }: { children: ReactNode }) {
 
   const nav = [
     { to: "/", label: "Home" },
-    { to: "/decision", label: "New Decision" },
+    { to: "/decision", label: ["New", "Decision"] },
     { to: "/dashboard", label: "Dashboard" },
     { to: "/examples", label: "Examples" },
     { to: "/history", label: "History" },
-    { to: "/science", label: "Science and Philosophy", shortLabel: "Science" },
+    { to: "/science", label: ["Science and", "Philosophy"], shortLabel: "Science" },
     { to: "/feedback", label: "User Feedback", shortLabel: "Feedback" },
     ...(isAdmin ? [{ to: "/admin" as const, label: "Admin" }] : []),
   ];
