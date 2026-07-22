@@ -11,18 +11,29 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TestimonialsRouteImport } from './routes/testimonials'
 import { Route as ScienceRouteImport } from './routes/science'
+import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as HistoryRouteImport } from './routes/history'
 import { Route as FeedbackRouteImport } from './routes/feedback'
 import { Route as ExamplesRouteImport } from './routes/examples'
+import { Route as DonateRouteImport } from './routes/donate'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AreasRouteImport } from './routes/areas'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AreasIndexRouteImport } from './routes/areas.index'
+import { Route as AreasSlugRouteImport } from './routes/areas.$slug'
 import { Route as ApiTtsRouteImport } from './routes/api/tts'
 import { Route as ApiTranscribeRouteImport } from './routes/api/transcribe'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
 import { Route as AuthenticatedDecisionRouteImport } from './routes/_authenticated/decision'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
+import { Route as AuthenticatedAccountRouteImport } from './routes/_authenticated/account'
+import { Route as AuthenticatedAccountIndexRouteImport } from './routes/_authenticated/account.index'
+import { Route as AuthenticatedAccountShadowRouteImport } from './routes/_authenticated/account.shadow'
+import { Route as AuthenticatedAccountEnemyRouteImport } from './routes/_authenticated/account.enemy'
+import { Route as AuthenticatedAccountDashboardRouteImport } from './routes/_authenticated/account.dashboard'
+import { Route as AuthenticatedAccountBillingRouteImport } from './routes/_authenticated/account.billing'
 
 const TestimonialsRoute = TestimonialsRouteImport.update({
   id: '/testimonials',
@@ -32,6 +43,11 @@ const TestimonialsRoute = TestimonialsRouteImport.update({
 const ScienceRoute = ScienceRouteImport.update({
   id: '/science',
   path: '/science',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PricingRoute = PricingRouteImport.update({
+  id: '/pricing',
+  path: '/pricing',
   getParentRoute: () => rootRouteImport,
 } as any)
 const HistoryRoute = HistoryRouteImport.update({
@@ -49,9 +65,19 @@ const ExamplesRoute = ExamplesRouteImport.update({
   path: '/examples',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DonateRoute = DonateRouteImport.update({
+  id: '/donate',
+  path: '/donate',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AreasRoute = AreasRouteImport.update({
+  id: '/areas',
+  path: '/areas',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
@@ -62,6 +88,16 @@ const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AreasIndexRoute = AreasIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AreasRoute,
+} as any)
+const AreasSlugRoute = AreasSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => AreasRoute,
 } as any)
 const ApiTtsRoute = ApiTtsRouteImport.update({
   id: '/api/tts',
@@ -93,28 +129,76 @@ const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
   path: '/admin',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedAccountRoute = AuthenticatedAccountRouteImport.update({
+  id: '/account',
+  path: '/account',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedAccountIndexRoute =
+  AuthenticatedAccountIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedAccountRoute,
+  } as any)
+const AuthenticatedAccountShadowRoute =
+  AuthenticatedAccountShadowRouteImport.update({
+    id: '/shadow',
+    path: '/shadow',
+    getParentRoute: () => AuthenticatedAccountRoute,
+  } as any)
+const AuthenticatedAccountEnemyRoute =
+  AuthenticatedAccountEnemyRouteImport.update({
+    id: '/enemy',
+    path: '/enemy',
+    getParentRoute: () => AuthenticatedAccountRoute,
+  } as any)
+const AuthenticatedAccountDashboardRoute =
+  AuthenticatedAccountDashboardRouteImport.update({
+    id: '/dashboard',
+    path: '/dashboard',
+    getParentRoute: () => AuthenticatedAccountRoute,
+  } as any)
+const AuthenticatedAccountBillingRoute =
+  AuthenticatedAccountBillingRouteImport.update({
+    id: '/billing',
+    path: '/billing',
+    getParentRoute: () => AuthenticatedAccountRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/areas': typeof AreasRouteWithChildren
   '/auth': typeof AuthRoute
+  '/donate': typeof DonateRoute
   '/examples': typeof ExamplesRoute
   '/feedback': typeof FeedbackRoute
   '/history': typeof HistoryRoute
+  '/pricing': typeof PricingRoute
   '/science': typeof ScienceRoute
   '/testimonials': typeof TestimonialsRoute
+  '/account': typeof AuthenticatedAccountRouteWithChildren
   '/admin': typeof AuthenticatedAdminRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/decision': typeof AuthenticatedDecisionRoute
   '/api/chat': typeof ApiChatRoute
   '/api/transcribe': typeof ApiTranscribeRoute
   '/api/tts': typeof ApiTtsRoute
+  '/areas/$slug': typeof AreasSlugRoute
+  '/areas/': typeof AreasIndexRoute
+  '/account/billing': typeof AuthenticatedAccountBillingRoute
+  '/account/dashboard': typeof AuthenticatedAccountDashboardRoute
+  '/account/enemy': typeof AuthenticatedAccountEnemyRoute
+  '/account/shadow': typeof AuthenticatedAccountShadowRoute
+  '/account/': typeof AuthenticatedAccountIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/donate': typeof DonateRoute
   '/examples': typeof ExamplesRoute
   '/feedback': typeof FeedbackRoute
   '/history': typeof HistoryRoute
+  '/pricing': typeof PricingRoute
   '/science': typeof ScienceRoute
   '/testimonials': typeof TestimonialsRoute
   '/admin': typeof AuthenticatedAdminRoute
@@ -123,47 +207,78 @@ export interface FileRoutesByTo {
   '/api/chat': typeof ApiChatRoute
   '/api/transcribe': typeof ApiTranscribeRoute
   '/api/tts': typeof ApiTtsRoute
+  '/areas/$slug': typeof AreasSlugRoute
+  '/areas': typeof AreasIndexRoute
+  '/account/billing': typeof AuthenticatedAccountBillingRoute
+  '/account/dashboard': typeof AuthenticatedAccountDashboardRoute
+  '/account/enemy': typeof AuthenticatedAccountEnemyRoute
+  '/account/shadow': typeof AuthenticatedAccountShadowRoute
+  '/account': typeof AuthenticatedAccountIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/areas': typeof AreasRouteWithChildren
   '/auth': typeof AuthRoute
+  '/donate': typeof DonateRoute
   '/examples': typeof ExamplesRoute
   '/feedback': typeof FeedbackRoute
   '/history': typeof HistoryRoute
+  '/pricing': typeof PricingRoute
   '/science': typeof ScienceRoute
   '/testimonials': typeof TestimonialsRoute
+  '/_authenticated/account': typeof AuthenticatedAccountRouteWithChildren
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/decision': typeof AuthenticatedDecisionRoute
   '/api/chat': typeof ApiChatRoute
   '/api/transcribe': typeof ApiTranscribeRoute
   '/api/tts': typeof ApiTtsRoute
+  '/areas/$slug': typeof AreasSlugRoute
+  '/areas/': typeof AreasIndexRoute
+  '/_authenticated/account/billing': typeof AuthenticatedAccountBillingRoute
+  '/_authenticated/account/dashboard': typeof AuthenticatedAccountDashboardRoute
+  '/_authenticated/account/enemy': typeof AuthenticatedAccountEnemyRoute
+  '/_authenticated/account/shadow': typeof AuthenticatedAccountShadowRoute
+  '/_authenticated/account/': typeof AuthenticatedAccountIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/areas'
     | '/auth'
+    | '/donate'
     | '/examples'
     | '/feedback'
     | '/history'
+    | '/pricing'
     | '/science'
     | '/testimonials'
+    | '/account'
     | '/admin'
     | '/dashboard'
     | '/decision'
     | '/api/chat'
     | '/api/transcribe'
     | '/api/tts'
+    | '/areas/$slug'
+    | '/areas/'
+    | '/account/billing'
+    | '/account/dashboard'
+    | '/account/enemy'
+    | '/account/shadow'
+    | '/account/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/auth'
+    | '/donate'
     | '/examples'
     | '/feedback'
     | '/history'
+    | '/pricing'
     | '/science'
     | '/testimonials'
     | '/admin'
@@ -172,31 +287,52 @@ export interface FileRouteTypes {
     | '/api/chat'
     | '/api/transcribe'
     | '/api/tts'
+    | '/areas/$slug'
+    | '/areas'
+    | '/account/billing'
+    | '/account/dashboard'
+    | '/account/enemy'
+    | '/account/shadow'
+    | '/account'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
+    | '/areas'
     | '/auth'
+    | '/donate'
     | '/examples'
     | '/feedback'
     | '/history'
+    | '/pricing'
     | '/science'
     | '/testimonials'
+    | '/_authenticated/account'
     | '/_authenticated/admin'
     | '/_authenticated/dashboard'
     | '/_authenticated/decision'
     | '/api/chat'
     | '/api/transcribe'
     | '/api/tts'
+    | '/areas/$slug'
+    | '/areas/'
+    | '/_authenticated/account/billing'
+    | '/_authenticated/account/dashboard'
+    | '/_authenticated/account/enemy'
+    | '/_authenticated/account/shadow'
+    | '/_authenticated/account/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AreasRoute: typeof AreasRouteWithChildren
   AuthRoute: typeof AuthRoute
+  DonateRoute: typeof DonateRoute
   ExamplesRoute: typeof ExamplesRoute
   FeedbackRoute: typeof FeedbackRoute
   HistoryRoute: typeof HistoryRoute
+  PricingRoute: typeof PricingRoute
   ScienceRoute: typeof ScienceRoute
   TestimonialsRoute: typeof TestimonialsRoute
   ApiChatRoute: typeof ApiChatRoute
@@ -220,6 +356,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ScienceRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/pricing': {
+      id: '/pricing'
+      path: '/pricing'
+      fullPath: '/pricing'
+      preLoaderRoute: typeof PricingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/history': {
       id: '/history'
       path: '/history'
@@ -241,11 +384,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ExamplesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/donate': {
+      id: '/donate'
+      path: '/donate'
+      fullPath: '/donate'
+      preLoaderRoute: typeof DonateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/auth': {
       id: '/auth'
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/areas': {
+      id: '/areas'
+      path: '/areas'
+      fullPath: '/areas'
+      preLoaderRoute: typeof AreasRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated': {
@@ -261,6 +418,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/areas/': {
+      id: '/areas/'
+      path: '/'
+      fullPath: '/areas/'
+      preLoaderRoute: typeof AreasIndexRouteImport
+      parentRoute: typeof AreasRoute
+    }
+    '/areas/$slug': {
+      id: '/areas/$slug'
+      path: '/$slug'
+      fullPath: '/areas/$slug'
+      preLoaderRoute: typeof AreasSlugRouteImport
+      parentRoute: typeof AreasRoute
     }
     '/api/tts': {
       id: '/api/tts'
@@ -304,16 +475,79 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/account': {
+      id: '/_authenticated/account'
+      path: '/account'
+      fullPath: '/account'
+      preLoaderRoute: typeof AuthenticatedAccountRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/account/': {
+      id: '/_authenticated/account/'
+      path: '/'
+      fullPath: '/account/'
+      preLoaderRoute: typeof AuthenticatedAccountIndexRouteImport
+      parentRoute: typeof AuthenticatedAccountRoute
+    }
+    '/_authenticated/account/shadow': {
+      id: '/_authenticated/account/shadow'
+      path: '/shadow'
+      fullPath: '/account/shadow'
+      preLoaderRoute: typeof AuthenticatedAccountShadowRouteImport
+      parentRoute: typeof AuthenticatedAccountRoute
+    }
+    '/_authenticated/account/enemy': {
+      id: '/_authenticated/account/enemy'
+      path: '/enemy'
+      fullPath: '/account/enemy'
+      preLoaderRoute: typeof AuthenticatedAccountEnemyRouteImport
+      parentRoute: typeof AuthenticatedAccountRoute
+    }
+    '/_authenticated/account/dashboard': {
+      id: '/_authenticated/account/dashboard'
+      path: '/dashboard'
+      fullPath: '/account/dashboard'
+      preLoaderRoute: typeof AuthenticatedAccountDashboardRouteImport
+      parentRoute: typeof AuthenticatedAccountRoute
+    }
+    '/_authenticated/account/billing': {
+      id: '/_authenticated/account/billing'
+      path: '/billing'
+      fullPath: '/account/billing'
+      preLoaderRoute: typeof AuthenticatedAccountBillingRouteImport
+      parentRoute: typeof AuthenticatedAccountRoute
+    }
   }
 }
 
+interface AuthenticatedAccountRouteChildren {
+  AuthenticatedAccountBillingRoute: typeof AuthenticatedAccountBillingRoute
+  AuthenticatedAccountDashboardRoute: typeof AuthenticatedAccountDashboardRoute
+  AuthenticatedAccountEnemyRoute: typeof AuthenticatedAccountEnemyRoute
+  AuthenticatedAccountShadowRoute: typeof AuthenticatedAccountShadowRoute
+  AuthenticatedAccountIndexRoute: typeof AuthenticatedAccountIndexRoute
+}
+
+const AuthenticatedAccountRouteChildren: AuthenticatedAccountRouteChildren = {
+  AuthenticatedAccountBillingRoute: AuthenticatedAccountBillingRoute,
+  AuthenticatedAccountDashboardRoute: AuthenticatedAccountDashboardRoute,
+  AuthenticatedAccountEnemyRoute: AuthenticatedAccountEnemyRoute,
+  AuthenticatedAccountShadowRoute: AuthenticatedAccountShadowRoute,
+  AuthenticatedAccountIndexRoute: AuthenticatedAccountIndexRoute,
+}
+
+const AuthenticatedAccountRouteWithChildren =
+  AuthenticatedAccountRoute._addFileChildren(AuthenticatedAccountRouteChildren)
+
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAccountRoute: typeof AuthenticatedAccountRouteWithChildren
   AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedDecisionRoute: typeof AuthenticatedDecisionRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAccountRoute: AuthenticatedAccountRouteWithChildren,
   AuthenticatedAdminRoute: AuthenticatedAdminRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedDecisionRoute: AuthenticatedDecisionRoute,
@@ -322,13 +556,28 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
 const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
+interface AreasRouteChildren {
+  AreasSlugRoute: typeof AreasSlugRoute
+  AreasIndexRoute: typeof AreasIndexRoute
+}
+
+const AreasRouteChildren: AreasRouteChildren = {
+  AreasSlugRoute: AreasSlugRoute,
+  AreasIndexRoute: AreasIndexRoute,
+}
+
+const AreasRouteWithChildren = AreasRoute._addFileChildren(AreasRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AreasRoute: AreasRouteWithChildren,
   AuthRoute: AuthRoute,
+  DonateRoute: DonateRoute,
   ExamplesRoute: ExamplesRoute,
   FeedbackRoute: FeedbackRoute,
   HistoryRoute: HistoryRoute,
+  PricingRoute: PricingRoute,
   ScienceRoute: ScienceRoute,
   TestimonialsRoute: TestimonialsRoute,
   ApiChatRoute: ApiChatRoute,

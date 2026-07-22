@@ -1,0 +1,53 @@
+import { createFileRoute, Link, Outlet, useRouterState } from "@tanstack/react-router";
+import { AppShell } from "@/components/AppShell";
+import { User, CreditCard, BarChart3, Moon, Flame } from "lucide-react";
+
+export const Route = createFileRoute("/_authenticated/account")({
+  head: () => ({
+    meta: [
+      { title: "Account — Decision Philosophy" },
+      { name: "description", content: "Manage your personal details, dashboard, shadow and inner enemy." },
+    ],
+  }),
+  component: AccountLayout,
+});
+
+const tabs: Array<{ to: "/account" | "/account/billing" | "/account/dashboard" | "/account/shadow" | "/account/enemy"; label: string; icon: typeof User; exact?: boolean }> = [
+  { to: "/account", label: "Personal details", icon: User, exact: true },
+  { to: "/account/billing", label: "Billing", icon: CreditCard },
+  { to: "/account/dashboard", label: "Dashboard", icon: BarChart3 },
+  { to: "/account/shadow", label: "Shadow", icon: Moon },
+  { to: "/account/enemy", label: "Inner Enemy", icon: Flame },
+];
+
+function AccountLayout() {
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  return (
+    <AppShell>
+      <div className="grid gap-8 md:grid-cols-[220px_1fr]">
+        <aside>
+          <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground">Account</p>
+          <nav className="mt-4 space-y-1">
+            {tabs.map((t) => {
+              const active = t.exact ? pathname === t.to : pathname === t.to || pathname.startsWith(t.to + "/");
+              return (
+                <Link
+                  key={t.to}
+                  to={t.to}
+                  className={`flex items-center gap-2 rounded-2xl px-3 py-2 text-sm transition ${
+                    active ? "bg-foreground text-background" : "text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  <t.icon className="h-4 w-4" /> {t.label}
+                </Link>
+              );
+            })}
+          </nav>
+        </aside>
+        <div className="min-w-0">
+          <Outlet />
+        </div>
+      </div>
+    </AppShell>
+  );
+}
