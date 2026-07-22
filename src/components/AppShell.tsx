@@ -1,5 +1,5 @@
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
-import { Brain, Moon, Sun, Sparkles, LogOut, LogIn, Shield, Menu, X, User } from "lucide-react";
+import { Brain, Moon, Sun, Sparkles, LogOut, LogIn, Shield, Menu, X } from "lucide-react";
 import { useEffect, useState, type ReactNode } from "react";
 import { useTheme } from "@/lib/theme";
 import { supabase } from "@/integrations/supabase/client";
@@ -52,7 +52,6 @@ export function AppShell({ children }: { children: ReactNode }) {
     ...(isAdmin ? [{ to: "/admin" as const, label: "Admin" }] : []),
   ];
   void Shield;
-  void User;
 
   async function signOut() {
     await supabase.auth.signOut();
