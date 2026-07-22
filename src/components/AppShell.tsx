@@ -179,12 +179,6 @@ export function AppShell({ children }: { children: ReactNode }) {
                     <LogIn className="h-3.5 w-3.5" /> Sign in
                   </Link>
                 )}
-                <Link
-                  to="/decision"
-                  className="flex flex-1 items-center justify-center gap-1.5 rounded-full bg-foreground px-4 py-2 text-xs font-medium text-background"
-                >
-                  <Sparkles className="h-3.5 w-3.5" /> Start
-                </Link>
               </div>
             </nav>
           </div>
