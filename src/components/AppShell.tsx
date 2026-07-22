@@ -1,5 +1,5 @@
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
-import { Brain, Moon, Sun, Sparkles, LogOut, LogIn, Shield, Menu, X } from "lucide-react";
+import { Brain, Moon, Sun, LogOut, LogIn, Shield, Menu, X } from "lucide-react";
 import { useEffect, useState, type ReactNode } from "react";
 import { useTheme } from "@/lib/theme";
 import { supabase } from "@/integrations/supabase/client";
@@ -127,13 +127,6 @@ export function AppShell({ children }: { children: ReactNode }) {
                 Sign in
               </Link>
             )}
-            <Link
-              to="/decision"
-              className="hidden items-center gap-1.5 rounded-full bg-foreground px-4 py-2 text-xs font-medium text-background transition hover:opacity-90 sm:flex"
-            >
-              <Sparkles className="h-3.5 w-3.5" />
-              Start
-            </Link>
             <button
               onClick={() => setMenuOpen((v) => !v)}
               aria-label={menuOpen ? "Close menu" : "Open menu"}
@@ -186,12 +179,6 @@ export function AppShell({ children }: { children: ReactNode }) {
                     <LogIn className="h-3.5 w-3.5" /> Sign in
                   </Link>
                 )}
-                <Link
-                  to="/decision"
-                  className="flex flex-1 items-center justify-center gap-1.5 rounded-full bg-foreground px-4 py-2 text-xs font-medium text-background"
-                >
-                  <Sparkles className="h-3.5 w-3.5" /> Start
-                </Link>
               </div>
             </nav>
           </div>
