@@ -1,5 +1,5 @@
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
-import { Brain, Moon, Sun, Sparkles, LogOut, LogIn, Shield, Menu, X } from "lucide-react";
+import { Brain, Moon, Sun, Sparkles, LogOut, LogIn, Shield, Menu, X, User } from "lucide-react";
 import { useEffect, useState, type ReactNode } from "react";
 import { useTheme } from "@/lib/theme";
 import { supabase } from "@/integrations/supabase/client";
@@ -42,14 +42,17 @@ export function AppShell({ children }: { children: ReactNode }) {
   const nav: Array<{ to: string; label: string | string[]; shortLabel?: string }> = [
     { to: "/", label: "Home" },
     { to: "/decision", label: ["New", "Decision"] },
-    { to: "/dashboard", label: "Dashboard" },
+    { to: "/areas", label: "Areas" },
     { to: "/examples", label: "Examples" },
-    { to: "/history", label: "History" },
     { to: "/science", label: ["Science and", "Philosophy"] },
+    { to: "/pricing", label: "Pricing" },
+    { to: "/donate", label: "Donate" },
     { to: "/feedback", label: "User Feedback", shortLabel: "Feedback" },
+    ...(user ? [{ to: "/account" as const, label: "Account" }] : []),
     ...(isAdmin ? [{ to: "/admin" as const, label: "Admin" }] : []),
   ];
   void Shield;
+  void User;
 
   async function signOut() {
     await supabase.auth.signOut();
