@@ -10,7 +10,7 @@ const searchSchema = z.object({ redirect: z.string().optional() });
 export const Route = createFileRoute("/auth")({
   head: () => ({
     meta: [
-      { title: "Sign in — Objective Solution Framework" },
+      { title: "Sign in — Decision Philosophy" },
       { name: "description", content: "Sign in or create an account to keep your decisions private and confidential." },
     ],
   }),
