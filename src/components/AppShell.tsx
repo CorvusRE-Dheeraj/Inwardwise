@@ -41,9 +41,10 @@ export function AppShell({ children }: { children: ReactNode }) {
 
   const nav: Array<{ to: string; label: string | string[]; shortLabel?: string }> = [
     { to: "/", label: "Home" },
-    { to: "/decision", label: ["New", "Decision"] },
+    { to: "/decision", label: ["Start New", "Decision"] },
     { to: "/areas", label: "Areas" },
     { to: "/examples", label: "Examples" },
+    { to: "/testimonials", label: "Testimonials" },
     { to: "/science", label: ["Science and", "Philosophy"] },
     { to: "/pricing", label: "Pricing" },
     { to: "/donate", label: "Donate" },
