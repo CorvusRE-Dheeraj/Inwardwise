@@ -12,13 +12,13 @@ export const Route = createFileRoute("/_authenticated/account")({
   component: AccountLayout,
 });
 
-const tabs = [
+const tabs: Array<{ to: "/account" | "/account/billing" | "/account/dashboard" | "/account/shadow" | "/account/enemy"; label: string; icon: typeof User; exact?: boolean }> = [
   { to: "/account", label: "Personal details", icon: User, exact: true },
   { to: "/account/billing", label: "Billing", icon: CreditCard },
   { to: "/account/dashboard", label: "Dashboard", icon: BarChart3 },
   { to: "/account/shadow", label: "Shadow", icon: Moon },
   { to: "/account/enemy", label: "Inner Enemy", icon: Flame },
-] as const;
+];
 
 function AccountLayout() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
