@@ -101,7 +101,7 @@ function AuthPage() {
           <span className="grid h-8 w-8 place-items-center rounded-full bg-foreground text-background">
             <Brain className="h-4 w-4" />
           </span>
-          <span className="font-display text-base">Objective Solution Framework</span>
+          <span className="font-display text-base">Decision Philosophy</span>
         </Link>
 
         <div className="glass rounded-3xl p-6 md:p-8">
