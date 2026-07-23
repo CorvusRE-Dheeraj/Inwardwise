@@ -101,16 +101,7 @@ export function AppShell({ children }: { children: ReactNode }) {
             })}
           </nav>
           <div className="flex shrink-0 items-center gap-2">
-            {user ? (
-              <button
-                onClick={signOut}
-                className="hidden items-center gap-1.5 rounded-full border border-glass-border px-3 py-2 text-[10px] text-muted-foreground transition hover:text-foreground sm:flex"
-                title={user.email ?? "Signed in"}
-              >
-                <LogOut className="h-3.5 w-3.5" />
-                Sign out
-              </button>
-            ) : (
+            {!user && (
               <Link
                 to="/auth"
                 className="hidden items-center gap-1.5 rounded-full border border-glass-border px-3 py-2 text-[10px] text-muted-foreground transition hover:text-foreground sm:flex"
