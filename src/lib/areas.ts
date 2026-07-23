@@ -16,6 +16,8 @@ export const AREAS: Area[] = [
   { slug: "marriage-counseling", name: "Marriage Counseling", blurb: "Turn conflict into shared objectives." },
   { slug: "ethics-counseling", name: "Ethics Counseling", blurb: "Test choices against your own principles." },
   { slug: "school-districts", name: "School Districts", blurb: "Policy, curriculum and community decisions." },
+  { slug: "security", name: "Security", blurb: "Airport, national, and digital security — detect psychological signals before they become threats." },
+  { slug: "organizational-change", name: "Organizational Change", blurb: "Reroute money and power in large systems with clarity and foresight." },
 ];
 
 export function findArea(slug: string): Area | undefined {
