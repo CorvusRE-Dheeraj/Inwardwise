@@ -146,23 +146,16 @@ export function AppShell({ children }: { children: ReactNode }) {
                   </Link>
                 );
               })}
-              <div className="mt-2 flex gap-2 border-t border-glass-border pt-3">
-                {user ? (
-                  <button
-                    onClick={signOut}
-                    className="flex flex-1 items-center justify-center gap-1.5 rounded-full border border-glass-border px-3 py-2 text-[10px] text-muted-foreground"
-                  >
-                    <LogOut className="h-3.5 w-3.5" /> Sign out
-                  </button>
-                ) : (
+              {!user && (
+                <div className="mt-2 flex gap-2 border-t border-glass-border pt-3">
                   <Link
                     to="/auth"
                     className="flex flex-1 items-center justify-center gap-1.5 rounded-full border border-glass-border px-3 py-2 text-[10px] text-muted-foreground"
                   >
                     <LogIn className="h-3.5 w-3.5" /> Sign in
                   </Link>
-                )}
-              </div>
+                </div>
+              )}
             </nav>
           </div>
         )}
