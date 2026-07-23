@@ -145,3 +145,92 @@ function IndividualDevelopmentContent() {
     </div>
   );
 }
+
+function SecurityContent() {
+  return (
+    <div className="mt-10 space-y-6 text-[15px] leading-relaxed">
+      <p>
+        Security is not only a hardware problem — it is a pattern-recognition problem. The signals
+        that precede a threat often show up first in language, behavior, and digital traces. We apply
+        the Objective Solution Framework to make those signals visible earlier and with less bias.
+      </p>
+
+      <div className="glass rounded-3xl p-6">
+        <h2 className="font-display text-2xl">Where this framework applies</h2>
+        <ul className="mt-4 space-y-3 text-sm">
+          {[
+            ["Airport Security", "Spot behavioral and psychological indicators before they escalate into physical risk."],
+            ["National Security", "Separate real threats from noise, tribe, and political pressure across intelligence workflows."],
+            ["Interrogations", "Use psychological clues as soft triggers — a software lie detector that reads patterns, not just polygraphs."],
+            ["Database & Social Searches", "Structure searches across criminal databases and platforms like Facebook to surface anomalies without violating proportionality."],
+          ].map(([title, desc]) => (
+            <li key={title} className="flex gap-3">
+              <span className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-foreground text-[11px] text-background">
+                •
+              </span>
+              <div>
+                <div className="font-medium">{title}</div>
+                <div className="text-muted-foreground">{desc}</div>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div className="glass rounded-3xl p-6">
+        <h2 className="font-display text-2xl">The principle</h2>
+        <p className="mt-3 text-sm text-muted-foreground">
+          A decision-first approach to security asks: what is the real objective? What boundary must not
+          be crossed? And what are the hidden pressures — fear, ego, institutional bias — that distort
+          the search for truth? By slowing the loop down, we reduce false positives and protect civil
+          liberties at the same time.
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function OrganizationalChangeContent() {
+  return (
+    <div className="mt-10 space-y-6 text-[15px] leading-relaxed">
+      <p>
+        The world is run by large systems and organizational bodies. When those systems need to
+        change, the task requires enormous clarity and amazing foresight — like the founders of this
+        country exercising. Both money and power are the flow streams that must be examined and
+        rerouted for change to take hold.
+      </p>
+
+      <div className="glass rounded-3xl p-6">
+        <h2 className="font-display text-2xl">The levers of change</h2>
+        <ul className="mt-4 space-y-3 text-sm">
+          {[
+            ["Clarity of objective", "Define what the organization is actually for, not just what it currently does."],
+            ["Foresight", "Map second- and third-order effects before the system locks in a new path."],
+            ["Money flows", "Follow budgets, incentives, and cost structures — they reveal where power really sits."],
+            ["Power flows", "Map decision rights, gatekeepers, and informal influence to understand resistance."],
+            ["Psychological & social science", "Use human behavior, not just org charts, to design change people can adopt."],
+          ].map(([title, desc]) => (
+            <li key={title} className="flex gap-3">
+              <span className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-foreground text-[11px] text-background">
+                •
+              </span>
+              <div>
+                <div className="font-medium">{title}</div>
+                <div className="text-muted-foreground">{desc}</div>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div className="glass rounded-3xl p-6">
+        <h2 className="font-display text-2xl">Why this matters</h2>
+        <p className="mt-3 text-sm text-muted-foreground">
+          Organizations that try to change without examining both money and power tend to adopt new
+          language while keeping old behavior. We help leaders surface the real objectives, redraw the
+          boundaries, and turn insight into executable commitment.
+        </p>
+      </div>
+    </div>
+  );
+}
