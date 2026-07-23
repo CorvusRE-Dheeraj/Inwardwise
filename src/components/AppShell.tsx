@@ -159,14 +159,14 @@ export function AppShell({ children }: { children: ReactNode }) {
                 {user ? (
                   <button
                     onClick={signOut}
-                    className="flex flex-1 items-center justify-center gap-1.5 rounded-full border border-glass-border px-3.5 py-2 text-xs text-muted-foreground"
+                    className="flex flex-1 items-center justify-center gap-1.5 rounded-full border border-glass-border px-3 py-2 text-[10px] text-muted-foreground"
                   >
                     <LogOut className="h-3.5 w-3.5" /> Sign out
                   </button>
                 ) : (
                   <Link
                     to="/auth"
-                    className="flex flex-1 items-center justify-center gap-1.5 rounded-full border border-glass-border px-3.5 py-2 text-xs text-muted-foreground"
+                    className="flex flex-1 items-center justify-center gap-1.5 rounded-full border border-glass-border px-3 py-2 text-[10px] text-muted-foreground"
                   >
                     <LogIn className="h-3.5 w-3.5" /> Sign in
                   </Link>
