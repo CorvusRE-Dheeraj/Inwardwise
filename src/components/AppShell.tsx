@@ -1,12 +1,10 @@
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
-import { Brain, Moon, Sun, LogOut, LogIn, Shield, Menu, X } from "lucide-react";
+import { Brain, LogOut, LogIn, Shield, Menu, X } from "lucide-react";
 import { useEffect, useState, type ReactNode } from "react";
-import { useTheme } from "@/lib/theme";
 import { supabase } from "@/integrations/supabase/client";
 import type { User } from "@supabase/supabase-js";
 
 export function AppShell({ children }: { children: ReactNode }) {
-  const { theme, toggle } = useTheme();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const navigate = useNavigate();
   const [user, setUser] = useState<User | null>(null);
