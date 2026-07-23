@@ -1,6 +1,7 @@
-import { createFileRoute, Link, Outlet, useRouterState } from "@tanstack/react-router";
+import { createFileRoute, Link, Outlet, useNavigate, useRouterState } from "@tanstack/react-router";
 import { AppShell } from "@/components/AppShell";
-import { User, CreditCard, BarChart3, Moon, Flame } from "lucide-react";
+import { User, CreditCard, BarChart3, Moon, Flame, LogOut } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/_authenticated/account")({
   head: () => ({
