@@ -23,6 +23,13 @@ const tabs: Array<{ to: "/account" | "/account/billing" | "/account/dashboard" |
 
 function AccountLayout() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const navigate = useNavigate();
+
+  async function signOut() {
+    await supabase.auth.signOut();
+    navigate({ to: "/auth", replace: true });
+  }
+
   return (
     <AppShell>
       <div className="grid gap-8 md:grid-cols-[220px_1fr]">
@@ -44,6 +51,12 @@ function AccountLayout() {
               );
             })}
           </nav>
+          <button
+            onClick={signOut}
+            className="mt-6 flex w-full items-center gap-2 rounded-2xl px-3 py-2 text-sm text-muted-foreground transition hover:bg-foreground/5 hover:text-foreground"
+          >
+            <LogOut className="h-4 w-4" /> Sign out
+          </button>
         </aside>
         <div className="min-w-0">
           <Outlet />
