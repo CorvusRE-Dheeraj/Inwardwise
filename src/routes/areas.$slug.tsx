@@ -47,6 +47,10 @@ function AreaPage() {
 
       {area.slug === "individual-development" ? (
         <IndividualDevelopmentContent />
+      ) : area.slug === "security" ? (
+        <SecurityContent />
+      ) : area.slug === "organizational-change" ? (
+        <OrganizationalChangeContent />
       ) : (
         <div className="mt-10 glass rounded-3xl p-6 text-sm text-muted-foreground">
           Content for this area is being developed. In the meantime, you can start a facilitated
