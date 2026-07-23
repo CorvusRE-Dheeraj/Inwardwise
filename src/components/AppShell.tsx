@@ -1,5 +1,5 @@
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
-import { Brain, LogOut, LogIn, Shield, Menu, X } from "lucide-react";
+import { Brain, LogIn, Shield, Menu, X } from "lucide-react";
 import { useEffect, useState, type ReactNode } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import type { User } from "@supabase/supabase-js";
@@ -101,16 +101,7 @@ export function AppShell({ children }: { children: ReactNode }) {
             })}
           </nav>
           <div className="flex shrink-0 items-center gap-2">
-            {user ? (
-              <button
-                onClick={signOut}
-                className="hidden items-center gap-1.5 rounded-full border border-glass-border px-3 py-2 text-[10px] text-muted-foreground transition hover:text-foreground sm:flex"
-                title={user.email ?? "Signed in"}
-              >
-                <LogOut className="h-3.5 w-3.5" />
-                Sign out
-              </button>
-            ) : (
+            {!user && (
               <Link
                 to="/auth"
                 className="hidden items-center gap-1.5 rounded-full border border-glass-border px-3 py-2 text-[10px] text-muted-foreground transition hover:text-foreground sm:flex"
@@ -155,23 +146,16 @@ export function AppShell({ children }: { children: ReactNode }) {
                   </Link>
                 );
               })}
-              <div className="mt-2 flex gap-2 border-t border-glass-border pt-3">
-                {user ? (
-                  <button
-                    onClick={signOut}
-                    className="flex flex-1 items-center justify-center gap-1.5 rounded-full border border-glass-border px-3 py-2 text-[10px] text-muted-foreground"
-                  >
-                    <LogOut className="h-3.5 w-3.5" /> Sign out
-                  </button>
-                ) : (
+              {!user && (
+                <div className="mt-2 flex gap-2 border-t border-glass-border pt-3">
                   <Link
                     to="/auth"
                     className="flex flex-1 items-center justify-center gap-1.5 rounded-full border border-glass-border px-3 py-2 text-[10px] text-muted-foreground"
                   >
                     <LogIn className="h-3.5 w-3.5" /> Sign in
                   </Link>
-                )}
-              </div>
+                </div>
+              )}
             </nav>
           </div>
         )}
