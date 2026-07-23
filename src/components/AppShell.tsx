@@ -101,17 +101,10 @@ export function AppShell({ children }: { children: ReactNode }) {
             })}
           </nav>
           <div className="flex shrink-0 items-center gap-2">
-            <button
-              onClick={toggle}
-              aria-label="Toggle theme"
-              className="grid h-9 w-9 place-items-center rounded-full border border-glass-border text-muted-foreground transition hover:text-foreground"
-            >
-              {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-            </button>
             {user ? (
               <button
                 onClick={signOut}
-                className="hidden items-center gap-1.5 rounded-full border border-glass-border px-3.5 py-2 text-xs text-muted-foreground transition hover:text-foreground sm:flex"
+                className="hidden items-center gap-1.5 rounded-full border border-glass-border px-3 py-2 text-[10px] text-muted-foreground transition hover:text-foreground sm:flex"
                 title={user.email ?? "Signed in"}
               >
                 <LogOut className="h-3.5 w-3.5" />
@@ -120,7 +113,7 @@ export function AppShell({ children }: { children: ReactNode }) {
             ) : (
               <Link
                 to="/auth"
-                className="hidden items-center gap-1.5 rounded-full border border-glass-border px-3.5 py-2 text-xs text-muted-foreground transition hover:text-foreground sm:flex"
+                className="hidden items-center gap-1.5 rounded-full border border-glass-border px-3 py-2 text-[10px] text-muted-foreground transition hover:text-foreground sm:flex"
               >
                 <LogIn className="h-3.5 w-3.5" />
                 Sign in
