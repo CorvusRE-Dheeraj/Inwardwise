@@ -1,19 +1,22 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, ExternalLink, Linkedin } from "lucide-react";
+import { motion } from "framer-motion";
 import { AppShell } from "@/components/AppShell";
 import alexPortrait from "@/assets/alex-freeman.jpg.asset.json";
 
 export const Route = createFileRoute("/history")({
   head: () => ({
     meta: [
-      { title: "History — Objective Solution Framework" },
+      { title: "History — Decision Philosophy" },
       {
         name: "description",
         content:
-          "The origin story of the Objective Solution Framework — from Alex Freeman's decades of philosophical inquiry to a 7-step AI-facilitated decision engine.",
+          "The origin story of Decision Philosophy — from Alex Freeman's decades of philosophical inquiry to a 7-stage AI-facilitated decision engine.",
       },
-      { property: "og:title", content: "History — Objective Solution Framework" },
-      { property: "og:description", content: "How the 7-step decision framework came to be." },
+      { property: "og:title", content: "History — Decision Philosophy" },
+      { property: "og:description", content: "How the 7-stage decision framework came to be." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: History,
@@ -22,30 +25,46 @@ export const Route = createFileRoute("/history")({
 function History() {
   return (
     <AppShell>
-      <div className="mx-auto max-w-3xl">
-        <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground">History</p>
-        <h1 className="font-display mt-2 text-4xl md:text-5xl">The origin of the framework</h1>
+      <section className="mx-auto w-[min(1100px,calc(100%-2rem))] pb-24 pt-10 md:pb-36 md:pt-16">
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="font-mono-cap text-[color:var(--muted-foreground)]"
+        >
+          History
+        </motion.p>
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.05 }}
+          className="font-display mt-4 text-4xl leading-[1.05] tracking-tight text-[color:var(--ink)] md:text-6xl"
+        >
+          The origin of the framework
+        </motion.h1>
 
-        <div className="mt-8 flex flex-col items-center gap-6 sm:flex-row sm:items-end">
-          <img
-            src={alexPortrait.url}
-            alt="Alex Freeman, Ph.D."
-            width={160}
-            height={160}
-            loading="lazy"
-            className="h-40 w-40 rounded-3xl object-cover ring-1 ring-glass-border"
-          />
+        <div className="rule-top mt-8" />
+
+        <div className="mt-10 flex flex-col items-center gap-8 sm:flex-row sm:items-end">
+          <div className="paper-card relative aspect-square w-40 shrink-0 overflow-hidden rounded-3xl p-1">
+            <img
+              src={alexPortrait.url}
+              alt="Alex Freeman, Ph.D."
+              className="h-full w-full rounded-[1.25rem] object-cover"
+            />
+          </div>
           <div>
-            <div className="font-display text-2xl">Alex Freeman, Ph.D.</div>
-            <p className="mt-1 text-sm text-muted-foreground">
+            <div className="font-display text-2xl text-[color:var(--ink)] md:text-3xl">
+              Alex Freeman, Ph.D.
+            </div>
+            <p className="mt-1 text-sm text-[color:var(--muted-foreground)]">
               Research Scientist and Philosopher
             </p>
-            <div className="mt-3 flex flex-wrap gap-2">
+            <div className="mt-4 flex flex-wrap gap-2">
               <a
                 href="https://www.linkedin.com/in/alex-freeman-phd-591a292a"
                 target="_blank"
                 rel="noreferrer"
-                className="glass inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs text-foreground/90 hover:bg-foreground/5"
+                className="inline-flex items-center gap-1.5 rounded-full border border-[color:var(--rule)] px-3 py-1.5 text-xs text-[color:var(--ink)] transition hover:bg-[color:var(--paper-2)]"
               >
                 <Linkedin className="h-3.5 w-3.5" /> LinkedIn
               </a>
@@ -53,7 +72,7 @@ function History() {
                 href="https://alexfreeman.org"
                 target="_blank"
                 rel="noreferrer"
-                className="glass inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs text-foreground/90 hover:bg-foreground/5"
+                className="inline-flex items-center gap-1.5 rounded-full border border-[color:var(--rule)] px-3 py-1.5 text-xs text-[color:var(--ink)] transition hover:bg-[color:var(--paper-2)]"
               >
                 <ExternalLink className="h-3.5 w-3.5" /> alexfreeman.org
               </a>
@@ -61,7 +80,7 @@ function History() {
           </div>
         </div>
 
-        <article className="prose prose-invert mt-10 max-w-none space-y-5 text-[15px] leading-relaxed text-foreground/90">
+        <article className="mt-12 max-w-3xl space-y-6 text-[16px] leading-[1.7] text-[color:var(--ink-2)]">
           <p>
             I began my journey as a philosophical person — it is even my earliest memory — a
             somewhat fearless thinker with a detachment from societal thinking norms, driven by a
@@ -71,7 +90,7 @@ function History() {
           </p>
           <p>
             Only after much education and prior to my Ph.D. did I fall upon the concepts of
-            self-image from <em>Psycho-Cybernetics</em> by Maxwell Maltz. From then on I focused on
+            self-image from <em className="font-display italic text-[color:var(--ink)]">Psycho-Cybernetics</em> by Maxwell Maltz. From then on I focused on
             social psychology and developed self-reflection, abstract thinking, fearless
             detachment from established thinking and other philosophical concepts. In parallel I
             was interested in science and engineering and had a strong career as a research
@@ -109,24 +128,25 @@ function History() {
             decision making, because we do not take enough time to make important decisions on a
             more informed, impartial and judgement-free basis.
           </p>
-          <p className="font-display text-xl text-foreground">Now that's history.</p>
+          <p className="font-display text-xl text-[color:var(--ink)]">Now that's history.</p>
         </article>
 
-        <div className="mt-10 flex flex-wrap items-center gap-3">
+        <div className="rule-top mt-12" />
+        <div className="mt-8 flex flex-wrap items-center gap-3">
           <Link
             to="/decision"
-            className="inline-flex items-center gap-2 rounded-full bg-foreground px-5 py-3 text-sm font-medium text-background"
+            className="inline-flex items-center gap-2 rounded-full bg-[color:var(--ink)] px-5 py-3 text-sm font-medium text-[color:var(--paper)] transition hover:bg-black"
           >
             Start a decision <ArrowRight className="h-4 w-4" />
           </Link>
           <Link
             to="/examples"
-            className="glass inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm text-foreground hover:bg-foreground/5"
+            className="inline-flex items-center gap-2 rounded-full border border-[color:var(--ink)] px-5 py-3 text-sm text-[color:var(--ink)] transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)]"
           >
             See examples
           </Link>
         </div>
-      </div>
+      </section>
     </AppShell>
   );
 }
