@@ -44,6 +44,7 @@ export function AppShell({ children }: { children: ReactNode }) {
     { to: "/areas", label: "Areas" },
     { to: "/examples", label: "Examples" },
     { to: "/science", label: "Science" },
+    { to: "/history", label: "History" },
     { to: "/testimonials", label: "Voices" },
     { to: "/pricing", label: "Pricing" },
     { to: "/donate", label: "Donate" },
@@ -178,6 +179,7 @@ export function AppShell({ children }: { children: ReactNode }) {
               <li><Link to="/areas" className="hover:text-[color:var(--royal)]">Areas</Link></li>
               <li><Link to="/examples" className="hover:text-[color:var(--royal)]">Examples</Link></li>
               <li><Link to="/science" className="hover:text-[color:var(--royal)]">Science &amp; Philosophy</Link></li>
+              <li><Link to="/history" className="hover:text-[color:var(--royal)]">History</Link></li>
             </ul>
           </div>
           <div>
