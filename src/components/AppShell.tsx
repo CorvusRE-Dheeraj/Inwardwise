@@ -44,6 +44,7 @@ export function AppShell({ children }: { children: ReactNode }) {
     { to: "/areas", label: "Areas" },
     { to: "/examples", label: "Examples" },
     { to: "/science", label: "Science" },
+    { to: "/history", label: "History" },
     { to: "/testimonials", label: "Voices" },
     { to: "/pricing", label: "Pricing" },
     { to: "/donate", label: "Donate" },
