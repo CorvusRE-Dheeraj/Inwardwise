@@ -126,18 +126,17 @@ function IndividualDevelopmentContent() {
           <svg viewBox="-15 -10 130 120" className="h-auto w-full">
             <polygon
               points={starPoints}
-              fill="hsl(var(--muted-foreground) / 0.18)"
-              stroke="currentColor"
+              fill="#D9D9D9"
+              stroke="#BFBFBF"
               strokeWidth="0.6"
-              className="text-muted-foreground/50"
             />
             <text
               x="50"
               y="50"
               textAnchor="middle"
               dominantBaseline="middle"
-              className="fill-current text-foreground"
-              style={{ fontSize: 7, fontWeight: 600 }}
+              fill="#000000"
+              style={{ fontSize: 7, fontWeight: 700 }}
             >
               <tspan x="50" dy="-2">Self</tspan>
               <tspan x="50" dy="8">Avatar</tspan>
