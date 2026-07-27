@@ -126,10 +126,10 @@ function IndividualDevelopmentContent() {
           <svg viewBox="-15 -10 130 120" className="h-auto w-full">
             <polygon
               points={starPoints}
-              fill="hsl(var(--accent) / 0.12)"
+              fill="hsl(var(--muted-foreground) / 0.18)"
               stroke="currentColor"
               strokeWidth="0.6"
-              className="text-foreground/70"
+              className="text-muted-foreground/50"
             />
             <text
               x="50"
