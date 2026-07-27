@@ -71,6 +71,20 @@ function AreaPage() {
 }
 
 function IndividualDevelopmentContent() {
+  const dims = [
+    { label: "Dimension 1", x: 50, y: 2 },
+    { label: "Dimension 2", x: 95, y: 35 },
+    { label: "Dimension 3", x: 78, y: 96 },
+    { label: "Dimension 4", x: 22, y: 96 },
+    { label: "Dimension 5", x: 5, y: 35 },
+  ];
+  // Five-point star path centered in 100x100 viewBox
+  const starPoints = Array.from({ length: 10 }, (_, i) => {
+    const angle = (Math.PI / 5) * i - Math.PI / 2;
+    const r = i % 2 === 0 ? 46 : 18;
+    return `${50 + r * Math.cos(angle)},${50 + r * Math.sin(angle)}`;
+  }).join(" ");
+
   return (
     <div className="mt-10 space-y-6 text-[15px] leading-relaxed">
       <p>
@@ -89,62 +103,87 @@ function IndividualDevelopmentContent() {
         become a true friend; they are so few and far between. But psychological wellbeing needs
         both — self-love and good social connection.
       </p>
+
       <p>
-        If you allow, your self can step out and watch you from a distance, and reach out to you
-        once in a while when it feels you need it. Your self-agent here can reach out to you in
-        ways that currently no other channel can. Help us help you. Create your <em>Shadow</em> and
-        your <em>Inner Enemy</em>, and let them reach you and interact with you to develop self-love.
+        Life is defined by two characteristic traits: <em>Reproduction</em> and <em>Evolution</em> —
+        the drive toward a better species, better adapted to survival and thriving. The first is
+        possible only for a physical being, which the human can do. You can accomplish reproduction
+        and accomplish your evolution, and pass on heredity to the next generation. The Avatar&rsquo;s
+        goal is solely the second: to make you better so you can evolve within this lifetime, for
+        the better.
+      </p>
+      <p>
+        Given this goal of your Avatar, let&rsquo;s design it using AI to help you evolve into a
+        better human being as time brings change. The Avatar&rsquo;s goal is how to make you better
+        over a long time, in a broad sense. It gets formed based on the five attributes defined
+        above. Once you identify that information and hard-code your Avatar, it goes to work by
+        identifying with the dimensions below and taking action based on the best course, based on
+        the prompt it received from you.
+      </p>
+
+      <figure className="glass rounded-3xl p-6">
+        <div className="mx-auto max-w-md">
+          <svg viewBox="-15 -10 130 120" className="h-auto w-full">
+            <polygon
+              points={starPoints}
+              fill="hsl(var(--accent) / 0.12)"
+              stroke="currentColor"
+              strokeWidth="0.6"
+              className="text-foreground/70"
+            />
+            <text
+              x="50"
+              y="50"
+              textAnchor="middle"
+              dominantBaseline="middle"
+              className="fill-current text-foreground"
+              style={{ fontSize: 7, fontWeight: 600 }}
+            >
+              <tspan x="50" dy="-2">Self</tspan>
+              <tspan x="50" dy="8">Avatar</tspan>
+            </text>
+            {dims.map((d) => (
+              <text
+                key={d.label}
+                x={d.x}
+                y={d.y}
+                textAnchor="middle"
+                className="fill-current text-muted-foreground"
+                style={{ fontSize: 4.2 }}
+              >
+                {d.label}
+              </text>
+            ))}
+          </svg>
+        </div>
+        <figcaption className="mt-4 text-center text-xs uppercase tracking-[0.18em] text-muted-foreground">
+          The Self Avatar and its five dimensions
+        </figcaption>
+      </figure>
+
+      <p>
+        Based on the human prompt, the Avatar will scan across all dimensions for a better
+        understanding of you and advise you. These dimensions are based on reviewing many scientific
+        papers and a combination of intuitive approaches — studying many philosophies, psychological
+        approaches and observational methods. There was no single approach; it came together as a
+        book project by the founder to assemble all of the material for the book he is working on.
+        You won&rsquo;t find this methodology in any single research.
       </p>
 
       <div className="glass rounded-3xl p-6">
-        <h2 className="font-display text-2xl">The five attributes of an individual</h2>
-        <ol className="mt-4 space-y-3 text-sm">
-          {[
-            ["Shadow", "Who you were growing up — the parts of you carried forward."],
-            ["Enemy", "The inner forces that pull you off course."],
-            ["Interests, skills and talents", "Your inner connections — what you are drawn to."],
-            ["Outer Connections", "The people and places that shape you."],
-            ["Connect the Dots", "The experiences that, in retrospect, form a pattern."],
-          ].map(([title, desc]) => (
-            <li key={title} className="flex gap-3">
-              <span className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-foreground text-[11px] text-background">
-                •
-              </span>
-              <div>
-                <div className="font-medium">{title}</div>
-                <div className="text-muted-foreground">{desc}</div>
-              </div>
-            </li>
-          ))}
-        </ol>
-        <p className="mt-5 text-sm text-muted-foreground">
-          Using these, we can help you develop better — by helping you define them, and by letting
-          them change over time.
-        </p>
-      </div>
-
-      <div className="glass rounded-3xl p-6">
-        <h2 className="font-display text-2xl">Why we do this</h2>
-        <p className="mt-3 text-sm text-muted-foreground">
-          At Decision Philosophy, we believe that if we can prevent even one suicide, our efforts
-          are worth it. We don&rsquo;t need to be another Facebook success. Our success is measured by
-          making a difference in people&rsquo;s lives and in society in general.
-        </p>
-        <ul className="mt-4 grid grid-cols-2 gap-2 text-sm sm:grid-cols-4">
-          {["Suicide prevention", "Depression prevention", "Anxiety prevention", "Anger prevention"].map((t) => (
-            <li key={t} className="glass rounded-2xl px-3 py-2 text-center text-xs">{t}</li>
-          ))}
-        </ul>
-        <p className="mt-5 text-sm text-muted-foreground">
-          My early sign of anger was when I felt I faced injustice — from family, friends or social
-          institutions. But anger only turns you into a stressed and disliked individual. When the
-          automated you reaches out to you and indicates which emotions you are feeling, the system
-          works with you to better your situation.
+        <p className="text-sm text-muted-foreground">
+          We can think of the Avatar as a <span className="text-foreground">Facebook for the inner self</span>,
+          as Facebook is for the outer world to see what you are thinking and experiencing. Unlike
+          Facebook, the information is confidential and will not be available to anyone except you.
+          By representing a truthful you as the Avatar, you can manage your inner self and have a
+          personal conversation with yourself. This builds self-love and a healthy acceptance of
+          who you are — not a victim of having to depend on others for acceptance and encouragement.
         </p>
       </div>
     </div>
   );
 }
+
 
 function SecurityContent() {
   return (
