@@ -40,7 +40,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   }, []);
 
   const nav: Array<{ to: string; label: string }> = [
-    { to: "/decision", label: "Start" },
+    { to: "/decision", label: "Start Decision" },
     { to: "/areas", label: "Areas" },
     { to: "/examples", label: "Examples" },
     { to: "/science", label: "Science" },
