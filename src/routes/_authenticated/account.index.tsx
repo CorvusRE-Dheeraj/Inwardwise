@@ -37,25 +37,36 @@ function PersonalDetailsPage() {
 
   return (
     <div>
-      <h1 className="font-display text-3xl">Personal details</h1>
+      <h1 className="font-display text-3xl">Edit Personal Settings</h1>
       <p className="mt-2 text-sm text-muted-foreground">
         A personal connection between you and your AI facilitator begins here.
       </p>
 
       <form onSubmit={onSave} className="mt-8 grid gap-4 max-w-xl">
-        <Field label="Email"><input value={email} disabled className="input opacity-70" /></Field>
         <Field label="Name">
           <input value={form.name} onChange={(e) => update("name", e.target.value)} className="input" placeholder="Your name" />
         </Field>
-        <Field label="Phone (for personal text with your Self-AI, optional)">
+        <Field label="Date of Birth">
+          <input type="date" value={form.dateOfBirth} onChange={(e) => update("dateOfBirth", e.target.value)} className="input" />
+        </Field>
+        <Field
+          label="Phone"
+          hint="For personal text communication with AI only. No one else will reach out to you."
+        >
           <input value={form.phone} onChange={(e) => update("phone", e.target.value)} className="input" placeholder="+1 555 000 0000" />
         </Field>
+        <Field label="Email"><input value={email} disabled className="input opacity-70" /></Field>
 
         <Toggle
-          label="Allow my Self to reach out to me"
-          desc="Occasional check-ins when your Self-AI feels you need one."
+          label="Allow my Inner Avatar to reach out to me automatically"
+          desc="We suggest you turn this on so the full power of the Inner Avatar works for you."
           value={form.reachOutEnabled}
           onChange={(v) => update("reachOutEnabled", v)}
+        />
+        <Toggle
+          label="Allow appointments to be set for me via my email above"
+          value={form.appointmentsEnabled}
+          onChange={(v) => update("appointmentsEnabled", v)}
         />
         <Toggle
           label="Email me insights"
