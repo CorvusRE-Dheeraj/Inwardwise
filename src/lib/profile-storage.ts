@@ -16,6 +16,16 @@ export type EnemyProfile = {
   traits: string; // e.g. "Egoistic, Narcissist, Anger, Jealousy"
 };
 
+export type SelfAvatar = {
+  avatar: string; // emoji or short symbol
+  dimension1: string;
+  dimension2: string;
+  dimension3: string;
+  dimension4: string;
+  dimension5: string;
+  note: string;
+};
+
 const key = (uid: string, ns: string) => `dp.profile.${ns}.${uid}`;
 
 function read<T>(k: string, fallback: T): T {
