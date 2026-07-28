@@ -6,14 +6,14 @@ export type PersonalDetails = {
   emailEnabled: boolean;
 };
 
-export type ShadowProfile = {
-  avatar: string; // emoji or short text
-  traits: string; // freeform text
-};
-
-export type EnemyProfile = {
-  avatar: string;
-  traits: string; // e.g. "Egoistic, Narcissist, Anger, Jealousy"
+export type SelfAvatar = {
+  avatar: string; // emoji or short symbol
+  dimension1: string;
+  dimension2: string;
+  dimension3: string;
+  dimension4: string;
+  dimension5: string;
+  note: string;
 };
 
 const key = (uid: string, ns: string) => `dp.profile.${ns}.${uid}`;
@@ -34,12 +34,17 @@ function write<T>(k: string, v: T) {
 }
 
 export const personalDefaults: PersonalDetails = { name: "", phone: "", reachOutEnabled: false, emailEnabled: true };
-export const shadowDefaults: ShadowProfile = { avatar: "🌱", traits: "" };
-export const enemyDefaults: EnemyProfile = { avatar: "🔥", traits: "" };
+export const selfAvatarDefaults: SelfAvatar = {
+  avatar: "✦",
+  dimension1: "",
+  dimension2: "",
+  dimension3: "",
+  dimension4: "",
+  dimension5: "",
+  note: "",
+};
 
 export const loadPersonal = (uid: string) => read(key(uid, "personal"), personalDefaults);
 export const savePersonal = (uid: string, v: PersonalDetails) => write(key(uid, "personal"), v);
-export const loadShadow = (uid: string) => read(key(uid, "shadow"), shadowDefaults);
-export const saveShadow = (uid: string, v: ShadowProfile) => write(key(uid, "shadow"), v);
-export const loadEnemy = (uid: string) => read(key(uid, "enemy"), enemyDefaults);
-export const saveEnemy = (uid: string, v: EnemyProfile) => write(key(uid, "enemy"), v);
+export const loadSelfAvatar = (uid: string) => read(key(uid, "selfAvatar"), selfAvatarDefaults);
+export const saveSelfAvatar = (uid: string, v: SelfAvatar) => write(key(uid, "selfAvatar"), v);
