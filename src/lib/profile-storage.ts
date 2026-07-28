@@ -35,7 +35,7 @@ function write<T>(k: string, v: T) {
   localStorage.setItem(k, JSON.stringify(v));
 }
 
-export const personalDefaults: PersonalDetails = { name: "", phone: "", reachOutEnabled: false, emailEnabled: true };
+export const personalDefaults: PersonalDetails = { name: "", dateOfBirth: "", phone: "", reachOutEnabled: false, emailEnabled: true, appointmentsEnabled: false };
 export const selfAvatarDefaults: SelfAvatar = {
   avatar: "✦",
   dimension1: "",
