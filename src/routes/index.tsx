@@ -7,13 +7,15 @@ import { STAGES } from "@/lib/ooi-stages";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Decision Philosophy" },
-      { name: "description", content: "Remove Bias, Fear, and Ego out of Your Decisions." },
+      { title: "Decision Philosophy — Remove Bias, Fear, and Ego From Your Decisions" },
+      { name: "description", content: "A quiet, deliberate practice for the few decisions that shape a life. Seven stages to remove bias, fear, and ego from every choice." },
       { property: "og:title", content: "Decision Philosophy" },
-      { property: "og:description", content: "Remove Bias, Fear, and Ego out of Your Decisions." },
+      { property: "og:description", content: "Remove bias, fear, and ego from the choices that shape a life." },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://decisionphilosophy.com/" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
+    links: [{ rel: "canonical", href: "https://decisionphilosophy.com/" }],
   }),
   component: Landing,
 });
