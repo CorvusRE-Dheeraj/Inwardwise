@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TestimonialsRouteImport } from './routes/testimonials'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ScienceRouteImport } from './routes/science'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as HistoryRouteImport } from './routes/history'
@@ -38,6 +39,11 @@ import { Route as LovableEmailQueueProcessRouteImport } from './routes/lovable/e
 const TestimonialsRoute = TestimonialsRouteImport.update({
   id: '/testimonials',
   path: '/testimonials',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ScienceRoute = ScienceRouteImport.update({
@@ -175,6 +181,7 @@ export interface FileRoutesByFullPath {
   '/history': typeof HistoryRoute
   '/pricing': typeof PricingRoute
   '/science': typeof ScienceRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/testimonials': typeof TestimonialsRoute
   '/account': typeof AuthenticatedAccountRouteWithChildren
   '/admin': typeof AuthenticatedAdminRoute
@@ -200,6 +207,7 @@ export interface FileRoutesByTo {
   '/history': typeof HistoryRoute
   '/pricing': typeof PricingRoute
   '/science': typeof ScienceRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/testimonials': typeof TestimonialsRoute
   '/admin': typeof AuthenticatedAdminRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
@@ -227,6 +235,7 @@ export interface FileRoutesById {
   '/history': typeof HistoryRoute
   '/pricing': typeof PricingRoute
   '/science': typeof ScienceRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/testimonials': typeof TestimonialsRoute
   '/_authenticated/account': typeof AuthenticatedAccountRouteWithChildren
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
@@ -255,6 +264,7 @@ export interface FileRouteTypes {
     | '/history'
     | '/pricing'
     | '/science'
+    | '/sitemap.xml'
     | '/testimonials'
     | '/account'
     | '/admin'
@@ -280,6 +290,7 @@ export interface FileRouteTypes {
     | '/history'
     | '/pricing'
     | '/science'
+    | '/sitemap.xml'
     | '/testimonials'
     | '/admin'
     | '/dashboard'
@@ -306,6 +317,7 @@ export interface FileRouteTypes {
     | '/history'
     | '/pricing'
     | '/science'
+    | '/sitemap.xml'
     | '/testimonials'
     | '/_authenticated/account'
     | '/_authenticated/admin'
@@ -334,6 +346,7 @@ export interface RootRouteChildren {
   HistoryRoute: typeof HistoryRoute
   PricingRoute: typeof PricingRoute
   ScienceRoute: typeof ScienceRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TestimonialsRoute: typeof TestimonialsRoute
   ApiChatRoute: typeof ApiChatRoute
   ApiTranscribeRoute: typeof ApiTranscribeRoute
@@ -348,6 +361,13 @@ declare module '@tanstack/react-router' {
       path: '/testimonials'
       fullPath: '/testimonials'
       preLoaderRoute: typeof TestimonialsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/science': {
@@ -578,6 +598,7 @@ const rootRouteChildren: RootRouteChildren = {
   HistoryRoute: HistoryRoute,
   PricingRoute: PricingRoute,
   ScienceRoute: ScienceRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   TestimonialsRoute: TestimonialsRoute,
   ApiChatRoute: ApiChatRoute,
   ApiTranscribeRoute: ApiTranscribeRoute,
@@ -587,13 +608,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
