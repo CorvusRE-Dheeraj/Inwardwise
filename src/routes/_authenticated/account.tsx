@@ -14,10 +14,10 @@ export const Route = createFileRoute("/_authenticated/account")({
 });
 
 const tabs: Array<{ to: "/account" | "/account/billing" | "/account/dashboard" | "/account/self-avatar"; label: string; icon: typeof User; exact?: boolean }> = [
-  { to: "/account", label: "Personal details", icon: User, exact: true },
+  { to: "/account", label: "Personal Settings", icon: User, exact: true },
   { to: "/account/billing", label: "Billing", icon: CreditCard },
   { to: "/account/dashboard", label: "Dashboard", icon: BarChart3 },
-  { to: "/account/self-avatar", label: "Self Avatar", icon: Sparkles },
+  { to: "/account/self-avatar", label: "Avatar Design", icon: Sparkles },
 ];
 
 function AccountLayout() {
