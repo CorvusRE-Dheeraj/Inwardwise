@@ -46,6 +46,15 @@ function write<T>(k: string, v: T) {
 export const personalDefaults: PersonalDetails = { name: "", phone: "", reachOutEnabled: false, emailEnabled: true };
 export const shadowDefaults: ShadowProfile = { avatar: "🌱", traits: "" };
 export const enemyDefaults: EnemyProfile = { avatar: "🔥", traits: "" };
+export const selfAvatarDefaults: SelfAvatar = {
+  avatar: "✦",
+  dimension1: "",
+  dimension2: "",
+  dimension3: "",
+  dimension4: "",
+  dimension5: "",
+  note: "",
+};
 
 export const loadPersonal = (uid: string) => read(key(uid, "personal"), personalDefaults);
 export const savePersonal = (uid: string, v: PersonalDetails) => write(key(uid, "personal"), v);
@@ -53,3 +62,5 @@ export const loadShadow = (uid: string) => read(key(uid, "shadow"), shadowDefaul
 export const saveShadow = (uid: string, v: ShadowProfile) => write(key(uid, "shadow"), v);
 export const loadEnemy = (uid: string) => read(key(uid, "enemy"), enemyDefaults);
 export const saveEnemy = (uid: string, v: EnemyProfile) => write(key(uid, "enemy"), v);
+export const loadSelfAvatar = (uid: string) => read(key(uid, "selfAvatar"), selfAvatarDefaults);
+export const saveSelfAvatar = (uid: string, v: SelfAvatar) => write(key(uid, "selfAvatar"), v);
