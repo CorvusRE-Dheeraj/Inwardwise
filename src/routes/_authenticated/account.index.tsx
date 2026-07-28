@@ -39,7 +39,7 @@ function PersonalDetailsPage() {
     <div>
       <h1 className="font-display text-3xl">Personal details</h1>
       <p className="mt-2 text-sm text-muted-foreground">
-        A personal connection between your <em>Shadow</em> and <em>Inner Enemy</em> is established here.
+        A personal connection between you and your AI facilitator begins here.
       </p>
 
       <form onSubmit={onSave} className="mt-8 grid gap-4 max-w-xl">
