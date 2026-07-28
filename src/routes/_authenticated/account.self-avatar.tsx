@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { loadSelfAvatar, saveSelfAvatar, selfAvatarDefaults, type SelfAvatar } from "@/lib/profile-storage";
@@ -11,6 +11,7 @@ function SelfAvatarPage() {
   const [uid, setUid] = useState<string | null>(null);
   const [form, setForm] = useState<SelfAvatar>(selfAvatarDefaults);
   const [saved, setSaved] = useState(false);
+  const [openDim, setOpenDim] = useState<string | null>(null);
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => {
@@ -48,12 +49,39 @@ function SelfAvatarPage() {
 
   return (
     <div>
-      <h1 className="font-display text-3xl">Self Avatar</h1>
-      <p className="mt-2 max-w-xl text-sm text-muted-foreground">
-        Your Self Avatar is a truthful, evolving representation of your inner self. Define the five dimensions that shape it so your AI can reflect you back to you.
-      </p>
+      <h1 className="font-display text-3xl">Avatar Design</h1>
 
-      <form onSubmit={onSave} className="mt-8 grid gap-4 max-w-xl">
+      <div className="mt-4 max-w-2xl space-y-4 text-sm leading-relaxed text-foreground/80">
+        <p>
+          Your inner Avatar is a unique representation of you psychologically. But it's built from first
+          principles that shaped you and will shape you based on future actions. Our unique approach does
+          not classify you and use those attributes to build your Avatar. That would not be unique, nor
+          a true representation of you — especially when you get triggered by certain things. Listing you
+          via classification would not be an inner representation.
+        </p>
+        <p>
+          For countless years the founder of the company asked this question as a physicist: are there
+          first principles that can define a human being? He did not just look into psychology research,
+          because that is very limiting. Instead he used his physics-based approach of things that need
+          to be built from first principles. So he developed this approach to help you build your Avatar.
+        </p>
+        <p>
+          For additional background information on the Avatar model{" "}
+          <Link to="/areas/$slug" params={{ slug: "individual-development" }} className="underline underline-offset-4 hover:text-accent">
+            click here
+          </Link>
+          .
+        </p>
+        <p>
+          In order to build your Avatar you have to answer a series of questions in each of the 5 dimensions.
+          This is a laborious process — you really have to dig deeper in answering these questions. Set
+          aside time and do this for each dimension so you get an Avatar that is accurate. You only have to
+          do this once; the Avatar will keep updating itself over time so it stays a representation of the
+          current you. You can always review your answers and change them to revise your Avatar.
+        </p>
+      </div>
+
+      <form onSubmit={onSave} className="mt-10 grid gap-4 max-w-2xl">
         <label className="block">
           <span className="mb-1 block text-xs text-muted-foreground">Avatar symbol (emoji or short text)</span>
           <input
@@ -97,17 +125,37 @@ function SelfAvatarPage() {
           </p>
         </div>
 
-        {dims.map((d) => (
-          <label key={d.key} className="block">
-            <span className="mb-1 block text-xs text-muted-foreground">{d.label}</span>
-            <input
-              value={form[d.key]}
-              onChange={(e) => update(d.key, e.target.value)}
-              className="input"
-              placeholder={`What defines ${d.label.toLowerCase()} of you?`}
-            />
-          </label>
-        ))}
+        <div className="mt-4 divide-y divide-border/60 rounded-2xl border border-border/60">
+          {dims.map((d) => {
+            const isOpen = openDim === d.key;
+            return (
+              <div key={d.key}>
+                <button
+                  type="button"
+                  onClick={() => setOpenDim(isOpen ? null : d.key)}
+                  className="flex w-full items-center justify-between px-5 py-4 text-left"
+                >
+                  <span className="text-sm font-medium">{d.label} — Questions</span>
+                  <span className="text-xs text-muted-foreground">{isOpen ? "Close" : "Open"}</span>
+                </button>
+                {isOpen && (
+                  <div className="space-y-3 border-t border-border/60 bg-background/40 px-5 py-4">
+                    <p className="text-xs uppercase tracking-[0.16em] text-muted-foreground">
+                      Guided questions for {d.label.toLowerCase()} will appear here.
+                    </p>
+                    <textarea
+                      value={form[d.key]}
+                      onChange={(e) => update(d.key, e.target.value)}
+                      rows={5}
+                      className="input"
+                      placeholder={`Begin your reflection on ${d.label.toLowerCase()}. Take your time — this is a first-principles exercise.`}
+                    />
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
 
         <label className="block">
           <span className="mb-1 block text-xs text-muted-foreground">Private note</span>
