@@ -63,7 +63,7 @@ function AreaPage() {
           to="/account/self-avatar"
           className="inline-flex items-center gap-2 rounded-full bg-foreground px-4 py-2 text-sm text-background transition hover:opacity-90"
         >
-          <Sparkles className="h-4 w-4" /> Create my avatar
+          <Sparkles className="h-4 w-4" /> Design Your Avatar
         </Link>
       </div>
     </article>
