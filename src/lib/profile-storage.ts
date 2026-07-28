@@ -1,9 +1,11 @@
 // Simple per-user local profile storage. Not synced to server yet.
 export type PersonalDetails = {
   name: string;
+  dateOfBirth: string;
   phone: string;
   reachOutEnabled: boolean;
   emailEnabled: boolean;
+  appointmentsEnabled: boolean;
 };
 
 export type SelfAvatar = {
