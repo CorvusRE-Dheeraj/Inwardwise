@@ -1,24 +1,23 @@
 import { createFileRoute, Link, Outlet, useNavigate, useRouterState } from "@tanstack/react-router";
 import { AppShell } from "@/components/AppShell";
-import { User, CreditCard, BarChart3, Moon, Flame, LogOut } from "lucide-react";
+import { User, CreditCard, BarChart3, Sparkles, LogOut } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/_authenticated/account")({
   head: () => ({
     meta: [
       { title: "Account — Decision Philosophy" },
-      { name: "description", content: "Manage your personal details, dashboard, shadow and inner enemy." },
+      { name: "description", content: "Manage your personal details, dashboard, and Self Avatar." },
     ],
   }),
   component: AccountLayout,
 });
 
-const tabs: Array<{ to: "/account" | "/account/billing" | "/account/dashboard" | "/account/shadow" | "/account/enemy"; label: string; icon: typeof User; exact?: boolean }> = [
+const tabs: Array<{ to: "/account" | "/account/billing" | "/account/dashboard" | "/account/self-avatar"; label: string; icon: typeof User; exact?: boolean }> = [
   { to: "/account", label: "Personal details", icon: User, exact: true },
   { to: "/account/billing", label: "Billing", icon: CreditCard },
   { to: "/account/dashboard", label: "Dashboard", icon: BarChart3 },
-  { to: "/account/shadow", label: "Shadow", icon: Moon },
-  { to: "/account/enemy", label: "Inner Enemy", icon: Flame },
+  { to: "/account/self-avatar", label: "Self Avatar", icon: Sparkles },
 ];
 
 function AccountLayout() {

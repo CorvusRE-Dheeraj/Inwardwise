@@ -31,6 +31,7 @@ import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/
 import { Route as AuthenticatedAccountRouteImport } from './routes/_authenticated/account'
 import { Route as AuthenticatedAccountIndexRouteImport } from './routes/_authenticated/account.index'
 import { Route as AuthenticatedAccountShadowRouteImport } from './routes/_authenticated/account.shadow'
+import { Route as AuthenticatedAccountSelfAvatarRouteImport } from './routes/_authenticated/account.self-avatar'
 import { Route as AuthenticatedAccountEnemyRouteImport } from './routes/_authenticated/account.enemy'
 import { Route as AuthenticatedAccountDashboardRouteImport } from './routes/_authenticated/account.dashboard'
 import { Route as AuthenticatedAccountBillingRouteImport } from './routes/_authenticated/account.billing'
@@ -147,6 +148,12 @@ const AuthenticatedAccountShadowRoute =
     path: '/shadow',
     getParentRoute: () => AuthenticatedAccountRoute,
   } as any)
+const AuthenticatedAccountSelfAvatarRoute =
+  AuthenticatedAccountSelfAvatarRouteImport.update({
+    id: '/self-avatar',
+    path: '/self-avatar',
+    getParentRoute: () => AuthenticatedAccountRoute,
+  } as any)
 const AuthenticatedAccountEnemyRoute =
   AuthenticatedAccountEnemyRouteImport.update({
     id: '/enemy',
@@ -195,6 +202,7 @@ export interface FileRoutesByFullPath {
   '/account/billing': typeof AuthenticatedAccountBillingRoute
   '/account/dashboard': typeof AuthenticatedAccountDashboardRoute
   '/account/enemy': typeof AuthenticatedAccountEnemyRoute
+  '/account/self-avatar': typeof AuthenticatedAccountSelfAvatarRoute
   '/account/shadow': typeof AuthenticatedAccountShadowRoute
   '/account/': typeof AuthenticatedAccountIndexRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
@@ -220,6 +228,7 @@ export interface FileRoutesByTo {
   '/account/billing': typeof AuthenticatedAccountBillingRoute
   '/account/dashboard': typeof AuthenticatedAccountDashboardRoute
   '/account/enemy': typeof AuthenticatedAccountEnemyRoute
+  '/account/self-avatar': typeof AuthenticatedAccountSelfAvatarRoute
   '/account/shadow': typeof AuthenticatedAccountShadowRoute
   '/account': typeof AuthenticatedAccountIndexRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
@@ -249,6 +258,7 @@ export interface FileRoutesById {
   '/_authenticated/account/billing': typeof AuthenticatedAccountBillingRoute
   '/_authenticated/account/dashboard': typeof AuthenticatedAccountDashboardRoute
   '/_authenticated/account/enemy': typeof AuthenticatedAccountEnemyRoute
+  '/_authenticated/account/self-avatar': typeof AuthenticatedAccountSelfAvatarRoute
   '/_authenticated/account/shadow': typeof AuthenticatedAccountShadowRoute
   '/_authenticated/account/': typeof AuthenticatedAccountIndexRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
@@ -278,6 +288,7 @@ export interface FileRouteTypes {
     | '/account/billing'
     | '/account/dashboard'
     | '/account/enemy'
+    | '/account/self-avatar'
     | '/account/shadow'
     | '/account/'
     | '/lovable/email/queue/process'
@@ -303,6 +314,7 @@ export interface FileRouteTypes {
     | '/account/billing'
     | '/account/dashboard'
     | '/account/enemy'
+    | '/account/self-avatar'
     | '/account/shadow'
     | '/account'
     | '/lovable/email/queue/process'
@@ -331,6 +343,7 @@ export interface FileRouteTypes {
     | '/_authenticated/account/billing'
     | '/_authenticated/account/dashboard'
     | '/_authenticated/account/enemy'
+    | '/_authenticated/account/self-avatar'
     | '/_authenticated/account/shadow'
     | '/_authenticated/account/'
     | '/lovable/email/queue/process'
@@ -510,6 +523,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAccountShadowRouteImport
       parentRoute: typeof AuthenticatedAccountRoute
     }
+    '/_authenticated/account/self-avatar': {
+      id: '/_authenticated/account/self-avatar'
+      path: '/self-avatar'
+      fullPath: '/account/self-avatar'
+      preLoaderRoute: typeof AuthenticatedAccountSelfAvatarRouteImport
+      parentRoute: typeof AuthenticatedAccountRoute
+    }
     '/_authenticated/account/enemy': {
       id: '/_authenticated/account/enemy'
       path: '/enemy'
@@ -545,6 +565,7 @@ interface AuthenticatedAccountRouteChildren {
   AuthenticatedAccountBillingRoute: typeof AuthenticatedAccountBillingRoute
   AuthenticatedAccountDashboardRoute: typeof AuthenticatedAccountDashboardRoute
   AuthenticatedAccountEnemyRoute: typeof AuthenticatedAccountEnemyRoute
+  AuthenticatedAccountSelfAvatarRoute: typeof AuthenticatedAccountSelfAvatarRoute
   AuthenticatedAccountShadowRoute: typeof AuthenticatedAccountShadowRoute
   AuthenticatedAccountIndexRoute: typeof AuthenticatedAccountIndexRoute
 }
@@ -553,6 +574,7 @@ const AuthenticatedAccountRouteChildren: AuthenticatedAccountRouteChildren = {
   AuthenticatedAccountBillingRoute: AuthenticatedAccountBillingRoute,
   AuthenticatedAccountDashboardRoute: AuthenticatedAccountDashboardRoute,
   AuthenticatedAccountEnemyRoute: AuthenticatedAccountEnemyRoute,
+  AuthenticatedAccountSelfAvatarRoute: AuthenticatedAccountSelfAvatarRoute,
   AuthenticatedAccountShadowRoute: AuthenticatedAccountShadowRoute,
   AuthenticatedAccountIndexRoute: AuthenticatedAccountIndexRoute,
 }
