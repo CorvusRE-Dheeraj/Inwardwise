@@ -70,14 +70,13 @@ function SelfAvatarPage() {
               <polygon points={starPoints} fill="#D9D9D9" stroke="#BFBFBF" strokeWidth="0.6" />
               <text
                 x="50"
-                y="50"
+                y="52"
                 textAnchor="middle"
                 dominantBaseline="middle"
                 fill="#000000"
-                style={{ fontSize: 7, fontWeight: 700 }}
+                style={{ fontSize: 6.5, fontWeight: 700 }}
               >
-                <tspan x="50" dy="-2">{form.avatar || "Self"}</tspan>
-                <tspan x="50" dy="8">Avatar</tspan>
+                Self Avatar
               </text>
               {dims.map((d) => (
                 <text
