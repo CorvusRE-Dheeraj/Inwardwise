@@ -1,8 +1,16 @@
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
-import { Menu, X } from "lucide-react";
-import { useEffect, useState, type ReactNode } from "react";
+import { ChevronDown, Menu, X } from "lucide-react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import type { User } from "@supabase/supabase-js";
+
+type NavItem =
+  | { to: string; label: string; children?: NavItem[] }
+  | { label: string; children: NavItem[] };
+
+function isNavItemWithLink(item: NavItem): item is { to: string; label: string; children?: NavItem[] } {
+  return "to" in item;
+}
 
 export function AppShell({ children }: { children: ReactNode }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
@@ -11,11 +19,14 @@ export function AppShell({ children }: { children: ReactNode }) {
   const [isAdmin, setIsAdmin] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [expandedMobile, setExpandedMobile] = useState<Set<string>>(new Set());
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => setUser(data.user ?? null));
     const { data: sub } = supabase.auth.onAuthStateChange((event, session) => {
-      if (["SIGNED_IN","SIGNED_OUT","USER_UPDATED","INITIAL_SESSION"].includes(event)) {
+      if (["SIGNED_IN", "SIGNED_OUT", "USER_UPDATED", "INITIAL_SESSION"].includes(event)) {
         setUser(session?.user ?? null);
       }
     });
@@ -39,10 +50,25 @@ export function AppShell({ children }: { children: ReactNode }) {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const nav: Array<{ to: string; label: string }> = [
-    { to: "/decision", label: "Start Decision" },
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setOpenDropdown(null);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const nav: NavItem[] = [
+    {
+      label: "Start Decision",
+      children: [
+        { to: "/decision", label: "Start a decision" },
+        { to: "/examples", label: "Examples" },
+      ],
+    },
     { to: "/areas", label: "Areas" },
-    { to: "/examples", label: "Examples" },
     { to: "/science", label: "Science" },
     { to: "/history", label: "History" },
     { to: "/testimonials", label: "Voices" },
@@ -52,6 +78,25 @@ export function AppShell({ children }: { children: ReactNode }) {
     ...(user ? [{ to: "/account", label: "Account" }] : []),
     ...(isAdmin ? [{ to: "/admin", label: "Admin" }] : []),
   ];
+
+  const topLevelNav = nav.slice(0, 7);
+  const mobileNav = nav;
+
+  function isActive(item: NavItem): boolean {
+    if (isNavItemWithLink(item)) {
+      return pathname === item.to || (item.to !== "/" && pathname.startsWith(item.to));
+    }
+    return item.children.some((child) => isActive(child));
+  }
+
+  function toggleMobile(label: string) {
+    setExpandedMobile((prev) => {
+      const next = new Set(prev);
+      if (next.has(label)) next.delete(label);
+      else next.add(label);
+      return next;
+    });
+  }
 
   async function signOut() {
     await supabase.auth.signOut();
@@ -75,18 +120,77 @@ export function AppShell({ children }: { children: ReactNode }) {
             </span>
           </Link>
 
-          <nav className="hidden items-center gap-7 md:flex">
-            {nav.slice(0, 7).map((n) => {
-              const active = pathname === n.to || (n.to !== "/" && pathname.startsWith(n.to));
+          <nav className="hidden items-center gap-7 md:flex" ref={dropdownRef}>
+            {topLevelNav.map((item) => {
+              if (!isNavItemWithLink(item) && item.children.length > 0) {
+                const active = isActive(item);
+                const open = openDropdown === item.label;
+                return (
+                  <div
+                    key={item.label}
+                    className="relative"
+                    onMouseEnter={() => setOpenDropdown(item.label)}
+                    onMouseLeave={() => setOpenDropdown(null)}
+                  >
+                    <button
+                      className={`group relative flex items-center gap-1 text-[13px] tracking-wide transition ${
+                        active ? "text-[color:var(--ink)]" : "text-[color:var(--muted-foreground)] hover:text-[color:var(--ink)]"
+                      }`}
+                      aria-expanded={open}
+                      aria-haspopup="menu"
+                      onClick={() => setOpenDropdown(open ? null : item.label)}
+                    >
+                      {item.label}
+                      <ChevronDown
+                        className={`h-3.5 w-3.5 transition-transform duration-300 ${open ? "rotate-180" : ""}`}
+                      />
+                      <span
+                        className={`absolute -bottom-1 left-0 h-px w-full origin-left scale-x-0 bg-[color:var(--ink)] transition-transform duration-500 group-hover:scale-x-100 ${
+                          active ? "scale-x-100" : ""
+                        }`}
+                      />
+                    </button>
+                    {open && (
+                      <div className="absolute left-0 top-full mt-2 w-56 rounded-xl border border-[color:var(--rule)] bg-[color:var(--paper)]/95 p-2 shadow-[0_12px_40px_-12px_rgba(0,0,0,0.12)] backdrop-blur-md">
+                        <ul role="menu">
+                          {item.children.map((child) => {
+                            if (!isNavItemWithLink(child)) return null;
+                            const childActive = pathname === child.to || (child.to !== "/" && pathname.startsWith(child.to));
+                            return (
+                              <li key={child.to} role="none">
+                                <Link
+                                  to={child.to}
+                                  role="menuitem"
+                                  className={`flex items-center rounded-lg px-3 py-2 text-[13px] transition ${
+                                    childActive
+                                      ? "bg-[color:var(--muted)]/60 text-[color:var(--ink)]"
+                                      : "text-[color:var(--muted-foreground)] hover:bg-[color:var(--muted)]/40 hover:text-[color:var(--ink)]"
+                                  }`}
+                                  onClick={() => setOpenDropdown(null)}
+                                >
+                                  {child.label}
+                                </Link>
+                              </li>
+                            );
+                          })}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                );
+              }
+
+              if (!isNavItemWithLink(item)) return null;
+              const active = isActive(item);
               return (
                 <Link
-                  key={n.to}
-                  to={n.to}
+                  key={item.to}
+                  to={item.to}
                   className={`group relative text-[13px] tracking-wide transition ${
                     active ? "text-[color:var(--ink)]" : "text-[color:var(--muted-foreground)] hover:text-[color:var(--ink)]"
                   }`}
                 >
-                  {n.label}
+                  {item.label}
                   <span
                     className={`absolute -bottom-1 left-0 h-px w-full origin-left scale-x-0 bg-[color:var(--ink)] transition-transform duration-500 group-hover:scale-x-100 ${
                       active ? "scale-x-100" : ""
@@ -130,19 +234,59 @@ export function AppShell({ children }: { children: ReactNode }) {
         {menuOpen && (
           <div className="mx-auto w-[min(1280px,calc(100%-2rem))] pb-6 md:hidden">
             <div className="rule-top pt-4">
-              <nav className="grid grid-cols-2 gap-x-6 gap-y-3">
-                {nav.map((n, i) => {
-                  const active = pathname === n.to || (n.to !== "/" && pathname.startsWith(n.to));
+              <nav className="grid grid-cols-2 gap-x-6 gap-y-2">
+                {mobileNav.map((item, i) => {
+                  if (!isNavItemWithLink(item) && item.children.length > 0) {
+                    const expanded = expandedMobile.has(item.label);
+                    const active = isActive(item);
+                    return (
+                      <div key={item.label} className="col-span-2">
+                        <button
+                          onClick={() => toggleMobile(item.label)}
+                          className={`flex w-full items-baseline gap-3 py-1 text-[15px] ${
+                            active ? "text-[color:var(--ink)]" : "text-[color:var(--muted-foreground)]"
+                          }`}
+                          aria-expanded={expanded}
+                        >
+                          <span className="font-mono-cap">{String(i + 1).padStart(2, "0")}</span>
+                          <span className="flex-1 text-left">{item.label}</span>
+                          <ChevronDown className={`h-4 w-4 transition-transform ${expanded ? "rotate-180" : ""}`} />
+                        </button>
+                        {expanded && (
+                          <div className="mt-1 ml-6 grid gap-1 border-l border-[color:var(--rule)] pl-4">
+                            {item.children.map((child) => {
+                              if (!isNavItemWithLink(child)) return null;
+                              const childActive = pathname === child.to || (child.to !== "/" && pathname.startsWith(child.to));
+                              return (
+                                <Link
+                                  key={child.to}
+                                  to={child.to}
+                                  className={`block py-1 text-[14px] ${
+                                    childActive ? "text-[color:var(--ink)]" : "text-[color:var(--muted-foreground)]"
+                                  }`}
+                                >
+                                  {child.label}
+                                </Link>
+                              );
+                            })}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  }
+
+                  if (!isNavItemWithLink(item)) return null;
+                  const active = isActive(item);
                   return (
                     <Link
-                      key={n.to}
-                      to={n.to}
+                      key={item.to}
+                      to={item.to}
                       className={`flex items-baseline gap-3 py-1 text-[15px] ${
                         active ? "text-[color:var(--ink)]" : "text-[color:var(--muted-foreground)]"
                       }`}
                     >
                       <span className="font-mono-cap">{String(i + 1).padStart(2, "0")}</span>
-                      {n.label}
+                      {item.label}
                     </Link>
                   );
                 })}
