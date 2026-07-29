@@ -16,7 +16,7 @@ export const Route = createFileRoute("/_authenticated/avatar/consult")({
       {
         name: "description",
         content:
-          "Speak with your inner self avatar. It responds through your Shadow, Enemy, Skills, Connections, and Life Experiences — always in service of your evolution.",
+          "Speak with your inner self avatar. It responds through your five dimensions — always in service of your evolution.",
       },
       { property: "og:title", content: "Consult your Avatar — Decision Philosophy" },
       {
@@ -24,7 +24,7 @@ export const Route = createFileRoute("/_authenticated/avatar/consult")({
         content: "A private mirror that speaks in your interest, and no one else's.",
       },
       { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
+      { name: "robots", content: "noindex, nofollow" },
     ],
   }),
   component: ConsultAvatar,
@@ -134,7 +134,7 @@ function ConsultAvatar() {
             <ul className="space-y-2">
               {[
                 "What am I avoiding right now that I shouldn't be?",
-                "What in my shadow could I turn into a strength this month?",
+                "What in Dimension 1 could I turn into a strength this month?",
                 "Suggest one small new experience that would stretch me.",
               ].map((s) => (
                 <li key={s}>

@@ -83,7 +83,7 @@ function AvatarLanding() {
       </div>
 
       <div className="mt-16 rule-top pt-8 text-sm text-muted-foreground">
-        Your Shadow and Enemy dimensions are stored privately in your account.
+        Dimensions 1 and 2 are stored privately in your account.
         Everything else lives on this device.
       </div>
     </div>
