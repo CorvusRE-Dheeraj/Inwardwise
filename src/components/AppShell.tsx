@@ -85,20 +85,25 @@ export function AppShell({ children }: { children: ReactNode }) {
           <nav className="hidden items-center gap-7 md:flex">
             {topLevelNav.map((item) => {
               const active = isActive(item.to);
-              return (
-                <Link
-                  key={item.to}
-                  to={item.to}
-                  className={`group relative text-[13px] tracking-wide transition ${
-                    active ? "text-[color:var(--ink)]" : "text-[color:var(--muted-foreground)] hover:text-[color:var(--ink)]"
+              const className = `group relative text-[13px] tracking-wide transition ${
+                active ? "text-[color:var(--ink)]" : "text-[color:var(--muted-foreground)] hover:text-[color:var(--ink)]"
+              }`;
+              const underline = (
+                <span
+                  className={`absolute -bottom-1 left-0 h-px w-full origin-left scale-x-0 bg-[color:var(--ink)] transition-transform duration-500 group-hover:scale-x-100 ${
+                    active ? "scale-x-100" : ""
                   }`}
-                >
+                />
+              );
+              return item.external ? (
+                <a key={item.to} href={item.to} target="_blank" rel="noopener noreferrer" className={className}>
                   {item.label}
-                  <span
-                    className={`absolute -bottom-1 left-0 h-px w-full origin-left scale-x-0 bg-[color:var(--ink)] transition-transform duration-500 group-hover:scale-x-100 ${
-                      active ? "scale-x-100" : ""
-                    }`}
-                  />
+                  {underline}
+                </a>
+              ) : (
+                <Link key={item.to} to={item.to} className={className}>
+                  {item.label}
+                  {underline}
                 </Link>
               );
             })}
