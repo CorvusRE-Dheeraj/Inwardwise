@@ -20,11 +20,12 @@ export const Route = createFileRoute("/_authenticated/avatar/build")({
       {
         name: "description",
         content:
-          "Describe your five dimensions — Shadow, Enemy, Skills & Talents, Outer Connections, Life Experiences — to build your inner self avatar.",
+          "Describe your five dimensions to build your inner self avatar.",
       },
       { property: "og:title", content: "Build your Avatar — Decision Philosophy" },
       { property: "og:description", content: "Five dimensions that make up who you are." },
       { property: "og:type", content: "website" },
+      { name: "robots", content: "noindex, nofollow" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
@@ -104,7 +105,7 @@ function BuildAvatar() {
         </h1>
         <p className="mt-3 max-w-2xl text-muted-foreground">
           Write as if only you will read this. There are no right answers — only truer
-          ones. Shadow and Enemy are stored privately in your account; the rest lives
+          ones. Dimensions 1 and 2 are stored privately in your account; the rest lives
           on this device.
         </p>
       </header>
@@ -122,79 +123,79 @@ function BuildAvatar() {
 
         <Section
           index="01"
-          title="Shadow"
-          hint="What you tend to suppress or feel ashamed of. The repressed feelings that quietly steer how you behave in front of others."
+          title="Dimension 1"
+          hint="Your first dimension. Write freely and privately — this is stored securely in your account."
         >
           <textarea
-            aria-label="Shadow dimension"
+            aria-label="Dimension 1"
             className={areaCls}
             value={shadow}
             onChange={(e) => {
               setShadow(e.target.value);
               setSaved(false);
             }}
-            placeholder="e.g. I am highly idealistic and outspoken, which makes me awkward in social settings, so I retreat and stay reserved…"
+            placeholder="Write in your own words…"
             disabled={privateLoading}
           />
         </Section>
 
         <Section
           index="02"
-          title="Enemy"
-          hint="Your destructive tendencies — small or large — that hurt you if unchecked. Stored privately behind sign-in."
+          title="Dimension 2"
+          hint="Your second dimension. Stored privately behind sign-in."
         >
           <textarea
-            aria-label="Enemy dimension"
+            aria-label="Dimension 2"
             className={areaCls}
             value={enemy}
             onChange={(e) => {
               setEnemy(e.target.value);
               setSaved(false);
             }}
-            placeholder="e.g. procrastination, rigid judgment of others, impulsive reactions when I feel disrespected…"
+            placeholder="Write in your own words…"
             disabled={privateLoading}
           />
         </Section>
 
         <Section
           index="03"
-          title="Skills & Talents"
-          hint="Skills form from necessity. Talents form over years without feeling like effort. Include both, and any strong interests."
+          title="Dimension 3"
+          hint="Your third dimension. Write in your own words."
         >
           <textarea
-            aria-label="Skills and talents"
+            aria-label="Dimension 3"
             className={areaCls}
             value={profile.skillsTalents}
             onChange={(e) => update("skillsTalents", e.target.value)}
-            placeholder="e.g. Skill — recruiting engineers. Talent — connecting disparate ideas into unexpected insights…"
+            placeholder="Write in your own words…"
           />
         </Section>
 
         <Section
           index="04"
-          title="Outer Connections & Interests"
-          hint="The routines and mediums through which you meet the world — the ones that shaped you without you trying."
+          title="Dimension 4"
+          hint="Your fourth dimension. Write in your own words."
         >
           <textarea
-            aria-label="Outer connections and interests"
+            aria-label="Dimension 4"
             className={areaCls}
             value={profile.outerConnections}
             onChange={(e) => update("outerConnections", e.target.value)}
-            placeholder="e.g. I watch long-form documentaries daily, I journal by hand, I take long walks alone to think…"
+            placeholder="Write in your own words…"
           />
         </Section>
 
         <Section
           index="05"
-          title="Life Experiences — Connect the Dots"
-          hint="Where you grew up, what shaped your sense of scarcity or abundance, defining turning points, the environment that formed you."
+          title="Dimension 5"
+          hint="Your fifth dimension. Write in your own words."
         >
           <textarea
-            aria-label="Life experiences"
+            aria-label="Dimension 5"
             className={areaCls}
             value={profile.lifeExperiences}
             onChange={(e) => update("lifeExperiences", e.target.value)}
-            placeholder="e.g. Grew up in a resource-scarce but education-obsessed society, where discipline became a survival strategy…"
+            placeholder="Write in your own words…"
           />
         </Section>
       </div>
