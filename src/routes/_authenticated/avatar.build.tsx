@@ -105,7 +105,7 @@ function BuildAvatar() {
         </h1>
         <p className="mt-3 max-w-2xl text-muted-foreground">
           Write as if only you will read this. There are no right answers — only truer
-          ones. Shadow and Enemy are stored privately in your account; the rest lives
+          ones. Dimensions 1 and 2 are stored privately in your account; the rest lives
           on this device.
         </p>
       </header>
