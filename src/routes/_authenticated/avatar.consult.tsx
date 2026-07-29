@@ -96,7 +96,13 @@ function ConsultAvatar() {
   if (!profile || !profile.name) {
     return (
       <div className="mx-auto max-w-2xl px-6 py-24 text-center">
-        <p className="font-mono-cap text-xs text-muted-foreground">Not yet born</p>
+        <Link
+          to="/"
+          className="inline-flex items-center gap-2 font-mono-cap text-xs text-muted-foreground hover:text-foreground transition-colors"
+        >
+          <span aria-hidden="true">←</span> Home
+        </Link>
+        <p className="mt-8 font-mono-cap text-xs text-muted-foreground">Not yet born</p>
         <h1 className="mt-4 font-serif text-4xl font-medium tracking-tight">
           Your avatar hasn't been born yet.
         </h1>
