@@ -121,7 +121,13 @@ function ConsultAvatar() {
 
   return (
     <div className="mx-auto flex max-w-3xl flex-col px-6 sm:px-8 pt-12 pb-8" style={{ minHeight: "calc(100vh - 120px)" }}>
-      <header className="mb-6">
+      <Link
+        to="/"
+        className="inline-flex items-center gap-2 font-mono-cap text-xs text-muted-foreground hover:text-foreground transition-colors"
+      >
+        <span aria-hidden="true">←</span> Home
+      </Link>
+      <header className="mt-6 mb-6">
         <p className="font-mono-cap text-xs text-muted-foreground">
           Consulting your inner mirror
         </p>
