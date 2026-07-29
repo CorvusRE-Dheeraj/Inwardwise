@@ -98,7 +98,13 @@ function BuildAvatar() {
 
   return (
     <div className="mx-auto max-w-3xl px-6 sm:px-8 py-12 sm:py-20">
-      <header className="mb-10">
+      <Link
+        to="/"
+        className="inline-flex items-center gap-2 font-mono-cap text-xs text-muted-foreground hover:text-foreground transition-colors"
+      >
+        <span aria-hidden="true">←</span> Home
+      </Link>
+      <header className="mt-8 mb-10">
         <p className="font-mono-cap text-xs text-muted-foreground">The five dimensions</p>
         <h1 className="mt-3 font-serif text-4xl sm:text-5xl font-medium tracking-tight">
           Describe your inner self.
