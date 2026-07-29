@@ -42,7 +42,13 @@ const PILLARS = [
 function AvatarLanding() {
   return (
     <div className="mx-auto max-w-6xl px-6 sm:px-8 py-16 sm:py-24">
-      <header className="max-w-3xl">
+      <Link
+        to="/"
+        className="inline-flex items-center gap-2 font-mono-cap text-xs text-muted-foreground hover:text-foreground transition-colors"
+      >
+        <span aria-hidden="true">←</span> Home
+      </Link>
+      <header className="mt-8 max-w-3xl">
         <p className="font-mono-cap text-xs text-muted-foreground">A private inner mirror</p>
         <h1 className="mt-4 font-serif text-4xl sm:text-6xl leading-[1.05] font-medium tracking-tight text-balance">
           You are the physical you.{" "}
