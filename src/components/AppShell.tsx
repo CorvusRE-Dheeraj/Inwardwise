@@ -42,7 +42,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   const nav: { to: string; label: string; external?: boolean }[] = [
     { to: "/decision", label: "Start Decision" },
     { to: "/areas", label: "Areas" },
-    { to: "https://document-to-drive.lovable.app", label: "Avatar", external: true },
+    { to: "/avatar", label: "Avatar" },
     { to: "/science", label: "Science" },
     { to: "/history", label: "History" },
     { to: "/testimonials", label: "Voices" },
