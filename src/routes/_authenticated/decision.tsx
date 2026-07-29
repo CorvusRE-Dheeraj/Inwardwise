@@ -648,6 +648,14 @@ function EmptyIntro({ onPick }: { onPick: (t: string) => void }) {
           </button>
         ))}
       </div>
+      <div className="mt-5 text-center">
+        <Link
+          to="/examples"
+          className="inline-flex items-center gap-1 text-[11px] tracking-wide text-muted-foreground transition hover:text-accent"
+        >
+          Browse example sessions →
+        </Link>
+      </div>
       <h3 className="font-display mt-10 text-2xl leading-tight text-accent md:text-3xl">
         Your confidentiality is never compromised!
         <br />
