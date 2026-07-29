@@ -39,14 +39,8 @@ export function AppShell({ children }: { children: ReactNode }) {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const nav: NavItem[] = [
-    {
-      label: "Start Decision",
-      children: [
-        { to: "/decision", label: "Start a decision" },
-        { to: "/examples", label: "Examples" },
-      ],
-    },
+  const nav: { to: string; label: string }[] = [
+    { to: "/decision", label: "Start Decision" },
     { to: "/areas", label: "Areas" },
     { to: "/science", label: "Science" },
     { to: "/history", label: "History" },
@@ -61,21 +55,15 @@ export function AppShell({ children }: { children: ReactNode }) {
   const topLevelNav = nav.slice(0, 7);
   const mobileNav = nav;
 
-  function isActive(item: NavItem): boolean {
-    if (isNavItemWithLink(item)) {
-      return pathname === item.to || (item.to !== "/" && pathname.startsWith(item.to));
-    }
-    return item.children.some((child) => isActive(child));
+  function isActive(to: string): boolean {
+    return pathname === to || (to !== "/" && pathname.startsWith(to));
   }
 
-  function toggleMobile(label: string) {
-    setExpandedMobile((prev) => {
-      const next = new Set(prev);
-      if (next.has(label)) next.delete(label);
-      else next.add(label);
-      return next;
-    });
+  async function signOut() {
+    await supabase.auth.signOut();
+    navigate({ to: "/auth", replace: true });
   }
+  void signOut;
 
   async function signOut() {
     await supabase.auth.signOut();
