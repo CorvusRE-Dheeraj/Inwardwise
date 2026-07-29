@@ -15,7 +15,7 @@ export const Route = createFileRoute("/_authenticated/avatar/")({
         content: "Five dimensions. One inner mirror. Built to help you evolve.",
       },
       { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
+      { name: "robots", content: "noindex, nofollow" },
     ],
   }),
   component: AvatarLanding,
@@ -25,12 +25,12 @@ const PILLARS = [
   {
     n: "01",
     title: "Private by design",
-    body: "Your Shadow and Enemy dimensions stay behind sign-in, tied to your account and only your account.",
+    body: "Dimensions 1 and 2 stay behind sign-in, tied to your account and only your account.",
   },
   {
     n: "02",
     title: "Five dimensions",
-    body: "Shadow, Enemy, Skills & Talents, Outer Connections, and Life Experiences — described once, in your own words.",
+    body: "Five dimensions of who you are — described once, in your own words.",
   },
   {
     n: "03",
