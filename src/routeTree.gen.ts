@@ -30,7 +30,10 @@ import { Route as AuthenticatedDecisionRouteImport } from './routes/_authenticat
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as AuthenticatedAccountRouteImport } from './routes/_authenticated/account'
+import { Route as AuthenticatedAvatarIndexRouteImport } from './routes/_authenticated/avatar.index'
 import { Route as AuthenticatedAccountIndexRouteImport } from './routes/_authenticated/account.index'
+import { Route as AuthenticatedAvatarConsultRouteImport } from './routes/_authenticated/avatar.consult'
+import { Route as AuthenticatedAvatarBuildRouteImport } from './routes/_authenticated/avatar.build'
 import { Route as AuthenticatedAccountSelfAvatarRouteImport } from './routes/_authenticated/account.self-avatar'
 import { Route as AuthenticatedAccountDashboardRouteImport } from './routes/_authenticated/account.dashboard'
 import { Route as AuthenticatedAccountBillingRouteImport } from './routes/_authenticated/account.billing'
@@ -140,11 +143,29 @@ const AuthenticatedAccountRoute = AuthenticatedAccountRouteImport.update({
   path: '/account',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedAvatarIndexRoute =
+  AuthenticatedAvatarIndexRouteImport.update({
+    id: '/avatar/',
+    path: '/avatar/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedAccountIndexRoute =
   AuthenticatedAccountIndexRouteImport.update({
     id: '/',
     path: '/',
     getParentRoute: () => AuthenticatedAccountRoute,
+  } as any)
+const AuthenticatedAvatarConsultRoute =
+  AuthenticatedAvatarConsultRouteImport.update({
+    id: '/avatar/consult',
+    path: '/avatar/consult',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAvatarBuildRoute =
+  AuthenticatedAvatarBuildRouteImport.update({
+    id: '/avatar/build',
+    path: '/avatar/build',
+    getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedAccountSelfAvatarRoute =
   AuthenticatedAccountSelfAvatarRouteImport.update({
@@ -195,7 +216,10 @@ export interface FileRoutesByFullPath {
   '/account/billing': typeof AuthenticatedAccountBillingRoute
   '/account/dashboard': typeof AuthenticatedAccountDashboardRoute
   '/account/self-avatar': typeof AuthenticatedAccountSelfAvatarRoute
+  '/avatar/build': typeof AuthenticatedAvatarBuildRoute
+  '/avatar/consult': typeof AuthenticatedAvatarConsultRoute
   '/account/': typeof AuthenticatedAccountIndexRoute
+  '/avatar/': typeof AuthenticatedAvatarIndexRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
 }
 export interface FileRoutesByTo {
@@ -220,7 +244,10 @@ export interface FileRoutesByTo {
   '/account/billing': typeof AuthenticatedAccountBillingRoute
   '/account/dashboard': typeof AuthenticatedAccountDashboardRoute
   '/account/self-avatar': typeof AuthenticatedAccountSelfAvatarRoute
+  '/avatar/build': typeof AuthenticatedAvatarBuildRoute
+  '/avatar/consult': typeof AuthenticatedAvatarConsultRoute
   '/account': typeof AuthenticatedAccountIndexRoute
+  '/avatar': typeof AuthenticatedAvatarIndexRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
 }
 export interface FileRoutesById {
@@ -249,7 +276,10 @@ export interface FileRoutesById {
   '/_authenticated/account/billing': typeof AuthenticatedAccountBillingRoute
   '/_authenticated/account/dashboard': typeof AuthenticatedAccountDashboardRoute
   '/_authenticated/account/self-avatar': typeof AuthenticatedAccountSelfAvatarRoute
+  '/_authenticated/avatar/build': typeof AuthenticatedAvatarBuildRoute
+  '/_authenticated/avatar/consult': typeof AuthenticatedAvatarConsultRoute
   '/_authenticated/account/': typeof AuthenticatedAccountIndexRoute
+  '/_authenticated/avatar/': typeof AuthenticatedAvatarIndexRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
 }
 export interface FileRouteTypes {
@@ -278,7 +308,10 @@ export interface FileRouteTypes {
     | '/account/billing'
     | '/account/dashboard'
     | '/account/self-avatar'
+    | '/avatar/build'
+    | '/avatar/consult'
     | '/account/'
+    | '/avatar/'
     | '/lovable/email/queue/process'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -303,7 +336,10 @@ export interface FileRouteTypes {
     | '/account/billing'
     | '/account/dashboard'
     | '/account/self-avatar'
+    | '/avatar/build'
+    | '/avatar/consult'
     | '/account'
+    | '/avatar'
     | '/lovable/email/queue/process'
   id:
     | '__root__'
@@ -331,7 +367,10 @@ export interface FileRouteTypes {
     | '/_authenticated/account/billing'
     | '/_authenticated/account/dashboard'
     | '/_authenticated/account/self-avatar'
+    | '/_authenticated/avatar/build'
+    | '/_authenticated/avatar/consult'
     | '/_authenticated/account/'
+    | '/_authenticated/avatar/'
     | '/lovable/email/queue/process'
   fileRoutesById: FileRoutesById
 }
@@ -503,12 +542,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAccountRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/avatar/': {
+      id: '/_authenticated/avatar/'
+      path: '/avatar'
+      fullPath: '/avatar/'
+      preLoaderRoute: typeof AuthenticatedAvatarIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/account/': {
       id: '/_authenticated/account/'
       path: '/'
       fullPath: '/account/'
       preLoaderRoute: typeof AuthenticatedAccountIndexRouteImport
       parentRoute: typeof AuthenticatedAccountRoute
+    }
+    '/_authenticated/avatar/consult': {
+      id: '/_authenticated/avatar/consult'
+      path: '/avatar/consult'
+      fullPath: '/avatar/consult'
+      preLoaderRoute: typeof AuthenticatedAvatarConsultRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/avatar/build': {
+      id: '/_authenticated/avatar/build'
+      path: '/avatar/build'
+      fullPath: '/avatar/build'
+      preLoaderRoute: typeof AuthenticatedAvatarBuildRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/account/self-avatar': {
       id: '/_authenticated/account/self-avatar'
@@ -563,6 +623,9 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedDecisionRoute: typeof AuthenticatedDecisionRoute
+  AuthenticatedAvatarBuildRoute: typeof AuthenticatedAvatarBuildRoute
+  AuthenticatedAvatarConsultRoute: typeof AuthenticatedAvatarConsultRoute
+  AuthenticatedAvatarIndexRoute: typeof AuthenticatedAvatarIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
@@ -570,6 +633,9 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminRoute: AuthenticatedAdminRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedDecisionRoute: AuthenticatedDecisionRoute,
+  AuthenticatedAvatarBuildRoute: AuthenticatedAvatarBuildRoute,
+  AuthenticatedAvatarConsultRoute: AuthenticatedAvatarConsultRoute,
+  AuthenticatedAvatarIndexRoute: AuthenticatedAvatarIndexRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =

@@ -155,6 +155,27 @@ export type Database = {
         }
         Relationships: []
       }
+      private_dimensions: {
+        Row: {
+          enemy: string
+          shadow: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          enemy?: string
+          shadow?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          enemy?: string
+          shadow?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       suppressed_emails: {
         Row: {
           created_at: string
