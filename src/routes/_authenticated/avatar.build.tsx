@@ -20,11 +20,12 @@ export const Route = createFileRoute("/_authenticated/avatar/build")({
       {
         name: "description",
         content:
-          "Describe your five dimensions — Shadow, Enemy, Skills & Talents, Outer Connections, Life Experiences — to build your inner self avatar.",
+          "Describe your five dimensions to build your inner self avatar.",
       },
       { property: "og:title", content: "Build your Avatar — Decision Philosophy" },
       { property: "og:description", content: "Five dimensions that make up who you are." },
       { property: "og:type", content: "website" },
+      { name: "robots", content: "noindex, nofollow" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
