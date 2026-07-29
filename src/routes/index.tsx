@@ -241,41 +241,6 @@ function Landing() {
         </motion.div>
       </section>
 
-      {/* ============ EMOTIONAL JOURNEY ============ */}
-      <section className="mx-auto w-[min(1280px,calc(100%-2rem))] py-28 md:py-40">
-        <div className="grid grid-cols-12 gap-6">
-          <div className="col-span-12 md:col-span-4">
-            <span className="font-mono-cap">§ 02 — The Journey</span>
-            <h2 className="font-display mt-6 text-4xl leading-[1.05] tracking-tight md:text-5xl">
-              From <em className="italic text-[color:var(--royal)]">confusion</em> to <em className="italic text-[color:var(--forest)]">confidence</em>.
-            </h2>
-          </div>
-          <ol className="col-span-12 md:col-span-7 md:col-start-6">
-            {[
-              ["Confusion", "Every life-changing decision begins in fog."],
-              ["Curiosity", "What if uncertainty could become structure?"],
-              ["Discovery", "Objectivity is not talent. It is a process."],
-              ["Confidence", "The right question makes the answer inevitable."],
-            ].map(([k, v], i) => (
-              <motion.li
-                key={k}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1, duration: 0.8, ease: [0.2, 0.7, 0.2, 1] }}
-                className="grid grid-cols-[auto_1fr] items-baseline gap-6 border-b border-[color:var(--rule)] py-6 last:border-b-0"
-              >
-                <span className="font-mono-cap w-10">{String(i + 1).padStart(2, "0")}</span>
-                <div>
-                  <div className="font-display text-2xl md:text-3xl">{k}</div>
-                  <div className="mt-1 text-[color:var(--muted-foreground)]">{v}</div>
-                </div>
-              </motion.li>
-            ))}
-          </ol>
-        </div>
-      </section>
-
       {/* ============ DECISION UNIVERSE ============ */}
       <section className="rule-top rule-bottom bg-[color:var(--paper-2)]/40">
         <div className="mx-auto w-[min(1280px,calc(100%-2rem))] py-24 md:py-32">
