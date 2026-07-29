@@ -145,14 +145,16 @@ export function AppShell({ children }: { children: ReactNode }) {
               <nav className="grid grid-cols-2 gap-x-6 gap-y-2">
                 {mobileNav.map((item, i) => {
                   const active = isActive(item.to);
-                  return (
-                    <Link
-                      key={item.to}
-                      to={item.to}
-                      className={`flex items-baseline gap-3 py-1 text-[15px] ${
-                        active ? "text-[color:var(--ink)]" : "text-[color:var(--muted-foreground)]"
-                      }`}
-                    >
+                  const cls = `flex items-baseline gap-3 py-1 text-[15px] ${
+                    active ? "text-[color:var(--ink)]" : "text-[color:var(--muted-foreground)]"
+                  }`;
+                  return item.external ? (
+                    <a key={item.to} href={item.to} target="_blank" rel="noopener noreferrer" className={cls}>
+                      <span className="font-mono-cap">{String(i + 1).padStart(2, "0")}</span>
+                      {item.label}
+                    </a>
+                  ) : (
+                    <Link key={item.to} to={item.to} className={cls}>
                       <span className="font-mono-cap">{String(i + 1).padStart(2, "0")}</span>
                       {item.label}
                     </Link>
