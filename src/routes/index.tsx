@@ -246,7 +246,7 @@ function Landing() {
         <div className="mx-auto w-[min(1280px,calc(100%-2rem))] py-24 md:py-32">
           <div className="mb-14 grid grid-cols-12 items-end gap-6">
             <div className="col-span-12 md:col-span-6">
-              <span className="font-mono-cap">§ 03 — The Decision Universe</span>
+              <span className="font-mono-cap">§ 02 — The Decision Universe</span>
               <h2 className="font-display mt-4 text-4xl leading-[1.05] md:text-6xl">
                 Every choice is a <em className="italic">constellation</em>.
               </h2>
@@ -262,15 +262,15 @@ function Landing() {
       </section>
 
       {/* ============ SCROLL INSIGHTS ============ */}
-      <Insight index="§ 04" small="Observation" big="Every life-changing decision begins with uncertainty." />
-      <Insight index="§ 05" small="Reframe" big="What if uncertainty could become structure?" />
-      <Insight index="§ 06" small="Principle" big="Objectivity is not talent. It is a process." />
+      <Insight index="§ 03" small="Observation" big="Every life-changing decision begins with uncertainty." />
+      <Insight index="§ 04" small="Reframe" big="What if uncertainty could become structure?" />
+      <Insight index="§ 05" small="Principle" big="Objectivity is not talent. It is a process." />
 
       {/* ============ SEVEN STAGES — editorial index ============ */}
       <section className="mx-auto w-[min(1280px,calc(100%-2rem))] py-28 md:py-36">
         <div className="mb-14 flex items-end justify-between">
           <div>
-            <span className="font-mono-cap">§ 07 — The Method</span>
+            <span className="font-mono-cap">§ 06 — The Method</span>
             <h2 className="font-display mt-4 text-4xl leading-[1.05] md:text-6xl">
               Seven stages,<br />one clear mind.
             </h2>
@@ -320,7 +320,7 @@ function Landing() {
               />
             ))}
           </svg>
-          <span className="font-mono-cap text-[color:var(--gold)]">§ 08 — The Rule</span>
+          <span className="font-mono-cap text-[color:var(--gold)]">§ 07 — The Rule</span>
           <h3 className="font-display mt-6 max-w-4xl text-4xl leading-[1.05] md:text-7xl">
             Spend half the time on the <em className="italic text-[color:var(--gold)]">question</em>. The answer lives inside the boundary.
           </h3>
