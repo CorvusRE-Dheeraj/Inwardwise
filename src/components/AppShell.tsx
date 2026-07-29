@@ -20,6 +20,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [expandedMobile, setExpandedMobile] = useState<Set<string>>(new Set());
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -86,6 +87,15 @@ export function AppShell({ children }: { children: ReactNode }) {
       return pathname === item.to || (item.to !== "/" && pathname.startsWith(item.to));
     }
     return item.children.some((child) => isActive(child));
+  }
+
+  function toggleMobile(label: string) {
+    setExpandedMobile((prev) => {
+      const next = new Set(prev);
+      if (next.has(label)) next.delete(label);
+      else next.add(label);
+      return next;
+    });
   }
 
   async function signOut() {
@@ -227,12 +237,12 @@ export function AppShell({ children }: { children: ReactNode }) {
               <nav className="grid grid-cols-2 gap-x-6 gap-y-2">
                 {mobileNav.map((item, i) => {
                   if (!isNavItemWithLink(item) && item.children.length > 0) {
-                    const [expanded, setExpanded] = useState(false);
+                    const expanded = expandedMobile.has(item.label);
                     const active = isActive(item);
                     return (
                       <div key={item.label} className="col-span-2">
                         <button
-                          onClick={() => setExpanded((v) => !v)}
+                          onClick={() => toggleMobile(item.label)}
                           className={`flex w-full items-baseline gap-3 py-1 text-[15px] ${
                             active ? "text-[color:var(--ink)]" : "text-[color:var(--muted-foreground)]"
                           }`}
