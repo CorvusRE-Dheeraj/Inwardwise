@@ -34,6 +34,7 @@ import { Route as AuthenticatedAvatarIndexRouteImport } from './routes/_authenti
 import { Route as AuthenticatedAccountIndexRouteImport } from './routes/_authenticated/account.index'
 import { Route as AuthenticatedAvatarConsultRouteImport } from './routes/_authenticated/avatar.consult'
 import { Route as AuthenticatedAvatarBuildRouteImport } from './routes/_authenticated/avatar.build'
+import { Route as AuthenticatedAvatarAskRouteImport } from './routes/_authenticated/avatar.ask'
 import { Route as AuthenticatedAccountSelfAvatarRouteImport } from './routes/_authenticated/account.self-avatar'
 import { Route as AuthenticatedAccountDashboardRouteImport } from './routes/_authenticated/account.dashboard'
 import { Route as AuthenticatedAccountBillingRouteImport } from './routes/_authenticated/account.billing'
@@ -168,6 +169,11 @@ const AuthenticatedAvatarBuildRoute =
     path: '/avatar/build',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedAvatarAskRoute = AuthenticatedAvatarAskRouteImport.update({
+  id: '/avatar/ask',
+  path: '/avatar/ask',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedAccountSelfAvatarRoute =
   AuthenticatedAccountSelfAvatarRouteImport.update({
     id: '/self-avatar',
@@ -223,6 +229,7 @@ export interface FileRoutesByFullPath {
   '/account/billing': typeof AuthenticatedAccountBillingRoute
   '/account/dashboard': typeof AuthenticatedAccountDashboardRoute
   '/account/self-avatar': typeof AuthenticatedAccountSelfAvatarRoute
+  '/avatar/ask': typeof AuthenticatedAvatarAskRoute
   '/avatar/build': typeof AuthenticatedAvatarBuildRoute
   '/avatar/consult': typeof AuthenticatedAvatarConsultRoute
   '/account/': typeof AuthenticatedAccountIndexRoute
@@ -252,6 +259,7 @@ export interface FileRoutesByTo {
   '/account/billing': typeof AuthenticatedAccountBillingRoute
   '/account/dashboard': typeof AuthenticatedAccountDashboardRoute
   '/account/self-avatar': typeof AuthenticatedAccountSelfAvatarRoute
+  '/avatar/ask': typeof AuthenticatedAvatarAskRoute
   '/avatar/build': typeof AuthenticatedAvatarBuildRoute
   '/avatar/consult': typeof AuthenticatedAvatarConsultRoute
   '/account': typeof AuthenticatedAccountIndexRoute
@@ -285,6 +293,7 @@ export interface FileRoutesById {
   '/_authenticated/account/billing': typeof AuthenticatedAccountBillingRoute
   '/_authenticated/account/dashboard': typeof AuthenticatedAccountDashboardRoute
   '/_authenticated/account/self-avatar': typeof AuthenticatedAccountSelfAvatarRoute
+  '/_authenticated/avatar/ask': typeof AuthenticatedAvatarAskRoute
   '/_authenticated/avatar/build': typeof AuthenticatedAvatarBuildRoute
   '/_authenticated/avatar/consult': typeof AuthenticatedAvatarConsultRoute
   '/_authenticated/account/': typeof AuthenticatedAccountIndexRoute
@@ -318,6 +327,7 @@ export interface FileRouteTypes {
     | '/account/billing'
     | '/account/dashboard'
     | '/account/self-avatar'
+    | '/avatar/ask'
     | '/avatar/build'
     | '/avatar/consult'
     | '/account/'
@@ -347,6 +357,7 @@ export interface FileRouteTypes {
     | '/account/billing'
     | '/account/dashboard'
     | '/account/self-avatar'
+    | '/avatar/ask'
     | '/avatar/build'
     | '/avatar/consult'
     | '/account'
@@ -379,6 +390,7 @@ export interface FileRouteTypes {
     | '/_authenticated/account/billing'
     | '/_authenticated/account/dashboard'
     | '/_authenticated/account/self-avatar'
+    | '/_authenticated/avatar/ask'
     | '/_authenticated/avatar/build'
     | '/_authenticated/avatar/consult'
     | '/_authenticated/account/'
@@ -583,6 +595,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAvatarBuildRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/avatar/ask': {
+      id: '/_authenticated/avatar/ask'
+      path: '/avatar/ask'
+      fullPath: '/avatar/ask'
+      preLoaderRoute: typeof AuthenticatedAvatarAskRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/account/self-avatar': {
       id: '/_authenticated/account/self-avatar'
       path: '/self-avatar'
@@ -643,6 +662,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedDecisionRoute: typeof AuthenticatedDecisionRoute
+  AuthenticatedAvatarAskRoute: typeof AuthenticatedAvatarAskRoute
   AuthenticatedAvatarBuildRoute: typeof AuthenticatedAvatarBuildRoute
   AuthenticatedAvatarConsultRoute: typeof AuthenticatedAvatarConsultRoute
   AuthenticatedAvatarIndexRoute: typeof AuthenticatedAvatarIndexRoute
@@ -654,6 +674,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminRoute: AuthenticatedAdminRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedDecisionRoute: AuthenticatedDecisionRoute,
+  AuthenticatedAvatarAskRoute: AuthenticatedAvatarAskRoute,
   AuthenticatedAvatarBuildRoute: AuthenticatedAvatarBuildRoute,
   AuthenticatedAvatarConsultRoute: AuthenticatedAvatarConsultRoute,
   AuthenticatedAvatarIndexRoute: AuthenticatedAvatarIndexRoute,
@@ -696,3 +717,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
