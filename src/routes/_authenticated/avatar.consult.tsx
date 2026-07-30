@@ -1,13 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
-import {
-  buildSystemPrompt,
-  loadProfile,
-  type StoredProfile,
-} from "@/lib/avatar-storage";
+import { supabase } from "@/integrations/supabase/client";
 import { chatWithAvatar } from "@/lib/avatar.functions";
-import { getPrivateDimensions } from "@/lib/private-dimensions.functions";
+import { useAvatarVault } from "@/lib/avatar-vault";
+import { decryptText } from "@/lib/avatar-crypto";
+import { buildAvatarSystemPrompt, type AvatarAnswers } from "@/lib/avatar-prompt";
+import { AVATAR_DIMENSIONS } from "@/lib/avatar-dimensions";
+import { Caution, PinKeypad } from "@/components/avatar/PinKeypad";
 
 export const Route = createFileRoute("/_authenticated/avatar/consult")({
   head: () => ({
@@ -16,7 +16,7 @@ export const Route = createFileRoute("/_authenticated/avatar/consult")({
       {
         name: "description",
         content:
-          "Speak with your inner self avatar. It responds through your five dimensions — always in service of your evolution.",
+          "Speak with your inner self avatar. It responds through the five dimensions you answered yourself.",
       },
       { property: "og:title", content: "Consult your Avatar — Decision Philosophy" },
       {
@@ -34,32 +34,40 @@ type ChatMessage = { role: "user" | "assistant"; content: string };
 
 function ConsultAvatar() {
   const chatFn = useServerFn(chatWithAvatar);
-  const getPrivate = useServerFn(getPrivateDimensions);
-  const [profile, setProfile] = useState<StoredProfile | null>(null);
-  const [hydrated, setHydrated] = useState(false);
-  const [privateDims, setPrivateDims] = useState<{
-    shadow: string;
-    enemy: string;
-  } | null>(null);
+  const vault = useAvatarVault();
 
+  const [answers, setAnswers] = useState<AvatarAnswers | null>(null);
+  const [name, setName] = useState("");
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
   const [sending, setSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
+  // Load and decrypt the user's own dimension answers.
   useEffect(() => {
-    setProfile(loadProfile());
-    setHydrated(true);
+    if (vault.status !== "unlocked" || !vault.key || !vault.profile) return;
+    let cancelled = false;
     (async () => {
-      try {
-        const priv = await getPrivate();
-        setPrivateDims(priv);
-      } catch {
-        /* ignore */
+      const { data: auth } = await supabase.auth.getUser();
+      const meta = auth.user?.user_metadata as { full_name?: string; name?: string } | undefined;
+      const { data } = await supabase
+        .from("avatar_answers")
+        .select("question_key, answer_text")
+        .eq("user_id", vault.profile!.user_id);
+      const out: AvatarAnswers = {};
+      for (const row of data ?? []) {
+        out[row.question_key] = await decryptText(vault.key!, row.answer_text);
+      }
+      if (!cancelled) {
+        setName(meta?.full_name || meta?.name || "");
+        setAnswers(out);
       }
     })();
-  }, [getPrivate]);
+    return () => {
+      cancelled = true;
+    };
+  }, [vault.status, vault.key, vault.profile]);
 
   useEffect(() => {
     scrollRef.current?.scrollTo({
@@ -70,23 +78,14 @@ function ConsultAvatar() {
 
   async function send() {
     const trimmed = input.trim();
-    if (!trimmed || sending) return;
+    if (!trimmed || sending || !answers) return;
     setError(null);
     const next: ChatMessage[] = [...messages, { role: "user", content: trimmed }];
     setMessages(next);
     setInput("");
     setSending(true);
     try {
-      const systemPrompt = buildSystemPrompt(
-        profile ?? {
-          name: "",
-          skillsTalents: "",
-          outerConnections: "",
-          lifeExperiences: "",
-          updatedAt: Date.now(),
-        },
-        privateDims,
-      );
+      const systemPrompt = buildAvatarSystemPrompt(answers, name);
       const res = await chatFn({ data: { systemPrompt, messages: next } });
       setMessages([...next, { role: "assistant", content: res.reply || "…" }]);
     } catch (e) {
@@ -98,12 +97,40 @@ function ConsultAvatar() {
     }
   }
 
-  if (!hydrated) {
-    return <div className="min-h-[60vh]" />;
+  if (vault.status === "loading") return <div className="min-h-[60vh]" />;
+
+  if (vault.status !== "unlocked") {
+    return (
+      <div className="mx-auto grid w-[min(900px,calc(100%-2rem))] gap-8 py-20 md:grid-cols-2">
+        <div className="rounded-lg border border-[color:var(--rule)] p-8">
+          <PinKeypad
+            mode={vault.status === "needs-setup" ? "setup" : "enter"}
+            busy={vault.busy}
+            error={vault.error}
+            onSubmit={(pin) =>
+              vault.status === "needs-setup" ? vault.setupPin(pin) : vault.unlock(pin)
+            }
+          />
+        </div>
+        <Caution>
+          Your avatar can only speak once your PIN unlocks the answers you wrote. They are decrypted
+          in your browser and never readable by anyone else.
+        </Caution>
+      </div>
+    );
   }
 
+  const answeredCount = answers
+    ? AVATAR_DIMENSIONS.filter((d) =>
+        d.questions.some((q) => (answers[q.key] ?? "").trim()),
+      ).length
+    : 0;
+
   return (
-    <div className="mx-auto flex max-w-3xl flex-col px-6 sm:px-8 pt-12 pb-8" style={{ minHeight: "calc(100vh - 120px)" }}>
+    <div
+      className="mx-auto flex max-w-3xl flex-col px-6 sm:px-8 pt-12 pb-8"
+      style={{ minHeight: "calc(100vh - 120px)" }}
+    >
       <Link
         to="/"
         className="inline-flex items-center gap-2 font-mono-cap text-xs text-muted-foreground hover:text-foreground transition-colors"
@@ -112,17 +139,24 @@ function ConsultAvatar() {
       </Link>
       <header className="mt-6 mb-6">
         <p className="font-mono-cap text-xs text-muted-foreground">
-          Consulting your inner mirror
+          Speaking from your own answers · {answeredCount} of {AVATAR_DIMENSIONS.length} dimensions
         </p>
         <h1 className="mt-2 font-serif text-3xl sm:text-4xl font-medium tracking-tight">
-          Hello{profile?.name ? `, ${profile.name}` : ""}.
+          Hello{name ? `, ${name}` : ""}.
         </h1>
       </header>
 
-      <div
-        ref={scrollRef}
-        className="paper-card flex-1 space-y-4 overflow-y-auto rounded-lg p-6"
-      >
+      {answers && answeredCount === 0 && (
+        <div className="mb-4 rounded-md border border-[var(--rule)] bg-white px-4 py-3 text-sm">
+          You haven&apos;t answered any dimension questions yet.{" "}
+          <Link to="/avatar" className="underline">
+            Answer them first
+          </Link>{" "}
+          so your avatar can speak from you, not about people in general.
+        </div>
+      )}
+
+      <div ref={scrollRef} className="paper-card flex-1 space-y-4 overflow-y-auto rounded-lg p-6">
         {messages.length === 0 && (
           <div className="text-sm text-muted-foreground">
             <p className="mb-3">Ask your avatar anything about you. Try:</p>
@@ -188,7 +222,7 @@ function ConsultAvatar() {
         />
         <button
           onClick={send}
-          disabled={sending || !input.trim()}
+          disabled={sending || !input.trim() || !answers}
           className="ink-btn self-end rounded-full px-6 py-2.5 text-sm font-medium hover:ink-btn-hover disabled:opacity-50"
         >
           Send
