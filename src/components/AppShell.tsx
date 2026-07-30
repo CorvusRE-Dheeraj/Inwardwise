@@ -122,12 +122,38 @@ export function AppShell({ children }: { children: ReactNode }) {
                 Account
               </Link>
             )}
-            <Link
-              to="/decision"
-              className="hidden items-center gap-2 rounded-full border border-[color:var(--ink)] px-4 py-2 text-[12px] tracking-wide text-[color:var(--ink)] transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)] sm:inline-flex"
+            <div
+              className="relative hidden sm:block"
+              onMouseEnter={() => setStartOpen(true)}
+              onMouseLeave={() => setStartOpen(false)}
             >
-              Begin
-            </Link>
+              <button
+                onClick={() => setStartOpen((v) => !v)}
+                aria-expanded={startOpen}
+                aria-haspopup="menu"
+                className="inline-flex items-center gap-2 rounded-full bg-[color:var(--royal)] px-6 py-2.5 text-[15px] tracking-wide text-white transition hover:opacity-90"
+              >
+                Start
+                <ChevronDown className={`h-4 w-4 transition-transform ${startOpen ? "rotate-180" : ""}`} />
+              </button>
+              {startOpen && (
+                <div className="absolute right-0 top-full z-50 w-60 pt-2">
+                  <div className="overflow-hidden rounded-xl border border-[color:var(--rule)] bg-[color:var(--paper)] shadow-lg">
+                    {startMenu.map((item) => (
+                      <Link
+                        key={item.to}
+                        to={item.to}
+                        onClick={() => setStartOpen(false)}
+                        className="block px-5 py-3 text-[14px] text-[color:var(--ink)] transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)]"
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
             <button
               onClick={() => setMenuOpen((v) => !v)}
               aria-label={menuOpen ? "Close menu" : "Open menu"}
