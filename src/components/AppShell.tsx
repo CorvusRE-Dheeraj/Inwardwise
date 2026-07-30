@@ -1,5 +1,5 @@
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
-import { Menu, X } from "lucide-react";
+import { ChevronDown, Menu, X } from "lucide-react";
 import { useEffect, useState, type ReactNode } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import type { User } from "@supabase/supabase-js";
@@ -11,6 +11,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   const [isAdmin, setIsAdmin] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [startOpen, setStartOpen] = useState(false);
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => setUser(data.user ?? null));
@@ -30,7 +31,7 @@ export function AppShell({ children }: { children: ReactNode }) {
     return () => { cancelled = true; };
   }, [user]);
 
-  useEffect(() => { setMenuOpen(false); }, [pathname]);
+  useEffect(() => { setMenuOpen(false); setStartOpen(false); }, [pathname]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -49,8 +50,16 @@ export function AppShell({ children }: { children: ReactNode }) {
     { to: "/pricing", label: "Pricing" },
     { to: "/donate", label: "Donate" },
     { to: "/feedback", label: "Feedback" },
+    { to: "/meditation", label: "Meditation" },
     ...(user ? [{ to: "/account", label: "Account" }] : []),
     ...(isAdmin ? [{ to: "/admin", label: "Admin" }] : []),
+  ];
+
+  const startMenu: { to: string; label: string }[] = [
+    { to: "/decision", label: "Start Decision" },
+    { to: "/avatar", label: "Build Avatar" },
+    { to: "/avatar/consult", label: "Connect to Avatar" },
+    { to: "/meditation", label: "Meditation" },
   ];
 
   const topLevelNav = nav.slice(0, 7);
@@ -75,7 +84,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       >
         <div className="mx-auto flex w-[min(1280px,calc(100%-2rem))] items-center justify-between py-4 md:py-5">
           <Link to="/" className="flex min-w-0 items-baseline gap-3">
-            <span className="font-mono-cap text-[color:var(--muted-foreground)]">Est. 2025</span>
+            <span className="font-mono-cap text-[color:var(--muted-foreground)]">Est. 2026</span>
             <span className="hidden h-4 w-px bg-[color:var(--rule)] sm:block" />
             <span className="font-display text-[1.35rem] leading-none tracking-tight text-[color:var(--ink)] md:text-2xl">
               Decision <span className="italic text-[color:var(--royal)]">Philosophy</span>
@@ -193,8 +202,8 @@ export function AppShell({ children }: { children: ReactNode }) {
                     Sign in
                   </Link>
                 )}
-                <Link to="/decision" className="flex-1 rounded-full bg-[color:var(--ink)] px-4 py-2 text-center text-[13px] text-[color:var(--paper)]">
-                  Begin
+                <Link to="/decision" className="flex-1 rounded-full bg-[color:var(--royal)] px-4 py-2 text-center text-[14px] text-white">
+                  Start Decision
                 </Link>
               </div>
             </div>
