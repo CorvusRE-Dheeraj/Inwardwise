@@ -1,5 +1,5 @@
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
-import { Menu, X } from "lucide-react";
+import { ChevronDown, Menu, X } from "lucide-react";
 import { useEffect, useState, type ReactNode } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import type { User } from "@supabase/supabase-js";
@@ -11,6 +11,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   const [isAdmin, setIsAdmin] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [startOpen, setStartOpen] = useState(false);
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => setUser(data.user ?? null));
@@ -30,7 +31,7 @@ export function AppShell({ children }: { children: ReactNode }) {
     return () => { cancelled = true; };
   }, [user]);
 
-  useEffect(() => { setMenuOpen(false); }, [pathname]);
+  useEffect(() => { setMenuOpen(false); setStartOpen(false); }, [pathname]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -49,8 +50,16 @@ export function AppShell({ children }: { children: ReactNode }) {
     { to: "/pricing", label: "Pricing" },
     { to: "/donate", label: "Donate" },
     { to: "/feedback", label: "Feedback" },
+    { to: "/meditation", label: "Meditation" },
     ...(user ? [{ to: "/account", label: "Account" }] : []),
     ...(isAdmin ? [{ to: "/admin", label: "Admin" }] : []),
+  ];
+
+  const startMenu: { to: string; label: string }[] = [
+    { to: "/decision", label: "Start Decision" },
+    { to: "/avatar", label: "Build Avatar" },
+    { to: "/avatar/consult", label: "Connect to Avatar" },
+    { to: "/meditation", label: "Meditation" },
   ];
 
   const topLevelNav = nav.slice(0, 7);
@@ -75,7 +84,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       >
         <div className="mx-auto flex w-[min(1280px,calc(100%-2rem))] items-center justify-between py-4 md:py-5">
           <Link to="/" className="flex min-w-0 items-baseline gap-3">
-            <span className="font-mono-cap text-[color:var(--muted-foreground)]">Est. 2025</span>
+            <span className="font-mono-cap text-[color:var(--muted-foreground)]">Est. 2026</span>
             <span className="hidden h-4 w-px bg-[color:var(--rule)] sm:block" />
             <span className="font-display text-[1.35rem] leading-none tracking-tight text-[color:var(--ink)] md:text-2xl">
               Decision <span className="italic text-[color:var(--royal)]">Philosophy</span>
@@ -122,12 +131,38 @@ export function AppShell({ children }: { children: ReactNode }) {
                 Account
               </Link>
             )}
-            <Link
-              to="/decision"
-              className="hidden items-center gap-2 rounded-full border border-[color:var(--ink)] px-4 py-2 text-[12px] tracking-wide text-[color:var(--ink)] transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)] sm:inline-flex"
+            <div
+              className="relative hidden sm:block"
+              onMouseEnter={() => setStartOpen(true)}
+              onMouseLeave={() => setStartOpen(false)}
             >
-              Begin
-            </Link>
+              <button
+                onClick={() => setStartOpen((v) => !v)}
+                aria-expanded={startOpen}
+                aria-haspopup="menu"
+                className="inline-flex items-center gap-2 rounded-full bg-[color:var(--royal)] px-6 py-2.5 text-[15px] tracking-wide text-white transition hover:opacity-90"
+              >
+                Start
+                <ChevronDown className={`h-4 w-4 transition-transform ${startOpen ? "rotate-180" : ""}`} />
+              </button>
+              {startOpen && (
+                <div className="absolute right-0 top-full z-50 w-60 pt-2">
+                  <div className="overflow-hidden rounded-xl border border-[color:var(--rule)] bg-[color:var(--paper)] shadow-lg">
+                    {startMenu.map((item) => (
+                      <Link
+                        key={item.to}
+                        to={item.to}
+                        onClick={() => setStartOpen(false)}
+                        className="block px-5 py-3 text-[14px] text-[color:var(--ink)] transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)]"
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
             <button
               onClick={() => setMenuOpen((v) => !v)}
               aria-label={menuOpen ? "Close menu" : "Open menu"}
@@ -167,8 +202,8 @@ export function AppShell({ children }: { children: ReactNode }) {
                     Sign in
                   </Link>
                 )}
-                <Link to="/decision" className="flex-1 rounded-full bg-[color:var(--ink)] px-4 py-2 text-center text-[13px] text-[color:var(--paper)]">
-                  Begin
+                <Link to="/decision" className="flex-1 rounded-full bg-[color:var(--royal)] px-4 py-2 text-center text-[14px] text-white">
+                  Start Decision
                 </Link>
               </div>
             </div>
