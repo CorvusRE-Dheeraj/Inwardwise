@@ -225,8 +225,8 @@ function DimensionFlow() {
                   await persist(false);
                   setStep((s) => s + 1);
                 } else {
-                  await persist(true);
-                  navigate({ to: "/avatar" });
+                  const allDone = await persist(true);
+                  navigate({ to: allDone ? "/avatar/consult" : "/avatar" });
                 }
               }}
               disabled={saving}
