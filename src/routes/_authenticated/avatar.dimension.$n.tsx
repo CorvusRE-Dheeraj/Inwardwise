@@ -2,7 +2,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { Lock } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import { getDimension } from "@/lib/avatar-dimensions";
+import { AVATAR_DIMENSIONS, getDimension } from "@/lib/avatar-dimensions";
 import { useAvatarVault } from "@/lib/avatar-vault";
 import { Caution, PinKeypad } from "@/components/avatar/PinKeypad";
 import { decryptText, encryptText } from "@/lib/avatar-crypto";
