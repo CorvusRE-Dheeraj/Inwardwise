@@ -46,11 +46,11 @@ export function AppShell({ children }: { children: ReactNode }) {
     { to: "/science", label: "Science" },
     { to: "/history", label: "History" },
     { to: "/testimonials", label: "Voices" },
+    { to: "/avatar", label: "Avatar" },
     { to: "/pricing", label: "Pricing" },
     { to: "/donate", label: "Donate" },
     { to: "/feedback", label: "Feedback" },
     { to: "/meditation", label: "Meditation" },
-    { to: "/avatar", label: "Avatar" },
     ...(user ? [{ to: "/account", label: "Account" }] : []),
     ...(isAdmin ? [{ to: "/admin", label: "Admin" }] : []),
   ];
