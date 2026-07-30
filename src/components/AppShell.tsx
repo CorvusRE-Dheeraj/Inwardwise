@@ -43,7 +43,6 @@ export function AppShell({ children }: { children: ReactNode }) {
   const nav: { to: string; label: string; external?: boolean }[] = [
     { to: "/decision", label: "Start Decision" },
     { to: "/areas", label: "Areas" },
-    { to: "/avatar", label: "Avatar" },
     { to: "/science", label: "Science" },
     { to: "/history", label: "History" },
     { to: "/testimonials", label: "Voices" },
@@ -57,8 +56,6 @@ export function AppShell({ children }: { children: ReactNode }) {
 
   const startMenu: { to: string; label: string }[] = [
     { to: "/decision", label: "Start Decision" },
-    { to: "/avatar", label: "Build Avatar" },
-    { to: "/avatar/consult", label: "Connect to Avatar" },
     { to: "/meditation", label: "Meditation" },
   ];
 

@@ -122,39 +122,41 @@ function Landing() {
         </motion.div>
       </section>
 
-      {/* ============ VOLUME II — AVATAR ============ */}
-      <Volume
-        eyebrow="Volume II · Create and Connect with Your Inner Avatar"
-        title={
-          <>
-            Your Avatar Working for Your{" "}
-            <em className="italic text-[color:var(--royal)]">Happiness</em>
-          </>
-        }
-        blurb="Create and connect with your inner Avatar that is participating and helping you in your evolution over time."
-        actions={
-          <>
-            <Link
-              to="/avatar"
-              className="inline-flex items-center gap-3 rounded-full bg-[color:var(--ink)] px-6 py-3.5 text-sm text-[color:var(--paper)] transition-transform duration-500 hover:-translate-y-0.5"
-            >
-              Build Your Avatar <span>→</span>
-            </Link>
-            <Link
-              to="/avatar/consult"
-              className="inline-flex items-center gap-3 rounded-full border border-[color:var(--ink)] px-6 py-3.5 text-sm text-[color:var(--ink)] transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)]"
-            >
-              Connect to Avatar <span>→</span>
-            </Link>
-          </>
-        }
-        meta={[
-          ["Method", "5 Dimensions of Inner You"],
-          ["Discipline", "Inner Psychology and Philosophy"],
-          ["Author", "Alex Freeman, Ph.D"],
-          ["Format", "Voice based Conversational"],
-        ]}
-      />
+      {/* Volume II — Avatar hidden during testing; accessible via /avatar directly */}
+      {false && (
+        <Volume
+          eyebrow="Volume II · Create and Connect with Your Inner Avatar"
+          title={
+            <>
+              Your Avatar Working for Your{" "}
+              <em className="italic text-[color:var(--royal)]">Happiness</em>
+            </>
+          }
+          blurb="Create and connect with your inner Avatar that is participating and helping you in your evolution over time."
+          actions={
+            <>
+              <Link
+                to="/avatar"
+                className="inline-flex items-center gap-3 rounded-full bg-[color:var(--ink)] px-6 py-3.5 text-sm text-[color:var(--paper)] transition-transform duration-500 hover:-translate-y-0.5"
+              >
+                Build Your Avatar <span>→</span>
+              </Link>
+              <Link
+                to="/avatar/consult"
+                className="inline-flex items-center gap-3 rounded-full border border-[color:var(--ink)] px-6 py-3.5 text-sm text-[color:var(--ink)] transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)]"
+              >
+                Connect to Avatar <span>→</span>
+              </Link>
+            </>
+          }
+          meta={[
+            ["Method", "5 Dimensions of Inner You"],
+            ["Discipline", "Inner Psychology and Philosophy"],
+            ["Author", "Alex Freeman, Ph.D"],
+            ["Format", "Voice based Conversational"],
+          ]}
+        />
+      )}
 
       {/* ============ VOLUME III — MEDITATION ============ */}
       <Volume
