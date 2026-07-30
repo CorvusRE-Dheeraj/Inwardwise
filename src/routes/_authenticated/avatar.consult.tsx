@@ -70,7 +70,7 @@ function ConsultAvatar() {
 
   async function send() {
     const trimmed = input.trim();
-    if (!trimmed || !profile || sending) return;
+    if (!trimmed || sending) return;
     setError(null);
     const next: ChatMessage[] = [...messages, { role: "user", content: trimmed }];
     setMessages(next);
