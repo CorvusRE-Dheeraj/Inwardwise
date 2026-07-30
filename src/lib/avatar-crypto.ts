@@ -8,8 +8,11 @@ function b64(buf: ArrayBuffer): string {
   return btoa(String.fromCharCode(...new Uint8Array(buf)));
 }
 
-function unb64(s: string): Uint8Array {
-  return Uint8Array.from(atob(s), (c) => c.charCodeAt(0));
+function unb64(s: string): ArrayBuffer {
+  const arr = Uint8Array.from(atob(s), (c) => c.charCodeAt(0));
+  const out = new ArrayBuffer(arr.length);
+  new Uint8Array(out).set(arr);
+  return out;
 }
 
 export function randomSalt(): string {
@@ -28,7 +31,7 @@ export async function hashPin(pin: string, salt: string): Promise<string> {
   const bits = await crypto.subtle.deriveBits(
     {
       name: "PBKDF2",
-      salt: unb64(salt + "").slice(),
+      salt: unb64(salt),
       iterations: ITERATIONS,
       hash: "SHA-256",
     },
