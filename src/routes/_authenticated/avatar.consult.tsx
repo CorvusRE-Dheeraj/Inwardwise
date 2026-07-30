@@ -70,14 +70,23 @@ function ConsultAvatar() {
 
   async function send() {
     const trimmed = input.trim();
-    if (!trimmed || !profile || sending) return;
+    if (!trimmed || sending) return;
     setError(null);
     const next: ChatMessage[] = [...messages, { role: "user", content: trimmed }];
     setMessages(next);
     setInput("");
     setSending(true);
     try {
-      const systemPrompt = buildSystemPrompt(profile, privateDims);
+      const systemPrompt = buildSystemPrompt(
+        profile ?? {
+          name: "",
+          skillsTalents: "",
+          outerConnections: "",
+          lifeExperiences: "",
+          updatedAt: Date.now(),
+        },
+        privateDims,
+      );
       const res = await chatFn({ data: { systemPrompt, messages: next } });
       setMessages([...next, { role: "assistant", content: res.reply || "…" }]);
     } catch (e) {
@@ -93,32 +102,6 @@ function ConsultAvatar() {
     return <div className="min-h-[60vh]" />;
   }
 
-  if (!profile || !profile.name) {
-    return (
-      <div className="mx-auto max-w-2xl px-6 py-24 text-center">
-        <Link
-          to="/"
-          className="inline-flex items-center gap-2 font-mono-cap text-xs text-muted-foreground hover:text-foreground transition-colors"
-        >
-          <span aria-hidden="true">←</span> Home
-        </Link>
-        <p className="mt-8 font-mono-cap text-xs text-muted-foreground">Not yet born</p>
-        <h1 className="mt-4 font-serif text-4xl font-medium tracking-tight">
-          Your avatar hasn't been born yet.
-        </h1>
-        <p className="mt-4 text-muted-foreground">
-          Describe your five dimensions first. Even a rough sketch is enough to begin.
-        </p>
-        <Link
-          to="/avatar"
-          className="ink-btn mt-8 inline-block rounded-full px-6 py-3 text-sm font-medium hover:ink-btn-hover"
-        >
-          Build your avatar
-        </Link>
-      </div>
-    );
-  }
-
   return (
     <div className="mx-auto flex max-w-3xl flex-col px-6 sm:px-8 pt-12 pb-8" style={{ minHeight: "calc(100vh - 120px)" }}>
       <Link
@@ -132,7 +115,7 @@ function ConsultAvatar() {
           Consulting your inner mirror
         </p>
         <h1 className="mt-2 font-serif text-3xl sm:text-4xl font-medium tracking-tight">
-          Hello, {profile.name}.
+          Hello{profile?.name ? `, ${profile.name}` : ""}.
         </h1>
       </header>
 
