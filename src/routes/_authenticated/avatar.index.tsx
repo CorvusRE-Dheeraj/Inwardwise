@@ -245,6 +245,14 @@ function AvatarDashboard() {
                   Your data
                 </div>
                 <div className="flex flex-wrap gap-3">
+                  {complete === AVATAR_DIMENSIONS.length && (
+                    <Link
+                      to="/avatar/consult"
+                      className="rounded-full bg-[color:var(--ink)] px-5 py-2 text-[13px] text-[color:var(--paper)]"
+                    >
+                      Consult your Avatar →
+                    </Link>
+                  )}
                   <Link
                     to="/avatar/ask"
                     className="rounded-full border border-[color:var(--rule)] px-5 py-2 text-[13px] transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)]"

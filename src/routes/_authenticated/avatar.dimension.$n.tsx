@@ -2,7 +2,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { Lock } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import { getDimension } from "@/lib/avatar-dimensions";
+import { AVATAR_DIMENSIONS, getDimension } from "@/lib/avatar-dimensions";
 import { useAvatarVault } from "@/lib/avatar-vault";
 import { Caution, PinKeypad } from "@/components/avatar/PinKeypad";
 import { decryptText, encryptText } from "@/lib/avatar-crypto";
@@ -98,7 +98,7 @@ function DimensionFlow() {
   const q = step >= 0 ? dim.questions[step] : null;
 
   async function persist(finished: boolean) {
-    if (!vault.key || !vault.profile) return;
+    if (!vault.key || !vault.profile) return false;
     setSaving(true);
     try {
       const rows = await Promise.all(
@@ -125,6 +125,16 @@ function DimensionFlow() {
         },
         { onConflict: "user_id,dimension_number" },
       );
+
+      if (!finished) return false;
+      const { data } = await supabase
+        .from("avatar_dimensions")
+        .select("dimension_number, progress_pct")
+        .eq("user_id", vault.profile.user_id);
+      const done = new Set(
+        (data ?? []).filter((r) => r.progress_pct >= 100).map((r) => r.dimension_number),
+      );
+      return AVATAR_DIMENSIONS.every((d) => done.has(d.n));
     } finally {
       setSaving(false);
     }
@@ -215,8 +225,8 @@ function DimensionFlow() {
                   await persist(false);
                   setStep((s) => s + 1);
                 } else {
-                  await persist(true);
-                  navigate({ to: "/avatar" });
+                  const allDone = await persist(true);
+                  navigate({ to: allDone ? "/avatar/consult" : "/avatar" });
                 }
               }}
               disabled={saving}

@@ -110,7 +110,7 @@ function ConsultAvatar() {
           Describe your five dimensions first. Even a rough sketch is enough to begin.
         </p>
         <Link
-          to="/avatar/build"
+          to="/avatar"
           className="ink-btn mt-8 inline-block rounded-full px-6 py-3 text-sm font-medium hover:ink-btn-hover"
         >
           Build your avatar
@@ -217,7 +217,7 @@ function ConsultAvatar() {
           ← Back to Avatar
         </Link>
         <span className="mx-3 text-muted-foreground">·</span>
-        <Link to="/avatar/build" className="text-muted-foreground hover:text-foreground">
+        <Link to="/avatar" className="text-muted-foreground hover:text-foreground">
           Edit dimensions
         </Link>
       </div>
