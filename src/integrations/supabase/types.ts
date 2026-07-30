@@ -38,6 +38,90 @@ export type Database = {
         }
         Relationships: []
       }
+      avatar_answers: {
+        Row: {
+          answer_text: string
+          dimension_number: number
+          id: string
+          question_key: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          answer_text?: string
+          dimension_number: number
+          id?: string
+          question_key: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          answer_text?: string
+          dimension_number?: number
+          id?: string
+          question_key?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      avatar_dimensions: {
+        Row: {
+          dimension_number: number
+          id: string
+          progress_pct: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          dimension_number: number
+          id?: string
+          progress_pct?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          dimension_number?: number
+          id?: string
+          progress_pct?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      avatar_profiles: {
+        Row: {
+          created_at: string
+          last_active_at: string
+          phone_number: string | null
+          pin_hash: string | null
+          pin_salt: string | null
+          scheduled_call_at: string | null
+          user_id: string
+          voice_enabled: boolean
+        }
+        Insert: {
+          created_at?: string
+          last_active_at?: string
+          phone_number?: string | null
+          pin_hash?: string | null
+          pin_salt?: string | null
+          scheduled_call_at?: string | null
+          user_id: string
+          voice_enabled?: boolean
+        }
+        Update: {
+          created_at?: string
+          last_active_at?: string
+          phone_number?: string | null
+          pin_hash?: string | null
+          pin_salt?: string | null
+          scheduled_call_at?: string | null
+          user_id?: string
+          voice_enabled?: boolean
+        }
+        Relationships: []
+      }
       email_send_log: {
         Row: {
           created_at: string
