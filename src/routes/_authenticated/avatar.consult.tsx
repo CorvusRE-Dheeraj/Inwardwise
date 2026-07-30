@@ -77,7 +77,16 @@ function ConsultAvatar() {
     setInput("");
     setSending(true);
     try {
-      const systemPrompt = buildSystemPrompt(profile, privateDims);
+      const systemPrompt = buildSystemPrompt(
+        profile ?? {
+          name: "",
+          skillsTalents: "",
+          outerConnections: "",
+          lifeExperiences: "",
+          updatedAt: Date.now(),
+        },
+        privateDims,
+      );
       const res = await chatFn({ data: { systemPrompt, messages: next } });
       setMessages([...next, { role: "assistant", content: res.reply || "…" }]);
     } catch (e) {
