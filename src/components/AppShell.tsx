@@ -50,12 +50,15 @@ export function AppShell({ children }: { children: ReactNode }) {
     { to: "/donate", label: "Donate" },
     { to: "/feedback", label: "Feedback" },
     { to: "/meditation", label: "Meditation" },
+    { to: "/avatar", label: "Avatar" },
     ...(user ? [{ to: "/account", label: "Account" }] : []),
     ...(isAdmin ? [{ to: "/admin", label: "Admin" }] : []),
   ];
 
   const startMenu: { to: string; label: string }[] = [
     { to: "/decision", label: "Start Decision" },
+    { to: "/avatar", label: "Build Avatar" },
+    { to: "/avatar/consult", label: "Connect to Avatar" },
     { to: "/meditation", label: "Meditation" },
   ];
 
