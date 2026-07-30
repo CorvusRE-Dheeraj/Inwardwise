@@ -217,7 +217,7 @@ function ConsultAvatar() {
           ← Back to Avatar
         </Link>
         <span className="mx-3 text-muted-foreground">·</span>
-        <Link to="/avatar/build" className="text-muted-foreground hover:text-foreground">
+        <Link to="/avatar" className="text-muted-foreground hover:text-foreground">
           Edit dimensions
         </Link>
       </div>
