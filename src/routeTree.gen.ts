@@ -13,6 +13,7 @@ import { Route as TestimonialsRouteImport } from './routes/testimonials'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ScienceRouteImport } from './routes/science'
 import { Route as PricingRouteImport } from './routes/pricing'
+import { Route as MeditationRouteImport } from './routes/meditation'
 import { Route as HistoryRouteImport } from './routes/history'
 import { Route as FeedbackRouteImport } from './routes/feedback'
 import { Route as ExamplesRouteImport } from './routes/examples'
@@ -58,6 +59,11 @@ const ScienceRoute = ScienceRouteImport.update({
 const PricingRoute = PricingRouteImport.update({
   id: '/pricing',
   path: '/pricing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MeditationRoute = MeditationRouteImport.update({
+  id: '/meditation',
+  path: '/meditation',
   getParentRoute: () => rootRouteImport,
 } as any)
 const HistoryRoute = HistoryRouteImport.update({
@@ -206,6 +212,7 @@ export interface FileRoutesByFullPath {
   '/examples': typeof ExamplesRoute
   '/feedback': typeof FeedbackRoute
   '/history': typeof HistoryRoute
+  '/meditation': typeof MeditationRoute
   '/pricing': typeof PricingRoute
   '/science': typeof ScienceRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -236,6 +243,7 @@ export interface FileRoutesByTo {
   '/examples': typeof ExamplesRoute
   '/feedback': typeof FeedbackRoute
   '/history': typeof HistoryRoute
+  '/meditation': typeof MeditationRoute
   '/pricing': typeof PricingRoute
   '/science': typeof ScienceRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -268,6 +276,7 @@ export interface FileRoutesById {
   '/examples': typeof ExamplesRoute
   '/feedback': typeof FeedbackRoute
   '/history': typeof HistoryRoute
+  '/meditation': typeof MeditationRoute
   '/pricing': typeof PricingRoute
   '/science': typeof ScienceRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -301,6 +310,7 @@ export interface FileRouteTypes {
     | '/examples'
     | '/feedback'
     | '/history'
+    | '/meditation'
     | '/pricing'
     | '/science'
     | '/sitemap.xml'
@@ -331,6 +341,7 @@ export interface FileRouteTypes {
     | '/examples'
     | '/feedback'
     | '/history'
+    | '/meditation'
     | '/pricing'
     | '/science'
     | '/sitemap.xml'
@@ -362,6 +373,7 @@ export interface FileRouteTypes {
     | '/examples'
     | '/feedback'
     | '/history'
+    | '/meditation'
     | '/pricing'
     | '/science'
     | '/sitemap.xml'
@@ -395,6 +407,7 @@ export interface RootRouteChildren {
   ExamplesRoute: typeof ExamplesRoute
   FeedbackRoute: typeof FeedbackRoute
   HistoryRoute: typeof HistoryRoute
+  MeditationRoute: typeof MeditationRoute
   PricingRoute: typeof PricingRoute
   ScienceRoute: typeof ScienceRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
@@ -433,6 +446,13 @@ declare module '@tanstack/react-router' {
       path: '/pricing'
       fullPath: '/pricing'
       preLoaderRoute: typeof PricingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/meditation': {
+      id: '/meditation'
+      path: '/meditation'
+      fullPath: '/meditation'
+      preLoaderRoute: typeof MeditationRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/history': {
@@ -683,6 +703,7 @@ const rootRouteChildren: RootRouteChildren = {
   ExamplesRoute: ExamplesRoute,
   FeedbackRoute: FeedbackRoute,
   HistoryRoute: HistoryRoute,
+  MeditationRoute: MeditationRoute,
   PricingRoute: PricingRoute,
   ScienceRoute: ScienceRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
@@ -695,3 +716,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
