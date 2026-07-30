@@ -98,7 +98,7 @@ function DimensionFlow() {
   const q = step >= 0 ? dim.questions[step] : null;
 
   async function persist(finished: boolean) {
-    if (!vault.key || !vault.profile) return;
+    if (!vault.key || !vault.profile) return false;
     setSaving(true);
     try {
       const rows = await Promise.all(
@@ -125,6 +125,16 @@ function DimensionFlow() {
         },
         { onConflict: "user_id,dimension_number" },
       );
+
+      if (!finished) return false;
+      const { data } = await supabase
+        .from("avatar_dimensions")
+        .select("dimension_number, progress_pct")
+        .eq("user_id", vault.profile.user_id);
+      const done = new Set(
+        (data ?? []).filter((r) => r.progress_pct >= 100).map((r) => r.dimension_number),
+      );
+      return AVATAR_DIMENSIONS.every((d) => done.has(d.n));
     } finally {
       setSaving(false);
     }
