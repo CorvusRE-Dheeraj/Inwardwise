@@ -1,97 +1,305 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import { Lock, Phone } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { AVATAR_DIMENSIONS } from "@/lib/avatar-dimensions";
+import { useAvatarVault } from "@/lib/avatar-vault";
+import { Caution, PinKeypad } from "@/components/avatar/PinKeypad";
 
 export const Route = createFileRoute("/_authenticated/avatar/")({
   head: () => ({
     meta: [
-      { title: "Your Avatar — Decision Philosophy" },
+      { title: "Avatar Design — Decision Philosophy" },
       {
         name: "description",
         content:
-          "A private digital reflection of your inner self, built across five dimensions, whose only goal is your evolution.",
+          "Design your Inner Avatar across five dimensions of self-knowledge — private, encrypted, and yours alone.",
       },
-      { property: "og:title", content: "Your Avatar — Decision Philosophy" },
-      {
-        property: "og:description",
-        content: "Five dimensions. One inner mirror. Built to help you evolve.",
-      },
+      { property: "og:title", content: "Avatar Design — Decision Philosophy" },
+      { property: "og:description", content: "Five dimensions. One inner mirror." },
       { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { name: "robots", content: "noindex, nofollow" },
     ],
   }),
-  component: AvatarLanding,
+  component: AvatarDashboard,
 });
 
-const PILLARS = [
-  {
-    n: "01",
-    title: "Private by design",
-    body: "Dimensions 1 and 2 stay behind sign-in, tied to your account and only your account.",
-  },
-  {
-    n: "02",
-    title: "Five dimensions",
-    body: "Five dimensions of who you are — described once, in your own words.",
-  },
-  {
-    n: "03",
-    title: "Built to evolve you",
-    body: "The only goal of your inner mirror is your evolution — small, specific steps toward a truer version of you.",
-  },
-];
+function AvatarDashboard() {
+  const vault = useAvatarVault();
+  const [progress, setProgress] = useState<Record<number, number>>({});
+  const [voice, setVoice] = useState(false);
+  const [phone, setPhone] = useState("");
+  const [when, setWhen] = useState("");
+  const [savedNote, setSavedNote] = useState<string | null>(null);
+  const [confirmWipe, setConfirmWipe] = useState(false);
 
-function AvatarLanding() {
+  useEffect(() => {
+    if (!vault.profile) return;
+    setVoice(vault.profile.voice_enabled);
+    setPhone(vault.profile.phone_number ?? "");
+    setWhen(vault.profile.scheduled_call_at?.slice(0, 16) ?? "");
+    supabase
+      .from("avatar_dimensions")
+      .select("dimension_number, progress_pct")
+      .eq("user_id", vault.profile.user_id)
+      .then(({ data }) => {
+        const map: Record<number, number> = {};
+        (data ?? []).forEach((r) => {
+          map[r.dimension_number] = r.progress_pct;
+        });
+        setProgress(map);
+      });
+  }, [vault.profile]);
+
+  async function saveVoice() {
+    if (!vault.profile) return;
+    await supabase
+      .from("avatar_profiles")
+      .update({
+        voice_enabled: voice,
+        phone_number: phone || null,
+        scheduled_call_at: when ? new Date(when).toISOString() : null,
+      })
+      .eq("user_id", vault.profile.user_id);
+    setSavedNote("Saved. Your Avatar will call at the time you chose.");
+    setTimeout(() => setSavedNote(null), 4000);
+  }
+
+  const complete = AVATAR_DIMENSIONS.filter((d) => (progress[d.n] ?? 0) >= 100).length;
+
   return (
-    <div className="mx-auto max-w-6xl px-6 sm:px-8 py-16 sm:py-24">
+    <div className="mx-auto w-[min(1100px,calc(100%-2rem))] py-14 sm:py-20">
       <Link
         to="/"
-        className="inline-flex items-center gap-2 font-mono-cap text-xs text-muted-foreground hover:text-foreground transition-colors"
+        className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)] transition hover:text-[color:var(--ink)]"
       >
-        <span aria-hidden="true">←</span> Home
+        ← Home
       </Link>
+
       <header className="mt-8 max-w-3xl">
-        <p className="font-mono-cap text-xs text-muted-foreground">A private inner mirror</p>
-        <h1 className="mt-4 font-serif text-4xl sm:text-6xl leading-[1.05] font-medium tracking-tight text-balance">
-          You are the physical you.{" "}
-          <span className="italic text-royal">Your avatar is the inner one.</span>
-        </h1>
-        <p className="mt-6 max-w-2xl text-base sm:text-lg leading-relaxed text-muted-foreground">
-          Every person is uniquely described by five dimensions. Once captured, they
-          form a digital inner self whose only purpose is your evolution — looking
-          out for you, and no one else.
-        </p>
-        <div className="mt-8 flex flex-wrap items-center gap-3">
-          <Link
-            to="/avatar/build"
-            className="ink-btn rounded-full px-6 py-3 text-sm font-medium hover:ink-btn-hover"
-          >
-            Build your avatar
-          </Link>
-          <Link
-            to="/avatar/consult"
-            className="rounded-full border border-[var(--rule)] px-6 py-3 text-sm font-medium text-foreground hover:bg-secondary transition-colors"
-          >
-            Consult your avatar →
-          </Link>
+        <div className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)]">
+          § 01 · Avatar Design Dashboard
         </div>
+        <h1 className="mt-4 font-display text-[clamp(2.4rem,6vw,4.2rem)] leading-[1.02] tracking-tight">
+          Design Your <span className="italic text-[color:var(--royal)]">Inner Avatar</span>
+        </h1>
+        <p className="mt-5 text-base leading-relaxed text-[color:var(--muted-foreground)]">
+          A digital representation of you, assembled from five dimensions of self-knowledge.
+          Answer honestly — the Avatar is only as useful as it is accurate.
+        </p>
       </header>
 
-      <div className="mt-16 grid gap-6 md:grid-cols-3">
-        {PILLARS.map((d) => (
-          <article key={d.n} className="paper-card rounded-lg p-8">
-            <div className="mb-6 flex items-baseline justify-between">
-              <span className="font-mono-cap text-xs text-muted-foreground">{d.n}</span>
-              <span className="ml-4 h-px flex-1 bg-[var(--rule)]" />
-            </div>
-            <h2 className="font-serif text-2xl font-medium">{d.title}</h2>
-            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{d.body}</p>
-          </article>
-        ))}
-      </div>
+      {vault.status === "needs-setup" || vault.status === "locked" ? (
+        <section className="mt-12 grid gap-8 md:grid-cols-2">
+          <div className="rounded-lg border border-[color:var(--rule)] p-8">
+            <PinKeypad
+              mode={vault.status === "needs-setup" ? "setup" : "enter"}
+              busy={vault.busy}
+              error={vault.error}
+              onSubmit={(pin) =>
+                vault.status === "needs-setup" ? vault.setupPin(pin) : vault.unlock(pin)
+              }
+            />
+          </div>
+          <Caution>
+            This 4-digit PIN is separate from your sign-in and encrypts your Avatar answers.
+            There is no recovery: if you lose it, the answers cannot be retrieved — not by us,
+            not by an administrator. You may permanently self-destruct your Avatar data at any
+            time, and data auto-purges after twelve months of account inactivity.
+          </Caution>
+        </section>
+      ) : null}
 
-      <div className="mt-16 rule-top pt-8 text-sm text-muted-foreground">
-        Dimensions 1 and 2 are stored privately in your account.
-        Everything else lives on this device.
-      </div>
+      {vault.status === "unlocked" && (
+        <>
+          <section className="mt-12 grid gap-6 md:grid-cols-[320px_1fr]">
+            <div className="flex flex-col items-center rounded-lg border border-[color:var(--rule)] p-8">
+              <div className="grid h-40 w-40 place-items-center rounded-full bg-[color:var(--royal)]/12 ring-1 ring-[color:var(--royal)]/25">
+                <span className="font-display text-4xl italic text-[color:var(--royal)]">
+                  {complete}/5
+                </span>
+              </div>
+              <div className="font-mono-cap mt-5 text-[10px] text-[color:var(--muted-foreground)]">
+                Avatar Portrait
+              </div>
+              <p className="mt-2 text-center text-sm text-[color:var(--muted-foreground)]">
+                Your portrait renders once all five dimensions are complete.
+              </p>
+            </div>
+
+            <div className="rounded-lg border border-[color:var(--rule)] p-8">
+              <div className="font-mono-cap flex items-center gap-2 text-[10px] text-[color:var(--muted-foreground)]">
+                <Phone className="h-3 w-3" /> Calendar Scheduling for Voice Build
+              </div>
+              <p className="mt-3 text-sm text-[color:var(--muted-foreground)]">
+                Rather than typing, schedule a call — your Avatar phones you and takes the
+                dimension questions conversationally.
+              </p>
+              <div className="mt-6 space-y-4">
+                <label className="flex items-center justify-between gap-4 text-sm">
+                  <span>Voice enabled</span>
+                  <button
+                    onClick={() => setVoice((v) => !v)}
+                    aria-pressed={voice}
+                    className={`h-6 w-11 rounded-full border border-[color:var(--rule)] p-0.5 transition ${
+                      voice ? "bg-[color:var(--ink)]" : "bg-transparent"
+                    }`}
+                  >
+                    <span
+                      className={`block h-4 w-4 rounded-full transition ${
+                        voice
+                          ? "translate-x-5 bg-[color:var(--paper)]"
+                          : "bg-[color:var(--muted-foreground)]"
+                      }`}
+                    />
+                  </button>
+                </label>
+                <label className="block text-sm">
+                  <span className="mb-1 block text-[color:var(--muted-foreground)]">
+                    Phone number
+                  </span>
+                  <input
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    placeholder="+1 555 000 0000"
+                    className="w-full rounded-md border border-[color:var(--rule)] bg-transparent px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[color:var(--royal)]/30"
+                  />
+                </label>
+                <label className="block text-sm">
+                  <span className="mb-1 block text-[color:var(--muted-foreground)]">
+                    Schedule a call
+                  </span>
+                  <input
+                    type="datetime-local"
+                    value={when}
+                    onChange={(e) => setWhen(e.target.value)}
+                    className="w-full rounded-md border border-[color:var(--rule)] bg-transparent px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[color:var(--royal)]/30"
+                  />
+                </label>
+                <div className="flex items-center gap-4">
+                  <button
+                    onClick={saveVoice}
+                    className="rounded-full bg-[color:var(--ink)] px-5 py-2 text-[13px] text-[color:var(--paper)]"
+                  >
+                    Save schedule
+                  </button>
+                  {savedNote && (
+                    <span className="text-sm text-[color:var(--royal)]">{savedNote}</span>
+                  )}
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section className="mt-14">
+            <div className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)]">
+              § 02 · The Five Dimensions
+            </div>
+            <div className="mt-6 border-t border-[color:var(--rule)]">
+              {AVATAR_DIMENSIONS.map((d) => {
+                const pct = progress[d.n] ?? 0;
+                return (
+                  <Link
+                    key={d.n}
+                    to="/avatar/dimension/$n"
+                    params={{ n: String(d.n) }}
+                    className="group grid gap-3 border-b border-[color:var(--rule)] py-6 transition hover:bg-[color:var(--ink)]/[0.02] sm:grid-cols-[80px_1fr_200px] sm:items-center"
+                  >
+                    <span className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)]">
+                      § 0{d.n}
+                    </span>
+                    <div>
+                      <div className="flex items-center gap-2 font-display text-2xl">
+                        <span className="italic text-[color:var(--royal)]">{d.italic}</span>
+                        {d.locked && <Lock className="h-3.5 w-3.5" />}
+                      </div>
+                      <p className="mt-1 text-sm text-[color:var(--muted-foreground)]">
+                        {d.oneLine}
+                      </p>
+                    </div>
+                    <div>
+                      <div className="h-px w-full bg-[color:var(--rule)]">
+                        <div
+                          className="h-px bg-[color:var(--ink)] transition-all"
+                          style={{ width: `${pct}%` }}
+                        />
+                      </div>
+                      <div className="font-mono-cap mt-2 text-[10px] text-[color:var(--muted-foreground)]">
+                        {pct}% complete
+                      </div>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+
+            <div className="mt-8 grid gap-6 md:grid-cols-2">
+              <Caution>
+                Your Avatar cannot fully form until all five dimensions are complete. Partial
+                answers produce partial reflections. If typing is the obstacle, schedule a voice
+                call above and finish them by speaking.
+              </Caution>
+              <div className="rounded-lg border border-[color:var(--rule)] p-5">
+                <div className="font-mono-cap mb-2 text-[10px] text-[color:var(--muted-foreground)]">
+                  Your data
+                </div>
+                <div className="flex flex-wrap gap-3">
+                  <Link
+                    to="/avatar/ask"
+                    className="rounded-full border border-[color:var(--rule)] px-5 py-2 text-[13px] transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)]"
+                  >
+                    Ask your Avatar →
+                  </Link>
+                  <button
+                    onClick={vault.lock}
+                    className="rounded-full border border-[color:var(--rule)] px-5 py-2 text-[13px]"
+                  >
+                    Lock Avatar
+                  </button>
+                  <button
+                    onClick={() => setConfirmWipe(true)}
+                    className="rounded-full px-5 py-2 text-[13px] text-destructive underline-offset-4 hover:underline"
+                  >
+                    Self-destruct
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
+        </>
+      )}
+
+      {confirmWipe && (
+        <div className="fixed inset-0 z-50 grid place-items-center bg-black/40 p-4">
+          <div className="w-full max-w-md rounded-lg border border-[color:var(--rule)] bg-[color:var(--paper)] p-8">
+            <div className="font-mono-cap text-[10px] text-destructive">Irreversible</div>
+            <h2 className="mt-3 font-display text-2xl">Self-destruct your Avatar?</h2>
+            <p className="mt-3 text-sm text-[color:var(--muted-foreground)]">
+              Every answer, every dimension, and your PIN will be permanently deleted. This
+              cannot be undone or recovered.
+            </p>
+            <div className="mt-6 flex gap-3">
+              <button
+                onClick={async () => {
+                  await vault.selfDestruct();
+                  setConfirmWipe(false);
+                  setProgress({});
+                }}
+                className="rounded-full bg-destructive px-5 py-2 text-[13px] text-white"
+              >
+                Delete everything
+              </button>
+              <button
+                onClick={() => setConfirmWipe(false)}
+                className="rounded-full border border-[color:var(--rule)] px-5 py-2 text-[13px]"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
