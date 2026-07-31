@@ -33,6 +33,7 @@ import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/
 import { Route as AuthenticatedAccountRouteImport } from './routes/_authenticated/account'
 import { Route as AuthenticatedAvatarIndexRouteImport } from './routes/_authenticated/avatar.index'
 import { Route as AuthenticatedAccountIndexRouteImport } from './routes/_authenticated/account.index'
+import { Route as AuthenticatedMeditationPracticeRouteImport } from './routes/_authenticated/meditation.practice'
 import { Route as AuthenticatedAvatarConsultRouteImport } from './routes/_authenticated/avatar.consult'
 import { Route as AuthenticatedAvatarAskRouteImport } from './routes/_authenticated/avatar.ask'
 import { Route as AuthenticatedAccountSelfAvatarRouteImport } from './routes/_authenticated/account.self-avatar'
@@ -162,6 +163,12 @@ const AuthenticatedAccountIndexRoute =
     path: '/',
     getParentRoute: () => AuthenticatedAccountRoute,
   } as any)
+const AuthenticatedMeditationPracticeRoute =
+  AuthenticatedMeditationPracticeRouteImport.update({
+    id: '/meditation/practice',
+    path: '/meditation/practice',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedAvatarConsultRoute =
   AuthenticatedAvatarConsultRouteImport.update({
     id: '/avatar/consult',
@@ -231,6 +238,7 @@ export interface FileRoutesByFullPath {
   '/account/self-avatar': typeof AuthenticatedAccountSelfAvatarRoute
   '/avatar/ask': typeof AuthenticatedAvatarAskRoute
   '/avatar/consult': typeof AuthenticatedAvatarConsultRoute
+  '/meditation/practice': typeof AuthenticatedMeditationPracticeRoute
   '/account/': typeof AuthenticatedAccountIndexRoute
   '/avatar/': typeof AuthenticatedAvatarIndexRoute
   '/avatar/dimension/$n': typeof AuthenticatedAvatarDimensionNRoute
@@ -261,6 +269,7 @@ export interface FileRoutesByTo {
   '/account/self-avatar': typeof AuthenticatedAccountSelfAvatarRoute
   '/avatar/ask': typeof AuthenticatedAvatarAskRoute
   '/avatar/consult': typeof AuthenticatedAvatarConsultRoute
+  '/meditation/practice': typeof AuthenticatedMeditationPracticeRoute
   '/account': typeof AuthenticatedAccountIndexRoute
   '/avatar': typeof AuthenticatedAvatarIndexRoute
   '/avatar/dimension/$n': typeof AuthenticatedAvatarDimensionNRoute
@@ -295,6 +304,7 @@ export interface FileRoutesById {
   '/_authenticated/account/self-avatar': typeof AuthenticatedAccountSelfAvatarRoute
   '/_authenticated/avatar/ask': typeof AuthenticatedAvatarAskRoute
   '/_authenticated/avatar/consult': typeof AuthenticatedAvatarConsultRoute
+  '/_authenticated/meditation/practice': typeof AuthenticatedMeditationPracticeRoute
   '/_authenticated/account/': typeof AuthenticatedAccountIndexRoute
   '/_authenticated/avatar/': typeof AuthenticatedAvatarIndexRoute
   '/_authenticated/avatar/dimension/$n': typeof AuthenticatedAvatarDimensionNRoute
@@ -329,6 +339,7 @@ export interface FileRouteTypes {
     | '/account/self-avatar'
     | '/avatar/ask'
     | '/avatar/consult'
+    | '/meditation/practice'
     | '/account/'
     | '/avatar/'
     | '/avatar/dimension/$n'
@@ -359,6 +370,7 @@ export interface FileRouteTypes {
     | '/account/self-avatar'
     | '/avatar/ask'
     | '/avatar/consult'
+    | '/meditation/practice'
     | '/account'
     | '/avatar'
     | '/avatar/dimension/$n'
@@ -392,6 +404,7 @@ export interface FileRouteTypes {
     | '/_authenticated/account/self-avatar'
     | '/_authenticated/avatar/ask'
     | '/_authenticated/avatar/consult'
+    | '/_authenticated/meditation/practice'
     | '/_authenticated/account/'
     | '/_authenticated/avatar/'
     | '/_authenticated/avatar/dimension/$n'
@@ -588,6 +601,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAccountIndexRouteImport
       parentRoute: typeof AuthenticatedAccountRoute
     }
+    '/_authenticated/meditation/practice': {
+      id: '/_authenticated/meditation/practice'
+      path: '/meditation/practice'
+      fullPath: '/meditation/practice'
+      preLoaderRoute: typeof AuthenticatedMeditationPracticeRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/avatar/consult': {
       id: '/_authenticated/avatar/consult'
       path: '/avatar/consult'
@@ -664,6 +684,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedDecisionRoute: typeof AuthenticatedDecisionRoute
   AuthenticatedAvatarAskRoute: typeof AuthenticatedAvatarAskRoute
   AuthenticatedAvatarConsultRoute: typeof AuthenticatedAvatarConsultRoute
+  AuthenticatedMeditationPracticeRoute: typeof AuthenticatedMeditationPracticeRoute
   AuthenticatedAvatarIndexRoute: typeof AuthenticatedAvatarIndexRoute
   AuthenticatedAvatarDimensionNRoute: typeof AuthenticatedAvatarDimensionNRoute
 }
@@ -675,6 +696,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDecisionRoute: AuthenticatedDecisionRoute,
   AuthenticatedAvatarAskRoute: AuthenticatedAvatarAskRoute,
   AuthenticatedAvatarConsultRoute: AuthenticatedAvatarConsultRoute,
+  AuthenticatedMeditationPracticeRoute: AuthenticatedMeditationPracticeRoute,
   AuthenticatedAvatarIndexRoute: AuthenticatedAvatarIndexRoute,
   AuthenticatedAvatarDimensionNRoute: AuthenticatedAvatarDimensionNRoute,
 }
