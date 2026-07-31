@@ -156,31 +156,6 @@ function Landing() {
         ]}
       />
 
-      {/* ============ VOLUME III — MEDITATION ============ */}
-      <Volume
-        eyebrow="Volume III · Quiet your mind and connect to your inner self"
-        title={
-          <>
-            Meditation — Connect to Your{" "}
-            <em className="italic text-[color:var(--royal)]">Inner Self</em>
-          </>
-        }
-        blurb="Scientifically developed meditation to quiet yourself and connect to your subconscious."
-        actions={
-          <Link
-            to="/meditation"
-            className="inline-flex items-center gap-3 rounded-full bg-[color:var(--ink)] px-6 py-3.5 text-sm text-[color:var(--paper)] transition-transform duration-500 hover:-translate-y-0.5"
-          >
-            Meditation Routine <span>→</span>
-          </Link>
-        }
-        meta={[
-          ["Method", "Scientifically Developed and Referenced"],
-          ["Discipline", "Meditation"],
-          ["Author", "Alex Freeman, Ph.D"],
-          ["Format", "AI Guided"],
-        ]}
-      />
     </AppShell>
   );
 }
