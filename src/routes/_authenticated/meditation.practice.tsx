@@ -134,16 +134,19 @@ function MeditationPractice() {
   async function saveDashboard() {
     if (!vault.profile) return;
     setSavedNote(null);
+    const tz = timeZone || detectTimeZone();
+    const patch = {
+      voice_enabled: voiceEnabled,
+      phone_number: phone.trim() || null,
+      scheduled_call_at: scheduledAt ? new Date(scheduledAt).toISOString() : null,
+      timezone: tz,
+    };
     const { error: err } = await supabase
       .from("avatar_profiles")
-      .update({
-        voice_enabled: voiceEnabled,
-        phone_number: phone.trim() || null,
-        scheduled_call_at: scheduledAt ? new Date(scheduledAt).toISOString() : null,
-      })
+      .update(patch)
       .eq("user_id", vault.profile.user_id);
-    setSavedNote(err ? err.message : "Saved.");
-    if (!err) vault.setProfile({ ...vault.profile, voice_enabled: voiceEnabled, phone_number: phone.trim() || null, scheduled_call_at: scheduledAt ? new Date(scheduledAt).toISOString() : null });
+    setSavedNote(err ? err.message : `Saved — your call is set in ${tz} time.`);
+    if (!err) vault.setProfile({ ...vault.profile, ...patch } as typeof vault.profile);
   }
 
   async function buildTonight() {
