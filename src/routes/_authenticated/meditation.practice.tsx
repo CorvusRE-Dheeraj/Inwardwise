@@ -246,6 +246,11 @@ function MeditationPractice() {
               onChange={(e) => setScheduledAt(e.target.value)}
               className="rounded-md border border-[color:var(--rule)] bg-white px-3 py-2 text-sm"
             />
+            <span className="text-xs text-[color:var(--muted-foreground)]">
+              {timeZone
+                ? `Your local time · ${timeZone}`
+                : "Detecting your timezone…"}
+            </span>
           </label>
           <label className="flex flex-col gap-2 text-sm">
             <span className="font-mono-cap text-[color:var(--muted-foreground)]">Phone number</span>
