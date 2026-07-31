@@ -7,9 +7,9 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Decision Philosophy — Remove Bias, Fear, and Ego From Your Decisions" },
-      { name: "description", content: "A quiet, deliberate practice for the few decisions that shape a life. Seven stages to remove bias, fear, and ego from every choice." },
+      { name: "description", content: "A quiet, deliberate practice for removing bias, fear, and ego from the choices to shape your life." },
       { property: "og:title", content: "Decision Philosophy" },
-      { property: "og:description", content: "Remove bias, fear, and ego from the choices that shape a life." },
+      { property: "og:description", content: "Remove bias, fear, and ego from the choices to shape your life." },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://decisionphilosophy.com/" },
       { name: "twitter:card", content: "summary_large_image" },
