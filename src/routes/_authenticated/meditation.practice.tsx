@@ -33,6 +33,15 @@ export const Route = createFileRoute("/_authenticated/meditation/practice")({
   component: MeditationPractice,
 });
 
+/** Format an ISO timestamp for a datetime-local input in the user's LOCAL time. */
+function toLocalInput(iso: string | null | undefined): string {
+  if (!iso) return "";
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return "";
+  const pad = (n: number) => String(n).padStart(2, "0");
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+}
+
 function MeditationPractice() {
   const chatFn = useServerFn(chatWithAvatar);
   const vault = useAvatarVault();
@@ -52,9 +61,12 @@ function MeditationPractice() {
   const [step, setStep] = useState(0);
   const [running, setRunning] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const hydratedRef = useRef(false);
 
   useEffect(() => {
     if (vault.status !== "unlocked" || !vault.key || !vault.profile) return;
+    if (hydratedRef.current) return;
+    hydratedRef.current = true;
     let cancelled = false;
     (async () => {
       const { data: auth } = await supabase.auth.getUser();
@@ -72,11 +84,7 @@ function MeditationPractice() {
       setAnswers(out);
       setVoiceEnabled(!!vault.profile!.voice_enabled);
       setPhone(vault.profile!.phone_number ?? "");
-      setScheduledAt(
-        vault.profile!.scheduled_call_at
-          ? new Date(vault.profile!.scheduled_call_at).toISOString().slice(0, 16)
-          : "",
-      );
+      setScheduledAt(toLocalInput(vault.profile!.scheduled_call_at));
     })();
     return () => {
       cancelled = true;
