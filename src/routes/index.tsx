@@ -53,10 +53,8 @@ function Landing() {
         <motion.div style={{ y: heroY }} className="mx-auto w-[min(1280px,calc(100%-2rem))] pt-12 md:pt-24">
           {/* editorial masthead */}
           <div className="flex items-center justify-between">
-            <span className="font-mono-cap">Volume I · A Decision Laboratory</span>
-            <span className="hidden font-mono-cap md:inline">
-              {new Date().toLocaleDateString("en-US", { month: "long", year: "numeric" })}
-            </span>
+            <span className="font-mono-cap">Volume I · Decision Philosophy</span>
+            <ClientDate />
           </div>
           <div className="hairline mt-4" />
 
