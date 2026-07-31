@@ -101,6 +101,21 @@ function MeditationPractice() {
     };
   }, [vault.status, vault.key, vault.profile]);
 
+  // Detect the browser's timezone after hydration and keep the profile in sync.
+  useEffect(() => {
+    const tz = detectTimeZone();
+    setTimeZone(tz);
+    if (!vault.profile) return;
+    const stored = (vault.profile as { timezone?: string | null }).timezone;
+    if (stored === tz) return;
+    void supabase
+      .from("avatar_profiles")
+      .update({ timezone: tz })
+      .eq("user_id", vault.profile.user_id)
+      .then(() => vault.setProfile({ ...vault.profile!, timezone: tz } as typeof vault.profile));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [vault.profile?.user_id]);
+
   useEffect(() => () => audioRef.current?.pause(), []);
 
   const grouped = useMemo(() => {
