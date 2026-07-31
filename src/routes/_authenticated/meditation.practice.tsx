@@ -42,6 +42,15 @@ function toLocalInput(iso: string | null | undefined): string {
   return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
 }
 
+/** The browser's IANA timezone, e.g. "Asia/Kolkata". */
+function detectTimeZone(): string {
+  try {
+    return Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC";
+  } catch {
+    return "UTC";
+  }
+}
+
 function MeditationPractice() {
   const chatFn = useServerFn(chatWithAvatar);
   const vault = useAvatarVault();
