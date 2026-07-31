@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { AppShell } from "@/components/AppShell";
 
 export const Route = createFileRoute("/")({
@@ -19,8 +19,8 @@ export const Route = createFileRoute("/")({
   component: Landing,
 });
 function ClientDate() {
-  const [date, setDate] = React.useState("");
-  React.useEffect(() => {
+  const [date, setDate] = useState("");
+  useEffect(() => {
     setDate(new Date().toLocaleDateString("en-US", { month: "long", year: "numeric" }));
   }, []);
   return <span className="hidden font-mono-cap md:inline">{date}</span>;
