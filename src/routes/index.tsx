@@ -86,7 +86,7 @@ function Landing() {
                 transition={{ delay: 1.2, duration: 1 }}
                 className="max-w-lg text-lg leading-relaxed text-[color:var(--ink-2)] md:text-xl"
               >
-                A quiet, deliberate practice for removing bias, fear, and ego from the choices that shape a life.
+                A quiet, deliberate practice for removing bias, fear, and ego from the choices to shape your life.
               </motion.p>
             </div>
             <div className="col-span-12 flex flex-col items-start gap-6 md:col-span-4 md:items-end md:justify-end">
