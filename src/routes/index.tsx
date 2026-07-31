@@ -18,6 +18,13 @@ export const Route = createFileRoute("/")({
   }),
   component: Landing,
 });
+function ClientDate() {
+  const [date, setDate] = React.useState("");
+  React.useEffect(() => {
+    setDate(new Date().toLocaleDateString("en-US", { month: "long", year: "numeric" }));
+  }, []);
+  return <span className="hidden font-mono-cap md:inline">{date}</span>;
+}
 
 /* ---------- Word-by-word rise ---------- */
 function RiseWords({ text, className, delay = 0, italic = false }: { text: string; className?: string; delay?: number; italic?: boolean }) {
