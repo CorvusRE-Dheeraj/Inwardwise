@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { AppShell } from "@/components/AppShell";
 
 export const Route = createFileRoute("/")({
@@ -18,6 +18,13 @@ export const Route = createFileRoute("/")({
   }),
   component: Landing,
 });
+function ClientDate() {
+  const [date, setDate] = useState("");
+  useEffect(() => {
+    setDate(new Date().toLocaleDateString("en-US", { month: "long", year: "numeric" }));
+  }, []);
+  return <span className="hidden font-mono-cap md:inline">{date}</span>;
+}
 
 /* ---------- Word-by-word rise ---------- */
 function RiseWords({ text, className, delay = 0, italic = false }: { text: string; className?: string; delay?: number; italic?: boolean }) {
@@ -53,10 +60,8 @@ function Landing() {
         <motion.div style={{ y: heroY }} className="mx-auto w-[min(1280px,calc(100%-2rem))] pt-12 md:pt-24">
           {/* editorial masthead */}
           <div className="flex items-center justify-between">
-            <span className="font-mono-cap">Volume I · A Decision Laboratory</span>
-            <span className="hidden font-mono-cap md:inline">
-              {new Date().toLocaleDateString("en-US", { month: "long", year: "numeric" })}
-            </span>
+            <span className="font-mono-cap">Volume I · Decision Philosophy</span>
+            <ClientDate />
           </div>
           <div className="hairline mt-4" />
 
