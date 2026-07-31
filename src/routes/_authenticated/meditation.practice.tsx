@@ -1,0 +1,349 @@
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useServerFn } from "@tanstack/react-start";
+import { motion, AnimatePresence } from "framer-motion";
+import { supabase } from "@/integrations/supabase/client";
+import { chatWithAvatar } from "@/lib/avatar.functions";
+import { useAvatarVault } from "@/lib/avatar-vault";
+import { decryptText } from "@/lib/avatar-crypto";
+import type { AvatarAnswers } from "@/lib/avatar-prompt";
+import { Caution, PinKeypad } from "@/components/avatar/PinKeypad";
+import { PRAYER_SETS, type PrayerLine } from "@/lib/meditation";
+import { buildMeditationPrompt, parseMeditationLines } from "@/lib/meditation-prompt";
+import { synthesizeSpeech } from "@/lib/voice";
+
+export const Route = createFileRoute("/_authenticated/meditation/practice")({
+  head: () => ({
+    meta: [
+      { title: "Guided Meditation Practice — Decision Philosophy" },
+      {
+        name: "description",
+        content:
+          "A private, voice-guided four-prayer meditation built from the answers you wrote yourself.",
+      },
+      { property: "og:title", content: "Guided Meditation Practice" },
+      {
+        property: "og:description",
+        content: "Four prayers, spoken in your own life's words, before you sleep.",
+      },
+      { property: "og:type", content: "website" },
+      { name: "robots", content: "noindex, nofollow" },
+    ],
+  }),
+  component: MeditationPractice,
+});
+
+function MeditationPractice() {
+  const chatFn = useServerFn(chatWithAvatar);
+  const vault = useAvatarVault();
+
+  const [answers, setAnswers] = useState<AvatarAnswers | null>(null);
+  const [name, setName] = useState("");
+
+  // Dashboard state (mirrors the avatar profile — one phone, one schedule).
+  const [voiceEnabled, setVoiceEnabled] = useState(false);
+  const [phone, setPhone] = useState("");
+  const [scheduledAt, setScheduledAt] = useState("");
+  const [savedNote, setSavedNote] = useState<string | null>(null);
+
+  const [lines, setLines] = useState<PrayerLine[] | null>(null);
+  const [building, setBuilding] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [step, setStep] = useState(0);
+  const [running, setRunning] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    if (vault.status !== "unlocked" || !vault.key || !vault.profile) return;
+    let cancelled = false;
+    (async () => {
+      const { data: auth } = await supabase.auth.getUser();
+      const meta = auth.user?.user_metadata as { full_name?: string; name?: string } | undefined;
+      const { data } = await supabase
+        .from("avatar_answers")
+        .select("question_key, answer_text")
+        .eq("user_id", vault.profile!.user_id);
+      const out: AvatarAnswers = {};
+      for (const row of data ?? []) {
+        out[row.question_key] = await decryptText(vault.key!, row.answer_text);
+      }
+      if (cancelled) return;
+      setName(meta?.full_name || meta?.name || "");
+      setAnswers(out);
+      setVoiceEnabled(!!vault.profile!.voice_enabled);
+      setPhone(vault.profile!.phone_number ?? "");
+      setScheduledAt(
+        vault.profile!.scheduled_call_at
+          ? new Date(vault.profile!.scheduled_call_at).toISOString().slice(0, 16)
+          : "",
+      );
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [vault.status, vault.key, vault.profile]);
+
+  useEffect(() => () => audioRef.current?.pause(), []);
+
+  const grouped = useMemo(() => {
+    if (!lines) return [];
+    return PRAYER_SETS.map((s) => ({ set: s, items: lines.filter((l) => l.set === s.key) })).filter(
+      (g) => g.items.length > 0,
+    );
+  }, [lines]);
+
+  const flat = useMemo(
+    () => grouped.flatMap((g) => g.items.map((l) => ({ ...l, set: g.set }))),
+    [grouped],
+  );
+  const current = flat[step];
+
+  async function saveDashboard() {
+    if (!vault.profile) return;
+    setSavedNote(null);
+    const { error: err } = await supabase
+      .from("avatar_profiles")
+      .update({
+        voice_enabled: voiceEnabled,
+        phone_number: phone.trim() || null,
+        scheduled_call_at: scheduledAt ? new Date(scheduledAt).toISOString() : null,
+      })
+      .eq("user_id", vault.profile.user_id);
+    setSavedNote(err ? err.message : "Saved.");
+    if (!err) vault.setProfile({ ...vault.profile, voice_enabled: voiceEnabled, phone_number: phone.trim() || null, scheduled_call_at: scheduledAt ? new Date(scheduledAt).toISOString() : null });
+  }
+
+  async function buildTonight() {
+    if (!answers || building) return;
+    setBuilding(true);
+    setError(null);
+    try {
+      const res = await chatFn({
+        data: {
+          systemPrompt: buildMeditationPrompt(answers, name),
+          messages: [{ role: "user" as const, content: "Prepare tonight's meditation." }],
+        },
+      });
+      const parsed = parseMeditationLines(res.reply || "");
+      if (parsed.length === 0) throw new Error("Tonight's lines could not be prepared. Try again.");
+      setLines(parsed);
+      setStep(0);
+      setRunning(true);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Something went wrong.");
+    } finally {
+      setBuilding(false);
+    }
+  }
+
+  async function speak(text: string) {
+    try {
+      audioRef.current?.pause();
+      const blob = await synthesizeSpeech(text);
+      const audio = new Audio(URL.createObjectURL(blob));
+      audioRef.current = audio;
+      await audio.play();
+    } catch {
+      /* silent — the practice works read-only too */
+    }
+  }
+
+  useEffect(() => {
+    if (running && voiceEnabled && current) void speak(current.text);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [step, running]);
+
+  if (vault.status === "loading") return <div className="min-h-[60vh]" />;
+
+  if (vault.status !== "unlocked") {
+    return (
+      <div className="mx-auto grid w-[min(900px,calc(100%-2rem))] gap-8 py-20 md:grid-cols-2">
+        <div className="rounded-lg border border-[color:var(--rule)] p-8">
+          <PinKeypad
+            mode={vault.status === "needs-setup" ? "setup" : "enter"}
+            busy={vault.busy}
+            error={vault.error}
+            onSubmit={(pin) =>
+              vault.status === "needs-setup" ? vault.setupPin(pin) : vault.unlock(pin)
+            }
+          />
+        </div>
+        <Caution>
+          Tonight&apos;s meditation is written from the answers only you can unlock. They are
+          decrypted in your browser and never readable by anyone else.
+        </Caution>
+      </div>
+    );
+  }
+
+  return (
+    <div className="mx-auto w-[min(980px,calc(100%-2rem))] py-14 md:py-20">
+      <Link
+        to="/meditation"
+        className="font-mono-cap text-xs text-[color:var(--muted-foreground)] hover:text-[color:var(--ink)]"
+      >
+        ← Meditation
+      </Link>
+
+      <header className="mt-6">
+        <span className="font-mono-cap text-[color:var(--muted-foreground)]">
+          Volume III · The Practice
+        </span>
+        <h1 className="font-display mt-3 text-[clamp(2rem,5.5vw,3.6rem)] leading-[1.03] tracking-tight">
+          Four prayers, in your <em className="italic text-[color:var(--royal)]">own words</em>
+        </h1>
+        <p className="mt-5 max-w-xl text-[color:var(--muted-foreground)]">
+          Tonight&apos;s lines are written from what you answered across your five dimensions. Say
+          each one aloud, slowly, and stay with it before moving on.
+        </p>
+      </header>
+
+      {/* ---------- Design dashboard ---------- */}
+      <section className="mt-12 rounded-xl border border-[color:var(--rule)] p-6 md:p-8">
+        <div className="font-mono-cap text-[color:var(--muted-foreground)]">Meditation dashboard</div>
+        <div className="mt-6 grid gap-6 md:grid-cols-3">
+          <label className="flex flex-col gap-2 text-sm">
+            <span className="font-mono-cap text-[color:var(--muted-foreground)]">Schedule</span>
+            <input
+              type="datetime-local"
+              value={scheduledAt}
+              onChange={(e) => setScheduledAt(e.target.value)}
+              className="rounded-md border border-[color:var(--rule)] bg-white px-3 py-2 text-sm"
+            />
+          </label>
+          <label className="flex flex-col gap-2 text-sm">
+            <span className="font-mono-cap text-[color:var(--muted-foreground)]">Phone number</span>
+            <input
+              type="tel"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              placeholder="+1 555 000 0000"
+              className="rounded-md border border-[color:var(--rule)] bg-white px-3 py-2 text-sm"
+            />
+            <span className="text-xs text-[color:var(--muted-foreground)]">
+              Check this is correct to receive the guided call.
+            </span>
+          </label>
+          <div className="flex flex-col gap-2 text-sm">
+            <span className="font-mono-cap text-[color:var(--muted-foreground)]">
+              Voice-enabled guided meditation
+            </span>
+            <button
+              type="button"
+              role="switch"
+              aria-checked={voiceEnabled}
+              onClick={() => setVoiceEnabled((v) => !v)}
+              className={`inline-flex h-9 w-20 items-center rounded-full border border-[color:var(--rule)] px-1 transition ${
+                voiceEnabled ? "bg-[color:var(--royal)]" : "bg-transparent"
+              }`}
+            >
+              <span
+                className={`h-7 w-7 rounded-full bg-[color:var(--paper)] shadow transition-transform ${
+                  voiceEnabled ? "translate-x-11" : ""
+                }`}
+              />
+            </button>
+            <span className="text-xs text-[color:var(--muted-foreground)]">
+              {voiceEnabled ? "On — each line is spoken to you." : "Off — read the lines yourself."}
+            </span>
+          </div>
+        </div>
+        <div className="mt-6 flex items-center gap-4">
+          <button
+            onClick={saveDashboard}
+            className="rounded-full border border-[color:var(--ink)] px-5 py-2 text-sm transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)]"
+          >
+            Save settings
+          </button>
+          {savedNote && (
+            <span className="text-xs text-[color:var(--muted-foreground)]">{savedNote}</span>
+          )}
+        </div>
+      </section>
+
+      {/* ---------- The practice ---------- */}
+      <section className="mt-10">
+        {!lines && (
+          <div className="rounded-xl border border-[color:var(--rule)] p-8 text-center">
+            <p className="mx-auto max-w-md text-[color:var(--muted-foreground)]">
+              When you are ready to sleep, begin. Your lines are prepared fresh each time, so the
+              prayer is never the same twice.
+            </p>
+            <button
+              onClick={buildTonight}
+              disabled={building || !answers}
+              className="mt-6 rounded-full bg-[color:var(--royal)] px-7 py-3 text-sm text-white transition hover:opacity-90 disabled:opacity-50"
+            >
+              {building ? "Preparing tonight's meditation…" : "Start meditation"}
+            </button>
+            {error && <p className="mt-4 text-sm text-red-600">{error}</p>}
+          </div>
+        )}
+
+        {lines && current && (
+          <div className="rounded-xl border border-[color:var(--rule)] p-8 md:p-12">
+            <div className="flex items-center justify-between">
+              <span className="font-mono-cap text-[color:var(--royal)]">
+                Prayer {current.set.n} · {current.set.title}
+              </span>
+              <span className="font-mono-cap text-[color:var(--muted-foreground)]">
+                {step + 1} / {flat.length}
+              </span>
+            </div>
+            <p className="mt-2 text-sm text-[color:var(--muted-foreground)]">
+              {current.set.invitation}
+            </p>
+
+            <AnimatePresence mode="wait">
+              <motion.p
+                key={step}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -12 }}
+                transition={{ duration: 0.7, ease: [0.2, 0.7, 0.2, 1] }}
+                className="font-display mt-10 min-h-[7rem] text-[clamp(1.5rem,3.4vw,2.4rem)] leading-[1.25] tracking-tight"
+              >
+                {current.text}
+              </motion.p>
+            </AnimatePresence>
+
+            <div className="mt-10 flex flex-wrap items-center gap-3">
+              <button
+                onClick={() => setStep((s) => Math.max(0, s - 1))}
+                disabled={step === 0}
+                className="rounded-full border border-[color:var(--rule)] px-5 py-2 text-sm disabled:opacity-40"
+              >
+                Back
+              </button>
+              {step < flat.length - 1 ? (
+                <button
+                  onClick={() => setStep((s) => s + 1)}
+                  className="rounded-full bg-[color:var(--ink)] px-6 py-2.5 text-sm text-[color:var(--paper)]"
+                >
+                  Next breath →
+                </button>
+              ) : (
+                <button
+                  onClick={() => {
+                    setRunning(false);
+                    setLines(null);
+                    setStep(0);
+                  }}
+                  className="rounded-full bg-[color:var(--royal)] px-6 py-2.5 text-sm text-white"
+                >
+                  Close the practice
+                </button>
+              )}
+              <button
+                onClick={() => speak(current.text)}
+                className="rounded-full border border-[color:var(--rule)] px-5 py-2 text-sm"
+              >
+                Speak this line
+              </button>
+            </div>
+          </div>
+        )}
+      </section>
+    </div>
+  );
+}
