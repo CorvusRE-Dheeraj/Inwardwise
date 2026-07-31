@@ -33,6 +33,15 @@ export const Route = createFileRoute("/_authenticated/meditation/practice")({
   component: MeditationPractice,
 });
 
+/** Format an ISO timestamp for a datetime-local input in the user's LOCAL time. */
+function toLocalInput(iso: string | null | undefined): string {
+  if (!iso) return "";
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return "";
+  const pad = (n: number) => String(n).padStart(2, "0");
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+}
+
 function MeditationPractice() {
   const chatFn = useServerFn(chatWithAvatar);
   const vault = useAvatarVault();
