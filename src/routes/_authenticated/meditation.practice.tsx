@@ -42,6 +42,15 @@ function toLocalInput(iso: string | null | undefined): string {
   return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
 }
 
+/** The browser's IANA timezone, e.g. "Asia/Kolkata". */
+function detectTimeZone(): string {
+  try {
+    return Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC";
+  } catch {
+    return "UTC";
+  }
+}
+
 function MeditationPractice() {
   const chatFn = useServerFn(chatWithAvatar);
   const vault = useAvatarVault();
@@ -53,6 +62,7 @@ function MeditationPractice() {
   const [voiceEnabled, setVoiceEnabled] = useState(false);
   const [phone, setPhone] = useState("");
   const [scheduledAt, setScheduledAt] = useState("");
+  const [timeZone, setTimeZone] = useState<string>("");
   const [savedNote, setSavedNote] = useState<string | null>(null);
 
   const [lines, setLines] = useState<PrayerLine[] | null>(null);
@@ -91,6 +101,21 @@ function MeditationPractice() {
     };
   }, [vault.status, vault.key, vault.profile]);
 
+  // Detect the browser's timezone after hydration and keep the profile in sync.
+  useEffect(() => {
+    const tz = detectTimeZone();
+    setTimeZone(tz);
+    if (!vault.profile) return;
+    const stored = (vault.profile as { timezone?: string | null }).timezone;
+    if (stored === tz) return;
+    void supabase
+      .from("avatar_profiles")
+      .update({ timezone: tz })
+      .eq("user_id", vault.profile.user_id)
+      .then(() => vault.setProfile({ ...vault.profile!, timezone: tz } as typeof vault.profile));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [vault.profile?.user_id]);
+
   useEffect(() => () => audioRef.current?.pause(), []);
 
   const grouped = useMemo(() => {
@@ -109,16 +134,19 @@ function MeditationPractice() {
   async function saveDashboard() {
     if (!vault.profile) return;
     setSavedNote(null);
+    const tz = timeZone || detectTimeZone();
+    const patch = {
+      voice_enabled: voiceEnabled,
+      phone_number: phone.trim() || null,
+      scheduled_call_at: scheduledAt ? new Date(scheduledAt).toISOString() : null,
+      timezone: tz,
+    };
     const { error: err } = await supabase
       .from("avatar_profiles")
-      .update({
-        voice_enabled: voiceEnabled,
-        phone_number: phone.trim() || null,
-        scheduled_call_at: scheduledAt ? new Date(scheduledAt).toISOString() : null,
-      })
+      .update(patch)
       .eq("user_id", vault.profile.user_id);
-    setSavedNote(err ? err.message : "Saved.");
-    if (!err) vault.setProfile({ ...vault.profile, voice_enabled: voiceEnabled, phone_number: phone.trim() || null, scheduled_call_at: scheduledAt ? new Date(scheduledAt).toISOString() : null });
+    setSavedNote(err ? err.message : `Saved — your call is set in ${tz} time.`);
+    if (!err) vault.setProfile({ ...vault.profile, ...patch } as typeof vault.profile);
   }
 
   async function buildTonight() {
@@ -218,6 +246,11 @@ function MeditationPractice() {
               onChange={(e) => setScheduledAt(e.target.value)}
               className="rounded-md border border-[color:var(--rule)] bg-white px-3 py-2 text-sm"
             />
+            <span className="text-xs text-[color:var(--muted-foreground)]">
+              {timeZone
+                ? `Your local time · ${timeZone}`
+                : "Detecting your timezone…"}
+            </span>
           </label>
           <label className="flex flex-col gap-2 text-sm">
             <span className="font-mono-cap text-[color:var(--muted-foreground)]">Phone number</span>

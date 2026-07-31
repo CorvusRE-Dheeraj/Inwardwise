@@ -1,0 +1,1 @@
+ALTER TABLE public.avatar_profiles ADD COLUMN IF NOT EXISTS timezone TEXT;
