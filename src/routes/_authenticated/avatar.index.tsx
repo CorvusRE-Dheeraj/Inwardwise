@@ -5,6 +5,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { AVATAR_DIMENSIONS } from "@/lib/avatar-dimensions";
 import { useAvatarVault } from "@/lib/avatar-vault";
 import { Caution, PinKeypad } from "@/components/avatar/PinKeypad";
+import { AvatarPortrait } from "@/components/avatar/AvatarPortrait";
+
 
 export const Route = createFileRoute("/_authenticated/avatar/")({
   head: () => ({
@@ -114,19 +116,12 @@ function AvatarDashboard() {
       {vault.status === "unlocked" && (
         <>
           <section className="mt-12 grid gap-6 md:grid-cols-[320px_1fr]">
-            <div className="flex flex-col items-center rounded-lg border border-[color:var(--rule)] p-8">
-              <div className="grid h-40 w-40 place-items-center rounded-full bg-[color:var(--royal)]/12 ring-1 ring-[color:var(--royal)]/25">
-                <span className="font-display text-4xl italic text-[color:var(--royal)]">
-                  {complete}/5
-                </span>
-              </div>
-              <div className="font-mono-cap mt-5 text-[10px] text-[color:var(--muted-foreground)]">
-                Avatar Portrait
-              </div>
-              <p className="mt-2 text-center text-sm text-[color:var(--muted-foreground)]">
-                Your portrait renders once all five dimensions are complete.
-              </p>
-            </div>
+            <AvatarPortrait
+              userId={vault.profile!.user_id}
+              complete={complete}
+              total={AVATAR_DIMENSIONS.length}
+            />
+
 
             <div className="rounded-lg border border-[color:var(--rule)] p-8">
               <div className="font-mono-cap flex items-center gap-2 text-[10px] text-[color:var(--muted-foreground)]">
