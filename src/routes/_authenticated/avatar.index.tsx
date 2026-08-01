@@ -5,6 +5,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { AVATAR_DIMENSIONS } from "@/lib/avatar-dimensions";
 import { useAvatarVault } from "@/lib/avatar-vault";
 import { Caution, PinKeypad } from "@/components/avatar/PinKeypad";
+import { AvatarPortrait } from "@/components/avatar/AvatarPortrait";
+
 
 export const Route = createFileRoute("/_authenticated/avatar/")({
   head: () => ({
