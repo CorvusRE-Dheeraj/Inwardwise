@@ -231,10 +231,12 @@ function AvatarDashboard() {
 
             <div className="mt-8 grid gap-6 md:grid-cols-2">
               <Caution>
-                Your Avatar cannot fully form until all five dimensions are complete. Partial
-                answers produce partial reflections. If typing is the obstacle, schedule a voice
-                call above and finish them by speaking.
+                Without completely answering all of the questions, your Avatar cannot fully form —
+                partial answers produce partial reflections. If typing is the obstacle, turn on
+                voice and schedule times when you can take a phone call; your Avatar will call you
+                and fill in the dimensions conversationally.
               </Caution>
+
               <div className="rounded-lg border border-[color:var(--rule)] p-5">
                 <div className="font-mono-cap mb-2 text-[10px] text-[color:var(--muted-foreground)]">
                   Your data
