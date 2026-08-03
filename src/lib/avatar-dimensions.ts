@@ -49,13 +49,14 @@ export const AVATAR_DIMENSIONS: AvatarDimension[] = [
     oneLine: "Private. Encrypted with your PIN. Visible only to you.",
     locked: true,
     intro:
-      "Everyone carries destructive tendencies that, left unmanaged, cause real harm. Naming them plainly — without judgement, without editing — is what makes your Avatar accurate rather than flattering.",
+      "You succumb to certain vices, destructive or unproductive habits and actions. They have derailed your life before, or carry the potential to. You may not think you have them, or hate to admit them, or fear being discovered. But your Avatar will not be accurate or complete unless you recognise them and list them here. No one else sees this — it is designed that way.",
     questions: [
       {
         key: "d2_q1",
         prompt:
-          "List any vices, destructive habits, or repeated patterns that have derailed you before — or could — and roughly how often they appear.",
-        helper: "This field is encrypted with your PIN. No administrator can read it.",
+          "Whatever the reason, list those vices, destructive habits or repeated patterns — and how often you have succumbed to them before.",
+        helper:
+          "Write without judgement. Extremes count too: ego, narcissism, selfishness, cynicism, impulsiveness, reactivity, lack of discipline around food, alcohol or substances, procrastination. Encrypted with your PIN — no administrator can read it.",
       },
     ],
   },
@@ -66,13 +67,20 @@ export const AVATAR_DIMENSIONS: AvatarDimension[] = [
     italic: "Skills & Talents",
     oneLine: "What effort built, and what came effortlessly.",
     intro:
-      "A skill is developed through repetition and necessity. A talent is something done with such ease and enjoyment that it never felt like effort. The distinction matters.",
+      "Skills are developed through repetition and disciplined follow-through. They took real effort, but you kept perfecting them until you were better than most. Skills are not interests: interests are ways of connecting to the outside world and belong in Dimension 4. A talent is different again — something you do very well and with ease, whose development you always enjoyed, and which others recognise you for.",
     questions: [
-      { key: "d3_q1", prompt: "What are your skills, and how did they develop?" },
+      {
+        key: "d3_q1",
+        prompt: "What are your skills, and how did they develop?",
+        helper:
+          "Channelled abilities built by necessity and repetition — writing, self-reflection, recruiting, surgery, cooking. Keep interests out; they belong in Dimension 4.",
+      },
       {
         key: "d3_q2",
         prompt:
-          "What is the one talent you — or others — most identify you with? Something you have used almost effortlessly to create or achieve.",
+          "What single talent do you — or others — identify you with, that you admire and have used effortlessly to create?",
+        helper:
+          "Talent never felt like effort. It may be self-taught or trained: inductive thinking, experimentation, a sport, an instrument, research ability, cooking.",
       },
     ],
   },
@@ -83,15 +91,20 @@ export const AVATAR_DIMENSIONS: AvatarDimension[] = [
     italic: "Interests & Outer Connections",
     oneLine: "How you meet the world outside yourself.",
     intro:
-      "These are not skills you have honed. They are the mediums through which you connect to the outer world — alone, and among others.",
+      "Interests belong here, not in Dimension 3. They are the mediums through which you connect to the outer world — routines so integral to you that they quietly shape what you know and who you meet. Some are solo; some are shared. Both matter.",
     questions: [
       {
         key: "d4_q1",
-        prompt: "What solo interests, hobbies, or activities connect you to the outer world?",
+        prompt:
+          "How do you connect to the outer world through solo interests, hobbies or activities?",
+        helper:
+          "Documentaries, reading, music, writing, gardening, scientific curiosity — things you return to without being asked.",
       },
       {
         key: "d4_q2",
-        prompt: "What social or group activities connect you to the outer world?",
+        prompt:
+          "How do you connect to the outer world through non-solo activities — social or group?",
+        helper: "Clubs, conferences, teams, communities, gatherings you attend or once attended.",
       },
     ],
   },
@@ -102,16 +115,21 @@ export const AVATAR_DIMENSIONS: AvatarDimension[] = [
     italic: "Life Experiences",
     oneLine: "The dots — and the line running through them.",
     intro:
-      "Experiences look random until they are laid side by side. Write them down first; the pattern comes second.",
+      "By connecting your life's experiences, a general sense of direction appears. That direction acts on your behalf: what to do next, what new experience is worth having, a trip, a course, a certain kind of person to befriend. Write the dots down first; the pattern comes second.",
     questions: [
-      { key: "d5_q1", prompt: "What are some of your unique life experiences, good or bad?" },
+      {
+        key: "d5_q1",
+        prompt:
+          "What are some of your unique life experiences — without regard to good or bad?",
+      },
       {
         key: "d5_q2",
-        prompt: "Looking at these experiences together, do you see a pattern?",
+        prompt: "If you connect these experiences like dots, is there a pattern?",
       },
     ],
   },
 ];
+
 
 export function getDimension(n: number): AvatarDimension | undefined {
   return AVATAR_DIMENSIONS.find((d) => d.n === n);
