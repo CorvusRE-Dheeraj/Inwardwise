@@ -69,3 +69,24 @@ export const PRAYER_SETS: PrayerSet[] = [
 export type PrayerLine = { set: PrayerSet["key"]; text: string };
 
 export const MEDITATION_LINES_PER_SET = 5;
+
+/** Session lengths offered on the dashboard, in minutes. */
+export const SESSION_MINUTE_OPTIONS = [5, 10, 15, 20, 30, 45] as const;
+
+/** Seconds a single line is held before the next one, including the spoken words. */
+export const SECONDS_PER_LINE = 25;
+
+/**
+ * The session is divided into four equal quarters — one per prayer — so the
+ * number of lines in each set follows the time the person scheduled.
+ */
+export function linesPerSetFor(minutes: number): number {
+  const perQuarter = (Math.max(1, minutes) * 60) / 4;
+  return Math.min(15, Math.max(3, Math.round(perQuarter / SECONDS_PER_LINE)));
+}
+
+/** How long each line is held on screen for a given session length. */
+export function dwellSecondsFor(minutes: number): number {
+  const perQuarter = (Math.max(1, minutes) * 60) / 4;
+  return Math.max(8, Math.round(perQuarter / linesPerSetFor(minutes)));
+}

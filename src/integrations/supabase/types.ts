@@ -97,6 +97,7 @@ export type Database = {
           pin_hash: string | null
           pin_salt: string | null
           scheduled_call_at: string | null
+          session_minutes: number
           timezone: string | null
           user_id: string
           voice_enabled: boolean
@@ -108,6 +109,7 @@ export type Database = {
           pin_hash?: string | null
           pin_salt?: string | null
           scheduled_call_at?: string | null
+          session_minutes?: number
           timezone?: string | null
           user_id: string
           voice_enabled?: boolean
@@ -119,6 +121,7 @@ export type Database = {
           pin_hash?: string | null
           pin_salt?: string | null
           scheduled_call_at?: string | null
+          session_minutes?: number
           timezone?: string | null
           user_id?: string
           voice_enabled?: boolean

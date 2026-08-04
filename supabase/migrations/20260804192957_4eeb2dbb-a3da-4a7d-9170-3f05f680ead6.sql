@@ -1,0 +1,1 @@
+ALTER TABLE public.avatar_profiles ADD COLUMN IF NOT EXISTS session_minutes integer NOT NULL DEFAULT 10;
