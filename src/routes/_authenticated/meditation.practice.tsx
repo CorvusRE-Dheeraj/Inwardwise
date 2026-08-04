@@ -145,6 +145,22 @@ function MeditationPractice() {
   );
   const current = flat[step];
 
+  // The meditation cannot start until the avatar is 100% built.
+  const totalQuestions = useMemo(
+    () => AVATAR_DIMENSIONS.reduce((n, d) => n + d.questions.length, 0),
+    [],
+  );
+  const answeredCount = useMemo(
+    () =>
+      answers
+        ? AVATAR_DIMENSIONS.flatMap((d) => d.questions).filter(
+            (q) => (answers[q.key] ?? "").trim().length > 0,
+          ).length
+        : 0,
+    [answers],
+  );
+  const avatarComplete = answers !== null && answeredCount === totalQuestions;
+
   async function saveDashboard() {
     if (!vault.profile) return;
     setSavedNote(null);
@@ -154,23 +170,26 @@ function MeditationPractice() {
       phone_number: phone.trim() || null,
       scheduled_call_at: scheduledAt ? new Date(scheduledAt).toISOString() : null,
       timezone: tz,
+      session_minutes: minutes,
     };
     const { error: err } = await supabase
       .from("avatar_profiles")
       .update(patch)
       .eq("user_id", vault.profile.user_id);
-    setSavedNote(err ? err.message : `Saved — your call is set in ${tz} time.`);
+    setSavedNote(
+      err ? err.message : `Saved — a ${minutes}-minute session, set in ${tz} time.`,
+    );
     if (!err) vault.setProfile({ ...vault.profile, ...patch } as typeof vault.profile);
   }
 
   async function buildTonight() {
-    if (!answers || building) return;
+    if (!answers || building || !avatarComplete) return;
     setBuilding(true);
     setError(null);
     try {
       const res = await chatFn({
         data: {
-          systemPrompt: buildMeditationPrompt(answers, name),
+          systemPrompt: buildMeditationPrompt(answers, name, linesPerSetFor(minutes), minutes),
           messages: [{ role: "user" as const, content: "Prepare tonight's meditation." }],
         },
       });
@@ -179,6 +198,11 @@ function MeditationPractice() {
       setLines(parsed);
       setStep(0);
       setRunning(true);
+      if (voiceEnabled) {
+        void speak(
+          "Get ready for your meditation. Take a minute to find a quiet place. When you are ready, we will begin.",
+        );
+      }
     } catch (e) {
       setError(e instanceof Error ? e.message : "Something went wrong.");
     } finally {
@@ -199,9 +223,20 @@ function MeditationPractice() {
   }
 
   useEffect(() => {
-    if (running && voiceEnabled && current) void speak(current.text);
+    if (running && ready && voiceEnabled && current) void speak(current.text);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [step, running]);
+  }, [step, running, ready]);
+
+  // Pace the session: each quarter of the scheduled time holds its own lines.
+  useEffect(() => {
+    if (!running || !ready || !autoAdvance || !current) return;
+    if (step >= flat.length - 1) return;
+    const t = setTimeout(() => setStep((s) => s + 1), dwellSecondsFor(minutes) * 1000);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [step, running, ready, autoAdvance, minutes, flat.length]);
+
+
 
   if (vault.status === "loading") return <div className="min-h-[60vh]" />;
 
