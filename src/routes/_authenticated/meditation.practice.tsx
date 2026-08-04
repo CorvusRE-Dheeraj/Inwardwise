@@ -472,7 +472,9 @@ function MeditationPractice() {
               ) : (
                 <button
                   onClick={() => {
+                    audioRef.current?.pause();
                     setRunning(false);
+                    setReady(false);
                     setLines(null);
                     setStep(0);
                   }}
@@ -487,7 +489,16 @@ function MeditationPractice() {
               >
                 Speak this line
               </button>
+              <button
+                onClick={() => setAutoAdvance((a) => !a)}
+                className="rounded-full border border-[color:var(--rule)] px-5 py-2 text-sm"
+              >
+                {autoAdvance
+                  ? `Paced · ${dwellSecondsFor(minutes)}s per line`
+                  : "Paced timing off"}
+              </button>
             </div>
+
           </div>
         )}
       </section>
