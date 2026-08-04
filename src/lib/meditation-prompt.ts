@@ -18,14 +18,24 @@ function answersBlock(answers: AvatarAnswers): string {
 /**
  * Builds the prompt that turns a person's own dimension answers into their
  * four sets of prayer lines for tonight's meditation.
+ *
+ * `linesPerSet` follows the session length they scheduled — the session is
+ * split into four equal quarters, one per prayer.
  */
-export function buildMeditationPrompt(answers: AvatarAnswers, name?: string): string {
+export function buildMeditationPrompt(
+  answers: AvatarAnswers,
+  name?: string,
+  linesPerSet: number = MEDITATION_LINES_PER_SET,
+  minutes?: number,
+): string {
   const sets = PRAYER_SETS.map(
     (s) =>
       `SET ${s.n} · key "${s.key}" · stem "${s.stem} …"\nDraw from dimensions ${s.dimensions.join(", ")} in that order.\n${s.guidance}${
         s.openings ? `\nBegin this set with lines that answer: ${s.openings.join(" / ")}` : ""
       }`,
   ).join("\n\n");
+
+  const seed = Math.random().toString(36).slice(2, 10);
 
   return `You are preparing tonight's private meditation for ${name || "this person"}.
 
@@ -37,7 +47,7 @@ ${answersBlock(answers)}
 
 === END ===
 
-Write ${MEDITATION_LINES_PER_SET} lines for each of the four sets.
+${minutes ? `This is a ${minutes}-minute session, divided into four equal quarters — one per prayer.\n\n` : ""}Write ${linesPerSet} lines for each of the four sets.
 
 ${sets}
 
@@ -46,6 +56,8 @@ RULES
 - Every line must be grounded in their own words above. Never invent events. If a dimension is unanswered, draw from the ones that are.
 - One sentence per line, spoken aloud comfortably in a single breath, 8–28 words.
 - Speak to them in the second person where natural; keep it plain, warm and specific. No therapy jargon, no headings, no numbering.
+- Within each set, vary and shuffle which dimension each line draws from so the session is never predictable. The four sets themselves stay in order.
+- These lines must be new: never repeat a phrasing they are likely to have heard in an earlier session. Session variation seed: ${seed}.
 - If they wrote almost nothing, write gentle universal lines that still fit the stems.
 
 Respond with JSON only, no prose and no code fences:
