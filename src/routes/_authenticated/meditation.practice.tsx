@@ -69,6 +69,7 @@ function MeditationPractice() {
   const [voiceEnabled, setVoiceEnabled] = useState(false);
   const [phone, setPhone] = useState("");
   const [scheduledAt, setScheduledAt] = useState("");
+  const [minutes, setMinutes] = useState<number>(10);
   const [timeZone, setTimeZone] = useState<string>("");
   const [savedNote, setSavedNote] = useState<string | null>(null);
 
@@ -77,6 +78,9 @@ function MeditationPractice() {
   const [error, setError] = useState<string | null>(null);
   const [step, setStep] = useState(0);
   const [running, setRunning] = useState(false);
+  /** Set once the person confirms they are in a quiet place and ready. */
+  const [ready, setReady] = useState(false);
+  const [autoAdvance, setAutoAdvance] = useState(true);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const hydratedRef = useRef(false);
 
