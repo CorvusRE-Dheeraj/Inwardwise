@@ -106,6 +106,9 @@ function MeditationPractice() {
       setVoiceEnabled(!!vault.profile!.voice_enabled);
       setPhone(vault.profile!.phone_number ?? "");
       setScheduledAt(toLocalInput(vault.profile!.scheduled_call_at));
+      setMinutes(
+        (vault.profile as { session_minutes?: number | null }).session_minutes ?? 10,
+      );
     })();
     return () => {
       cancelled = true;
