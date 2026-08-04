@@ -375,12 +375,21 @@ function MeditationPractice() {
         {!lines && (
           <div className="rounded-xl border border-[color:var(--rule)] p-8 text-center">
             <p className="mx-auto max-w-md text-[color:var(--muted-foreground)]">
-              When you are ready to sleep, begin. Your lines are prepared fresh each time, so the
-              prayer is never the same twice.
+              When you are ready to sleep, begin. Your {minutes}-minute session is prepared fresh
+              each time, so the prayer is never the same twice.
             </p>
+            {answers && !avatarComplete && (
+              <p className="mx-auto mt-5 max-w-md text-sm text-[color:var(--muted-foreground)]">
+                Your meditation cannot begin until your avatar is fully built —{" "}
+                {answeredCount} of {totalQuestions} questions answered.{" "}
+                <Link to="/avatar" className="text-[color:var(--royal)] underline">
+                  Finish building your avatar →
+                </Link>
+              </p>
+            )}
             <button
               onClick={buildTonight}
-              disabled={building || !answers}
+              disabled={building || !answers || !avatarComplete}
               className="mt-6 rounded-full bg-[color:var(--royal)] px-7 py-3 text-sm text-white transition hover:opacity-90 disabled:opacity-50"
             >
               {building ? "Preparing tonight's meditation…" : "Start meditation"}
@@ -389,7 +398,36 @@ function MeditationPractice() {
           </div>
         )}
 
-        {lines && current && (
+        {lines && !ready && (
+          <div className="rounded-xl border border-[color:var(--rule)] p-8 text-center md:p-12">
+            <p className="font-display text-[clamp(1.4rem,3vw,2.1rem)] leading-snug tracking-tight">
+              Get ready for your meditation. Take a minute to find a quiet place.
+            </p>
+            <p className="mt-4 text-sm text-[color:var(--muted-foreground)]">
+              Are you ready to begin?
+            </p>
+            <div className="mt-8 flex flex-wrap justify-center gap-3">
+              <button
+                onClick={() => setReady(true)}
+                className="rounded-full bg-[color:var(--royal)] px-7 py-3 text-sm text-white"
+              >
+                Yes, I&apos;m ready
+              </button>
+              <button
+                onClick={() => {
+                  audioRef.current?.pause();
+                  setLines(null);
+                  setRunning(false);
+                }}
+                className="rounded-full border border-[color:var(--rule)] px-6 py-3 text-sm"
+              >
+                Not yet
+              </button>
+            </div>
+          </div>
+        )}
+
+        {lines && ready && current && (
           <div className="rounded-xl border border-[color:var(--rule)] p-8 md:p-12">
             <div className="flex items-center justify-between">
               <span className="font-mono-cap text-[color:var(--royal)]">
