@@ -8,7 +8,14 @@ import { useAvatarVault } from "@/lib/avatar-vault";
 import { decryptText } from "@/lib/avatar-crypto";
 import type { AvatarAnswers } from "@/lib/avatar-prompt";
 import { Caution, PinKeypad } from "@/components/avatar/PinKeypad";
-import { PRAYER_SETS, type PrayerLine } from "@/lib/meditation";
+import {
+  PRAYER_SETS,
+  SESSION_MINUTE_OPTIONS,
+  dwellSecondsFor,
+  linesPerSetFor,
+  type PrayerLine,
+} from "@/lib/meditation";
+import { AVATAR_DIMENSIONS } from "@/lib/avatar-dimensions";
 import { buildMeditationPrompt, parseMeditationLines } from "@/lib/meditation-prompt";
 import { synthesizeSpeech } from "@/lib/voice";
 
