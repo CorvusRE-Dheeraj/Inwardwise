@@ -40,7 +40,9 @@ export const chatWithAvatar = createServerFn({ method: "POST" })
         throw new Error("Your avatar is resting — too many requests. Try again in a moment.");
       }
       if (res.status === 402) {
-        throw new Error("Avatar credits are exhausted. Add credits to continue.");
+        throw new Error(
+          "Your avatar is temporarily offline: the workspace AI balance is empty. Top up credits in Settings → Plans & credit usage → Add credits, then try again.",
+        );
       }
       throw new Error(`Avatar unreachable (${res.status}). ${text.slice(0, 200)}`);
     }
