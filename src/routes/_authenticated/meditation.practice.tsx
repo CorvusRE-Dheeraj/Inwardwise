@@ -421,9 +421,12 @@ function MeditationPractice() {
               placeholder="+1 555 000 0000"
               className="rounded-md border border-[color:var(--rule)] bg-white px-3 py-2 text-sm"
             />
-            <span className="text-xs text-[color:var(--muted-foreground)]">
-              Check this is correct to receive the guided call.
+            <span
+              className={`text-xs ${phoneError || missingPhone ? "text-destructive" : "text-[color:var(--muted-foreground)]"}`}
+            >
+              {phoneError ?? missingPhone ?? "Check this is correct to receive the guided call."}
             </span>
+
           </label>
           <div className="flex flex-col gap-2 text-sm">
             <span className="font-mono-cap text-[color:var(--muted-foreground)]">
