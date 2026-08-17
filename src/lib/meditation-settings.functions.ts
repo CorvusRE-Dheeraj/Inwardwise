@@ -64,7 +64,8 @@ export const saveMeditationSettings = createServerFn({ method: "POST" })
       duration_minutes: data.durationMinutes,
       voice_enabled: data.voiceEnabled,
       timezone: data.timezone,
-      status: data.scheduledAt ? "scheduled" : "cancelled",
+      status:
+        data.scheduledAt && data.voiceEnabled && phone ? "scheduled" : "cancelled",
       last_error: null,
       ...(data.script ? { script: data.script } : {}),
     };

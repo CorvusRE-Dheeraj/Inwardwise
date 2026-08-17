@@ -466,7 +466,7 @@ function MeditationPractice() {
         </div>
         {callStatus && (
           <p className="mt-3 text-xs text-[color:var(--muted-foreground)]">
-            {callStatus.status === "scheduled" && callStatus.scheduled_at
+            {callStatus.status === "scheduled" && callStatus.voice_enabled && callStatus.scheduled_at
               ? `Call queued for ${new Date(callStatus.scheduled_at).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" })}.`
               : callStatus.status === "sent"
                 ? `Last call placed ${callStatus.last_call_at ? new Date(callStatus.last_call_at).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" }) : "recently"}.`
