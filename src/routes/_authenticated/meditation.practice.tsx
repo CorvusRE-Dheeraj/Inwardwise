@@ -18,6 +18,13 @@ import {
 import { AVATAR_DIMENSIONS } from "@/lib/avatar-dimensions";
 import { buildMeditationPrompt, parseMeditationLines } from "@/lib/meditation-prompt";
 import { synthesizeSpeech } from "@/lib/voice";
+import { toast } from "sonner";
+import {
+  getMeditationSettings,
+  saveMeditationSettings,
+  type MeditationSettings,
+} from "@/lib/meditation-settings.functions";
+
 
 export const Route = createFileRoute("/_authenticated/meditation/practice")({
   head: () => ({
