@@ -283,15 +283,9 @@ function MeditationPractice() {
     setBuilding(true);
     setError(null);
     try {
-      const res = await chatFn({
-        data: {
-          systemPrompt: buildMeditationPrompt(answers, name, linesPerSetFor(minutes), minutes),
-          messages: [{ role: "user" as const, content: "Prepare tonight's meditation." }],
-        },
-      });
-      const parsed = parseMeditationLines(res.reply || "");
-      if (parsed.length === 0) throw new Error("Tonight's lines could not be prepared. Try again.");
+      const parsed = await generateScript();
       setLines(parsed);
+
       setStep(0);
       setRunning(true);
       if (voiceEnabled) {
