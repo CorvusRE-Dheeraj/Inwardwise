@@ -452,17 +452,30 @@ function MeditationPractice() {
             </span>
           </div>
         </div>
-        <div className="mt-6 flex items-center gap-4">
+        <div className="mt-6 flex flex-wrap items-center gap-4">
           <button
             onClick={saveDashboard}
-            className="rounded-full border border-[color:var(--ink)] px-5 py-2 text-sm transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)]"
+            disabled={!canSave}
+            className="rounded-full border border-[color:var(--ink)] px-5 py-2 text-sm transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)] disabled:opacity-40 disabled:hover:bg-transparent disabled:hover:text-[color:var(--ink)]"
           >
-            Save settings
+            {saving ? "Saving…" : "Save settings"}
           </button>
           {savedNote && (
             <span className="text-xs text-[color:var(--muted-foreground)]">{savedNote}</span>
           )}
         </div>
+        {callStatus && (
+          <p className="mt-3 text-xs text-[color:var(--muted-foreground)]">
+            {callStatus.status === "scheduled" && callStatus.scheduled_at
+              ? `Call queued for ${new Date(callStatus.scheduled_at).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" })}.`
+              : callStatus.status === "sent"
+                ? `Last call placed ${callStatus.last_call_at ? new Date(callStatus.last_call_at).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" }) : "recently"}.`
+                : callStatus.status === "failed"
+                  ? `Last call did not go through. ${callStatus.last_error ?? ""}`
+                  : "No call scheduled."}
+          </p>
+        )}
+
       </section>
 
       {/* ---------- The practice ---------- */}
