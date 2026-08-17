@@ -33,6 +33,7 @@ import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/
 import { Route as AuthenticatedAccountRouteImport } from './routes/_authenticated/account'
 import { Route as AuthenticatedAvatarIndexRouteImport } from './routes/_authenticated/avatar.index'
 import { Route as AuthenticatedAccountIndexRouteImport } from './routes/_authenticated/account.index'
+import { Route as ApiPublicMeditationDispatchRouteImport } from './routes/api/public/meditation-dispatch'
 import { Route as AuthenticatedMeditationPracticeRouteImport } from './routes/_authenticated/meditation.practice'
 import { Route as AuthenticatedAvatarConsultRouteImport } from './routes/_authenticated/avatar.consult'
 import { Route as AuthenticatedAvatarAskRouteImport } from './routes/_authenticated/avatar.ask'
@@ -164,6 +165,12 @@ const AuthenticatedAccountIndexRoute =
     path: '/',
     getParentRoute: () => AuthenticatedAccountRoute,
   } as any)
+const ApiPublicMeditationDispatchRoute =
+  ApiPublicMeditationDispatchRouteImport.update({
+    id: '/api/public/meditation-dispatch',
+    path: '/api/public/meditation-dispatch',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const AuthenticatedMeditationPracticeRoute =
   AuthenticatedMeditationPracticeRouteImport.update({
     id: '/meditation/practice',
@@ -246,6 +253,7 @@ export interface FileRoutesByFullPath {
   '/avatar/ask': typeof AuthenticatedAvatarAskRoute
   '/avatar/consult': typeof AuthenticatedAvatarConsultRoute
   '/meditation/practice': typeof AuthenticatedMeditationPracticeRoute
+  '/api/public/meditation-dispatch': typeof ApiPublicMeditationDispatchRoute
   '/account/': typeof AuthenticatedAccountIndexRoute
   '/avatar/': typeof AuthenticatedAvatarIndexRoute
   '/avatar/dimension/$n': typeof AuthenticatedAvatarDimensionNRoute
@@ -278,6 +286,7 @@ export interface FileRoutesByTo {
   '/avatar/ask': typeof AuthenticatedAvatarAskRoute
   '/avatar/consult': typeof AuthenticatedAvatarConsultRoute
   '/meditation/practice': typeof AuthenticatedMeditationPracticeRoute
+  '/api/public/meditation-dispatch': typeof ApiPublicMeditationDispatchRoute
   '/account': typeof AuthenticatedAccountIndexRoute
   '/avatar': typeof AuthenticatedAvatarIndexRoute
   '/avatar/dimension/$n': typeof AuthenticatedAvatarDimensionNRoute
@@ -314,6 +323,7 @@ export interface FileRoutesById {
   '/_authenticated/avatar/ask': typeof AuthenticatedAvatarAskRoute
   '/_authenticated/avatar/consult': typeof AuthenticatedAvatarConsultRoute
   '/_authenticated/meditation/practice': typeof AuthenticatedMeditationPracticeRoute
+  '/api/public/meditation-dispatch': typeof ApiPublicMeditationDispatchRoute
   '/_authenticated/account/': typeof AuthenticatedAccountIndexRoute
   '/_authenticated/avatar/': typeof AuthenticatedAvatarIndexRoute
   '/_authenticated/avatar/dimension/$n': typeof AuthenticatedAvatarDimensionNRoute
@@ -350,6 +360,7 @@ export interface FileRouteTypes {
     | '/avatar/ask'
     | '/avatar/consult'
     | '/meditation/practice'
+    | '/api/public/meditation-dispatch'
     | '/account/'
     | '/avatar/'
     | '/avatar/dimension/$n'
@@ -382,6 +393,7 @@ export interface FileRouteTypes {
     | '/avatar/ask'
     | '/avatar/consult'
     | '/meditation/practice'
+    | '/api/public/meditation-dispatch'
     | '/account'
     | '/avatar'
     | '/avatar/dimension/$n'
@@ -417,6 +429,7 @@ export interface FileRouteTypes {
     | '/_authenticated/avatar/ask'
     | '/_authenticated/avatar/consult'
     | '/_authenticated/meditation/practice'
+    | '/api/public/meditation-dispatch'
     | '/_authenticated/account/'
     | '/_authenticated/avatar/'
     | '/_authenticated/avatar/dimension/$n'
@@ -441,6 +454,7 @@ export interface RootRouteChildren {
   ApiChatRoute: typeof ApiChatRoute
   ApiTranscribeRoute: typeof ApiTranscribeRoute
   ApiTtsRoute: typeof ApiTtsRoute
+  ApiPublicMeditationDispatchRoute: typeof ApiPublicMeditationDispatchRoute
   ApiPublicMeditationTwimlIdRoute: typeof ApiPublicMeditationTwimlIdRoute
   LovableEmailQueueProcessRoute: typeof LovableEmailQueueProcessRoute
 }
@@ -615,6 +629,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAccountIndexRouteImport
       parentRoute: typeof AuthenticatedAccountRoute
     }
+    '/api/public/meditation-dispatch': {
+      id: '/api/public/meditation-dispatch'
+      path: '/api/public/meditation-dispatch'
+      fullPath: '/api/public/meditation-dispatch'
+      preLoaderRoute: typeof ApiPublicMeditationDispatchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated/meditation/practice': {
       id: '/_authenticated/meditation/practice'
       path: '/meditation/practice'
@@ -754,6 +775,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiChatRoute: ApiChatRoute,
   ApiTranscribeRoute: ApiTranscribeRoute,
   ApiTtsRoute: ApiTtsRoute,
+  ApiPublicMeditationDispatchRoute: ApiPublicMeditationDispatchRoute,
   ApiPublicMeditationTwimlIdRoute: ApiPublicMeditationTwimlIdRoute,
   LovableEmailQueueProcessRoute: LovableEmailQueueProcessRoute,
 }
