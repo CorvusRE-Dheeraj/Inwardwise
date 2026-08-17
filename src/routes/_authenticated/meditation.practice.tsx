@@ -171,26 +171,95 @@ function MeditationPractice() {
   );
   const avatarComplete = answers !== null && answeredCount === totalQuestions;
 
-  async function saveDashboard() {
-    if (!vault.profile) return;
-    setSavedNote(null);
-    const tz = timeZone || detectTimeZone();
-    const patch = {
-      voice_enabled: voiceEnabled,
-      phone_number: phone.trim() || null,
-      scheduled_call_at: scheduledAt ? new Date(scheduledAt).toISOString() : null,
-      timezone: tz,
-      session_minutes: minutes,
-    };
-    const { error: err } = await supabase
-      .from("avatar_profiles")
-      .update(patch)
-      .eq("user_id", vault.profile.user_id);
-    setSavedNote(
-      err ? err.message : `Saved — a ${minutes}-minute session, set in ${tz} time.`,
-    );
-    if (!err) vault.setProfile({ ...vault.profile, ...patch } as typeof vault.profile);
+  // ---- Validation for the schedule -------------------------------------
+  const normalizedPhone = phone.replace(/[\s()-]/g, "").trim();
+  const phoneError =
+    normalizedPhone.length > 0 && !/^\+[1-9]\d{7,14}$/.test(normalizedPhone)
+      ? "Use the international format, e.g. +14155550123."
+      : null;
+  const scheduleError =
+    scheduledAt && new Date(scheduledAt).getTime() <= Date.now()
+      ? "Choose a time in the future."
+      : null;
+  const missingPhone =
+    voiceEnabled && !!scheduledAt && normalizedPhone.length === 0
+      ? "A phone number is needed for the scheduled call."
+      : null;
+  const canSave = !phoneError && !scheduleError && !missingPhone && !saving;
+
+  /** Writes tonight's prayer lines using the person's own dimension answers. */
+  async function generateScript(): Promise<PrayerLine[]> {
+    if (!answers) throw new Error("Your answers are still loading.");
+    const res = await chatFn({
+      data: {
+        systemPrompt: buildMeditationPrompt(answers, name, linesPerSetFor(minutes), minutes),
+        messages: [{ role: "user" as const, content: "Prepare tonight's meditation." }],
+      },
+    });
+    const parsed = parseMeditationLines(res.reply || "");
+    if (parsed.length === 0) throw new Error("Tonight's lines could not be prepared. Try again.");
+    return parsed;
   }
+
+  async function saveDashboard() {
+    if (!vault.profile || !canSave) return;
+    setSavedNote(null);
+    setSaving(true);
+    const tz = timeZone || detectTimeZone();
+    try {
+      // Keep the avatar profile in step for the rest of the app.
+      const patch = {
+        voice_enabled: voiceEnabled,
+        phone_number: normalizedPhone || null,
+        scheduled_call_at: scheduledAt ? new Date(scheduledAt).toISOString() : null,
+        timezone: tz,
+        session_minutes: minutes,
+      };
+      await supabase.from("avatar_profiles").update(patch).eq("user_id", vault.profile.user_id);
+      vault.setProfile({ ...vault.profile, ...patch } as typeof vault.profile);
+
+      // The call speaks the same wording every time — prepare it once, now.
+      let script: PrayerLine[] | null = null;
+      if (scheduledAt && voiceEnabled && normalizedPhone && avatarComplete) {
+        script = await generateScript();
+      }
+
+      await saveSettingsFn({
+        data: {
+          phoneNumber: normalizedPhone || null,
+          scheduledAt: scheduledAt ? new Date(scheduledAt).toISOString() : null,
+          durationMinutes: minutes,
+          voiceEnabled,
+          timezone: tz,
+          script,
+        },
+      });
+
+      const when = scheduledAt
+        ? new Date(scheduledAt).toLocaleString(undefined, {
+            dateStyle: "medium",
+            timeStyle: "short",
+          })
+        : null;
+      const note =
+        when && voiceEnabled && normalizedPhone
+          ? `Saved — we will call ${normalizedPhone} on ${when} (${tz}) for ${minutes} minutes.`
+          : when
+            ? `Saved — ${minutes} minutes on ${when} (${tz}). No call: turn voice on to be called.`
+            : `Saved — a ${minutes}-minute session, in ${tz} time.`;
+      setSavedNote(note);
+      toast.success(note);
+      const { settings } = await statusFn({});
+      setCallStatus(settings);
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : "Could not save your settings.";
+      setSavedNote(msg);
+      toast.error(msg);
+    } finally {
+      setSaving(false);
+    }
+  }
+
 
   async function buildTonight() {
     if (!answers || building || !avatarComplete) return;
