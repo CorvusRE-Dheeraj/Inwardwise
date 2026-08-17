@@ -70,17 +70,25 @@ async function dispatch(request: Request) {
       if (!res.ok) {
         const body = await res.text();
         console.error(`[meditation] Twilio call failed [${res.status}]: ${body}`);
+        let detail = `Call failed (${res.status}).`;
+        try {
+          const parsed = JSON.parse(body) as { message?: string };
+          if (parsed.message) detail = parsed.message;
+        } catch {
+          /* keep the generic message */
+        }
         await supabaseAdmin
           .from("meditation_settings")
           .update({
             status: "failed",
-            last_error: `Call failed (${res.status}).`,
+            last_error: detail.slice(0, 300),
             last_call_at: new Date().toISOString(),
           })
           .eq("id", row.id);
         results.push({ id: row.id, status: "failed" });
         continue;
       }
+
 
       await supabaseAdmin
         .from("meditation_settings")
