@@ -245,6 +245,57 @@ export type Database = {
         }
         Relationships: []
       }
+      meditation_settings: {
+        Row: {
+          call_token: string
+          created_at: string
+          duration_minutes: number
+          id: string
+          last_call_at: string | null
+          last_error: string | null
+          phone_number: string | null
+          scheduled_at: string | null
+          script: Json | null
+          status: string
+          timezone: string
+          updated_at: string
+          user_id: string
+          voice_enabled: boolean
+        }
+        Insert: {
+          call_token?: string
+          created_at?: string
+          duration_minutes?: number
+          id?: string
+          last_call_at?: string | null
+          last_error?: string | null
+          phone_number?: string | null
+          scheduled_at?: string | null
+          script?: Json | null
+          status?: string
+          timezone?: string
+          updated_at?: string
+          user_id: string
+          voice_enabled?: boolean
+        }
+        Update: {
+          call_token?: string
+          created_at?: string
+          duration_minutes?: number
+          id?: string
+          last_call_at?: string | null
+          last_error?: string | null
+          phone_number?: string | null
+          scheduled_at?: string | null
+          script?: Json | null
+          status?: string
+          timezone?: string
+          updated_at?: string
+          user_id?: string
+          voice_enabled?: boolean
+        }
+        Relationships: []
+      }
       private_dimensions: {
         Row: {
           enemy: string
