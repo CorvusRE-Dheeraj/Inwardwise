@@ -67,7 +67,10 @@ function detectTimeZone(): string {
 
 function MeditationPractice() {
   const chatFn = useServerFn(chatWithAvatar);
+  const saveSettingsFn = useServerFn(saveMeditationSettings);
+  const statusFn = useServerFn(getMeditationSettings);
   const vault = useAvatarVault();
+
 
   const [answers, setAnswers] = useState<AvatarAnswers | null>(null);
   const [name, setName] = useState("");
