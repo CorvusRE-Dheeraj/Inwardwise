@@ -1,7 +1,36 @@
 import { createFileRoute } from "@tanstack/react-router";
 
+type Line = { set: string; text: string };
+
+const SET_TITLES: Record<string, string> = {
+  sorry: "I am sorry.",
+  forgive: "Please forgive me.",
+  thank: "Thank you.",
+  love: "I love you.",
+};
+
+/** Turn the saved prayer lines into a single spoken meditation script. */
+function buildScriptText(script: unknown, minutes: number): string {
+  const lines = Array.isArray(script) ? (script as Line[]) : [];
+  if (lines.length === 0) {
+    return "Your meditation is not prepared yet. Please open the dashboard and save your settings again.";
+  }
+  const order = ["sorry", "forgive", "thank", "love"];
+  const parts: string[] = [
+    "Welcome to your meditation. Find a quiet place, and breathe slowly.",
+  ];
+  for (const key of order) {
+    const items = lines.filter((l) => l.set === key);
+    if (items.length === 0) continue;
+    parts.push(SET_TITLES[key] ?? "");
+    for (const l of items) parts.push(l.text);
+  }
+  parts.push("Rest now. Your meditation is complete.");
+  return `This is a ${minutes} minute meditation.\n\n${parts.join("\n")}`;
+}
+
 /**
- * Polled every minute by the database scheduler. Places the Twilio voice call
+ * Polled every minute by the database scheduler. Places the Vapi voice call
  * for every meditation whose scheduled time has arrived.
  */
 async function dispatch(request: Request) {
@@ -12,21 +41,19 @@ async function dispatch(request: Request) {
     return new Response("Forbidden", { status: 403 });
   }
 
-  const sid = process.env["TWILIO_ACCOUNT_SID"];
-  const authToken = process.env["TWILIO_AUTH_TOKEN"];
-  const from = process.env["TWILIO_FROM_NUMBER"];
+  const vapiKey = process.env["VAPI_API_KEY"];
+  const phoneNumberId = process.env["VAPI_PHONE_NUMBER_ID"];
 
   const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
   const { data: due, error } = await supabaseAdmin
     .from("meditation_settings")
-    .select("id, user_id, phone_number, voice_enabled, call_token, scheduled_at")
+    .select("id, user_id, phone_number, voice_enabled, scheduled_at, script, duration_minutes")
     .eq("status", "scheduled")
     .lte("scheduled_at", new Date().toISOString())
     .limit(25);
 
   if (error) return Response.json({ error: error.message }, { status: 500 });
 
-  const origin = new URL(request.url).origin;
   const results: Array<{ id: string; status: string }> = [];
 
   for (const row of due ?? []) {
@@ -40,7 +67,7 @@ async function dispatch(request: Request) {
       continue;
     }
 
-    if (!sid || !authToken || !from) {
+    if (!vapiKey || !phoneNumberId) {
       await supabaseAdmin
         .from("meditation_settings")
         .update({ status: "failed", last_error: "Calling is not configured." })
@@ -50,30 +77,54 @@ async function dispatch(request: Request) {
     }
 
     try {
-      const twimlUrl = `${origin}/api/public/meditation-twiml/${row.id}?token=${row.call_token}`;
-      const res = await fetch(
-        `https://api.twilio.com/2010-04-01/Accounts/${sid}/Calls.json`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Basic ${btoa(`${sid}:${authToken}`)}`,
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-          body: new URLSearchParams({
-            To: row.phone_number,
-            From: from,
-            Url: twimlUrl,
-          }),
+      const minutes = row.duration_minutes ?? 10;
+      const scriptText = buildScriptText(row.script, minutes);
+
+      const res = await fetch("https://api.vapi.ai/call", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${vapiKey}`,
+          "Content-Type": "application/json",
         },
-      );
+        body: JSON.stringify({
+          phoneNumberId,
+          customer: { number: row.phone_number },
+          assistant: {
+            name: "Meditation Guide",
+            firstMessage:
+              "Welcome to your meditation. Settle in, and breathe slowly with me.",
+            firstMessageMode: "assistant-speaks-first",
+            maxDurationSeconds: Math.min(3600, Math.max(300, minutes * 60 + 120)),
+            silenceTimeoutSeconds: 120,
+            model: {
+              provider: "openai",
+              model: "gpt-4o-mini",
+              temperature: 0.4,
+              messages: [
+                {
+                  role: "system",
+                  content:
+                    `You are a calm meditation guide leading a ${minutes} minute Ho'oponopono meditation over the phone. ` +
+                    `Speak the script below slowly, one line at a time, pausing between lines and letting the listener breathe. ` +
+                    `Do not add commentary, do not ask questions, and do not rush. If the listener speaks, respond gently in one short sentence and continue. ` +
+                    `When the script is finished, wish them rest and end the call.\n\nSCRIPT:\n${scriptText}`,
+                },
+              ],
+            },
+            voice: { provider: "vapi", voiceId: "Paige" },
+          },
+        }),
+      });
 
       if (!res.ok) {
         const body = await res.text();
-        console.error(`[meditation] Twilio call failed [${res.status}]: ${body}`);
+        console.error(`[meditation] Vapi call failed [${res.status}]: ${body}`);
         let detail = `Call failed (${res.status}).`;
         try {
-          const parsed = JSON.parse(body) as { message?: string };
-          if (parsed.message) detail = parsed.message;
+          const parsed = JSON.parse(body) as { message?: string | string[] };
+          if (parsed.message) {
+            detail = Array.isArray(parsed.message) ? parsed.message.join(" ") : parsed.message;
+          }
         } catch {
           /* keep the generic message */
         }
@@ -88,7 +139,6 @@ async function dispatch(request: Request) {
         results.push({ id: row.id, status: "failed" });
         continue;
       }
-
 
       await supabaseAdmin
         .from("meditation_settings")
