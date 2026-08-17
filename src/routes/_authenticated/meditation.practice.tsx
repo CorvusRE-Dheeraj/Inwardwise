@@ -145,6 +145,20 @@ function MeditationPractice() {
 
   useEffect(() => () => audioRef.current?.pause(), []);
 
+  // Show the state of the scheduled call (queued, called, failed).
+  useEffect(() => {
+    if (vault.status !== "unlocked") return;
+    let cancelled = false;
+    void statusFn({}).then(({ settings }) => {
+      if (!cancelled) setCallStatus(settings);
+    });
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [vault.status]);
+
+
   const grouped = useMemo(() => {
     if (!lines) return [];
     return PRAYER_SETS.map((s) => ({ set: s, items: lines.filter((l) => l.set === s.key) })).filter(
