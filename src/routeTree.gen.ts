@@ -41,7 +41,6 @@ import { Route as AuthenticatedAccountSelfAvatarRouteImport } from './routes/_au
 import { Route as AuthenticatedAccountDashboardRouteImport } from './routes/_authenticated/account.dashboard'
 import { Route as AuthenticatedAccountBillingRouteImport } from './routes/_authenticated/account.billing'
 import { Route as LovableEmailQueueProcessRouteImport } from './routes/lovable/email/queue/process'
-import { Route as ApiPublicMeditationTwimlIdRouteImport } from './routes/api/public/meditation-twiml.$id'
 import { Route as AuthenticatedAvatarDimensionNRouteImport } from './routes/_authenticated/avatar.dimension.$n'
 
 const TestimonialsRoute = TestimonialsRouteImport.update({
@@ -212,12 +211,6 @@ const LovableEmailQueueProcessRoute =
     path: '/lovable/email/queue/process',
     getParentRoute: () => rootRouteImport,
   } as any)
-const ApiPublicMeditationTwimlIdRoute =
-  ApiPublicMeditationTwimlIdRouteImport.update({
-    id: '/api/public/meditation-twiml/$id',
-    path: '/api/public/meditation-twiml/$id',
-    getParentRoute: () => rootRouteImport,
-  } as any)
 const AuthenticatedAvatarDimensionNRoute =
   AuthenticatedAvatarDimensionNRouteImport.update({
     id: '/avatar/dimension/$n',
@@ -257,7 +250,6 @@ export interface FileRoutesByFullPath {
   '/account/': typeof AuthenticatedAccountIndexRoute
   '/avatar/': typeof AuthenticatedAvatarIndexRoute
   '/avatar/dimension/$n': typeof AuthenticatedAvatarDimensionNRoute
-  '/api/public/meditation-twiml/$id': typeof ApiPublicMeditationTwimlIdRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
 }
 export interface FileRoutesByTo {
@@ -290,7 +282,6 @@ export interface FileRoutesByTo {
   '/account': typeof AuthenticatedAccountIndexRoute
   '/avatar': typeof AuthenticatedAvatarIndexRoute
   '/avatar/dimension/$n': typeof AuthenticatedAvatarDimensionNRoute
-  '/api/public/meditation-twiml/$id': typeof ApiPublicMeditationTwimlIdRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
 }
 export interface FileRoutesById {
@@ -327,7 +318,6 @@ export interface FileRoutesById {
   '/_authenticated/account/': typeof AuthenticatedAccountIndexRoute
   '/_authenticated/avatar/': typeof AuthenticatedAvatarIndexRoute
   '/_authenticated/avatar/dimension/$n': typeof AuthenticatedAvatarDimensionNRoute
-  '/api/public/meditation-twiml/$id': typeof ApiPublicMeditationTwimlIdRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
 }
 export interface FileRouteTypes {
@@ -364,7 +354,6 @@ export interface FileRouteTypes {
     | '/account/'
     | '/avatar/'
     | '/avatar/dimension/$n'
-    | '/api/public/meditation-twiml/$id'
     | '/lovable/email/queue/process'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -397,7 +386,6 @@ export interface FileRouteTypes {
     | '/account'
     | '/avatar'
     | '/avatar/dimension/$n'
-    | '/api/public/meditation-twiml/$id'
     | '/lovable/email/queue/process'
   id:
     | '__root__'
@@ -433,7 +421,6 @@ export interface FileRouteTypes {
     | '/_authenticated/account/'
     | '/_authenticated/avatar/'
     | '/_authenticated/avatar/dimension/$n'
-    | '/api/public/meditation-twiml/$id'
     | '/lovable/email/queue/process'
   fileRoutesById: FileRoutesById
 }
@@ -455,7 +442,6 @@ export interface RootRouteChildren {
   ApiTranscribeRoute: typeof ApiTranscribeRoute
   ApiTtsRoute: typeof ApiTtsRoute
   ApiPublicMeditationDispatchRoute: typeof ApiPublicMeditationDispatchRoute
-  ApiPublicMeditationTwimlIdRoute: typeof ApiPublicMeditationTwimlIdRoute
   LovableEmailQueueProcessRoute: typeof LovableEmailQueueProcessRoute
 }
 
@@ -685,13 +671,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LovableEmailQueueProcessRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/public/meditation-twiml/$id': {
-      id: '/api/public/meditation-twiml/$id'
-      path: '/api/public/meditation-twiml/$id'
-      fullPath: '/api/public/meditation-twiml/$id'
-      preLoaderRoute: typeof ApiPublicMeditationTwimlIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/_authenticated/avatar/dimension/$n': {
       id: '/_authenticated/avatar/dimension/$n'
       path: '/avatar/dimension/$n'
@@ -776,7 +755,6 @@ const rootRouteChildren: RootRouteChildren = {
   ApiTranscribeRoute: ApiTranscribeRoute,
   ApiTtsRoute: ApiTtsRoute,
   ApiPublicMeditationDispatchRoute: ApiPublicMeditationDispatchRoute,
-  ApiPublicMeditationTwimlIdRoute: ApiPublicMeditationTwimlIdRoute,
   LovableEmailQueueProcessRoute: LovableEmailQueueProcessRoute,
 }
 export const routeTree = rootRouteImport
