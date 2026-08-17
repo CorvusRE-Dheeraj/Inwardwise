@@ -18,6 +18,13 @@ import {
 import { AVATAR_DIMENSIONS } from "@/lib/avatar-dimensions";
 import { buildMeditationPrompt, parseMeditationLines } from "@/lib/meditation-prompt";
 import { synthesizeSpeech } from "@/lib/voice";
+import { toast } from "sonner";
+import {
+  getMeditationSettings,
+  saveMeditationSettings,
+  type MeditationSettings,
+} from "@/lib/meditation-settings.functions";
+
 
 export const Route = createFileRoute("/_authenticated/meditation/practice")({
   head: () => ({
@@ -60,7 +67,10 @@ function detectTimeZone(): string {
 
 function MeditationPractice() {
   const chatFn = useServerFn(chatWithAvatar);
+  const saveSettingsFn = useServerFn(saveMeditationSettings);
+  const statusFn = useServerFn(getMeditationSettings);
   const vault = useAvatarVault();
+
 
   const [answers, setAnswers] = useState<AvatarAnswers | null>(null);
   const [name, setName] = useState("");
@@ -72,6 +82,9 @@ function MeditationPractice() {
   const [minutes, setMinutes] = useState<number>(10);
   const [timeZone, setTimeZone] = useState<string>("");
   const [savedNote, setSavedNote] = useState<string | null>(null);
+  const [saving, setSaving] = useState(false);
+  const [callStatus, setCallStatus] = useState<MeditationSettings | null>(null);
+
 
   const [lines, setLines] = useState<PrayerLine[] | null>(null);
   const [building, setBuilding] = useState(false);
@@ -132,6 +145,20 @@ function MeditationPractice() {
 
   useEffect(() => () => audioRef.current?.pause(), []);
 
+  // Show the state of the scheduled call (queued, called, failed).
+  useEffect(() => {
+    if (vault.status !== "unlocked") return;
+    let cancelled = false;
+    void statusFn({}).then(({ settings }) => {
+      if (!cancelled) setCallStatus(settings);
+    });
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [vault.status]);
+
+
   const grouped = useMemo(() => {
     if (!lines) return [];
     return PRAYER_SETS.map((s) => ({ set: s, items: lines.filter((l) => l.set === s.key) })).filter(
@@ -161,41 +188,104 @@ function MeditationPractice() {
   );
   const avatarComplete = answers !== null && answeredCount === totalQuestions;
 
-  async function saveDashboard() {
-    if (!vault.profile) return;
-    setSavedNote(null);
-    const tz = timeZone || detectTimeZone();
-    const patch = {
-      voice_enabled: voiceEnabled,
-      phone_number: phone.trim() || null,
-      scheduled_call_at: scheduledAt ? new Date(scheduledAt).toISOString() : null,
-      timezone: tz,
-      session_minutes: minutes,
-    };
-    const { error: err } = await supabase
-      .from("avatar_profiles")
-      .update(patch)
-      .eq("user_id", vault.profile.user_id);
-    setSavedNote(
-      err ? err.message : `Saved — a ${minutes}-minute session, set in ${tz} time.`,
-    );
-    if (!err) vault.setProfile({ ...vault.profile, ...patch } as typeof vault.profile);
+  // ---- Validation for the schedule -------------------------------------
+  const normalizedPhone = phone.replace(/[\s()-]/g, "").trim();
+  const phoneError =
+    normalizedPhone.length > 0 && !/^\+[1-9]\d{7,14}$/.test(normalizedPhone)
+      ? "Use the international format, e.g. +14155550123."
+      : null;
+  const scheduleError =
+    scheduledAt && new Date(scheduledAt).getTime() <= Date.now()
+      ? "Choose a time in the future."
+      : null;
+  const missingPhone =
+    voiceEnabled && !!scheduledAt && normalizedPhone.length === 0
+      ? "A phone number is needed for the scheduled call."
+      : null;
+  const canSave = !phoneError && !scheduleError && !missingPhone && !saving;
+
+  /** Writes tonight's prayer lines using the person's own dimension answers. */
+  async function generateScript(): Promise<PrayerLine[]> {
+    if (!answers) throw new Error("Your answers are still loading.");
+    const res = await chatFn({
+      data: {
+        systemPrompt: buildMeditationPrompt(answers, name, linesPerSetFor(minutes), minutes),
+        messages: [{ role: "user" as const, content: "Prepare tonight's meditation." }],
+      },
+    });
+    const parsed = parseMeditationLines(res.reply || "");
+    if (parsed.length === 0) throw new Error("Tonight's lines could not be prepared. Try again.");
+    return parsed;
   }
+
+  async function saveDashboard() {
+    if (!vault.profile || !canSave) return;
+    setSavedNote(null);
+    setSaving(true);
+    const tz = timeZone || detectTimeZone();
+    try {
+      // Keep the avatar profile in step for the rest of the app.
+      const patch = {
+        voice_enabled: voiceEnabled,
+        phone_number: normalizedPhone || null,
+        scheduled_call_at: scheduledAt ? new Date(scheduledAt).toISOString() : null,
+        timezone: tz,
+        session_minutes: minutes,
+      };
+      await supabase.from("avatar_profiles").update(patch).eq("user_id", vault.profile.user_id);
+      vault.setProfile({ ...vault.profile, ...patch } as typeof vault.profile);
+
+      // The call speaks the same wording every time — prepare it once, now.
+      let script: PrayerLine[] | null = null;
+      if (scheduledAt && voiceEnabled && normalizedPhone && avatarComplete) {
+        script = await generateScript();
+      }
+
+      await saveSettingsFn({
+        data: {
+          phoneNumber: normalizedPhone || null,
+          scheduledAt: scheduledAt ? new Date(scheduledAt).toISOString() : null,
+          durationMinutes: minutes,
+          voiceEnabled,
+          timezone: tz,
+          script,
+        },
+      });
+
+      const when = scheduledAt
+        ? new Date(scheduledAt).toLocaleString(undefined, {
+            dateStyle: "medium",
+            timeStyle: "short",
+          })
+        : null;
+      const note =
+        when && voiceEnabled && normalizedPhone
+          ? `Saved — we will call ${normalizedPhone} on ${when} (${tz}) for ${minutes} minutes.`
+          : when
+            ? `Saved — ${minutes} minutes on ${when} (${tz}). No call: turn voice on to be called.`
+            : `Saved — a ${minutes}-minute session, in ${tz} time.`;
+      setSavedNote(note);
+      toast.success(note);
+      const { settings } = await statusFn({});
+      setCallStatus(settings);
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : "Could not save your settings.";
+      setSavedNote(msg);
+      toast.error(msg);
+    } finally {
+      setSaving(false);
+    }
+  }
+
 
   async function buildTonight() {
     if (!answers || building || !avatarComplete) return;
     setBuilding(true);
     setError(null);
     try {
-      const res = await chatFn({
-        data: {
-          systemPrompt: buildMeditationPrompt(answers, name, linesPerSetFor(minutes), minutes),
-          messages: [{ role: "user" as const, content: "Prepare tonight's meditation." }],
-        },
-      });
-      const parsed = parseMeditationLines(res.reply || "");
-      if (parsed.length === 0) throw new Error("Tonight's lines could not be prepared. Try again.");
+      const parsed = await generateScript();
       setLines(parsed);
+
       setStep(0);
       setRunning(true);
       if (voiceEnabled) {
@@ -295,11 +385,13 @@ function MeditationPractice() {
               onChange={(e) => setScheduledAt(e.target.value)}
               className="rounded-md border border-[color:var(--rule)] bg-white px-3 py-2 text-sm"
             />
-            <span className="text-xs text-[color:var(--muted-foreground)]">
-              {timeZone
-                ? `Your local time · ${timeZone}`
-                : "Detecting your timezone…"}
+            <span
+              className={`text-xs ${scheduleError ? "text-destructive" : "text-[color:var(--muted-foreground)]"}`}
+            >
+              {scheduleError ??
+                (timeZone ? `Your local time · ${timeZone}` : "Detecting your timezone…")}
             </span>
+
           </label>
           <label className="flex flex-col gap-2 text-sm">
             <span className="font-mono-cap text-[color:var(--muted-foreground)]">
@@ -329,9 +421,12 @@ function MeditationPractice() {
               placeholder="+1 555 000 0000"
               className="rounded-md border border-[color:var(--rule)] bg-white px-3 py-2 text-sm"
             />
-            <span className="text-xs text-[color:var(--muted-foreground)]">
-              Check this is correct to receive the guided call.
+            <span
+              className={`text-xs ${phoneError || missingPhone ? "text-destructive" : "text-[color:var(--muted-foreground)]"}`}
+            >
+              {phoneError ?? missingPhone ?? "Check this is correct to receive the guided call."}
             </span>
+
           </label>
           <div className="flex flex-col gap-2 text-sm">
             <span className="font-mono-cap text-[color:var(--muted-foreground)]">
@@ -357,17 +452,30 @@ function MeditationPractice() {
             </span>
           </div>
         </div>
-        <div className="mt-6 flex items-center gap-4">
+        <div className="mt-6 flex flex-wrap items-center gap-4">
           <button
             onClick={saveDashboard}
-            className="rounded-full border border-[color:var(--ink)] px-5 py-2 text-sm transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)]"
+            disabled={!canSave}
+            className="rounded-full border border-[color:var(--ink)] px-5 py-2 text-sm transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)] disabled:opacity-40 disabled:hover:bg-transparent disabled:hover:text-[color:var(--ink)]"
           >
-            Save settings
+            {saving ? "Saving…" : "Save settings"}
           </button>
           {savedNote && (
             <span className="text-xs text-[color:var(--muted-foreground)]">{savedNote}</span>
           )}
         </div>
+        {callStatus && (
+          <p className="mt-3 text-xs text-[color:var(--muted-foreground)]">
+            {callStatus.status === "scheduled" && callStatus.scheduled_at
+              ? `Call queued for ${new Date(callStatus.scheduled_at).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" })}.`
+              : callStatus.status === "sent"
+                ? `Last call placed ${callStatus.last_call_at ? new Date(callStatus.last_call_at).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" }) : "recently"}.`
+                : callStatus.status === "failed"
+                  ? `Last call did not go through. ${callStatus.last_error ?? ""}`
+                  : "No call scheduled."}
+          </p>
+        )}
+
       </section>
 
       {/* ---------- The practice ---------- */}
