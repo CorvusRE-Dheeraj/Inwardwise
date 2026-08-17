@@ -79,6 +79,9 @@ function MeditationPractice() {
   const [minutes, setMinutes] = useState<number>(10);
   const [timeZone, setTimeZone] = useState<string>("");
   const [savedNote, setSavedNote] = useState<string | null>(null);
+  const [saving, setSaving] = useState(false);
+  const [callStatus, setCallStatus] = useState<MeditationSettings | null>(null);
+
 
   const [lines, setLines] = useState<PrayerLine[] | null>(null);
   const [building, setBuilding] = useState(false);
