@@ -24,6 +24,8 @@ import {
   saveMeditationSettings,
   type MeditationSettings,
 } from "@/lib/meditation-settings.functions";
+import { sendMeditationText } from "@/lib/meditation-sms.functions";
+
 
 
 export const Route = createFileRoute("/_authenticated/meditation/practice")({
@@ -69,6 +71,8 @@ function MeditationPractice() {
   const chatFn = useServerFn(chatWithAvatar);
   const saveSettingsFn = useServerFn(saveMeditationSettings);
   const statusFn = useServerFn(getMeditationSettings);
+  const sendTextFn = useServerFn(sendMeditationText);
+
   const vault = useAvatarVault();
 
 
@@ -83,7 +87,9 @@ function MeditationPractice() {
   const [timeZone, setTimeZone] = useState<string>("");
   const [savedNote, setSavedNote] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
+  const [texting, setTexting] = useState(false);
   const [callStatus, setCallStatus] = useState<MeditationSettings | null>(null);
+
 
 
   const [lines, setLines] = useState<PrayerLine[] | null>(null);
@@ -204,6 +210,25 @@ function MeditationPractice() {
       : null;
   const canSave = !phoneError && !scheduleError && !missingPhone && !saving;
 
+  // A meditation is delivered one way at a time: a call already queued for the
+  // chosen moment blocks the text for that same moment.
+  const callAtSameTime =
+    !!scheduledAt &&
+    voiceEnabled &&
+    callStatus?.status === "scheduled" &&
+    !!callStatus.voice_enabled &&
+    !!callStatus.scheduled_at &&
+    new Date(callStatus.scheduled_at).getTime() === new Date(scheduledAt).getTime();
+  const textBlockedReason = !avatarComplete
+    ? "Finish your avatar to receive the written draft."
+    : normalizedPhone.length === 0 || phoneError
+      ? "Add a valid phone number to receive the draft by text."
+      : callAtSameTime
+        ? "A call is already scheduled for that exact time — the text cannot be scheduled for the same moment. Turn the call off or pick another time."
+        : null;
+  const canText = !textBlockedReason && !texting && !saving;
+
+
   /** Writes tonight's prayer lines using the person's own dimension answers. */
   async function generateScript(): Promise<PrayerLine[]> {
     if (!answers) throw new Error("Your answers are still loading.");
@@ -276,6 +301,36 @@ function MeditationPractice() {
       setSaving(false);
     }
   }
+
+  /** Sends tonight's written draft as a text message to the saved number. */
+  async function textDraft() {
+    if (!canText) return;
+    setTexting(true);
+    setSavedNote(null);
+    try {
+      const script = lines ?? (await generateScript());
+      setLines((prev) => prev ?? script);
+      await sendTextFn({
+        data: {
+          phoneNumber: normalizedPhone,
+          durationMinutes: minutes,
+          scheduledAt: scheduledAt ? new Date(scheduledAt).toISOString() : null,
+          script,
+        },
+      });
+      const note = `Draft texted to ${normalizedPhone}.`;
+      setSavedNote(note);
+      toast.success(note);
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : "The text could not be sent.";
+      setSavedNote(msg);
+      toast.error(msg);
+    } finally {
+      setTexting(false);
+    }
+  }
+
+
 
 
   async function buildTonight() {
@@ -460,10 +515,22 @@ function MeditationPractice() {
           >
             {saving ? "Saving…" : "Save settings"}
           </button>
+          <button
+            onClick={textDraft}
+            disabled={!canText}
+            title={textBlockedReason ?? undefined}
+            className="rounded-full border border-[color:var(--rule)] px-5 py-2 text-sm transition hover:border-[color:var(--ink)] disabled:opacity-40"
+          >
+            {texting ? "Sending the draft…" : "Text me the meditation draft"}
+          </button>
           {savedNote && (
             <span className="text-xs text-[color:var(--muted-foreground)]">{savedNote}</span>
           )}
         </div>
+        {textBlockedReason && (
+          <p className="mt-3 text-xs text-[color:var(--muted-foreground)]">{textBlockedReason}</p>
+        )}
+
         {callStatus && (
           <p className="mt-3 text-xs text-[color:var(--muted-foreground)]">
             {callStatus.status === "scheduled" && callStatus.voice_enabled && callStatus.scheduled_at
