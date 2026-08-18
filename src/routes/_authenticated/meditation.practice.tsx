@@ -277,6 +277,36 @@ function MeditationPractice() {
     }
   }
 
+  /** Sends tonight's written draft as a text message to the saved number. */
+  async function textDraft() {
+    if (!canText) return;
+    setTexting(true);
+    setSavedNote(null);
+    try {
+      const script = lines ?? (await generateScript());
+      setLines((prev) => prev ?? script);
+      await sendTextFn({
+        data: {
+          phoneNumber: normalizedPhone,
+          durationMinutes: minutes,
+          scheduledAt: scheduledAt ? new Date(scheduledAt).toISOString() : null,
+          script,
+        },
+      });
+      const note = `Draft texted to ${normalizedPhone}.`;
+      setSavedNote(note);
+      toast.success(note);
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : "The text could not be sent.";
+      setSavedNote(msg);
+      toast.error(msg);
+    } finally {
+      setTexting(false);
+    }
+  }
+
+
+
 
   async function buildTonight() {
     if (!answers || building || !avatarComplete) return;
