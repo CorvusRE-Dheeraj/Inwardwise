@@ -69,6 +69,8 @@ function MeditationPractice() {
   const chatFn = useServerFn(chatWithAvatar);
   const saveSettingsFn = useServerFn(saveMeditationSettings);
   const statusFn = useServerFn(getMeditationSettings);
+  const sendTextFn = useServerFn(sendMeditationText);
+
   const vault = useAvatarVault();
 
 
