@@ -102,14 +102,24 @@ export const sendMeditationText = createServerFn({ method: "POST" })
     if (!res.ok) {
       const text = await res.text();
       let detail = `The text could not be sent (${res.status}).`;
+      let code: number | undefined;
       try {
-        const parsed = JSON.parse(text) as { message?: string };
+        const parsed = JSON.parse(text) as { message?: string; code?: number };
+        code = parsed.code;
         if (parsed.message) detail = parsed.message;
       } catch {
         /* keep the generic message */
       }
-      throw new Error(detail.slice(0, 300));
+      if (code === 21608) {
+        detail = `This messaging account is still in trial mode, so it can only text numbers that have been verified with the phone provider. Verify ${phone} in the Twilio console, or upgrade the account, then try again.`;
+      } else if (code === 21610) {
+        detail = "That number has replied STOP and is unsubscribed from these messages. Reply START from the phone to resume.";
+      } else if (code === 21211 || code === 21614) {
+        detail = "That phone number does not look like a valid mobile number. Check it and try again.";
+      }
+      throw new Error(detail.slice(0, 400));
     }
+
 
     return { ok: true as const, phone };
   });
