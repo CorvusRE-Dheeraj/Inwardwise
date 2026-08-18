@@ -107,32 +107,35 @@ function MeditationPractice() {
     if (vault.status !== "unlocked" || !vault.key || !vault.profile) return;
     if (hydratedRef.current) return;
     hydratedRef.current = true;
-    let cancelled = false;
+    const profile = vault.profile;
+    const key = vault.key;
     (async () => {
-      const { data: auth } = await supabase.auth.getUser();
-      const meta = auth.user?.user_metadata as { full_name?: string; name?: string } | undefined;
-      const { data } = await supabase
-        .from("avatar_answers")
-        .select("question_key, answer_text")
-        .eq("user_id", vault.profile!.user_id);
-      const out: AvatarAnswers = {};
-      for (const row of data ?? []) {
-        out[row.question_key] = await decryptText(vault.key!, row.answer_text);
+      try {
+        const { data: auth } = await supabase.auth.getUser();
+        const meta = auth.user?.user_metadata as { full_name?: string; name?: string } | undefined;
+        const { data } = await supabase
+          .from("avatar_answers")
+          .select("question_key, answer_text")
+          .eq("user_id", profile.user_id);
+        const out: AvatarAnswers = {};
+        for (const row of data ?? []) {
+          out[row.question_key] = await decryptText(key, row.answer_text);
+        }
+        setName(meta?.full_name || meta?.name || "");
+        setAnswers(out);
+        setVoiceEnabled(!!profile.voice_enabled);
+        setPhone(profile.phone_number ?? "");
+        setScheduledAt(toLocalInput(profile.scheduled_call_at));
+        setMinutes((profile as { session_minutes?: number | null }).session_minutes ?? 10);
+      } catch {
+        // Allow a retry on the next render rather than staying stuck.
+        hydratedRef.current = false;
+        setAnswers({});
       }
-      if (cancelled) return;
-      setName(meta?.full_name || meta?.name || "");
-      setAnswers(out);
-      setVoiceEnabled(!!vault.profile!.voice_enabled);
-      setPhone(vault.profile!.phone_number ?? "");
-      setScheduledAt(toLocalInput(vault.profile!.scheduled_call_at));
-      setMinutes(
-        (vault.profile as { session_minutes?: number | null }).session_minutes ?? 10,
-      );
     })();
-    return () => {
-      cancelled = true;
-    };
-  }, [vault.status, vault.key, vault.profile]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [vault.status, vault.key, vault.profile?.user_id]);
+
 
   // Detect the browser's timezone after hydration and keep the profile in sync.
   useEffect(() => {
