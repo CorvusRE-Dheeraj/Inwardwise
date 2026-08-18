@@ -204,6 +204,25 @@ function MeditationPractice() {
       : null;
   const canSave = !phoneError && !scheduleError && !missingPhone && !saving;
 
+  // A meditation is delivered one way at a time: a call already queued for the
+  // chosen moment blocks the text for that same moment.
+  const callAtSameTime =
+    !!scheduledAt &&
+    voiceEnabled &&
+    callStatus?.status === "scheduled" &&
+    !!callStatus.voice_enabled &&
+    !!callStatus.scheduled_at &&
+    new Date(callStatus.scheduled_at).getTime() === new Date(scheduledAt).getTime();
+  const textBlockedReason = !avatarComplete
+    ? "Finish your avatar to receive the written draft."
+    : normalizedPhone.length === 0 || phoneError
+      ? "Add a valid phone number to receive the draft by text."
+      : callAtSameTime
+        ? "A call is already scheduled for that exact time — the text cannot be scheduled for the same moment. Turn the call off or pick another time."
+        : null;
+  const canText = !textBlockedReason && !texting && !saving;
+
+
   /** Writes tonight's prayer lines using the person's own dimension answers. */
   async function generateScript(): Promise<PrayerLine[]> {
     if (!answers) throw new Error("Your answers are still loading.");
