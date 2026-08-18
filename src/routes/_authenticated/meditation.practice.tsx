@@ -460,10 +460,22 @@ function MeditationPractice() {
           >
             {saving ? "Saving…" : "Save settings"}
           </button>
+          <button
+            onClick={textDraft}
+            disabled={!canText}
+            title={textBlockedReason ?? undefined}
+            className="rounded-full border border-[color:var(--rule)] px-5 py-2 text-sm transition hover:border-[color:var(--ink)] disabled:opacity-40"
+          >
+            {texting ? "Sending the draft…" : "Text me the meditation draft"}
+          </button>
           {savedNote && (
             <span className="text-xs text-[color:var(--muted-foreground)]">{savedNote}</span>
           )}
         </div>
+        {textBlockedReason && (
+          <p className="mt-3 text-xs text-[color:var(--muted-foreground)]">{textBlockedReason}</p>
+        )}
+
         {callStatus && (
           <p className="mt-3 text-xs text-[color:var(--muted-foreground)]">
             {callStatus.status === "scheduled" && callStatus.voice_enabled && callStatus.scheduled_at
