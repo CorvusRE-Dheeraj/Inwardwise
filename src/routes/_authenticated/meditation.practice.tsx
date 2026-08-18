@@ -24,6 +24,8 @@ import {
   saveMeditationSettings,
   type MeditationSettings,
 } from "@/lib/meditation-settings.functions";
+import { sendMeditationText } from "@/lib/meditation-sms.functions";
+
 
 
 export const Route = createFileRoute("/_authenticated/meditation/practice")({
