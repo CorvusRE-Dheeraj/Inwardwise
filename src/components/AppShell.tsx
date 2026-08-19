@@ -32,7 +32,7 @@ export function AppShell({ children }: { children: ReactNode }) {
     return () => { cancelled = true; };
   }, [user]);
 
-  useEffect(() => { setMenuOpen(false); setStartOpen(false); }, [pathname]);
+  useEffect(() => { setMenuOpen(false); setStartOpen(false); setMobileStartOpen(false); }, [pathname]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
