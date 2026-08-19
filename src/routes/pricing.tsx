@@ -5,9 +5,9 @@ import { AppShell } from "@/components/AppShell";
 export const Route = createFileRoute("/pricing")({
   head: () => ({
     meta: [
-      { title: "Pricing — Decision Philosophy" },
+      { title: "Pricing — Inwardwise" },
       { name: "description", content: "Free during beta. Corporate pricing available on request." },
-      { property: "og:title", content: "Pricing — Decision Philosophy" },
+      { property: "og:title", content: "Pricing — Inwardwise" },
       { property: "og:description", content: "Free during beta. Corporate plans on request." },
     ],
   }),
@@ -21,7 +21,7 @@ function PricingPage() {
         <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground">Pricing</p>
         <h1 className="font-display mt-2 text-4xl sm:text-5xl">Free while we&rsquo;re in beta.</h1>
         <p className="mt-3 max-w-2xl text-sm text-muted-foreground">
-          We&rsquo;re actively refining Decision Philosophy with early users. During this period, the
+          We&rsquo;re actively refining Inwardwise with early users. During this period, the
           full framework is available at no cost.
         </p>
 

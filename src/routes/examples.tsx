@@ -11,13 +11,13 @@ import canadaPdf from "@/assets/examples/move-canada.pdf.asset.json";
 export const Route = createFileRoute("/examples")({
   head: () => ({
     meta: [
-      { title: "Example Sessions — Decision Philosophy" },
+      { title: "Example Sessions — Inwardwise" },
       {
         name: "description",
         content:
           "Read complete worked examples of the Objective Solution Framework — six real decision sessions, each downloadable as a full PDF transcript.",
       },
-      { property: "og:title", content: "Example Sessions — Decision Philosophy" },
+      { property: "og:title", content: "Example Sessions — Inwardwise" },
       {
         property: "og:description",
         content:

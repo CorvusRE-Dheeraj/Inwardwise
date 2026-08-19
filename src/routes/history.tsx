@@ -7,13 +7,13 @@ import alexPortrait from "@/assets/alex-freeman.jpg.asset.json";
 export const Route = createFileRoute("/history")({
   head: () => ({
     meta: [
-      { title: "History — Decision Philosophy" },
+      { title: "History — Inwardwise" },
       {
         name: "description",
         content:
-          "The origin story of Decision Philosophy — from Alex Freeman's decades of philosophical inquiry to a 7-stage AI-facilitated decision engine.",
+          "The origin story of Inwardwise — from Alex Freeman's decades of philosophical inquiry to a 7-stage AI-facilitated decision engine.",
       },
-      { property: "og:title", content: "History — Decision Philosophy" },
+      { property: "og:title", content: "History — Inwardwise" },
       { property: "og:description", content: "How the 7-stage decision framework came to be." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

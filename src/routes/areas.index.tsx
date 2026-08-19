@@ -10,7 +10,7 @@ function AreasIndex() {
   return (
     <div>
       <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground">Areas</p>
-      <h1 className="font-display mt-2 text-3xl sm:text-4xl">Where Decision Philosophy helps</h1>
+      <h1 className="font-display mt-2 text-3xl sm:text-4xl">Where Inwardwise helps</h1>
       <p className="mt-3 max-w-2xl text-sm text-muted-foreground">
         The same 7-stage framework applied to the decisions that shape your life, your family, your work and your community.
       </p>

@@ -3,13 +3,13 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 export const Route = createFileRoute("/_authenticated/avatar/ask")({
   head: () => ({
     meta: [
-      { title: "Ask your Avatar — Decision Philosophy" },
+      { title: "Ask your Avatar — Inwardwise" },
       {
         name: "description",
         content:
           "Send a prompt to your Inner Avatar and receive suggestions drawn from your five dimensions.",
       },
-      { property: "og:title", content: "Ask your Avatar — Decision Philosophy" },
+      { property: "og:title", content: "Ask your Avatar — Inwardwise" },
       { property: "og:description", content: "A private mirror that answers in your interest." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
