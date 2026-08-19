@@ -13,6 +13,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   const [scrolled, setScrolled] = useState(false);
   const [startOpen, setStartOpen] = useState(false);
   const [mobileStartOpen, setMobileStartOpen] = useState(false);
+  const [productsOpen, setProductsOpen] = useState(false);
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => setUser(data.user ?? null));
