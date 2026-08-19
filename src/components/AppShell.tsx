@@ -44,6 +44,7 @@ export function AppShell({ children }: { children: ReactNode }) {
 
   const nav: { to: string; label: string; external?: boolean }[] = [
     { to: "/areas", label: "Services" },
+    { to: "/meditation", label: "Meditation" },
     { to: "/science", label: "Science" },
     { to: "/history", label: "Message from Founder" },
     { to: "/testimonials", label: "Voices" },
@@ -57,6 +58,7 @@ export function AppShell({ children }: { children: ReactNode }) {
     { to: "/avatar", label: "Build Self" },
     { to: "/avatar/ask", label: "Self Aware" },
     { to: "/avatar/consult", label: "Connect" },
+    { to: "/meditation", label: "Meditation" },
   ];
 
   const startActive = startMenu.some((item) => isActive(item.to));
@@ -64,11 +66,11 @@ export function AppShell({ children }: { children: ReactNode }) {
   const mobileNav: { to: string; label: string; external?: boolean }[] = [
     { to: "/products", label: "Products" },
     ...nav,
-    { to: "/meditation", label: "Calm" },
     { to: "/donate", label: "Donate" },
     { to: "/feedback", label: "Feedback" },
     { to: "/contact", label: "Contact Us" },
   ];
+
 
   function isActive(to: string): boolean {
     return pathname === to || (to !== "/" && pathname.startsWith(to));
