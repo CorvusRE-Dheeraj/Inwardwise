@@ -209,7 +209,7 @@ function Meditation() {
           className="mx-auto w-[min(1280px,calc(100%-2rem))] py-24 md:py-32"
         >
           <span className="font-mono-cap text-[color:var(--muted-foreground)]">
-            § 02 · The Four Prayers
+            § 03 · The Four Prayers
           </span>
           <h2 className="font-display mt-5 max-w-4xl text-[clamp(2.4rem,7vw,5rem)] leading-[1.02] tracking-tight">
             Four prayers, in <em className="italic text-[color:var(--royal)]">your own words</em>
