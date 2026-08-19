@@ -125,6 +125,51 @@ export function AppShell({ children }: { children: ReactNode }) {
               )}
             </div>
 
+            <div
+              className="relative"
+              onMouseEnter={() => setProductsOpen(true)}
+              onMouseLeave={() => setProductsOpen(false)}
+            >
+              <button
+                onClick={() => setProductsOpen((v) => !v)}
+                aria-expanded={productsOpen}
+                aria-haspopup="menu"
+                className={`group relative inline-flex items-center gap-1.5 text-[13px] tracking-wide transition ${
+                  isActive("/products")
+                    ? "text-[color:var(--ink)]"
+                    : "text-[color:var(--muted-foreground)] hover:text-[color:var(--ink)]"
+                }`}
+              >
+                Products
+                <ChevronDown className={`h-3.5 w-3.5 transition-transform ${productsOpen ? "rotate-180" : ""}`} />
+              </button>
+              {productsOpen && (
+                <div className="absolute left-0 top-full z-50 w-60 pt-3">
+                  <div className="overflow-hidden rounded-xl border border-[color:var(--rule)] bg-[color:var(--paper)] shadow-lg">
+                    <Link
+                      to="/products"
+                      onClick={() => setProductsOpen(false)}
+                      className="block border-b border-[color:var(--rule)] px-5 py-3 text-[14px] text-[color:var(--ink)] transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)]"
+                    >
+                      All products
+                    </Link>
+                    {startMenu.map((item) => (
+                      <Link
+                        key={item.to}
+                        to={item.to}
+                        onClick={() => setProductsOpen(false)}
+                        className="block px-5 py-3 text-[14px] text-[color:var(--ink)] transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)]"
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
+
+
             {topLevelNav.map((item) => {
               const active = isActive(item.to);
               const className = `group relative text-[13px] tracking-wide transition ${
