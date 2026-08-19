@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Lock, Phone } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import { AVATAR_DIMENSIONS } from "@/lib/avatar-dimensions";
+import { AVATAR_DIMENSIONS } from "@/lib/avatar-factors";
 import { useAvatarVault } from "@/lib/avatar-vault";
 import { Caution, PinKeypad } from "@/components/avatar/PinKeypad";
 import { AvatarPortrait } from "@/components/avatar/AvatarPortrait";
@@ -15,10 +15,10 @@ export const Route = createFileRoute("/_authenticated/avatar/")({
       {
         name: "description",
         content:
-          "Design your Inner Avatar across five dimensions of self-knowledge — private, encrypted, and yours alone.",
+          "Design your Inner Avatar across five factors of self-knowledge — private, encrypted, and yours alone.",
       },
       { property: "og:title", content: "Avatar Design — Inwardwise" },
-      { property: "og:description", content: "Five dimensions. One inner mirror." },
+      { property: "og:description", content: "Five factors. One inner mirror." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "robots", content: "noindex, nofollow" },
@@ -87,7 +87,7 @@ function AvatarDashboard() {
           Design Your <span className="italic text-[color:var(--royal)]">Inner Avatar</span>
         </h1>
         <p className="mt-5 text-base leading-relaxed text-[color:var(--muted-foreground)]">
-          A digital representation of you, assembled from five dimensions of self-knowledge.
+          A digital representation of you, assembled from five factors of self-knowledge.
           Answer honestly — the Avatar is only as useful as it is accurate.
         </p>
       </header>
@@ -129,7 +129,7 @@ function AvatarDashboard() {
               </div>
               <p className="mt-3 text-sm text-[color:var(--muted-foreground)]">
                 Rather than typing, schedule a call — your Avatar phones you and takes the
-                dimension questions conversationally.
+                factor questions conversationally.
               </p>
               <div className="mt-6 space-y-4">
                 <label className="flex items-center justify-between gap-4 text-sm">
@@ -189,7 +189,7 @@ function AvatarDashboard() {
 
           <section className="mt-14">
             <div className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)]">
-              § 02 · The Five Dimensions
+              § 02 · The Five Factors
             </div>
             <div className="mt-6 border-t border-[color:var(--rule)]">
               {AVATAR_DIMENSIONS.map((d) => {
@@ -234,7 +234,7 @@ function AvatarDashboard() {
                 Without completely answering all of the questions, your Avatar cannot fully form —
                 partial answers produce partial reflections. If typing is the obstacle, turn on
                 voice and schedule times when you can take a phone call; your Avatar will call you
-                and fill in the dimensions conversationally.
+                and fill in the factors conversationally.
               </Caution>
 
               <div className="rounded-lg border border-[color:var(--rule)] p-5">
@@ -281,7 +281,7 @@ function AvatarDashboard() {
             <div className="font-mono-cap text-[10px] text-destructive">Irreversible</div>
             <h2 className="mt-3 font-display text-2xl">Self-destruct your Avatar?</h2>
             <p className="mt-3 text-sm text-[color:var(--muted-foreground)]">
-              Every answer, every dimension, and your PIN will be permanently deleted. This
+              Every answer, every factor, and your PIN will be permanently deleted. This
               cannot be undone or recovered.
             </p>
             <div className="mt-6 flex gap-3">

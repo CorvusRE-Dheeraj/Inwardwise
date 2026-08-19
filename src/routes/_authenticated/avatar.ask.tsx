@@ -7,7 +7,7 @@ export const Route = createFileRoute("/_authenticated/avatar/ask")({
       {
         name: "description",
         content:
-          "Send a prompt to your Inner Avatar and receive suggestions drawn from your five dimensions.",
+          "Send a prompt to your Inner Avatar and receive suggestions drawn from your five factors.",
       },
       { property: "og:title", content: "Ask your Avatar — Inwardwise" },
       { property: "og:description", content: "A private mirror that answers in your interest." },
@@ -35,7 +35,7 @@ function AvatarAsk() {
         Ask your <span className="italic text-[color:var(--royal)]">Inner Avatar</span>
       </h1>
       <p className="mt-6 max-w-2xl text-base leading-relaxed text-[color:var(--muted-foreground)]">
-        Once your five dimensions are complete, your Avatar will process prompts and return
+        Once your five factors are complete, your Avatar will process prompts and return
         suggestions drawn from what it knows of you. This chapter is being written.
       </p>
       <div className="mt-10 flex flex-wrap gap-3">

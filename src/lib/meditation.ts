@@ -1,4 +1,4 @@
-// The four-prayer meditation process, connected to the five avatar dimensions.
+// The four-prayer meditation process, connected to the five avatar factors.
 // Theory is internal — only the practice itself is shown to the user.
 
 export type PrayerSet = {
@@ -10,9 +10,9 @@ export type PrayerSet = {
   invitation: string;
   /** Internal guidance for generating the person's own lines. */
   guidance: string;
-  /** Dimension numbers this set draws from, in order. */
+  /** Factor numbers this set draws from, in order. */
   dimensions: number[];
-  /** Extra openings before the dimension-drawn lines. */
+  /** Extra openings before the factor-drawn lines. */
   openings?: string[];
 };
 

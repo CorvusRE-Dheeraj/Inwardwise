@@ -6,7 +6,7 @@ import { chatWithAvatar } from "@/lib/avatar.functions";
 import { useAvatarVault } from "@/lib/avatar-vault";
 import { decryptText } from "@/lib/avatar-crypto";
 import { buildAvatarSystemPrompt, type AvatarAnswers } from "@/lib/avatar-prompt";
-import { AVATAR_DIMENSIONS } from "@/lib/avatar-dimensions";
+import { AVATAR_DIMENSIONS } from "@/lib/avatar-factors";
 import { Caution, PinKeypad } from "@/components/avatar/PinKeypad";
 
 export const Route = createFileRoute("/_authenticated/avatar/consult")({
@@ -16,7 +16,7 @@ export const Route = createFileRoute("/_authenticated/avatar/consult")({
       {
         name: "description",
         content:
-          "Speak with your inner self avatar. It responds through the five dimensions you answered yourself.",
+          "Speak with your inner self avatar. It responds through the five factors you answered yourself.",
       },
       { property: "og:title", content: "Consult your Avatar — Inwardwise" },
       {
@@ -44,7 +44,7 @@ function ConsultAvatar() {
   const [error, setError] = useState<string | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  // Load and decrypt the user's own dimension answers.
+  // Load and decrypt the user's own factor answers.
   useEffect(() => {
     if (vault.status !== "unlocked" || !vault.key || !vault.profile) return;
     let cancelled = false;
@@ -139,7 +139,7 @@ function ConsultAvatar() {
       </Link>
       <header className="mt-6 mb-6">
         <p className="font-mono-cap text-xs text-muted-foreground">
-          Speaking from your own answers · {answeredCount} of {AVATAR_DIMENSIONS.length} dimensions
+          Speaking from your own answers · {answeredCount} of {AVATAR_DIMENSIONS.length} factors
         </p>
         <h1 className="mt-2 font-serif text-3xl sm:text-4xl font-medium tracking-tight">
           Hello{name ? `, ${name}` : ""}.
@@ -148,7 +148,7 @@ function ConsultAvatar() {
 
       {answers && answeredCount === 0 && (
         <div className="mb-4 rounded-md border border-[var(--rule)] bg-white px-4 py-3 text-sm">
-          You haven&apos;t answered any dimension questions yet.{" "}
+          You haven&apos;t answered any factor questions yet.{" "}
           <Link to="/avatar" className="underline">
             Answer them first
           </Link>{" "}
@@ -163,7 +163,7 @@ function ConsultAvatar() {
             <ul className="space-y-2">
               {[
                 "What am I avoiding right now that I shouldn't be?",
-                "What in Dimension 1 could I turn into a strength this month?",
+                "What in Factor 1 could I turn into a strength this month?",
                 "Suggest one small new experience that would stretch me.",
               ].map((s) => (
                 <li key={s}>
@@ -235,7 +235,7 @@ function ConsultAvatar() {
         </Link>
         <span className="mx-3 text-muted-foreground">·</span>
         <Link to="/avatar" className="text-muted-foreground hover:text-foreground">
-          Edit dimensions
+          Edit factors
         </Link>
       </div>
     </div>

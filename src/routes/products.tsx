@@ -49,7 +49,7 @@ const PRODUCTS: {
     title: "Your Inward Self Working for",
     italic: "Your Happiness",
     blurb:
-      "Build an inner Avatar across five private dimensions, ask it what you cannot ask anyone else, and quiet the mind with an AI-guided meditation built for the modern brain.",
+      "Build an inner Avatar across five private factors, ask it what you cannot ask anyone else, and quiet the mind with an AI-guided meditation built for the modern brain.",
     links: [
       { to: "/avatar", label: "Build Self", primary: true },
       { to: "/avatar/ask", label: "Self Aware" },

@@ -216,7 +216,7 @@ function Meditation() {
           </h2>
           <p className="mt-8 max-w-xl text-lg leading-relaxed text-[color:var(--muted-foreground)]">
             A modified Ho'oponopono practice — each prayer completed with something true about your
-            life, drawn from the answers you wrote across your five dimensions.
+            life, drawn from the answers you wrote across your five factors.
           </p>
 
           <div className="mt-16 grid gap-px border-y border-[color:var(--rule)] md:grid-cols-4">

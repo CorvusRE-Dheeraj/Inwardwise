@@ -154,7 +154,7 @@ function Landing() {
           </>
         }
         meta={[
-          ["Method", "5 Dimensions of Inner You"],
+          ["Method", "5 Factors of Inner You"],
           ["Discipline", "Inner Psychology and Philosophy"],
           ["Author", "Alex Freeman, Ph.D"],
           ["Format", "Voice based Conversational"],
@@ -188,7 +188,7 @@ function Landing() {
           </>
         }
         meta={[
-          ["Method", "Grounded in your own dimensions"],
+          ["Method", "Grounded in your own factors"],
           ["Discipline", "Belonging and social wellbeing"],
           ["Author", "Alex Freeman, Ph.D"],
           ["Format", "Conversational"],

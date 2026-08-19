@@ -2,7 +2,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { Lock } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import { AVATAR_DIMENSIONS, getDimension } from "@/lib/avatar-dimensions";
+import { AVATAR_DIMENSIONS, getDimension } from "@/lib/avatar-factors";
 import { useAvatarVault } from "@/lib/avatar-vault";
 import { Caution, PinKeypad } from "@/components/avatar/PinKeypad";
 import { decryptText, encryptText } from "@/lib/avatar-crypto";
@@ -10,13 +10,13 @@ import { decryptText, encryptText } from "@/lib/avatar-crypto";
 export const Route = createFileRoute("/_authenticated/avatar/dimension/$n")({
   head: () => ({
     meta: [
-      { title: "Dimension — Avatar · Inwardwise" },
+      { title: "Factor — Avatar · Inwardwise" },
       {
         name: "description",
         content:
-          "Answer the questions of this dimension to build your Inner Avatar. Private and encrypted.",
+          "Answer the questions of this factor to build your Inner Avatar. Private and encrypted.",
       },
-      { property: "og:title", content: "Dimension — Avatar · Inwardwise" },
+      { property: "og:title", content: "Factor — Avatar · Inwardwise" },
       { property: "og:description", content: "One question at a time, in your own words." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -63,7 +63,7 @@ function DimensionFlow() {
   if (!dim) {
     return (
       <div className="mx-auto w-[min(700px,calc(100%-2rem))] py-24 text-center">
-        <p className="font-display text-3xl">That dimension does not exist.</p>
+        <p className="font-display text-3xl">That factor does not exist.</p>
         <Link to="/avatar" className="mt-6 inline-block text-sm underline">
           Back to Avatar Design
         </Link>
@@ -165,7 +165,7 @@ function DimensionFlow() {
           {dim.locked && (
             <div className="mt-8 max-w-2xl">
               <Caution>
-                This dimension is private and encrypted with your PIN. It is stored as written —
+                This factor is private and encrypted with your PIN. It is stored as written —
                 unread, unmoderated, and invisible to administrators.
               </Caution>
             </div>
@@ -232,7 +232,7 @@ function DimensionFlow() {
               disabled={saving}
               className="rounded-full bg-[color:var(--ink)] px-6 py-2 text-[13px] text-[color:var(--paper)] disabled:opacity-50"
             >
-              {step + 1 < total ? "Continue" : "Finish dimension"}
+              {step + 1 < total ? "Continue" : "Finish factor"}
             </button>
             {saving && (
               <span className="text-sm text-[color:var(--muted-foreground)]">Saving…</span>

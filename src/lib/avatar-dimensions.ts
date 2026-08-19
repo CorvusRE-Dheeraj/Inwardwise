@@ -15,7 +15,7 @@ export const AVATAR_DIMENSIONS: AvatarDimension[] = [
   {
     n: 1,
     section: "§ 01",
-    title: "Dimension One —",
+    title: "Factor One —",
     italic: "Shadow",
     oneLine: "What you suppress, hide, or feel ashamed of.",
     intro:
@@ -44,7 +44,7 @@ export const AVATAR_DIMENSIONS: AvatarDimension[] = [
   {
     n: 2,
     section: "§ 02",
-    title: "Dimension Two —",
+    title: "Factor Two —",
     italic: "Enemy",
     oneLine: "Private. Encrypted with your PIN. Visible only to you.",
     locked: true,
@@ -63,17 +63,17 @@ export const AVATAR_DIMENSIONS: AvatarDimension[] = [
   {
     n: 3,
     section: "§ 03",
-    title: "Dimension Three —",
+    title: "Factor Three —",
     italic: "Skills & Talents",
     oneLine: "What effort built, and what came effortlessly.",
     intro:
-      "Skills are developed through repetition and disciplined follow-through. They took real effort, but you kept perfecting them until you were better than most. Skills are not interests: interests are ways of connecting to the outside world and belong in Dimension 4. A talent is different again — something you do very well and with ease, whose development you always enjoyed, and which others recognise you for.",
+      "Skills are developed through repetition and disciplined follow-through. They took real effort, but you kept perfecting them until you were better than most. Skills are not interests: interests are ways of connecting to the outside world and belong in Factor 4. A talent is different again — something you do very well and with ease, whose development you always enjoyed, and which others recognise you for.",
     questions: [
       {
         key: "d3_q1",
         prompt: "What are your skills, and how did they develop?",
         helper:
-          "Channelled abilities built by necessity and repetition — writing, self-reflection, recruiting, surgery, cooking. Keep interests out; they belong in Dimension 4.",
+          "Channelled abilities built by necessity and repetition — writing, self-reflection, recruiting, surgery, cooking. Keep interests out; they belong in Factor 4.",
       },
       {
         key: "d3_q2",
@@ -87,11 +87,11 @@ export const AVATAR_DIMENSIONS: AvatarDimension[] = [
   {
     n: 4,
     section: "§ 04",
-    title: "Dimension Four —",
+    title: "Factor Four —",
     italic: "Interests & Outer Connections",
     oneLine: "How you meet the world outside yourself.",
     intro:
-      "Interests belong here, not in Dimension 3. They are the mediums through which you connect to the outer world — routines so integral to you that they quietly shape what you know and who you meet. Some are solo; some are shared. Both matter.",
+      "Interests belong here, not in Factor 3. They are the mediums through which you connect to the outer world — routines so integral to you that they quietly shape what you know and who you meet. Some are solo; some are shared. Both matter.",
     questions: [
       {
         key: "d4_q1",
@@ -111,7 +111,7 @@ export const AVATAR_DIMENSIONS: AvatarDimension[] = [
   {
     n: 5,
     section: "§ 05",
-    title: "Dimension Five —",
+    title: "Factor Five —",
     italic: "Life Experiences",
     oneLine: "The dots — and the line running through them.",
     intro:

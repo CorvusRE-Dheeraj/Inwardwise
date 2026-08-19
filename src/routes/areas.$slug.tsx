@@ -72,11 +72,11 @@ function AreaPage() {
 
 function IndividualDevelopmentContent() {
   const dims = [
-    { label: "Dimension 1", x: 50, y: 2 },
-    { label: "Dimension 2", x: 95, y: 35 },
-    { label: "Dimension 3", x: 78, y: 96 },
-    { label: "Dimension 4", x: 22, y: 96 },
-    { label: "Dimension 5", x: 5, y: 35 },
+    { label: "Factor 1", x: 50, y: 2 },
+    { label: "Factor 2", x: 95, y: 35 },
+    { label: "Factor 3", x: 78, y: 96 },
+    { label: "Factor 4", x: 22, y: 96 },
+    { label: "Factor 5", x: 5, y: 35 },
   ];
   // Five-point star path centered in 100x100 viewBox
   const starPoints = Array.from({ length: 10 }, (_, i) => {
@@ -117,7 +117,7 @@ function IndividualDevelopmentContent() {
         better human being as time brings change. The Avatar&rsquo;s goal is how to make you better
         over a long time, in a broad sense. It gets formed based on the five attributes defined
         above. Once you identify that information and hard-code your Avatar, it goes to work by
-        identifying with the dimensions below and taking action based on the best course, based on
+        identifying with the factors below and taking action based on the best course, based on
         the prompt it received from you.
       </p>
 
@@ -156,13 +156,13 @@ function IndividualDevelopmentContent() {
           </svg>
         </div>
         <figcaption className="mt-4 text-center text-xs uppercase tracking-[0.18em] text-muted-foreground">
-          The Self Avatar and its five dimensions
+          The Self Avatar and its five factors
         </figcaption>
       </figure>
 
       <p>
-        Based on the human prompt, the Avatar will scan across all dimensions for a better
-        understanding of you and advise you. These dimensions are based on reviewing many scientific
+        Based on the human prompt, the Avatar will scan across all factors for a better
+        understanding of you and advise you. These factors are based on reviewing many scientific
         papers and a combination of intuitive approaches — studying many philosophies, psychological
         approaches and observational methods. There was no single approach; it came together as a
         book project by the founder to assemble all of the material for the book he is working on.
