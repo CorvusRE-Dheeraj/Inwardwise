@@ -6,14 +6,14 @@ import { AppShell } from "@/components/AppShell";
 export const Route = createFileRoute("/feedback")({
   head: () => ({
     meta: [
-      { title: "User Feedback — Decision Philosophy" },
+      { title: "User Feedback — Inwardwise" },
       {
         name: "description",
         content:
-          "Share your feedback on the Decision Philosophy framework — short or long version.",
+          "Share your feedback on the Inwardwise framework — short or long version.",
       },
-      { property: "og:title", content: "User Feedback — Decision Philosophy" },
-      { property: "og:description", content: "Short or long feedback for the Decision Philosophy framework." },
+      { property: "og:title", content: "User Feedback — Inwardwise" },
+      { property: "og:description", content: "Short or long feedback for the Inwardwise framework." },
     ],
   }),
   component: Feedback,

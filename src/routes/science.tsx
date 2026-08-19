@@ -4,10 +4,10 @@ import { AppShell } from "@/components/AppShell";
 export const Route = createFileRoute("/science")({
   head: () => ({
     meta: [
-      { title: "Science and Philosophy — Decision Philosophy" },
-      { name: "description", content: "Science and Philosophy page for Decision Philosophy." },
-      { property: "og:title", content: "Science and Philosophy — Decision Philosophy" },
-      { property: "og:description", content: "Science and Philosophy page for Decision Philosophy." },
+      { title: "Science and Philosophy — Inwardwise" },
+      { name: "description", content: "Science and Philosophy page for Inwardwise." },
+      { property: "og:title", content: "Science and Philosophy — Inwardwise" },
+      { property: "og:description", content: "Science and Philosophy page for Inwardwise." },
     ],
   }),
   component: Science,

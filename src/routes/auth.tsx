@@ -10,7 +10,7 @@ const searchSchema = z.object({ redirect: z.string().optional() });
 export const Route = createFileRoute("/auth")({
   head: () => ({
     meta: [
-      { title: "Sign in — Decision Philosophy" },
+      { title: "Sign in — Inwardwise" },
       { name: "description", content: "Sign in or create an account to keep your decisions private and confidential." },
     ],
   }),
@@ -101,7 +101,7 @@ function AuthPage() {
           <span className="grid h-8 w-8 place-items-center rounded-full bg-foreground text-background">
             <Brain className="h-4 w-4" />
           </span>
-          <span className="font-display text-base">Decision Philosophy</span>
+          <span className="font-display text-base">Inwardwise</span>
         </Link>
 
         <div className="glass rounded-3xl p-6 md:p-8">

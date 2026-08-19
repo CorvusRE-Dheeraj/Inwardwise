@@ -10,13 +10,13 @@ import { decryptText, encryptText } from "@/lib/avatar-crypto";
 export const Route = createFileRoute("/_authenticated/avatar/dimension/$n")({
   head: () => ({
     meta: [
-      { title: "Dimension — Avatar · Decision Philosophy" },
+      { title: "Dimension — Avatar · Inwardwise" },
       {
         name: "description",
         content:
           "Answer the questions of this dimension to build your Inner Avatar. Private and encrypted.",
       },
-      { property: "og:title", content: "Dimension — Avatar · Decision Philosophy" },
+      { property: "og:title", content: "Dimension — Avatar · Inwardwise" },
       { property: "og:description", content: "One question at a time, in your own words." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

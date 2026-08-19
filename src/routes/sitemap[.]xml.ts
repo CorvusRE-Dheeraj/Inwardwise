@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
 import { AREAS } from "@/lib/areas";
 
-const BASE_URL = "https://decisionphilosophy.com";
+const BASE_URL = "https://inwardwise.com";
 
 interface SitemapEntry {
   path: string;

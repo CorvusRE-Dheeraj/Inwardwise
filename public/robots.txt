@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://decisionphilosophy.com/sitemap.xml
+Sitemap: https://inwardwise.com/sitemap.xml
