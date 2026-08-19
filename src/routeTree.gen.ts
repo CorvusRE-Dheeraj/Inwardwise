@@ -12,12 +12,14 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as TestimonialsRouteImport } from './routes/testimonials'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ScienceRouteImport } from './routes/science'
+import { Route as ProductsRouteImport } from './routes/products'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as MeditationRouteImport } from './routes/meditation'
 import { Route as HistoryRouteImport } from './routes/history'
 import { Route as FeedbackRouteImport } from './routes/feedback'
 import { Route as ExamplesRouteImport } from './routes/examples'
 import { Route as DonateRouteImport } from './routes/donate'
+import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AreasRouteImport } from './routes/areas'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
@@ -58,6 +60,11 @@ const ScienceRoute = ScienceRouteImport.update({
   path: '/science',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProductsRoute = ProductsRouteImport.update({
+  id: '/products',
+  path: '/products',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PricingRoute = PricingRouteImport.update({
   id: '/pricing',
   path: '/pricing',
@@ -86,6 +93,11 @@ const ExamplesRoute = ExamplesRouteImport.update({
 const DonateRoute = DonateRouteImport.update({
   id: '/donate',
   path: '/donate',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRoute = AuthRouteImport.update({
@@ -222,12 +234,14 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/areas': typeof AreasRouteWithChildren
   '/auth': typeof AuthRoute
+  '/contact': typeof ContactRoute
   '/donate': typeof DonateRoute
   '/examples': typeof ExamplesRoute
   '/feedback': typeof FeedbackRoute
   '/history': typeof HistoryRoute
   '/meditation': typeof MeditationRoute
   '/pricing': typeof PricingRoute
+  '/products': typeof ProductsRoute
   '/science': typeof ScienceRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/testimonials': typeof TestimonialsRoute
@@ -255,12 +269,14 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/contact': typeof ContactRoute
   '/donate': typeof DonateRoute
   '/examples': typeof ExamplesRoute
   '/feedback': typeof FeedbackRoute
   '/history': typeof HistoryRoute
   '/meditation': typeof MeditationRoute
   '/pricing': typeof PricingRoute
+  '/products': typeof ProductsRoute
   '/science': typeof ScienceRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/testimonials': typeof TestimonialsRoute
@@ -290,12 +306,14 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/areas': typeof AreasRouteWithChildren
   '/auth': typeof AuthRoute
+  '/contact': typeof ContactRoute
   '/donate': typeof DonateRoute
   '/examples': typeof ExamplesRoute
   '/feedback': typeof FeedbackRoute
   '/history': typeof HistoryRoute
   '/meditation': typeof MeditationRoute
   '/pricing': typeof PricingRoute
+  '/products': typeof ProductsRoute
   '/science': typeof ScienceRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/testimonials': typeof TestimonialsRoute
@@ -326,12 +344,14 @@ export interface FileRouteTypes {
     | '/'
     | '/areas'
     | '/auth'
+    | '/contact'
     | '/donate'
     | '/examples'
     | '/feedback'
     | '/history'
     | '/meditation'
     | '/pricing'
+    | '/products'
     | '/science'
     | '/sitemap.xml'
     | '/testimonials'
@@ -359,12 +379,14 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
+    | '/contact'
     | '/donate'
     | '/examples'
     | '/feedback'
     | '/history'
     | '/meditation'
     | '/pricing'
+    | '/products'
     | '/science'
     | '/sitemap.xml'
     | '/testimonials'
@@ -393,12 +415,14 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/areas'
     | '/auth'
+    | '/contact'
     | '/donate'
     | '/examples'
     | '/feedback'
     | '/history'
     | '/meditation'
     | '/pricing'
+    | '/products'
     | '/science'
     | '/sitemap.xml'
     | '/testimonials'
@@ -429,12 +453,14 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AreasRoute: typeof AreasRouteWithChildren
   AuthRoute: typeof AuthRoute
+  ContactRoute: typeof ContactRoute
   DonateRoute: typeof DonateRoute
   ExamplesRoute: typeof ExamplesRoute
   FeedbackRoute: typeof FeedbackRoute
   HistoryRoute: typeof HistoryRoute
   MeditationRoute: typeof MeditationRoute
   PricingRoute: typeof PricingRoute
+  ProductsRoute: typeof ProductsRoute
   ScienceRoute: typeof ScienceRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TestimonialsRoute: typeof TestimonialsRoute
@@ -466,6 +492,13 @@ declare module '@tanstack/react-router' {
       path: '/science'
       fullPath: '/science'
       preLoaderRoute: typeof ScienceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/products': {
+      id: '/products'
+      path: '/products'
+      fullPath: '/products'
+      preLoaderRoute: typeof ProductsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/pricing': {
@@ -508,6 +541,13 @@ declare module '@tanstack/react-router' {
       path: '/donate'
       fullPath: '/donate'
       preLoaderRoute: typeof DonateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth': {
@@ -742,12 +782,14 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AreasRoute: AreasRouteWithChildren,
   AuthRoute: AuthRoute,
+  ContactRoute: ContactRoute,
   DonateRoute: DonateRoute,
   ExamplesRoute: ExamplesRoute,
   FeedbackRoute: FeedbackRoute,
   HistoryRoute: HistoryRoute,
   MeditationRoute: MeditationRoute,
   PricingRoute: PricingRoute,
+  ProductsRoute: ProductsRoute,
   ScienceRoute: ScienceRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   TestimonialsRoute: TestimonialsRoute,
