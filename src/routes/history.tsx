@@ -43,7 +43,7 @@ const MESSAGES: { eyebrow: string; title: string; body: string[] }[] = [
     eyebrow: "§ 03",
     title: "Message to Investors",
     body: [
-      "The defensible asset here is not a wrapper around a language model. It is a seven-stage philosophical filter, empirically derived over decades and validated against real decisions, plus a five-dimensional model of self that improves as people use it.",
+      "The defensible asset here is not a wrapper around a language model. It is a seven-stage philosophical filter, empirically derived over decades and validated against real decisions, plus a five-factor model of self that improves as people use it.",
       "We are building deliberately: measurable improvement in decision quality first, scale second. If that order appeals to you, we should talk.",
     ],
   },
