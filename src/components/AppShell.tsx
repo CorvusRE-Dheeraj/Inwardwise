@@ -42,14 +42,11 @@ export function AppShell({ children }: { children: ReactNode }) {
   }, []);
 
   const nav: { to: string; label: string; external?: boolean }[] = [
-    { to: "/areas", label: "Areas" },
+    { to: "/areas", label: "Services" },
     { to: "/science", label: "Science" },
-    { to: "/history", label: "History" },
+    { to: "/history", label: "Message from Founder" },
     { to: "/testimonials", label: "Voices" },
     { to: "/pricing", label: "Pricing" },
-    { to: "/donate", label: "Donate" },
-    { to: "/feedback", label: "Feedback" },
-    { to: "/meditation", label: "Meditation" },
     ...(user ? [{ to: "/account", label: "Account" }] : []),
     ...(isAdmin ? [{ to: "/admin", label: "Admin" }] : []),
   ];
