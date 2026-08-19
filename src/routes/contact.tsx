@@ -55,9 +55,9 @@ function Contact() {
             <address className="mt-3 not-italic text-[16px] leading-relaxed text-[color:var(--ink-2)]">
               Inwardwise
               <br />
-              2601 Warren Parkway
+              10247 Warren Pkwy
               <br />
-              Frisco, Texas 75034
+              Frisco, TX 75035
               <br />
               United States
             </address>
