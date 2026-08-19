@@ -44,6 +44,7 @@ export function AppShell({ children }: { children: ReactNode }) {
 
   const nav: { to: string; label: string; external?: boolean }[] = [
     { to: "/areas", label: "Services" },
+    { to: "/meditation", label: "Meditation" },
     { to: "/science", label: "Science" },
     { to: "/history", label: "Message from Founder" },
     { to: "/testimonials", label: "Voices" },
@@ -57,6 +58,7 @@ export function AppShell({ children }: { children: ReactNode }) {
     { to: "/avatar", label: "Build Self" },
     { to: "/avatar/ask", label: "Self Aware" },
     { to: "/avatar/consult", label: "Connect" },
+    { to: "/meditation", label: "Meditation" },
   ];
 
   const startActive = startMenu.some((item) => isActive(item.to));
@@ -64,11 +66,11 @@ export function AppShell({ children }: { children: ReactNode }) {
   const mobileNav: { to: string; label: string; external?: boolean }[] = [
     { to: "/products", label: "Products" },
     ...nav,
-    { to: "/meditation", label: "Calm" },
     { to: "/donate", label: "Donate" },
     { to: "/feedback", label: "Feedback" },
     { to: "/contact", label: "Contact Us" },
   ];
+
 
   function isActive(to: string): boolean {
     return pathname === to || (to !== "/" && pathname.startsWith(to));
@@ -302,7 +304,7 @@ export function AppShell({ children }: { children: ReactNode }) {
               <li><Link to="/products" className="hover:text-[color:var(--royal)]">Products</Link></li>
               <li><Link to="/decision" className="hover:text-[color:var(--royal)]">Start a decision</Link></li>
               <li><Link to="/areas" className="hover:text-[color:var(--royal)]">Services</Link></li>
-              <li><Link to="/meditation" className="hover:text-[color:var(--royal)]">Calm</Link></li>
+              <li><Link to="/meditation" className="hover:text-[color:var(--royal)]">Meditation</Link></li>
               <li><Link to="/examples" className="hover:text-[color:var(--royal)]">Examples</Link></li>
               <li><Link to="/science" className="hover:text-[color:var(--royal)]">Science</Link></li>
               <li><Link to="/history" className="hover:text-[color:var(--royal)]">Message from Founder</Link></li>
