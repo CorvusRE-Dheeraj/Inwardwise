@@ -92,6 +92,42 @@ export function AppShell({ children }: { children: ReactNode }) {
           </Link>
 
           <nav className="hidden items-center gap-7 md:flex">
+            <div
+              className="relative"
+              onMouseEnter={() => setStartOpen(true)}
+              onMouseLeave={() => setStartOpen(false)}
+            >
+              <button
+                onClick={() => setStartOpen((v) => !v)}
+                aria-expanded={startOpen}
+                aria-haspopup="menu"
+                className={`inline-flex items-center gap-2 rounded-full px-6 py-2.5 text-[15px] tracking-wide transition hover:opacity-90 ${
+                  startActive
+                    ? "bg-[color:var(--ink)] text-[color:var(--paper)]"
+                    : "bg-[color:var(--royal)] text-white"
+                }`}
+              >
+                Start
+                <ChevronDown className={`h-4 w-4 transition-transform ${startOpen ? "rotate-180" : ""}`} />
+              </button>
+              {startOpen && (
+                <div className="absolute left-0 top-full z-50 w-60 pt-2">
+                  <div className="overflow-hidden rounded-xl border border-[color:var(--rule)] bg-[color:var(--paper)] shadow-lg">
+                    {startMenu.map((item) => (
+                      <Link
+                        key={item.to}
+                        to={item.to}
+                        onClick={() => setStartOpen(false)}
+                        className="block px-5 py-3 text-[14px] text-[color:var(--ink)] transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)]"
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
             {topLevelNav.map((item) => {
               const active = isActive(item.to);
               const className = `group relative text-[13px] tracking-wide transition ${
@@ -131,37 +167,6 @@ export function AppShell({ children }: { children: ReactNode }) {
                 Account
               </Link>
             )}
-            <div
-              className="relative hidden sm:block"
-              onMouseEnter={() => setStartOpen(true)}
-              onMouseLeave={() => setStartOpen(false)}
-            >
-              <button
-                onClick={() => setStartOpen((v) => !v)}
-                aria-expanded={startOpen}
-                aria-haspopup="menu"
-                className="inline-flex items-center gap-2 rounded-full bg-[color:var(--royal)] px-6 py-2.5 text-[15px] tracking-wide text-white transition hover:opacity-90"
-              >
-                Start
-                <ChevronDown className={`h-4 w-4 transition-transform ${startOpen ? "rotate-180" : ""}`} />
-              </button>
-              {startOpen && (
-                <div className="absolute right-0 top-full z-50 w-60 pt-2">
-                  <div className="overflow-hidden rounded-xl border border-[color:var(--rule)] bg-[color:var(--paper)] shadow-lg">
-                    {startMenu.map((item) => (
-                      <Link
-                        key={item.to}
-                        to={item.to}
-                        onClick={() => setStartOpen(false)}
-                        className="block px-5 py-3 text-[14px] text-[color:var(--ink)] transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)]"
-                      >
-                        {item.label}
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
 
             <button
               onClick={() => setMenuOpen((v) => !v)}
