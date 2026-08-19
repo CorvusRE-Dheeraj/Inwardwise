@@ -303,11 +303,13 @@ export function AppShell({ children }: { children: ReactNode }) {
           <div>
             <div className="font-mono-cap mb-3">Explore</div>
             <ul className="space-y-2 text-sm">
+              <li><Link to="/products" className="hover:text-[color:var(--royal)]">Products</Link></li>
               <li><Link to="/decision" className="hover:text-[color:var(--royal)]">Start a decision</Link></li>
-              <li><Link to="/areas" className="hover:text-[color:var(--royal)]">Areas</Link></li>
+              <li><Link to="/areas" className="hover:text-[color:var(--royal)]">Services</Link></li>
+              <li><Link to="/meditation" className="hover:text-[color:var(--royal)]">Calm</Link></li>
               <li><Link to="/examples" className="hover:text-[color:var(--royal)]">Examples</Link></li>
-              <li><Link to="/science" className="hover:text-[color:var(--royal)]">Science &amp; Philosophy</Link></li>
-              <li><Link to="/history" className="hover:text-[color:var(--royal)]">History</Link></li>
+              <li><Link to="/science" className="hover:text-[color:var(--royal)]">Science</Link></li>
+              <li><Link to="/history" className="hover:text-[color:var(--royal)]">Message from Founder</Link></li>
             </ul>
           </div>
           <div>
@@ -317,6 +319,7 @@ export function AppShell({ children }: { children: ReactNode }) {
               <li><Link to="/feedback" className="hover:text-[color:var(--royal)]">Feedback</Link></li>
               <li><Link to="/donate" className="hover:text-[color:var(--royal)]">Donate</Link></li>
               <li><Link to="/pricing" className="hover:text-[color:var(--royal)]">Pricing</Link></li>
+              <li><Link to="/contact" className="hover:text-[color:var(--royal)]">Contact Us</Link></li>
             </ul>
           </div>
           <div>

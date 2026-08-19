@@ -127,12 +127,12 @@ function Landing() {
         </motion.div>
       </section>
 
-      {/* ============ VOLUME II — AVATAR ============ */}
+      {/* ============ VOLUME II — SELF ============ */}
       <Volume
-        eyebrow="Volume II · Create and Connect with Your Inner Avatar"
+        eyebrow="Volume II · Self · Create and Connect with Your Inner Avatar"
         title={
           <>
-            Your Avatar Working for Your{" "}
+            Your Inward Self Working for Your{" "}
             <em className="italic text-[color:var(--royal)]">Happiness</em>
           </>
         }
@@ -143,13 +143,13 @@ function Landing() {
               to="/avatar"
               className="inline-flex items-center gap-3 rounded-full bg-[color:var(--ink)] px-6 py-3.5 text-sm text-[color:var(--paper)] transition-transform duration-500 hover:-translate-y-0.5"
             >
-              Build Your Avatar <span>→</span>
+              Build Self <span>→</span>
             </Link>
             <Link
-              to="/avatar/consult"
+              to="/avatar/ask"
               className="inline-flex items-center gap-3 rounded-full border border-[color:var(--ink)] px-6 py-3.5 text-sm text-[color:var(--ink)] transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)]"
             >
-              Connect to Avatar <span>→</span>
+              Self Aware <span>→</span>
             </Link>
           </>
         }
@@ -158,6 +158,40 @@ function Landing() {
           ["Discipline", "Inner Psychology and Philosophy"],
           ["Author", "Alex Freeman, Ph.D"],
           ["Format", "Voice based Conversational"],
+        ]}
+      />
+
+      {/* ============ VOLUME III — CONNECT ============ */}
+      <Volume
+        eyebrow="Volume III · Connect"
+        title={
+          <>
+            Connect — Be Yourself and{" "}
+            <em className="italic text-[color:var(--royal)]">Belong</em>
+          </>
+        }
+        blurb="Speak with the Avatar that knows you, and find your place among people without performing a version of yourself."
+        actions={
+          <>
+            <Link
+              to="/avatar/consult"
+              className="inline-flex items-center gap-3 rounded-full bg-[color:var(--ink)] px-6 py-3.5 text-sm text-[color:var(--paper)] transition-transform duration-500 hover:-translate-y-0.5"
+            >
+              Connect <span>→</span>
+            </Link>
+            <Link
+              to="/products"
+              className="inline-flex items-center gap-3 rounded-full border border-[color:var(--ink)] px-6 py-3.5 text-sm text-[color:var(--ink)] transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)]"
+            >
+              All products <span>→</span>
+            </Link>
+          </>
+        }
+        meta={[
+          ["Method", "Grounded in your own dimensions"],
+          ["Discipline", "Belonging and social wellbeing"],
+          ["Author", "Alex Freeman, Ph.D"],
+          ["Format", "Conversational"],
         ]}
       />
 
