@@ -58,8 +58,8 @@ function PersonalDetailsPage() {
         <Field label="Email"><input value={email} disabled className="input opacity-70" /></Field>
 
         <Toggle
-          label="Allow my Inner Avatar to reach out to me automatically"
-          desc="We suggest you turn this on so the full power of the Inner Avatar works for you."
+          label="Allow my Inner InwardWise Self to reach out to me automatically"
+          desc="We suggest you turn this on so the full power of the Inner InwardWise Self works for you."
           value={form.reachOutEnabled}
           onChange={(v) => update("reachOutEnabled", v)}
         />

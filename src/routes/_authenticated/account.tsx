@@ -7,7 +7,7 @@ export const Route = createFileRoute("/_authenticated/account")({
   head: () => ({
     meta: [
       { title: "Account — Inwardwise" },
-      { name: "description", content: "Manage your personal details, dashboard, and Self Avatar." },
+      { name: "description", content: "Manage your personal details, dashboard, and InwardWise Self." },
     ],
   }),
   component: AccountLayout,
@@ -17,7 +17,7 @@ const tabs: Array<{ to: "/account" | "/account/billing" | "/account/dashboard" |
   { to: "/account", label: "Personal Settings", icon: User, exact: true },
   { to: "/account/billing", label: "Billing", icon: CreditCard },
   { to: "/account/dashboard", label: "Dashboard", icon: BarChart3 },
-  { to: "/account/self-avatar", label: "Avatar Design", icon: Sparkles },
+  { to: "/account/self-avatar", label: "InwardWise Self Design", icon: Sparkles },
 ];
 
 function AccountLayout() {

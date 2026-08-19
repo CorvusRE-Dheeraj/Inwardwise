@@ -561,7 +561,7 @@ function MeditationPractice() {
             </p>
             {answers && !avatarComplete && (
               <p className="mx-auto mt-5 max-w-md text-sm text-[color:var(--muted-foreground)]">
-                Your meditation cannot begin until your avatar is fully built —{" "}
+                Your meditation cannot begin until your InwardWise Self is fully built —{" "}
                 {answeredCount} of {totalQuestions} questions answered.{" "}
                 <Link to="/avatar" className="text-[color:var(--royal)] underline">
                   Finish building your avatar →

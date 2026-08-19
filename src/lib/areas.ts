@@ -9,7 +9,7 @@ export const AREAS: Area[] = [
     slug: "individual-development",
     name: "Individual Development",
     blurb:
-      "Build real self-knowledge with an AI Avatar trained on your own five factors, then use it to choose better.",
+      "Build real self-knowledge with an AI InwardWise Self trained on your own five factors, then use it to choose better.",
   },
   {
     slug: "individual-wellbeing",

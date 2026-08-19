@@ -11,13 +11,13 @@ import { AvatarPortrait } from "@/components/avatar/AvatarPortrait";
 export const Route = createFileRoute("/_authenticated/avatar/")({
   head: () => ({
     meta: [
-      { title: "Avatar Design — Inwardwise" },
+      { title: "InwardWise Self Design — Inwardwise" },
       {
         name: "description",
         content:
-          "Design your Inner Avatar across five factors of self-knowledge — private, encrypted, and yours alone.",
+          "Design your Inner InwardWise Self across five factors of self-knowledge — private, encrypted, and yours alone.",
       },
-      { property: "og:title", content: "Avatar Design — Inwardwise" },
+      { property: "og:title", content: "InwardWise Self Design — Inwardwise" },
       { property: "og:description", content: "Five factors. One inner mirror." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -64,7 +64,7 @@ function AvatarDashboard() {
         scheduled_call_at: when ? new Date(when).toISOString() : null,
       })
       .eq("user_id", vault.profile.user_id);
-    setSavedNote("Saved. Your Avatar will call at the time you chose.");
+    setSavedNote("Saved. Your InwardWise Self will call at the time you chose.");
     setTimeout(() => setSavedNote(null), 4000);
   }
 
@@ -81,14 +81,14 @@ function AvatarDashboard() {
 
       <header className="mt-8 max-w-3xl">
         <div className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)]">
-          § 01 · Avatar Design Dashboard
+          § 01 · InwardWise Self Design Dashboard
         </div>
         <h1 className="mt-4 font-display text-[clamp(2.4rem,6vw,4.2rem)] leading-[1.02] tracking-tight">
-          Design Your <span className="italic text-[color:var(--royal)]">Inner Avatar</span>
+          Design Your <span className="italic text-[color:var(--royal)]">Inner InwardWise Self</span>
         </h1>
         <p className="mt-5 text-base leading-relaxed text-[color:var(--muted-foreground)]">
           A digital representation of you, assembled from five factors of self-knowledge.
-          Answer honestly — the Avatar is only as useful as it is accurate.
+          Answer honestly — the InwardWise Self is only as useful as it is accurate.
         </p>
       </header>
 
@@ -105,9 +105,9 @@ function AvatarDashboard() {
             />
           </div>
           <Caution>
-            This 4-digit PIN is separate from your sign-in and encrypts your Avatar answers.
+            This 4-digit PIN is separate from your sign-in and encrypts your InwardWise Self answers.
             There is no recovery: if you lose it, the answers cannot be retrieved — not by us,
-            not by an administrator. You may permanently self-destruct your Avatar data at any
+            not by an administrator. You may permanently self-destruct your InwardWise Self data at any
             time, and data auto-purges after twelve months of account inactivity.
           </Caution>
         </section>
@@ -128,7 +128,7 @@ function AvatarDashboard() {
                 <Phone className="h-3 w-3" /> Calendar Scheduling for Voice Build
               </div>
               <p className="mt-3 text-sm text-[color:var(--muted-foreground)]">
-                Rather than typing, schedule a call — your Avatar phones you and takes the
+                Rather than typing, schedule a call — your InwardWise Self phones you and takes the
                 factor questions conversationally.
               </p>
               <div className="mt-6 space-y-4">
@@ -231,9 +231,9 @@ function AvatarDashboard() {
 
             <div className="mt-8 grid gap-6 md:grid-cols-2">
               <Caution>
-                Without completely answering all of the questions, your Avatar cannot fully form —
+                Without completely answering all of the questions, your InwardWise Self cannot fully form —
                 partial answers produce partial reflections. If typing is the obstacle, turn on
-                voice and schedule times when you can take a phone call; your Avatar will call you
+                voice and schedule times when you can take a phone call; your InwardWise Self will call you
                 and fill in the factors conversationally.
               </Caution>
 
@@ -247,20 +247,20 @@ function AvatarDashboard() {
                       to="/avatar/consult"
                       className="rounded-full bg-[color:var(--ink)] px-5 py-2 text-[13px] text-[color:var(--paper)]"
                     >
-                      Consult your Avatar →
+                      Consult your InwardWise Self →
                     </Link>
                   )}
                   <Link
                     to="/avatar/ask"
                     className="rounded-full border border-[color:var(--rule)] px-5 py-2 text-[13px] transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)]"
                   >
-                    Ask your Avatar →
+                    Ask your InwardWise Self →
                   </Link>
                   <button
                     onClick={vault.lock}
                     className="rounded-full border border-[color:var(--rule)] px-5 py-2 text-[13px]"
                   >
-                    Lock Avatar
+                    Lock InwardWise Self
                   </button>
                   <button
                     onClick={() => setConfirmWipe(true)}
@@ -279,7 +279,7 @@ function AvatarDashboard() {
         <div className="fixed inset-0 z-50 grid place-items-center bg-black/40 p-4">
           <div className="w-full max-w-md rounded-lg border border-[color:var(--rule)] bg-[color:var(--paper)] p-8">
             <div className="font-mono-cap text-[10px] text-destructive">Irreversible</div>
-            <h2 className="mt-3 font-display text-2xl">Self-destruct your Avatar?</h2>
+            <h2 className="mt-3 font-display text-2xl">Self-destruct your InwardWise Self?</h2>
             <p className="mt-3 text-sm text-[color:var(--muted-foreground)]">
               Every answer, every factor, and your PIN will be permanently deleted. This
               cannot be undone or recovered.

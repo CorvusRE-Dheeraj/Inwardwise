@@ -1,8 +1,8 @@
 /**
  * Turns a photograph into an ink-on-paper sketch entirely in the browser.
  *
- * `detail` (0 → 1) is driven by how many Avatar factors have been answered:
- * an unanswered Avatar renders as a faint, unresolved outline; a complete one
+ * `detail` (0 → 1) is driven by how many InwardWise Self factors have been answered:
+ * an unanswered InwardWise Self renders as a faint, unresolved outline; a complete one
  * renders as a fully inked portrait.
  */
 

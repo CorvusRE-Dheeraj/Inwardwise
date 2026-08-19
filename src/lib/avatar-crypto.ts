@@ -1,4 +1,4 @@
-// Client-side PIN handling for Avatar data.
+// Client-side PIN handling for InwardWise Self data.
 // The PIN never leaves the browser: we store only a salted hash server-side,
 // and encrypt sensitive answers with an AES-GCM key derived from the PIN.
 
