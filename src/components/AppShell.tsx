@@ -13,6 +13,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   const [scrolled, setScrolled] = useState(false);
   const [startOpen, setStartOpen] = useState(false);
   const [mobileStartOpen, setMobileStartOpen] = useState(false);
+  const [productsOpen, setProductsOpen] = useState(false);
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => setUser(data.user ?? null));
@@ -32,7 +33,7 @@ export function AppShell({ children }: { children: ReactNode }) {
     return () => { cancelled = true; };
   }, [user]);
 
-  useEffect(() => { setMenuOpen(false); setStartOpen(false); setMobileStartOpen(false); }, [pathname]);
+  useEffect(() => { setMenuOpen(false); setStartOpen(false); setMobileStartOpen(false); setProductsOpen(false); }, [pathname]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -42,14 +43,11 @@ export function AppShell({ children }: { children: ReactNode }) {
   }, []);
 
   const nav: { to: string; label: string; external?: boolean }[] = [
-    { to: "/areas", label: "Areas" },
+    { to: "/areas", label: "Services" },
     { to: "/science", label: "Science" },
-    { to: "/history", label: "History" },
+    { to: "/history", label: "Message from Founder" },
     { to: "/testimonials", label: "Voices" },
     { to: "/pricing", label: "Pricing" },
-    { to: "/donate", label: "Donate" },
-    { to: "/feedback", label: "Feedback" },
-    { to: "/meditation", label: "Meditation" },
     ...(user ? [{ to: "/account", label: "Account" }] : []),
     ...(isAdmin ? [{ to: "/admin", label: "Admin" }] : []),
   ];
@@ -63,7 +61,14 @@ export function AppShell({ children }: { children: ReactNode }) {
 
   const startActive = startMenu.some((item) => isActive(item.to));
   const topLevelNav = nav;
-  const mobileNav = nav;
+  const mobileNav: { to: string; label: string; external?: boolean }[] = [
+    { to: "/products", label: "Products" },
+    ...nav,
+    { to: "/meditation", label: "Calm" },
+    { to: "/donate", label: "Donate" },
+    { to: "/feedback", label: "Feedback" },
+    { to: "/contact", label: "Contact Us" },
+  ];
 
   function isActive(to: string): boolean {
     return pathname === to || (to !== "/" && pathname.startsWith(to));
@@ -127,6 +132,51 @@ export function AppShell({ children }: { children: ReactNode }) {
                 </div>
               )}
             </div>
+
+            <div
+              className="relative"
+              onMouseEnter={() => setProductsOpen(true)}
+              onMouseLeave={() => setProductsOpen(false)}
+            >
+              <button
+                onClick={() => setProductsOpen((v) => !v)}
+                aria-expanded={productsOpen}
+                aria-haspopup="menu"
+                className={`group relative inline-flex items-center gap-1.5 text-[13px] tracking-wide transition ${
+                  isActive("/products")
+                    ? "text-[color:var(--ink)]"
+                    : "text-[color:var(--muted-foreground)] hover:text-[color:var(--ink)]"
+                }`}
+              >
+                Products
+                <ChevronDown className={`h-3.5 w-3.5 transition-transform ${productsOpen ? "rotate-180" : ""}`} />
+              </button>
+              {productsOpen && (
+                <div className="absolute left-0 top-full z-50 w-60 pt-3">
+                  <div className="overflow-hidden rounded-xl border border-[color:var(--rule)] bg-[color:var(--paper)] shadow-lg">
+                    <Link
+                      to="/products"
+                      onClick={() => setProductsOpen(false)}
+                      className="block border-b border-[color:var(--rule)] px-5 py-3 text-[14px] text-[color:var(--ink)] transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)]"
+                    >
+                      All products
+                    </Link>
+                    {startMenu.map((item) => (
+                      <Link
+                        key={item.to}
+                        to={item.to}
+                        onClick={() => setProductsOpen(false)}
+                        className="block px-5 py-3 text-[14px] text-[color:var(--ink)] transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)]"
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
+
 
             {topLevelNav.map((item) => {
               const active = isActive(item.to);
@@ -253,11 +303,13 @@ export function AppShell({ children }: { children: ReactNode }) {
           <div>
             <div className="font-mono-cap mb-3">Explore</div>
             <ul className="space-y-2 text-sm">
+              <li><Link to="/products" className="hover:text-[color:var(--royal)]">Products</Link></li>
               <li><Link to="/decision" className="hover:text-[color:var(--royal)]">Start a decision</Link></li>
-              <li><Link to="/areas" className="hover:text-[color:var(--royal)]">Areas</Link></li>
+              <li><Link to="/areas" className="hover:text-[color:var(--royal)]">Services</Link></li>
+              <li><Link to="/meditation" className="hover:text-[color:var(--royal)]">Calm</Link></li>
               <li><Link to="/examples" className="hover:text-[color:var(--royal)]">Examples</Link></li>
-              <li><Link to="/science" className="hover:text-[color:var(--royal)]">Science &amp; Philosophy</Link></li>
-              <li><Link to="/history" className="hover:text-[color:var(--royal)]">History</Link></li>
+              <li><Link to="/science" className="hover:text-[color:var(--royal)]">Science</Link></li>
+              <li><Link to="/history" className="hover:text-[color:var(--royal)]">Message from Founder</Link></li>
             </ul>
           </div>
           <div>
@@ -267,6 +319,7 @@ export function AppShell({ children }: { children: ReactNode }) {
               <li><Link to="/feedback" className="hover:text-[color:var(--royal)]">Feedback</Link></li>
               <li><Link to="/donate" className="hover:text-[color:var(--royal)]">Donate</Link></li>
               <li><Link to="/pricing" className="hover:text-[color:var(--royal)]">Pricing</Link></li>
+              <li><Link to="/contact" className="hover:text-[color:var(--royal)]">Contact Us</Link></li>
             </ul>
           </div>
           <div>

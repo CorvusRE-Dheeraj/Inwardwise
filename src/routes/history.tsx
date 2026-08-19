@@ -7,20 +7,55 @@ import alexPortrait from "@/assets/alex-freeman.jpg.asset.json";
 export const Route = createFileRoute("/history")({
   head: () => ({
     meta: [
-      { title: "History — Inwardwise" },
+      { title: "Message from the Founder — Inwardwise" },
       {
         name: "description",
         content:
-          "The origin story of Inwardwise — from Alex Freeman's decades of philosophical inquiry to a 7-stage AI-facilitated decision engine.",
+          "A message from Alex Freeman, Ph.D. — the history behind Inwardwise, and notes to users, colleagues, investors and donors.",
       },
-      { property: "og:title", content: "History — Inwardwise" },
-      { property: "og:description", content: "How the 7-stage decision framework came to be." },
+      { property: "og:title", content: "Message from the Founder — Inwardwise" },
+      { property: "og:description", content: "History, and messages to users, colleagues, investors and donors." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: History,
 });
+
+const MESSAGES: { eyebrow: string; title: string; body: string[] }[] = [
+  {
+    eyebrow: "§ 01",
+    title: "Message to Users",
+    body: [
+      "You already know how to think. What the modern day removes is the time and the quiet to do it properly, so decisions get made on instinct, fear or whoever spoke last.",
+      "Inwardwise gives you back the discipline without the labour. Bring one real decision, answer honestly, and let the process strip out the bias you cannot see from the inside. That is the whole promise, and it is enough.",
+    ],
+  },
+  {
+    eyebrow: "§ 02",
+    title: "Message to Colleagues",
+    body: [
+      "This work sits between social psychology, philosophy and applied AI, and it does not belong entirely to any of them. That is exactly why I need people who will argue with it.",
+      "If you research decision quality, self-image, stress biology or human-AI interaction, I would rather have your criticism early than your endorsement late. Write to us.",
+    ],
+  },
+  {
+    eyebrow: "§ 03",
+    title: "Message to Investors",
+    body: [
+      "The defensible asset here is not a wrapper around a language model. It is a seven-stage philosophical filter, empirically derived over decades and validated against real decisions, plus a five-dimensional model of self that improves as people use it.",
+      "We are building deliberately: measurable improvement in decision quality first, scale second. If that order appeals to you, we should talk.",
+    ],
+  },
+  {
+    eyebrow: "§ 04",
+    title: "Message to Donors",
+    body: [
+      "Part of this work has no business model attached to it — helping people in crisis reason their way to a next step, and making that help free at the point of need.",
+      "Donations go toward keeping those paths open for people who could never pay for them. Thank you for considering it.",
+    ],
+  },
+];
 
 function History() {
   return (
@@ -31,7 +66,7 @@ function History() {
           animate={{ opacity: 1, y: 0 }}
           className="font-mono-cap text-[color:var(--muted-foreground)]"
         >
-          History
+          Message from the Founder
         </motion.p>
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
@@ -39,7 +74,7 @@ function History() {
           transition={{ delay: 0.05 }}
           className="font-display mt-4 text-4xl leading-[1.05] tracking-tight text-[color:var(--ink)] md:text-6xl"
         >
-          The origin of the framework
+          History, and a word to you
         </motion.h1>
 
         <div className="rule-top mt-8" />
@@ -130,6 +165,21 @@ function History() {
           </p>
           <p className="font-display text-xl text-[color:var(--ink)]">Now that's history.</p>
         </article>
+
+        <div className="rule-top mt-14" />
+        <div className="mt-2">
+          {MESSAGES.map((m) => (
+            <article key={m.title} className="border-b border-[color:var(--rule)] py-10">
+              <span className="font-mono-cap text-[color:var(--muted-foreground)]">{m.eyebrow}</span>
+              <h2 className="font-display mt-3 text-2xl tracking-tight md:text-3xl">{m.title}</h2>
+              <div className="mt-4 max-w-3xl space-y-4 text-[16px] leading-[1.7] text-[color:var(--ink-2)]">
+                {m.body.map((p, i) => (
+                  <p key={i}>{p}</p>
+                ))}
+              </div>
+            </article>
+          ))}
+        </div>
 
         <div className="rule-top mt-12" />
         <div className="mt-8 flex flex-wrap items-center gap-3">
