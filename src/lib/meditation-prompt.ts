@@ -1,4 +1,4 @@
-import { AVATAR_DIMENSIONS } from "@/lib/avatar-dimensions";
+import { AVATAR_DIMENSIONS } from "@/lib/avatar-factors";
 import type { AvatarAnswers } from "@/lib/avatar-prompt";
 import { MEDITATION_LINES_PER_SET, PRAYER_SETS, type PrayerLine } from "@/lib/meditation";
 
@@ -11,12 +11,12 @@ function answersBlock(answers: AvatarAnswers): string {
       })
       .filter(Boolean)
       .join("\n\n");
-    return qa ? `DIMENSION ${d.n} — ${d.italic}\n${qa}` : `DIMENSION ${d.n} — (not answered)`;
+    return qa ? `FACTOR ${d.n} — ${d.italic}\n${qa}` : `FACTOR ${d.n} — (not answered)`;
   }).join("\n\n---\n\n");
 }
 
 /**
- * Builds the prompt that turns a person's own dimension answers into their
+ * Builds the prompt that turns a person's own factor answers into their
  * four sets of prayer lines for tonight's meditation.
  *
  * `linesPerSet` follows the session length they scheduled — the session is
@@ -30,7 +30,7 @@ export function buildMeditationPrompt(
 ): string {
   const sets = PRAYER_SETS.map(
     (s) =>
-      `SET ${s.n} · key "${s.key}" · stem "${s.stem} …"\nDraw from dimensions ${s.dimensions.join(", ")} in that order.\n${s.guidance}${
+      `SET ${s.n} · key "${s.key}" · stem "${s.stem} …"\nDraw from factors ${s.dimensions.join(", ")} in that order.\n${s.guidance}${
         s.openings ? `\nBegin this set with lines that answer: ${s.openings.join(" / ")}` : ""
       }`,
   ).join("\n\n");
@@ -53,10 +53,10 @@ ${sets}
 
 RULES
 - Every line must begin with that set's exact stem (set 4 may also use "I love you despite").
-- Every line must be grounded in their own words above. Never invent events. If a dimension is unanswered, draw from the ones that are.
+- Every line must be grounded in their own words above. Never invent events. If a factor is unanswered, draw from the ones that are.
 - One sentence per line, spoken aloud comfortably in a single breath, 8–28 words.
 - Speak to them in the second person where natural; keep it plain, warm and specific. No therapy jargon, no headings, no numbering.
-- Within each set, vary and shuffle which dimension each line draws from so the session is never predictable. The four sets themselves stay in order.
+- Within each set, vary and shuffle which factor each line draws from so the session is never predictable. The four sets themselves stay in order.
 - These lines must be new: never repeat a phrasing they are likely to have heard in an earlier session. Session variation seed: ${seed}.
 - If they wrote almost nothing, write gentle universal lines that still fit the stems.
 

@@ -34,11 +34,11 @@ function SelfAvatarPage() {
   }
 
   const dims = [
-    { label: "Dimension 1", key: "dimension1" as const, x: 50, y: 2 },
-    { label: "Dimension 2", key: "dimension2" as const, x: 95, y: 35 },
-    { label: "Dimension 3", key: "dimension3" as const, x: 78, y: 96 },
-    { label: "Dimension 4", key: "dimension4" as const, x: 22, y: 96 },
-    { label: "Dimension 5", key: "dimension5" as const, x: 5, y: 35 },
+    { label: "Factor 1", key: "dimension1" as const, x: 50, y: 2 },
+    { label: "Factor 2", key: "dimension2" as const, x: 95, y: 35 },
+    { label: "Factor 3", key: "dimension3" as const, x: 78, y: 96 },
+    { label: "Factor 4", key: "dimension4" as const, x: 22, y: 96 },
+    { label: "Factor 5", key: "dimension5" as const, x: 5, y: 35 },
   ];
 
   const starPoints = Array.from({ length: 10 }, (_, i) => {
@@ -73,9 +73,9 @@ function SelfAvatarPage() {
           .
         </p>
         <p>
-          In order to build your Avatar you have to answer a series of questions in each of the 5 dimensions.
+          In order to build your Avatar you have to answer a series of questions in each of the 5 factors.
           This is a laborious process — you really have to dig deeper in answering these questions. Set
-          aside time and do this for each dimension so you get an Avatar that is accurate. You only have to
+          aside time and do this for each factor so you get an Avatar that is accurate. You only have to
           do this once; the Avatar will keep updating itself over time so it stays a representation of the
           current you. You can always review your answers and change them to revise your Avatar.
         </p>
@@ -121,7 +121,7 @@ function SelfAvatarPage() {
             </svg>
           </div>
           <p className="mt-4 text-center text-xs uppercase tracking-[0.18em] text-muted-foreground">
-            The Self Avatar and its five dimensions
+            The Self Avatar and its five factors
           </p>
         </div>
 

@@ -15,7 +15,7 @@ import {
   linesPerSetFor,
   type PrayerLine,
 } from "@/lib/meditation";
-import { AVATAR_DIMENSIONS } from "@/lib/avatar-dimensions";
+import { AVATAR_DIMENSIONS } from "@/lib/avatar-factors";
 import { buildMeditationPrompt, parseMeditationLines } from "@/lib/meditation-prompt";
 import { synthesizeSpeech } from "@/lib/voice";
 import { toast } from "sonner";
@@ -235,7 +235,7 @@ function MeditationPractice() {
   const canText = !textBlockedReason && !texting && !saving;
 
 
-  /** Writes tonight's prayer lines using the person's own dimension answers. */
+  /** Writes tonight's prayer lines using the person's own factor answers. */
   async function generateScript(): Promise<PrayerLine[]> {
     if (!answers) throw new Error("Your answers are still loading.");
     const res = await chatFn({
@@ -429,7 +429,7 @@ function MeditationPractice() {
           Four prayers, in your <em className="italic text-[color:var(--royal)]">own words</em>
         </h1>
         <p className="mt-5 max-w-xl text-[color:var(--muted-foreground)]">
-          Tonight&apos;s lines are written from what you answered across your five dimensions. Say
+          Tonight&apos;s lines are written from what you answered across your five factors. Say
           each one aloud, slowly, and stay with it before moving on.
         </p>
       </header>

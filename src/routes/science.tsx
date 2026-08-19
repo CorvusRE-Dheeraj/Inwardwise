@@ -8,7 +8,7 @@ export const Route = createFileRoute("/science")({
       {
         name: "description",
         content:
-          "The science behind Inwardwise: decision quality, the five dimensions of self, self-awareness and connection — with references from stress biology to modern psychology.",
+          "The science behind Inwardwise: decision quality, the five factors of self, self-awareness and connection — with references from stress biology to modern psychology.",
       },
       { property: "og:title", content: "Science — The Thinking Behind Inwardwise" },
       {
@@ -35,7 +35,7 @@ const SECTIONS: { n: string; title: string; body: string[] }[] = [
     n: "§ 02",
     title: "Self Build",
     body: [
-      "Your inner Avatar is assembled from five dimensions — among them your skills, your talents, your outer connections, and the ability to connect the dots between experiences that seem unrelated.",
+      "Your inner Avatar is assembled from five factors — among them your skills, your talents, your outer connections, and the ability to connect the dots between experiences that seem unrelated.",
       "The underlying idea is old and well supported: self-image governs behaviour. When the picture you hold of yourself is accurate and complete, your choices stop fighting your own nature. When it is distorted, no amount of information corrects the outcome.",
     ],
   },

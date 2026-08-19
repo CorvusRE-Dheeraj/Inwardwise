@@ -6,14 +6,14 @@ const BUCKET = "avatar-portraits";
 
 type Props = {
   userId: string;
-  /** How many of the five dimensions are complete. */
+  /** How many of the five factors are complete. */
   complete: number;
   total: number;
 };
 
 /**
  * Upload a photograph, keep it private, and render it as an ink sketch whose
- * definition sharpens as more dimensions are answered.
+ * definition sharpens as more factors are answered.
  */
 export function AvatarPortrait({ userId, complete, total }: Props) {
   const [sourceUrl, setSourceUrl] = useState<string | null>(null);
@@ -37,7 +37,7 @@ export function AvatarPortrait({ userId, complete, total }: Props) {
     };
   }, [path]);
 
-  // Re-sketch whenever the photo or the dimension progress changes.
+  // Re-sketch whenever the photo or the factor progress changes.
   useEffect(() => {
     if (!sourceUrl) return;
     let cancelled = false;
@@ -99,11 +99,11 @@ export function AvatarPortrait({ userId, complete, total }: Props) {
       </div>
 
       <div className="font-mono-cap mt-5 text-[10px] text-[color:var(--muted-foreground)]">
-        Avatar Portrait · {complete}/{total} dimensions
+        Avatar Portrait · {complete}/{total} factors
       </div>
       <p className="mt-2 text-center text-sm text-[color:var(--muted-foreground)]">
         {sketch
-          ? "Your sketch sharpens as each dimension is answered."
+          ? "Your sketch sharpens as each factor is answered."
           : "Attach a photograph — it is drawn as a private ink sketch."}
       </p>
 
