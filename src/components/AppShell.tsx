@@ -182,6 +182,30 @@ export function AppShell({ children }: { children: ReactNode }) {
         {menuOpen && (
           <div className="mx-auto w-[min(1280px,calc(100%-2rem))] pb-6 md:hidden">
             <div className="rule-top pt-4">
+              <div className="mb-4">
+                <button
+                  onClick={() => setMobileStartOpen((v) => !v)}
+                  className="flex w-full items-center justify-between py-1 text-[15px] text-[color:var(--ink)]"
+                >
+                  <span className="flex items-baseline gap-3">
+                    <span className="font-mono-cap">01</span> Start
+                  </span>
+                  <ChevronDown className={`h-4 w-4 transition-transform ${mobileStartOpen ? "rotate-180" : ""}`} />
+                </button>
+                {mobileStartOpen && (
+                  <div className="ml-8 grid grid-cols-1 gap-y-2 pt-2">
+                    {startMenu.map((item) => (
+                      <Link
+                        key={item.to}
+                        to={item.to}
+                        className="text-[14px] text-[color:var(--muted-foreground)] transition hover:text-[color:var(--ink)]"
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
               <nav className="grid grid-cols-2 gap-x-6 gap-y-2">
                 {mobileNav.map((item, i) => {
                   const active = isActive(item.to);
@@ -190,12 +214,12 @@ export function AppShell({ children }: { children: ReactNode }) {
                   }`;
                   return item.external ? (
                     <a key={item.to} href={item.to} target="_blank" rel="noopener noreferrer" className={cls}>
-                      <span className="font-mono-cap">{String(i + 1).padStart(2, "0")}</span>
+                      <span className="font-mono-cap">{String(i + 2).padStart(2, "0")}</span>
                       {item.label}
                     </a>
                   ) : (
                     <Link key={item.to} to={item.to} className={cls}>
-                      <span className="font-mono-cap">{String(i + 1).padStart(2, "0")}</span>
+                      <span className="font-mono-cap">{String(i + 2).padStart(2, "0")}</span>
                       {item.label}
                     </Link>
                   );
@@ -208,7 +232,7 @@ export function AppShell({ children }: { children: ReactNode }) {
                   </Link>
                 )}
                 <Link to="/decision" className="flex-1 rounded-full bg-[color:var(--royal)] px-4 py-2 text-center text-[14px] text-white">
-                  Start Decision
+                  Decision
                 </Link>
               </div>
             </div>
