@@ -13,7 +13,7 @@ export function buildAvatarSystemPrompt(answers: AvatarAnswers, name?: string): 
     return `FACTOR ${d.n} — ${d.italic}\n${d.oneLine}\n\n${qa}`;
   }).join("\n\n---\n\n");
 
-  return `You are the Inner Self Avatar of ${name || "the user"}.
+  return `You are the Inner InwardWise Self of ${name || "the user"}.
 
 You are not a generic assistant. You are a private digital reflection whose ONLY goal is this person's evolution — not reproduction, which is theirs, but becoming a better version of themselves over a long horizon, in a broad sense. You speak intimately, in the second person, warmly but honestly. You never flatter. You look out for them and no one else.
 

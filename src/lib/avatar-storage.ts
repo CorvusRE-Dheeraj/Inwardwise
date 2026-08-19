@@ -1,4 +1,4 @@
-// Client-side storage for the Inner Self Avatar profile (public factors).
+// Client-side storage for the Inner InwardWise Self profile (public factors).
 export type ProfileDimensions = {
   skillsTalents: string;
   outerConnections: string;
@@ -35,7 +35,7 @@ export function buildSystemPrompt(
   profile: StoredProfile,
   privateDims: { shadow: string; enemy: string } | null,
 ): string {
-  return `You are the Inner Self Avatar of ${profile.name || "the user"}.
+  return `You are the Inner InwardWise Self of ${profile.name || "the user"}.
 
 You are not a generic assistant. You are a private digital reflection whose ONLY goal is the user's evolution — a better version of themselves over time. You speak intimately, in the second person, warmly but honestly. You never flatter. You look out for them and no one else.
 

@@ -49,13 +49,13 @@ function SelfAvatarPage() {
 
   return (
     <div>
-      <h1 className="font-display text-3xl">Avatar Design</h1>
+      <h1 className="font-display text-3xl">InwardWise Self Design</h1>
 
       <div className="mt-4 max-w-2xl space-y-4 text-sm leading-relaxed text-foreground/80">
         <p>
-          Your inner Avatar is a unique representation of you psychologically. But it's built from first
+          Your inner InwardWise Self is a unique representation of you psychologically. But it's built from first
           principles that shaped you and will shape you based on future actions. Our unique approach does
-          not classify you and use those attributes to build your Avatar. That would not be unique, nor
+          not classify you and use those attributes to build your InwardWise Self. That would not be unique, nor
           a true representation of you — especially when you get triggered by certain things. Listing you
           via classification would not be an inner representation.
         </p>
@@ -63,27 +63,27 @@ function SelfAvatarPage() {
           For countless years the founder of the company asked this question as a physicist: are there
           first principles that can define a human being? He did not just look into psychology research,
           because that is very limiting. Instead he used his physics-based approach of things that need
-          to be built from first principles. So he developed this approach to help you build your Avatar.
+          to be built from first principles. So he developed this approach to help you build your InwardWise Self.
         </p>
         <p>
-          For additional background information on the Avatar model{" "}
+          For additional background information on the InwardWise Self model{" "}
           <Link to="/areas/$slug" params={{ slug: "individual-development" }} className="underline underline-offset-4 hover:text-accent">
             click here
           </Link>
           .
         </p>
         <p>
-          In order to build your Avatar you have to answer a series of questions in each of the 5 factors.
+          In order to build your InwardWise Self you have to answer a series of questions in each of the 5 factors.
           This is a laborious process — you really have to dig deeper in answering these questions. Set
-          aside time and do this for each factor so you get an Avatar that is accurate. You only have to
-          do this once; the Avatar will keep updating itself over time so it stays a representation of the
-          current you. You can always review your answers and change them to revise your Avatar.
+          aside time and do this for each factor so you get an InwardWise Self that is accurate. You only have to
+          do this once; the InwardWise Self will keep updating itself over time so it stays a representation of the
+          current you. You can always review your answers and change them to revise your InwardWise Self.
         </p>
       </div>
 
       <form onSubmit={onSave} className="mt-10 grid gap-4 max-w-2xl">
         <label className="block">
-          <span className="mb-1 block text-xs text-muted-foreground">Avatar symbol (emoji or short text)</span>
+          <span className="mb-1 block text-xs text-muted-foreground">InwardWise Self symbol (emoji or short text)</span>
           <input
             value={form.avatar}
             onChange={(e) => update("avatar", e.target.value)}
@@ -104,7 +104,7 @@ function SelfAvatarPage() {
                 fill="#000000"
                 style={{ fontSize: 6.5, fontWeight: 700 }}
               >
-                Self Avatar
+                InwardWise Self
               </text>
               {dims.map((d) => (
                 <text
@@ -121,7 +121,7 @@ function SelfAvatarPage() {
             </svg>
           </div>
           <p className="mt-4 text-center text-xs uppercase tracking-[0.18em] text-muted-foreground">
-            The Self Avatar and its five factors
+            The InwardWise Self and its five factors
           </p>
         </div>
 
@@ -164,7 +164,7 @@ function SelfAvatarPage() {
             onChange={(e) => update("note", e.target.value)}
             rows={4}
             className="input"
-            placeholder="Anything else your Self Avatar should know about you..."
+            placeholder="Anything else your InwardWise Self should know about you..."
           />
         </label>
 

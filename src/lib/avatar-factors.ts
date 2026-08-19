@@ -49,7 +49,7 @@ export const AVATAR_DIMENSIONS: AvatarDimension[] = [
     oneLine: "Private. Encrypted with your PIN. Visible only to you.",
     locked: true,
     intro:
-      "You succumb to certain vices, destructive or unproductive habits and actions. They have derailed your life before, or carry the potential to. You may not think you have them, or hate to admit them, or fear being discovered. But your Avatar will not be accurate or complete unless you recognise them and list them here. No one else sees this — it is designed that way.",
+      "You succumb to certain vices, destructive or unproductive habits and actions. They have derailed your life before, or carry the potential to. You may not think you have them, or hate to admit them, or fear being discovered. But your InwardWise Self will not be accurate or complete unless you recognise them and list them here. No one else sees this — it is designed that way.",
     questions: [
       {
         key: "d2_q1",

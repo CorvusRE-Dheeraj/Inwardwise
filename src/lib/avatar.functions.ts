@@ -16,7 +16,7 @@ export const chatWithAvatar = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     const apiKey = process.env.LOVABLE_API_KEY;
     if (!apiKey) {
-      throw new Error("Avatar is not configured (missing LOVABLE_API_KEY).");
+      throw new Error("InwardWise Self is not configured (missing LOVABLE_API_KEY).");
     }
 
     const res = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
@@ -37,14 +37,14 @@ export const chatWithAvatar = createServerFn({ method: "POST" })
     if (!res.ok) {
       const text = await res.text().catch(() => "");
       if (res.status === 429) {
-        throw new Error("Your avatar is resting — too many requests. Try again in a moment.");
+        throw new Error("Your InwardWise Self is resting — too many requests. Try again in a moment.");
       }
       if (res.status === 402) {
         throw new Error(
-          "Your avatar is temporarily offline: the workspace AI balance is empty. Top up credits in Settings → Plans & credit usage → Add credits, then try again.",
+          "Your InwardWise Self is temporarily offline: the workspace AI balance is empty. Top up credits in Settings → Plans & credit usage → Add credits, then try again.",
         );
       }
-      throw new Error(`Avatar unreachable (${res.status}). ${text.slice(0, 200)}`);
+      throw new Error(`InwardWise Self unreachable (${res.status}). ${text.slice(0, 200)}`);
     }
 
     const json = (await res.json()) as {

@@ -9,7 +9,7 @@ export const Route = createFileRoute("/products")({
       {
         name: "description",
         content:
-          "The three Inwardwise products: Decision for clear choices, Self for your inner Avatar and calm, and Connect to belong as yourself.",
+          "The three Inwardwise products: Decision for clear choices, Self for your inner InwardWise Self and calm, and Connect to belong as yourself.",
       },
       { property: "og:title", content: "Products — Decision, Self, Connect | Inwardwise" },
       {
@@ -49,7 +49,7 @@ const PRODUCTS: {
     title: "Your Inward Self Working for",
     italic: "Your Happiness",
     blurb:
-      "Build an inner Avatar across five private factors, ask it what you cannot ask anyone else, and quiet the mind with an AI-guided meditation built for the modern brain.",
+      "Build an inner InwardWise Self across five private factors, ask it what you cannot ask anyone else, and quiet the mind with an AI-guided meditation built for the modern brain.",
     links: [
       { to: "/avatar", label: "Build Self", primary: true },
       { to: "/avatar/ask", label: "Self Aware" },
@@ -62,7 +62,7 @@ const PRODUCTS: {
     title: "Be Yourself and",
     italic: "Belong",
     blurb:
-      "Connect with your Avatar — and, in time, with people whose inner shape fits yours. Conversation grounded in who you actually are, not the version you perform.",
+      "Connect with your InwardWise Self — and, in time, with people whose inner shape fits yours. Conversation grounded in who you actually are, not the version you perform.",
     links: [
       { to: "/avatar/consult", label: "Connect", primary: true },
       { to: "/areas", label: "See services" },

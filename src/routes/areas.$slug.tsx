@@ -63,7 +63,7 @@ function AreaPage() {
           to="/account/self-avatar"
           className="inline-flex items-center gap-2 rounded-full bg-foreground px-4 py-2 text-sm text-background transition hover:opacity-90"
         >
-          <Sparkles className="h-4 w-4" /> Design Your Avatar
+          <Sparkles className="h-4 w-4" /> Design Your InwardWise Self
         </Link>
       </div>
     </article>
@@ -108,15 +108,15 @@ function IndividualDevelopmentContent() {
         Life is defined by two characteristic traits: <em>Reproduction</em> and <em>Evolution</em> —
         the drive toward a better species, better adapted to survival and thriving. The first is
         possible only for a physical being, which the human can do. You can accomplish reproduction
-        and accomplish your evolution, and pass on heredity to the next generation. The Avatar&rsquo;s
+        and accomplish your evolution, and pass on heredity to the next generation. The InwardWise Self&rsquo;s
         goal is solely the second: to make you better so you can evolve within this lifetime, for
         the better.
       </p>
       <p>
-        Given this goal of your Avatar, let&rsquo;s design it using AI to help you evolve into a
-        better human being as time brings change. The Avatar&rsquo;s goal is how to make you better
+        Given this goal of your InwardWise Self, let&rsquo;s design it using AI to help you evolve into a
+        better human being as time brings change. The InwardWise Self&rsquo;s goal is how to make you better
         over a long time, in a broad sense. It gets formed based on the five attributes defined
-        above. Once you identify that information and hard-code your Avatar, it goes to work by
+        above. Once you identify that information and hard-code your InwardWise Self, it goes to work by
         identifying with the factors below and taking action based on the best course, based on
         the prompt it received from you.
       </p>
@@ -136,10 +136,11 @@ function IndividualDevelopmentContent() {
               textAnchor="middle"
               dominantBaseline="middle"
               fill="#000000"
-              style={{ fontSize: 7, fontWeight: 700 }}
+              style={{ fontSize: 6, fontWeight: 700 }}
             >
-              <tspan x="50" dy="-2">Self</tspan>
-              <tspan x="50" dy="8">Avatar</tspan>
+              <tspan x="50" dy="-2">InwardWise</tspan>
+              <tspan x="50" dy="7">Self</tspan>
+
             </text>
             {dims.map((d) => (
               <text
@@ -156,12 +157,12 @@ function IndividualDevelopmentContent() {
           </svg>
         </div>
         <figcaption className="mt-4 text-center text-xs uppercase tracking-[0.18em] text-muted-foreground">
-          The Self Avatar and its five factors
+          The InwardWise Self and its five factors
         </figcaption>
       </figure>
 
       <p>
-        Based on the human prompt, the Avatar will scan across all factors for a better
+        Based on the human prompt, the InwardWise Self will scan across all factors for a better
         understanding of you and advise you. These factors are based on reviewing many scientific
         papers and a combination of intuitive approaches — studying many philosophies, psychological
         approaches and observational methods. There was no single approach; it came together as a
@@ -171,10 +172,10 @@ function IndividualDevelopmentContent() {
 
       <div className="glass rounded-3xl p-6">
         <p className="text-sm text-muted-foreground">
-          We can think of the Avatar as a <span className="text-foreground">Facebook for the inner self</span>,
+          We can think of the InwardWise Self as a <span className="text-foreground">Facebook for the inner self</span>,
           as Facebook is for the outer world to see what you are thinking and experiencing. Unlike
           Facebook, the information is confidential and will not be available to anyone except you.
-          By representing a truthful you as the Avatar, you can manage your inner self and have a
+          By representing a truthful you as the InwardWise Self, you can manage your inner self and have a
           personal conversation with yourself. This builds self-love and a healthy acceptance of
           who you are — not a victim of having to depend on others for acceptance and encouragement.
         </p>

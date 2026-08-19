@@ -51,7 +51,7 @@ const { PinKeypad } = await import("@/components/avatar/PinKeypad");
 /** Mirrors the PIN gate of the /avatar dashboard route. */
 function AvatarGate() {
   const vault = useAvatarVault();
-  if (vault.status === "unlocked") return <div>Avatar Portrait</div>;
+  if (vault.status === "unlocked") return <div>InwardWise Self Portrait</div>;
   if (vault.status === "loading") return <div>Loading…</div>;
   return (
     <PinKeypad
@@ -72,7 +72,7 @@ async function enterPin(pin: string) {
   }
 }
 
-describe("Avatar PIN gate", () => {
+describe("InwardWise Self PIN gate", () => {
   beforeEach(() => {
     sessionStorage.clear();
     updateSpy.mockClear();
@@ -91,11 +91,11 @@ describe("Avatar PIN gate", () => {
     };
 
     render(<AvatarGate />);
-    await screen.findByText("Enter your Avatar PIN");
+    await screen.findByText("Enter your InwardWise Self PIN");
 
     await enterPin("1234");
 
-    expect(await screen.findByText("Avatar Portrait", {}, { timeout: 10_000 })).toBeInTheDocument();
+    expect(await screen.findByText("InwardWise Self Portrait", {}, { timeout: 10_000 })).toBeInTheDocument();
   }, 20_000);
 
   it("blocks the dashboard when the PIN is incorrect", async () => {
@@ -110,14 +110,14 @@ describe("Avatar PIN gate", () => {
     };
 
     render(<AvatarGate />);
-    await screen.findByText("Enter your Avatar PIN");
+    await screen.findByText("Enter your InwardWise Self PIN");
 
     await enterPin("9999");
 
     expect(
       await screen.findByText("That PIN is not correct.", {}, { timeout: 10_000 }),
     ).toBeInTheDocument();
-    expect(screen.queryByText("Avatar Portrait")).not.toBeInTheDocument();
+    expect(screen.queryByText("InwardWise Self Portrait")).not.toBeInTheDocument();
     expect(sessionStorage.getItem("avatar-pin:session")).toBeNull();
   }, 20_000);
 
@@ -139,6 +139,6 @@ describe("Avatar PIN gate", () => {
     await enterPin("4321");
 
     await waitFor(() => expect(updateSpy).toHaveBeenCalled(), { timeout: 10_000 });
-    expect(await screen.findByText("Avatar Portrait", {}, { timeout: 10_000 })).toBeInTheDocument();
+    expect(await screen.findByText("InwardWise Self Portrait", {}, { timeout: 10_000 })).toBeInTheDocument();
   }, 30_000);
 });

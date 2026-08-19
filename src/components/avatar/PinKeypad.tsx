@@ -57,7 +57,7 @@ export function PinKeypad({
 
   const label =
     mode === "enter"
-      ? "Enter your Avatar PIN"
+      ? "Enter your InwardWise Self PIN"
       : stage === "first"
         ? "Choose a 4-digit PIN"
         : "Confirm your PIN";

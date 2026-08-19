@@ -87,7 +87,7 @@ export function AvatarPortrait({ userId, complete, total }: Props) {
         {sketch ? (
           <img
             src={sketch}
-            alt="Ink sketch of your Avatar portrait"
+            alt="Ink sketch of your InwardWise Self portrait"
             className="h-full w-full object-cover"
             style={{ opacity: 0.55 + 0.45 * detail, transition: "opacity 600ms ease" }}
           />
@@ -99,7 +99,7 @@ export function AvatarPortrait({ userId, complete, total }: Props) {
       </div>
 
       <div className="font-mono-cap mt-5 text-[10px] text-[color:var(--muted-foreground)]">
-        Avatar Portrait · {complete}/{total} factors
+        InwardWise Self Portrait · {complete}/{total} factors
       </div>
       <p className="mt-2 text-center text-sm text-[color:var(--muted-foreground)]">
         {sketch

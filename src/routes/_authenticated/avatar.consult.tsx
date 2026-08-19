@@ -12,13 +12,13 @@ import { Caution, PinKeypad } from "@/components/avatar/PinKeypad";
 export const Route = createFileRoute("/_authenticated/avatar/consult")({
   head: () => ({
     meta: [
-      { title: "Consult your Avatar — Inwardwise" },
+      { title: "Consult your InwardWise Self — Inwardwise" },
       {
         name: "description",
         content:
-          "Speak with your inner self avatar. It responds through the five factors you answered yourself.",
+          "Speak with your inner InwardWise Self. It responds through the five factors you answered yourself.",
       },
-      { property: "og:title", content: "Consult your Avatar — Inwardwise" },
+      { property: "og:title", content: "Consult your InwardWise Self — Inwardwise" },
       {
         property: "og:description",
         content: "A private mirror that speaks in your interest, and no one else's.",
@@ -113,7 +113,7 @@ function ConsultAvatar() {
           />
         </div>
         <Caution>
-          Your avatar can only speak once your PIN unlocks the answers you wrote. They are decrypted
+          Your InwardWise Self can only speak once your PIN unlocks the answers you wrote. They are decrypted
           in your browser and never readable by anyone else.
         </Caution>
       </div>
@@ -188,14 +188,14 @@ function ConsultAvatar() {
             }
           >
             {m.role === "assistant" && (
-              <div className="font-mono-cap mb-1 text-[10px] text-royal">Avatar</div>
+              <div className="font-mono-cap mb-1 text-[10px] text-royal">InwardWise Self</div>
             )}
             <div className="whitespace-pre-wrap">{m.content}</div>
           </div>
         ))}
         {sending && (
           <div className="mr-auto max-w-[90%] rounded-lg border border-[var(--rule)] bg-white px-4 py-3 text-sm text-muted-foreground">
-            <span className="animate-pulse">Your avatar is reflecting…</span>
+            <span className="animate-pulse">Your InwardWise Self is reflecting…</span>
           </div>
         )}
         {error && (
@@ -231,7 +231,7 @@ function ConsultAvatar() {
 
       <div className="mt-6 text-sm">
         <Link to="/avatar" className="text-muted-foreground hover:text-foreground">
-          ← Back to Avatar
+          ← Back to InwardWise Self
         </Link>
         <span className="mx-3 text-muted-foreground">·</span>
         <Link to="/avatar" className="text-muted-foreground hover:text-foreground">

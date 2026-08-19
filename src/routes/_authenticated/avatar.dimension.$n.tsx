@@ -10,13 +10,13 @@ import { decryptText, encryptText } from "@/lib/avatar-crypto";
 export const Route = createFileRoute("/_authenticated/avatar/dimension/$n")({
   head: () => ({
     meta: [
-      { title: "Factor — Avatar · Inwardwise" },
+      { title: "Factor — InwardWise Self · Inwardwise" },
       {
         name: "description",
         content:
-          "Answer the questions of this factor to build your Inner Avatar. Private and encrypted.",
+          "Answer the questions of this factor to build your Inner InwardWise Self. Private and encrypted.",
       },
-      { property: "og:title", content: "Factor — Avatar · Inwardwise" },
+      { property: "og:title", content: "Factor — InwardWise Self · Inwardwise" },
       { property: "og:description", content: "One question at a time, in your own words." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -65,7 +65,7 @@ function DimensionFlow() {
       <div className="mx-auto w-[min(700px,calc(100%-2rem))] py-24 text-center">
         <p className="font-display text-3xl">That factor does not exist.</p>
         <Link to="/avatar" className="mt-6 inline-block text-sm underline">
-          Back to Avatar Design
+          Back to InwardWise Self Design
         </Link>
       </div>
     );
@@ -146,7 +146,7 @@ function DimensionFlow() {
         to="/avatar"
         className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)] transition hover:text-[color:var(--ink)]"
       >
-        ← Avatar Design
+        ← InwardWise Self Design
       </Link>
 
       <div className="font-mono-cap mt-8 flex items-center gap-2 text-[10px] text-[color:var(--muted-foreground)]">
