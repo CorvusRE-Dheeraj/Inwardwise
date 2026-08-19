@@ -205,16 +205,12 @@ export function AppShell({ children }: { children: ReactNode }) {
           </nav>
 
           <div className="flex shrink-0 items-center gap-3">
-            {!user ? (
+            {!user && (
               <Link
                 to="/auth"
                 className="hidden text-[13px] text-[color:var(--muted-foreground)] transition hover:text-[color:var(--ink)] sm:inline"
               >
                 Sign in
-              </Link>
-            ) : (
-              <Link to="/account" className="hidden text-[13px] text-[color:var(--muted-foreground)] transition hover:text-[color:var(--ink)] sm:inline">
-                Account
               </Link>
             )}
 
