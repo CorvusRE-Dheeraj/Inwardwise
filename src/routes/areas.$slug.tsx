@@ -136,10 +136,11 @@ function IndividualDevelopmentContent() {
               textAnchor="middle"
               dominantBaseline="middle"
               fill="#000000"
-              style={{ fontSize: 7, fontWeight: 700 }}
+              style={{ fontSize: 6, fontWeight: 700 }}
             >
-              <tspan x="50" dy="-2">Self</tspan>
-              <tspan x="50" dy="8">InwardWise Self</tspan>
+              <tspan x="50" dy="-2">InwardWise</tspan>
+              <tspan x="50" dy="7">Self</tspan>
+
             </text>
             {dims.map((d) => (
               <text
