@@ -304,7 +304,7 @@ export function AppShell({ children }: { children: ReactNode }) {
               <li><Link to="/products" className="hover:text-[color:var(--royal)]">Products</Link></li>
               <li><Link to="/decision" className="hover:text-[color:var(--royal)]">Start a decision</Link></li>
               <li><Link to="/areas" className="hover:text-[color:var(--royal)]">Services</Link></li>
-              <li><Link to="/meditation" className="hover:text-[color:var(--royal)]">Calm</Link></li>
+              <li><Link to="/meditation" className="hover:text-[color:var(--royal)]">Meditation</Link></li>
               <li><Link to="/examples" className="hover:text-[color:var(--royal)]">Examples</Link></li>
               <li><Link to="/science" className="hover:text-[color:var(--royal)]">Science</Link></li>
               <li><Link to="/history" className="hover:text-[color:var(--royal)]">Message from Founder</Link></li>
