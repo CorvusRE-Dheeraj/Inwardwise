@@ -22,6 +22,41 @@ export const Route = createFileRoute("/history")({
   component: History,
 });
 
+const MESSAGES: { eyebrow: string; title: string; body: string[] }[] = [
+  {
+    eyebrow: "§ 01",
+    title: "Message to Users",
+    body: [
+      "You already know how to think. What the modern day removes is the time and the quiet to do it properly, so decisions get made on instinct, fear or whoever spoke last.",
+      "Inwardwise gives you back the discipline without the labour. Bring one real decision, answer honestly, and let the process strip out the bias you cannot see from the inside. That is the whole promise, and it is enough.",
+    ],
+  },
+  {
+    eyebrow: "§ 02",
+    title: "Message to Colleagues",
+    body: [
+      "This work sits between social psychology, philosophy and applied AI, and it does not belong entirely to any of them. That is exactly why I need people who will argue with it.",
+      "If you research decision quality, self-image, stress biology or human-AI interaction, I would rather have your criticism early than your endorsement late. Write to us.",
+    ],
+  },
+  {
+    eyebrow: "§ 03",
+    title: "Message to Investors",
+    body: [
+      "The defensible asset here is not a wrapper around a language model. It is a seven-stage philosophical filter, empirically derived over decades and validated against real decisions, plus a five-dimensional model of self that improves as people use it.",
+      "We are building deliberately: measurable improvement in decision quality first, scale second. If that order appeals to you, we should talk.",
+    ],
+  },
+  {
+    eyebrow: "§ 04",
+    title: "Message to Donors",
+    body: [
+      "Part of this work has no business model attached to it — helping people in crisis reason their way to a next step, and making that help free at the point of need.",
+      "Donations go toward keeping those paths open for people who could never pay for them. Thank you for considering it.",
+    ],
+  },
+];
+
 function History() {
   return (
     <AppShell>
