@@ -101,6 +101,104 @@ function Meditation() {
         </motion.div>
       </section>
 
+      {/* A practice designed for the modern mind */}
+      <section className="rule-top">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-12% 0px" }}
+          transition={{ duration: 1, ease: [0.2, 0.7, 0.2, 1] }}
+          className="mx-auto w-[min(1280px,calc(100%-2rem))] py-24 md:py-32"
+        >
+          <span className="font-mono-cap text-[color:var(--muted-foreground)]">
+            § 02 · Why this practice
+          </span>
+          <h2 className="font-display mt-5 max-w-4xl text-[clamp(2.2rem,6vw,4.6rem)] leading-[1.02] tracking-tight">
+            A meditation practice designed for the{" "}
+            <em className="italic text-[color:var(--royal)]">modern mind</em>
+          </h2>
+
+          <div className="mt-10 grid gap-10 md:grid-cols-[1.2fr_0.8fr]">
+            <div className="max-w-3xl space-y-5 text-[16px] leading-[1.75] text-[color:var(--ink-2)]">
+              <p>
+                The founder has been exposed to many types of meditation and is a staunch believer in
+                the scientific method of evaluating everything. This practice is his scientific
+                understanding of meditation, defined plainly.
+              </p>
+              <p>
+                Throughout the day, the brain processes a constant stream of thoughts, emotions,
+                decisions and sensory information. This ongoing mental activity can leave us feeling
+                overstimulated, distracted or emotionally drained. Sleep helps the brain recover, but
+                many people also benefit from learning how to create moments of calm while they are
+                awake. Instead, people often use alcohol as a way to quiet the mind. Many mental
+                illnesses carry over-stimulation of the brain as an underlying cause, which stresses
+                the importance of quieting the mind down.
+              </p>
+              <p>
+                Meditation offers a practical way to slow the pace of thought, reduce mental noise and
+                redirect attention. Rather than forcing the mind to become completely silent, this
+                technique guides you into a calmer and more receptive state.
+              </p>
+              <p>
+                As external distractions begin to fade, you may become more aware of thoughts,
+                feelings and ideas that are usually overlooked. This quieter state can create space
+                for reflection, greater self-awareness, creative insight and the occasional “aha”
+                moment.
+              </p>
+              <p>
+                Research into meditation suggests that these practices can influence stress responses,
+                emotional regulation and patterns of brain activity. A calm or thankful frame of mind
+                may further support relaxation and help shift attention away from worry and mental
+                overload.
+              </p>
+              <p>
+                This meditation and autosuggestion method was developed by combining traditional
+                contemplative ideas with modern insights into neuronal activity, mental disorders, the
+                thought process and how it influences the mind–body connection, and neuronal imaging
+                techniques used to study mental activity under different thought patterns. AI guides
+                you with the suggestions so you can follow along easily.
+              </p>
+              <p>
+                You do not need previous meditation experience, special beliefs or hours of free time.
+                You only need a willingness to pause, listen and become more present. This is not
+                about escaping your thoughts. It is about learning to relate to them with greater
+                calm, clarity and intention.
+              </p>
+              <p className="font-display text-xl text-[color:var(--ink)]">
+                Quiet the noise. Reconnect with yourself. Discover what becomes possible when the mind
+                is given space to settle — and let AI make meditation a routine habit for you.
+              </p>
+            </div>
+
+            <div className="paper-card h-fit rounded-3xl p-6">
+              <span className="font-mono-cap text-[color:var(--muted-foreground)]">
+                With regular practice
+              </span>
+              <ul className="mt-4 space-y-3 text-[15px] leading-relaxed text-[color:var(--ink-2)]">
+                {[
+                  "Reduce mental clutter and everyday stress",
+                  "Feel calmer and more emotionally balanced",
+                  "Improve focus and self-awareness",
+                  "Create time for meaningful reflection",
+                  "Become more receptive to new perspectives and personal insights",
+                ].map((b) => (
+                  <li key={b} className="flex gap-3">
+                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[color:var(--royal)]" />
+                    {b}
+                  </li>
+                ))}
+              </ul>
+              <Link
+                to="/meditation/practice"
+                className="mt-7 inline-flex items-center gap-3 rounded-full bg-[color:var(--ink)] px-6 py-3.5 text-sm text-[color:var(--paper)] transition-transform duration-500 hover:-translate-y-0.5"
+              >
+                Start Meditation <span>→</span>
+              </Link>
+            </div>
+          </div>
+        </motion.div>
+      </section>
+
       {/* Four prayers overview */}
       <section className="rule-top">
         <motion.div
