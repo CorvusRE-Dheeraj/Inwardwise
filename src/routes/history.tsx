@@ -172,7 +172,7 @@ function History() {
             <article key={m.title} className="border-b border-[color:var(--rule)] py-10">
               <span className="font-mono-cap text-[color:var(--muted-foreground)]">{m.eyebrow}</span>
               <h2 className="font-display mt-3 text-2xl tracking-tight md:text-3xl">{m.title}</h2>
-              <div className="mt-4 max-w-3xl space-y-4 text-[16px] leading-[1.7] text-[color:var(--ink-2)]">
+              <div className="mt-4 max-w-3xl space-y-4 text-justify text-[16px] leading-[1.7] text-[color:var(--ink-2)]">
                 {m.body.map((p, i) => (
                   <p key={i}>{p}</p>
                 ))}
