@@ -43,7 +43,7 @@ function AreaPage() {
       </Link>
       <p className="mt-6 text-xs uppercase tracking-[0.18em] text-muted-foreground">Area</p>
       <h1 className="font-display mt-2 text-4xl sm:text-5xl">{area.name}</h1>
-      <p className="mt-4 text-lg text-muted-foreground">{area.blurb}</p>
+      <p className="mt-4 text-justify text-lg text-muted-foreground">{area.blurb}</p>
 
       {area.slug === "individual-development" ? (
         <IndividualDevelopmentContent />
