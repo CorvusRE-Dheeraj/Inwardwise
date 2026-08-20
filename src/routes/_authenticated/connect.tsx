@@ -22,6 +22,7 @@ import {
   reportConnectContent,
   submitConnectStory,
 } from "@/lib/connect.functions";
+import { scheduleStoryCall } from "@/lib/connect-story-call.functions";
 
 export const Route = createFileRoute("/_authenticated/connect")({
   head: () => ({
