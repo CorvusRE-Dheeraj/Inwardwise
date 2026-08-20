@@ -71,7 +71,7 @@ function Science() {
       <section className="mx-auto w-[min(1100px,calc(100%-2rem))] pb-24 pt-10 md:pt-16">
         <span className="font-mono-cap text-[color:var(--muted-foreground)]">Science</span>
         <h1 className="font-display mt-4 max-w-4xl text-4xl leading-[1.05] tracking-tight md:text-6xl">
-          Inward<em className="italic text-[color:var(--royal)]">wise</em>
+          Inward<em className="italic text-[color:var(--royal)]">Wise</em>
         </h1>
         <p className="mt-8 max-w-2xl text-lg leading-relaxed text-[color:var(--ink-2)]">
           A connected world where intelligent decision making can happen — understand your biases and
