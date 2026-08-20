@@ -7,13 +7,13 @@ import alexPortrait from "@/assets/alex-freeman.jpg.asset.json";
 export const Route = createFileRoute("/history")({
   head: () => ({
     meta: [
-      { title: "Message from the Founder — InwardWise" },
+      { title: "History — InwardWise" },
       {
         name: "description",
         content:
           "A message from Alex Freeman, Ph.D. — the history behind InwardWise, and notes to users, colleagues, investors and donors.",
       },
-      { property: "og:title", content: "Message from the Founder — InwardWise" },
+      { property: "og:title", content: "History — InwardWise" },
       { property: "og:description", content: "History, and messages to users, colleagues, investors and donors." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -74,7 +74,7 @@ function History() {
           transition={{ delay: 0.05 }}
           className="font-display mt-4 text-4xl leading-[1.05] tracking-tight text-[color:var(--ink)] md:text-6xl"
         >
-          History, and a word to you
+          History
         </motion.h1>
 
         <div className="rule-top mt-8" />
