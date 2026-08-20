@@ -6,7 +6,7 @@ import { PRAYER_SETS } from "@/lib/meditation";
 export const Route = createFileRoute("/meditation")({
   head: () => ({
     meta: [
-      { title: "Meditation — Connect to Your Inner Self | Inwardwise" },
+      { title: "Meditation — Connect to Your Inner Self | InwardWise" },
       {
         name: "description",
         content:

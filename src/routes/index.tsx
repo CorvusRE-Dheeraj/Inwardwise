@@ -6,9 +6,9 @@ import { AppShell } from "@/components/AppShell";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Inwardwise — Remove Bias, Fear, and Ego From Your Decisions" },
+      { title: "InwardWise — Remove Bias, Fear, and Ego From Your Decisions" },
       { name: "description", content: "A quiet, deliberate practice for removing bias, fear, and ego from the choices to shape your life." },
-      { property: "og:title", content: "Inwardwise" },
+      { property: "og:title", content: "InwardWise" },
       { property: "og:description", content: "Remove bias, fear, and ego from the choices to shape your life." },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://inwardwise.com/" },
@@ -60,7 +60,7 @@ function Landing() {
         <motion.div style={{ y: heroY }} className="mx-auto w-[min(1280px,calc(100%-2rem))] pt-12 md:pt-24">
           {/* editorial masthead */}
           <div className="flex items-center justify-between">
-            <span className="font-mono-cap">Volume I · Inwardwise</span>
+            <span className="font-mono-cap">Volume I · InwardWise</span>
             <ClientDate />
           </div>
           <div className="hairline mt-4" />

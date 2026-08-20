@@ -5,9 +5,9 @@ import { AppShell } from "@/components/AppShell";
 export const Route = createFileRoute("/donate")({
   head: () => ({
     meta: [
-      { title: "Donate — Inwardwise" },
-      { name: "description", content: "Support Inwardwise's non-profit projects — suicide, depression and anxiety prevention." },
-      { property: "og:title", content: "Donate — Inwardwise" },
+      { title: "Donate — InwardWise" },
+      { name: "description", content: "Support InwardWise's non-profit projects — suicide, depression and anxiety prevention." },
+      { property: "og:title", content: "Donate — InwardWise" },
       { property: "og:description", content: "Donated funds are earmarked 100% for non-profit projects." },
     ],
   }),

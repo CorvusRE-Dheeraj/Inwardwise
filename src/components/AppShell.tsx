@@ -332,7 +332,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         </div>
         <div className="rule-top">
           <div className="mx-auto flex w-[min(1280px,calc(100%-2rem))] items-center justify-between py-5 text-xs text-[color:var(--muted-foreground)]">
-            <span>© {new Date().getFullYear()} Inwardwise</span>
+            <span>© {new Date().getFullYear()} InwardWise</span>
             <span className="font-mono-cap">Volume I · Edition 001</span>
           </div>
         </div>
