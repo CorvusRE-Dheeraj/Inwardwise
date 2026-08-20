@@ -11,7 +11,7 @@ function answersBlock(answers: AvatarAnswers): string {
       })
       .filter(Boolean)
       .join("\n\n");
-    return qa ? `FACTOR ${d.n} — ${d.italic}\n${qa}` : `FACTOR ${d.n} — (not answered)`;
+    return qa ? `FACTOR ${d.n}\n${qa}` : `FACTOR ${d.n} — (not answered)`;
   }).join("\n\n---\n\n");
 }
 
