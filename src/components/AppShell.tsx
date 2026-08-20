@@ -57,7 +57,7 @@ export function AppShell({ children }: { children: ReactNode }) {
     { to: "/avatar", label: "Build Self" },
     { to: "/avatar/ask", label: "Self Aware" },
     { to: "/meditation", label: "Meditation", sub: true },
-    { to: "/avatar/consult", label: "Connect" },
+    { to: "/connect", label: "Connect" },
   ];
 
 
