@@ -74,7 +74,7 @@ function History() {
           transition={{ delay: 0.05 }}
           className="font-display mt-4 text-4xl leading-[1.05] tracking-tight text-[color:var(--ink)] md:text-6xl"
         >
-          History
+          History, and a word to you
         </motion.h1>
 
         <div className="rule-top mt-8" />
