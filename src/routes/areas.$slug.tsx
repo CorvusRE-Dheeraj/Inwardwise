@@ -231,10 +231,10 @@ function SecurityContent() {
 
 function OrganizationalChangeContent() {
   return (
-    <div className="mt-10 space-y-6 text-[15px] leading-relaxed">
+    <div className="mt-10 space-y-6 text-justify text-[15px] leading-relaxed">
       <p>
         The world is run by large systems and organizational bodies. When those systems need to
-        change, the task requires enormous clarity and amazing foresight — like the founders of this
+        change, the task requires enormous clarity and amazing foresight, like the founders of this
         country exercising. Both money and power are the flow streams that must be examined and
         rerouted for change to take hold.
       </p>
@@ -245,7 +245,7 @@ function OrganizationalChangeContent() {
           {[
             ["Clarity of objective", "Define what the organization is actually for, not just what it currently does."],
             ["Foresight", "Map second- and third-order effects before the system locks in a new path."],
-            ["Money flows", "Follow budgets, incentives, and cost structures — they reveal where power really sits."],
+            ["Money flows", "Follow budgets, incentives, and cost structures, they reveal where power really sits."],
             ["Power flows", "Map decision rights, gatekeepers, and informal influence to understand resistance."],
             ["Psychological & social science", "Use human behavior, not just org charts, to design change people can adopt."],
           ].map(([title, desc]) => (
@@ -255,7 +255,7 @@ function OrganizationalChangeContent() {
               </span>
               <div>
                 <div className="font-medium">{title}</div>
-                <div className="text-muted-foreground">{desc}</div>
+                <div className="text-justify text-muted-foreground">{desc}</div>
               </div>
             </li>
           ))}
@@ -264,7 +264,7 @@ function OrganizationalChangeContent() {
 
       <div className="glass rounded-3xl p-6">
         <h2 className="font-display text-2xl">Why this matters</h2>
-        <p className="mt-3 text-sm text-muted-foreground">
+        <p className="mt-3 text-justify text-sm text-muted-foreground">
           Organizations that try to change without examining both money and power tend to adopt new
           language while keeping old behavior. We help leaders surface the real objectives, redraw the
           boundaries, and turn insight into executable commitment.
