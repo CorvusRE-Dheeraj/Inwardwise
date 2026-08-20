@@ -7,13 +7,13 @@ import alexPortrait from "@/assets/alex-freeman.jpg.asset.json";
 export const Route = createFileRoute("/history")({
   head: () => ({
     meta: [
-      { title: "Message from the Founder — InwardWise" },
+      { title: "History — InwardWise" },
       {
         name: "description",
         content:
           "A message from Alex Freeman, Ph.D. — the history behind InwardWise, and notes to users, colleagues, investors and donors.",
       },
-      { property: "og:title", content: "Message from the Founder — InwardWise" },
+      { property: "og:title", content: "History — InwardWise" },
       { property: "og:description", content: "History, and messages to users, colleagues, investors and donors." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
