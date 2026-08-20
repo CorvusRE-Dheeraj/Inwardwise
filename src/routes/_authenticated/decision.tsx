@@ -250,7 +250,7 @@ function DecisionChat() {
       doc.setFontSize(9);
       doc.setTextColor(150);
       doc.text(`${p} / ${total}`, pageW - margin, pageH - 24, { align: "right" });
-      doc.text("Inwardwise — Objective Solution Framework", margin, pageH - 24);
+      doc.text("InwardWise — Objective Solution Framework", margin, pageH - 24);
     }
 
     const safe = title.replace(/[^a-z0-9\-_. ]/gi, "").slice(0, 60).trim() || "decision-session";

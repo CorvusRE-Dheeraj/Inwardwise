@@ -5,13 +5,13 @@ import { Mail, MapPin } from "lucide-react";
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Contact Us — Inwardwise" },
+      { title: "Contact Us — InwardWise" },
       {
         name: "description",
         content:
-          "Reach the Inwardwise team by email at info@inwardwise.com or write to our Warren Parkway office in Frisco, Texas.",
+          "Reach the InwardWise team by email at info@inwardwise.com or write to our Warren Parkway office in Frisco, Texas.",
       },
-      { property: "og:title", content: "Contact Us — Inwardwise" },
+      { property: "og:title", content: "Contact Us — InwardWise" },
       { property: "og:description", content: "Email info@inwardwise.com or write to our Frisco, Texas office." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -26,7 +26,7 @@ function Contact() {
       <section className="mx-auto w-[min(900px,calc(100%-2rem))] pb-24 pt-10 md:pt-16">
         <span className="font-mono-cap text-[color:var(--muted-foreground)]">Contact Us</span>
         <h1 className="font-display mt-4 text-4xl leading-[1.05] tracking-tight md:text-6xl">
-          Write to <em className="italic text-[color:var(--royal)]">Inwardwise</em>
+          Write to <em className="italic text-[color:var(--royal)]">InwardWise</em>
         </h1>
         <div className="rule-top mt-8" />
 
@@ -53,7 +53,7 @@ function Contact() {
               <span className="font-mono-cap">Mailing address</span>
             </div>
             <address className="mt-3 not-italic text-[16px] leading-relaxed text-[color:var(--ink-2)]">
-              Inwardwise
+              InwardWise
               <br />
               10247 Warren Pkwy
               <br />

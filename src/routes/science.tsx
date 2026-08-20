@@ -4,13 +4,13 @@ import { AppShell } from "@/components/AppShell";
 export const Route = createFileRoute("/science")({
   head: () => ({
     meta: [
-      { title: "Science — The Thinking Behind Inwardwise" },
+      { title: "Science — The Thinking Behind InwardWise" },
       {
         name: "description",
         content:
-          "The science behind Inwardwise: decision quality, the five factors of self, self-awareness and connection — with references from stress biology to modern psychology.",
+          "The science behind InwardWise: decision quality, the five factors of self, self-awareness and connection — with references from stress biology to modern psychology.",
       },
-      { property: "og:title", content: "Science — The Thinking Behind Inwardwise" },
+      { property: "og:title", content: "Science — The Thinking Behind InwardWise" },
       {
         property: "og:description",
         content: "Understand your biases and weaknesses, become fully self aware, improve your chances of follow through.",
@@ -27,7 +27,7 @@ const SECTIONS: { n: string; title: string; body: string[] }[] = [
     n: "§ 01",
     title: "Decision",
     body: [
-      "The seven-stage Inwardwise filter is empirically derived. It was built through decades of applied practice rather than assembled from an existing academic theory — which is precisely why it is new.",
+      "The seven-stage InwardWise filter is empirically derived. It was built through decades of applied practice rather than assembled from an existing academic theory — which is precisely why it is new.",
       "The relevant literature is broad rather than direct: work on cognitive bias, bounded rationality, loss aversion and the gap between intention and follow-through all describe the failure modes the filter is designed to interrupt. The results we observe in practice are strong enough that the method does not need to lean on any single model to justify itself.",
     ],
   },
@@ -94,7 +94,7 @@ function Science() {
         </div>
 
         <p className="mt-10 text-sm text-[color:var(--muted-foreground)]">
-          This page shares general background only. The Inwardwise model itself remains proprietary.
+          This page shares general background only. The InwardWise model itself remains proprietary.
         </p>
       </section>
     </AppShell>

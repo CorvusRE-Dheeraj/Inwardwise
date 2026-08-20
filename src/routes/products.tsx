@@ -5,13 +5,13 @@ import { AppShell } from "@/components/AppShell";
 export const Route = createFileRoute("/products")({
   head: () => ({
     meta: [
-      { title: "Products — Decision, Self, Connect | Inwardwise" },
+      { title: "Products — Decision, Self, Connect | InwardWise" },
       {
         name: "description",
         content:
-          "The three Inwardwise products: Decision for clear choices, Self for your inner InwardWise Self and calm, and Connect to belong as yourself.",
+          "The three InwardWise products: Decision for clear choices, Self for your inner InwardWise Self and calm, and Connect to belong as yourself.",
       },
-      { property: "og:title", content: "Products — Decision, Self, Connect | Inwardwise" },
+      { property: "og:title", content: "Products — Decision, Self, Connect | InwardWise" },
       {
         property: "og:description",
         content: "Decision, Self and Connect — three products, one inward practice.",
@@ -77,7 +77,7 @@ function Products() {
         <div className="decision-grid pointer-events-none absolute inset-0 opacity-70" />
         <div className="mx-auto w-[min(1280px,calc(100%-2rem))] pt-12 md:pt-20">
           <div className="flex items-center justify-between">
-            <span className="font-mono-cap">Inwardwise · Products</span>
+            <span className="font-mono-cap">InwardWise · Products</span>
             <span className="hidden font-mono-cap md:inline">Decision · Self · Connect</span>
           </div>
           <div className="hairline mt-4" />

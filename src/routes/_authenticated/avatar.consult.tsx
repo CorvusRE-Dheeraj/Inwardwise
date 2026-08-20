@@ -12,13 +12,13 @@ import { Caution, PinKeypad } from "@/components/avatar/PinKeypad";
 export const Route = createFileRoute("/_authenticated/avatar/consult")({
   head: () => ({
     meta: [
-      { title: "Consult your InwardWise Self — Inwardwise" },
+      { title: "Consult your InwardWise Self — InwardWise" },
       {
         name: "description",
         content:
           "Speak with your inner InwardWise Self. It responds through the five factors you answered yourself.",
       },
-      { property: "og:title", content: "Consult your InwardWise Self — Inwardwise" },
+      { property: "og:title", content: "Consult your InwardWise Self — InwardWise" },
       {
         property: "og:description",
         content: "A private mirror that speaks in your interest, and no one else's.",

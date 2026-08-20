@@ -11,13 +11,13 @@ import { AvatarPortrait } from "@/components/avatar/AvatarPortrait";
 export const Route = createFileRoute("/_authenticated/avatar/")({
   head: () => ({
     meta: [
-      { title: "InwardWise Self Design — Inwardwise" },
+      { title: "InwardWise Self Design — InwardWise" },
       {
         name: "description",
         content:
           "Design your Inner InwardWise Self across five factors of self-knowledge — private, encrypted, and yours alone.",
       },
-      { property: "og:title", content: "InwardWise Self Design — Inwardwise" },
+      { property: "og:title", content: "InwardWise Self Design — InwardWise" },
       { property: "og:description", content: "Five factors. One inner mirror." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

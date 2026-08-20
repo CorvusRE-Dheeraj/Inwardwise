@@ -7,13 +7,13 @@ import alexPortrait from "@/assets/alex-freeman.jpg.asset.json";
 export const Route = createFileRoute("/history")({
   head: () => ({
     meta: [
-      { title: "Message from the Founder — Inwardwise" },
+      { title: "Message from the Founder — InwardWise" },
       {
         name: "description",
         content:
-          "A message from Alex Freeman, Ph.D. — the history behind Inwardwise, and notes to users, colleagues, investors and donors.",
+          "A message from Alex Freeman, Ph.D. — the history behind InwardWise, and notes to users, colleagues, investors and donors.",
       },
-      { property: "og:title", content: "Message from the Founder — Inwardwise" },
+      { property: "og:title", content: "Message from the Founder — InwardWise" },
       { property: "og:description", content: "History, and messages to users, colleagues, investors and donors." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -28,7 +28,7 @@ const MESSAGES: { eyebrow: string; title: string; body: string[] }[] = [
     title: "Message to Users",
     body: [
       "You already know how to think. What the modern day removes is the time and the quiet to do it properly, so decisions get made on instinct, fear or whoever spoke last.",
-      "Inwardwise gives you back the discipline without the labour. Bring one real decision, answer honestly, and let the process strip out the bias you cannot see from the inside. That is the whole promise, and it is enough.",
+      "InwardWise gives you back the discipline without the labour. Bring one real decision, answer honestly, and let the process strip out the bias you cannot see from the inside. That is the whole promise, and it is enough.",
     ],
   },
   {

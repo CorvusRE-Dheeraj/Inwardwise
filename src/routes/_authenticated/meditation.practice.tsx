@@ -31,7 +31,7 @@ import { sendMeditationText } from "@/lib/meditation-sms.functions";
 export const Route = createFileRoute("/_authenticated/meditation/practice")({
   head: () => ({
     meta: [
-      { title: "Guided Meditation Practice — Inwardwise" },
+      { title: "Guided Meditation Practice — InwardWise" },
       {
         name: "description",
         content:
