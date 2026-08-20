@@ -34,9 +34,10 @@ function AvatarAsk() {
       <h1 className="mt-4 font-display text-[clamp(2.2rem,5vw,3.4rem)] leading-[1.05] tracking-tight">
         Ask your <span className="italic text-[color:var(--royal)]">Inner InwardWise Self</span>
       </h1>
-      <p className="mt-6 max-w-2xl text-base leading-relaxed text-[color:var(--muted-foreground)]">
-        Once your five factors are complete, your InwardWise Self will process prompts and return
-        suggestions drawn from what it knows of you. This chapter is being written.
+      <p className="mt-6 max-w-2xl text-base leading-relaxed text-[color:var(--muted-foreground)] text-justify">
+        Your InwardWise Self is ready. Ask it anything that matters to you, about a decision, a
+        relationship, a direction, or a recurring pattern. It will answer from the five factors you
+        wrote, not from generic advice.
       </p>
       <div className="mt-10 flex flex-wrap gap-3">
         <Link
