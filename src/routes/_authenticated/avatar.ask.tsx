@@ -3,13 +3,13 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 export const Route = createFileRoute("/_authenticated/avatar/ask")({
   head: () => ({
     meta: [
-      { title: "Ask your InwardWise Self — InwardWise" },
+      { title: "Ask InwardWise Self — InwardWise" },
       {
         name: "description",
         content:
-          "Send a prompt to your Inner InwardWise Self and receive suggestions drawn from your five factors.",
+          "Send a prompt to your InwardWise Self and receive suggestions drawn from your five factors.",
       },
-      { property: "og:title", content: "Ask your InwardWise Self — InwardWise" },
+      { property: "og:title", content: "Ask InwardWise Self — InwardWise" },
       { property: "og:description", content: "A private mirror that answers in your interest." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -32,7 +32,7 @@ function AvatarAsk() {
         § 03 · InwardWise Self Processes
       </div>
       <h1 className="mt-4 font-display text-[clamp(2.2rem,5vw,3.4rem)] leading-[1.05] tracking-tight">
-        Ask your <span className="italic text-[color:var(--royal)]">Inner InwardWise Self</span>
+        Ask <span className="italic text-[color:var(--royal)]">InwardWise Self</span>
       </h1>
       <p className="mt-6 max-w-2xl text-base leading-relaxed text-[color:var(--muted-foreground)] text-justify">
         Your InwardWise Self is ready. Ask it anything that matters to you, about a decision, a
