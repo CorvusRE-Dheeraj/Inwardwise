@@ -44,7 +44,6 @@ export function AppShell({ children }: { children: ReactNode }) {
 
   const nav: { to: string; label: string; external?: boolean }[] = [
     { to: "/areas", label: "Services" },
-    { to: "/meditation", label: "Meditation" },
     { to: "/science", label: "Science" },
     { to: "/history", label: "Message from Founder" },
     { to: "/testimonials", label: "Voices" },
@@ -53,13 +52,14 @@ export function AppShell({ children }: { children: ReactNode }) {
     ...(isAdmin ? [{ to: "/admin", label: "Admin" }] : []),
   ];
 
-  const startMenu: { to: string; label: string }[] = [
+  const startMenu: { to: string; label: string; sub?: boolean }[] = [
     { to: "/decision", label: "Decision" },
     { to: "/avatar", label: "Build Self" },
     { to: "/avatar/ask", label: "Self Aware" },
+    { to: "/meditation", label: "Meditation", sub: true },
     { to: "/avatar/consult", label: "Connect" },
-    { to: "/meditation", label: "Meditation" },
   ];
+
 
   const startActive = startMenu.some((item) => isActive(item.to));
   const topLevelNav = nav;
