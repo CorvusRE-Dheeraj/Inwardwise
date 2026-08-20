@@ -78,6 +78,9 @@ async function dispatch(request: Request) {
               ],
             },
             voice: { provider: "vapi", voiceId: "Paige" },
+            server: {
+              url: `https://project--cd008caf-0d68-4a9e-9728-28d447940785.lovable.app/api/public/connect-story-call-webhook?token=${encodeURIComponent(cronSecret)}`,
+            },
           },
         }),
       });
