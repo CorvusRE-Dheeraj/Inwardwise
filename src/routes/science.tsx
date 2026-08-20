@@ -73,8 +73,8 @@ function Science() {
         <h1 className="font-display mt-4 max-w-4xl text-4xl leading-[1.05] tracking-tight md:text-6xl">
           Inward<em className="italic text-[color:var(--royal)]">Wise</em>
         </h1>
-        <p className="mt-8 max-w-2xl text-lg leading-relaxed text-[color:var(--ink-2)]">
-          A connected world where intelligent decision making can happen — understand your biases and
+        <p className="mt-8 max-w-2xl text-justify text-lg leading-relaxed text-[color:var(--ink-2)]">
+          A connected world where intelligent decision making can happen, understand your biases and
           weaknesses, become fully self aware, and improve your chances of follow through and success.
         </p>
         <div className="rule-top mt-10" />
@@ -84,7 +84,7 @@ function Science() {
             <article key={s.title} className="border-b border-[color:var(--rule)] py-12">
               <span className="font-mono-cap text-[color:var(--muted-foreground)]">{s.n}</span>
               <h2 className="font-display mt-3 text-3xl tracking-tight md:text-4xl">{s.title}</h2>
-              <div className="mt-5 max-w-3xl space-y-4 text-[16px] leading-[1.7] text-[color:var(--ink-2)]">
+              <div className="mt-5 max-w-3xl space-y-4 text-justify text-[16px] leading-[1.7] text-[color:var(--ink-2)]">
                 {s.body.map((p, i) => (
                   <p key={i}>{p}</p>
                 ))}
