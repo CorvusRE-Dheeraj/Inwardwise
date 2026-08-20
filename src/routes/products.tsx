@@ -64,7 +64,7 @@ const PRODUCTS: {
     blurb:
       "Connect with your InwardWise Self — and, in time, with people whose inner shape fits yours. Conversation grounded in who you actually are, not the version you perform.",
     links: [
-      { to: "/avatar/consult", label: "Connect", primary: true },
+      { to: "/connect", label: "Connect", primary: true },
       { to: "/areas", label: "See services" },
     ],
   },

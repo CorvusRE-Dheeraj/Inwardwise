@@ -128,6 +128,232 @@ export type Database = {
         }
         Relationships: []
       }
+      connect_group_members: {
+        Row: {
+          created_at: string
+          group_id: string
+          id: string
+          pseudonym: string
+          status: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          group_id: string
+          id?: string
+          pseudonym?: string
+          status?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          group_id?: string
+          id?: string
+          pseudonym?: string
+          status?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "connect_group_members_group_id_fkey"
+            columns: ["group_id"]
+            isOneToOne: false
+            referencedRelation: "connect_groups"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      connect_groups: {
+        Row: {
+          category: string
+          created_at: string
+          description: string | null
+          ends_at: string | null
+          id: string
+          max_members: number
+          moderation_status: string
+          starts_at: string | null
+          status: string
+          title: string
+        }
+        Insert: {
+          category: string
+          created_at?: string
+          description?: string | null
+          ends_at?: string | null
+          id?: string
+          max_members?: number
+          moderation_status?: string
+          starts_at?: string | null
+          status?: string
+          title: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          description?: string | null
+          ends_at?: string | null
+          id?: string
+          max_members?: number
+          moderation_status?: string
+          starts_at?: string | null
+          status?: string
+          title?: string
+        }
+        Relationships: []
+      }
+      connect_insights: {
+        Row: {
+          aggregate_insight: string | null
+          created_at: string
+          id: string
+          prompt_id: string
+          reading_body: string | null
+          reading_title: string | null
+          reflection: string
+          user_id: string
+        }
+        Insert: {
+          aggregate_insight?: string | null
+          created_at?: string
+          id?: string
+          prompt_id: string
+          reading_body?: string | null
+          reading_title?: string | null
+          reflection: string
+          user_id: string
+        }
+        Update: {
+          aggregate_insight?: string | null
+          created_at?: string
+          id?: string
+          prompt_id?: string
+          reading_body?: string | null
+          reading_title?: string | null
+          reflection?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "connect_insights_prompt_id_fkey"
+            columns: ["prompt_id"]
+            isOneToOne: false
+            referencedRelation: "connect_prompts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      connect_prompts: {
+        Row: {
+          category: string | null
+          created_at: string
+          id: string
+          prompt_text: string
+          risk_flag: string | null
+          status: string
+          user_id: string
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string
+          id?: string
+          prompt_text: string
+          risk_flag?: string | null
+          status?: string
+          user_id: string
+        }
+        Update: {
+          category?: string | null
+          created_at?: string
+          id?: string
+          prompt_text?: string
+          risk_flag?: string | null
+          status?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      connect_reports: {
+        Row: {
+          created_at: string
+          id: string
+          reason: string
+          reporter_user_id: string
+          status: string
+          target_id: string | null
+          target_type: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          reason: string
+          reporter_user_id: string
+          status?: string
+          target_id?: string | null
+          target_type: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          reason?: string
+          reporter_user_id?: string
+          status?: string
+          target_id?: string | null
+          target_type?: string
+        }
+        Relationships: []
+      }
+      connect_stories: {
+        Row: {
+          action_taken: string | null
+          advice: string | null
+          audio_url: string | null
+          category: string
+          created_at: string
+          fear: string | null
+          id: string
+          is_published: boolean
+          lesson: string | null
+          moderation_status: string
+          outcome: string | null
+          owner_user_id: string | null
+          pseudonym: string
+          situation: string
+        }
+        Insert: {
+          action_taken?: string | null
+          advice?: string | null
+          audio_url?: string | null
+          category: string
+          created_at?: string
+          fear?: string | null
+          id?: string
+          is_published?: boolean
+          lesson?: string | null
+          moderation_status?: string
+          outcome?: string | null
+          owner_user_id?: string | null
+          pseudonym?: string
+          situation: string
+        }
+        Update: {
+          action_taken?: string | null
+          advice?: string | null
+          audio_url?: string | null
+          category?: string
+          created_at?: string
+          fear?: string | null
+          id?: string
+          is_published?: boolean
+          lesson?: string | null
+          moderation_status?: string
+          outcome?: string | null
+          owner_user_id?: string | null
+          pseudonym?: string
+          situation?: string
+        }
+        Relationships: []
+      }
       email_send_log: {
         Row: {
           created_at: string
