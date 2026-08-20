@@ -51,7 +51,7 @@ const MESSAGES: { eyebrow: string; title: string; body: string[] }[] = [
     eyebrow: "§ 04",
     title: "Message to Donors",
     body: [
-      "Part of this work has no business model attached to it — helping people in crisis reason their way to a next step, and making that help free at the point of need.",
+      "Part of this work has no business model attached to it, helping people in crisis reason their way to a next step, and making that help free at the point of need.",
       "Donations go toward keeping those paths open for people who could never pay for them. Thank you for considering it.",
     ],
   },
@@ -115,9 +115,9 @@ function History() {
           </div>
         </div>
 
-        <article className="mt-12 max-w-3xl space-y-6 text-[16px] leading-[1.7] text-[color:var(--ink-2)]">
+        <article className="mt-12 max-w-3xl space-y-6 text-justify text-[16px] leading-[1.7] text-[color:var(--ink-2)]">
           <p>
-            I began my journey as a philosophical person — it is even my earliest memory — a
+            I began my journey as a philosophical person, it is even my earliest memory, a
             somewhat fearless thinker with a detachment from societal thinking norms, driven by a
             constant need for time alone. Even as a child, I used to wonder how inefficient we
             think, how emotional and egoistic we get, and I felt many societal problems were
@@ -129,9 +129,9 @@ function History() {
             social psychology and developed self-reflection, abstract thinking, fearless
             detachment from established thinking and other philosophical concepts. In parallel I
             was interested in science and engineering and had a strong career as a research
-            scientist — and among many innovations I developed problem-solving tools. I felt I
+            scientist, and among many innovations I developed problem-solving tools. I felt I
             could bridge my science training into social psychology. My childhood interests kept
-            tugging, and eventually — with a friend who shared the same interests — I perfected a
+            tugging, and eventually, with a friend who shared the same interests, I perfected a
             set of decision-making tools. I tested them thoroughly, using them in my own
             decisions.
           </p>
@@ -152,11 +152,11 @@ function History() {
             Combining the old wisdom with the new AI tools, I was able to synthesize deep
             philosophical approaches into a very simple 7-step process filter that runs on AI. All
             decisions can go through the 7 steps fast to reach critical decisions in any field for
-            anyone — which is my goal.
+            anyone, which is my goal.
           </p>
           <p>
             The real innovation is in the philosophical 7-step process of problem solving, but AI
-            makes it fast enough to go through these steps fairly easily — so the mental agony to
+            makes it fast enough to go through these steps fairly easily, so the mental agony to
             stick to the process is taken away, while the filter still removes emotional biases,
             self-ego-based rigidness and fear-based approaches, and forces certain
             self-reflection. In the past, the fast-paced society did not allow fast yet rigorous
@@ -172,7 +172,7 @@ function History() {
             <article key={m.title} className="border-b border-[color:var(--rule)] py-10">
               <span className="font-mono-cap text-[color:var(--muted-foreground)]">{m.eyebrow}</span>
               <h2 className="font-display mt-3 text-2xl tracking-tight md:text-3xl">{m.title}</h2>
-              <div className="mt-4 max-w-3xl space-y-4 text-[16px] leading-[1.7] text-[color:var(--ink-2)]">
+              <div className="mt-4 max-w-3xl space-y-4 text-justify text-[16px] leading-[1.7] text-[color:var(--ink-2)]">
                 {m.body.map((p, i) => (
                   <p key={i}>{p}</p>
                 ))}
