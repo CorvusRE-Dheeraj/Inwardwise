@@ -125,9 +125,9 @@ export function AppShell({ children }: { children: ReactNode }) {
                         key={item.to}
                         to={item.to}
                         onClick={() => setStartOpen(false)}
-                        className="block px-5 py-3 text-[14px] text-[color:var(--ink)] transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)]"
+                        className={`block py-3 text-[14px] text-[color:var(--ink)] transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)] ${item.sub ? "pl-9 pr-5 text-[13px] text-[color:var(--muted-foreground)]" : "px-5"}`}
                       >
-                        {item.label}
+                        {item.sub ? "↳ " : ""}{item.label}
                       </Link>
                     ))}
                   </div>
@@ -168,9 +168,9 @@ export function AppShell({ children }: { children: ReactNode }) {
                         key={item.to}
                         to={item.to}
                         onClick={() => setProductsOpen(false)}
-                        className="block px-5 py-3 text-[14px] text-[color:var(--ink)] transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)]"
+                        className={`block py-3 text-[14px] text-[color:var(--ink)] transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)] ${item.sub ? "pl-9 pr-5 text-[13px] text-[color:var(--muted-foreground)]" : "px-5"}`}
                       >
-                        {item.label}
+                        {item.sub ? "↳ " : ""}{item.label}
                       </Link>
                     ))}
                   </div>
