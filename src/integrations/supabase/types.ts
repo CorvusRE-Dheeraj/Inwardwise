@@ -354,6 +354,48 @@ export type Database = {
         }
         Relationships: []
       }
+      connect_story_calls: {
+        Row: {
+          category: string
+          created_at: string
+          id: string
+          last_call_at: string | null
+          last_error: string | null
+          phone_number: string
+          provider_call_id: string | null
+          scheduled_at: string
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          category: string
+          created_at?: string
+          id?: string
+          last_call_at?: string | null
+          last_error?: string | null
+          phone_number: string
+          provider_call_id?: string | null
+          scheduled_at: string
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          id?: string
+          last_call_at?: string | null
+          last_error?: string | null
+          phone_number?: string
+          provider_call_id?: string | null
+          scheduled_at?: string
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       email_send_log: {
         Row: {
           created_at: string
