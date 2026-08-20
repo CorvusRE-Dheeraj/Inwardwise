@@ -51,7 +51,7 @@ const MESSAGES: { eyebrow: string; title: string; body: string[] }[] = [
     eyebrow: "§ 04",
     title: "Message to Donors",
     body: [
-      "Part of this work has no business model attached to it — helping people in crisis reason their way to a next step, and making that help free at the point of need.",
+      "Part of this work has no business model attached to it, helping people in crisis reason their way to a next step, and making that help free at the point of need.",
       "Donations go toward keeping those paths open for people who could never pay for them. Thank you for considering it.",
     ],
   },
