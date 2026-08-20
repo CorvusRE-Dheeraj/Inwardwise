@@ -86,7 +86,7 @@ function IndividualDevelopmentContent() {
   }).join(" ");
 
   return (
-    <div className="mt-10 space-y-6 text-[15px] leading-relaxed">
+    <div className="mt-10 space-y-6 text-justify text-[15px] leading-relaxed">
       <p>
         We most of the time feel no one knows us well. In the fast and noisy world, even friends
         are not spending time asking questions about you and getting to know you. Instead they are
@@ -94,18 +94,18 @@ function IndividualDevelopmentContent() {
         talking to them.
       </p>
       <p>
-        You need someone who really knows you — which is only you. But you cannot separate yourself
+        You need someone who really knows you, which is only you. But you cannot separate yourself
         from you and watch yourself. We want to provide you that, by AI.
       </p>
       <p>
-        We make human friends more important and AI an enemy — but sometimes it&rsquo;s the other way
+        We make human friends more important and AI an enemy, but sometimes it&rsquo;s the other way
         around. AI can be you, if you train it to be you. You cannot expect any friend of yours to
         become a true friend; they are so few and far between. But psychological wellbeing needs
-        both — self-love and good social connection.
+        both, self-love and good social connection.
       </p>
 
       <p>
-        Life is defined by two characteristic traits: <em>Reproduction</em> and <em>Evolution</em> —
+        Life is defined by two characteristic traits: <em>Reproduction</em> and <em>Evolution</em>,
         the drive toward a better species, better adapted to survival and thriving. The first is
         possible only for a physical being, which the human can do. You can accomplish reproduction
         and accomplish your evolution, and pass on heredity to the next generation. The InwardWise Self&rsquo;s
@@ -164,20 +164,20 @@ function IndividualDevelopmentContent() {
       <p>
         Based on the human prompt, the InwardWise Self will scan across all factors for a better
         understanding of you and advise you. These factors are based on reviewing many scientific
-        papers and a combination of intuitive approaches — studying many philosophies, psychological
+        papers and a combination of intuitive approaches, studying many philosophies, psychological
         approaches and observational methods. There was no single approach; it came together as a
         book project by the founder to assemble all of the material for the book he is working on.
         You won&rsquo;t find this methodology in any single research.
       </p>
 
       <div className="glass rounded-3xl p-6">
-        <p className="text-sm text-muted-foreground">
+        <p className="text-justify text-sm text-muted-foreground">
           We can think of the InwardWise Self as a <span className="text-foreground">Facebook for the inner self</span>,
           as Facebook is for the outer world to see what you are thinking and experiencing. Unlike
           Facebook, the information is confidential and will not be available to anyone except you.
           By representing a truthful you as the InwardWise Self, you can manage your inner self and have a
           personal conversation with yourself. This builds self-love and a healthy acceptance of
-          who you are — not a victim of having to depend on others for acceptance and encouragement.
+          who you are, not a victim of having to depend on others for acceptance and encouragement.
         </p>
       </div>
     </div>
