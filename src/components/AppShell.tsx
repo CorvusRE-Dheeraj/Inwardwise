@@ -246,9 +246,10 @@ export function AppShell({ children }: { children: ReactNode }) {
                       <Link
                         key={item.to}
                         to={item.to}
-                        className="text-[14px] text-[color:var(--muted-foreground)] transition hover:text-[color:var(--ink)]"
+                        className={`text-[14px] text-[color:var(--muted-foreground)] transition hover:text-[color:var(--ink)] ${item.sub ? "pl-4 text-[13px]" : ""}`}
                       >
-                        {item.label}
+                        {item.sub ? "↳ " : ""}{item.label}
+
                       </Link>
                     ))}
                   </div>
