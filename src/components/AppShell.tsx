@@ -94,7 +94,7 @@ export function AppShell({ children }: { children: ReactNode }) {
             <span className="font-mono-cap text-[color:var(--muted-foreground)]">Est. 2026</span>
             <span className="hidden h-4 w-px bg-[color:var(--rule)] sm:block" />
             <span className="font-display text-[1.35rem] leading-none tracking-tight text-[color:var(--ink)] md:text-2xl">
-              Inward<span className="italic text-[color:var(--royal)]">wise</span>
+              Inward<span className="italic text-[color:var(--royal)]">Wise</span>
             </span>
           </Link>
 
@@ -294,7 +294,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       <footer className="mt-24 rule-top">
         <div className="mx-auto grid w-[min(1280px,calc(100%-2rem))] grid-cols-1 gap-8 py-12 md:grid-cols-4">
           <div>
-            <div className="font-display text-xl">Inward<span className="italic text-[color:var(--royal)]">wise</span></div>
+            <div className="font-display text-xl">Inward<span className="italic text-[color:var(--royal)]">Wise</span></div>
             <p className="mt-3 text-sm text-[color:var(--muted-foreground)]">
               A laboratory for thinking. Removing bias, fear, and ego — one decision at a time.
             </p>
