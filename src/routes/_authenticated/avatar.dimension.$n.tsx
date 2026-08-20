@@ -150,17 +150,17 @@ function DimensionFlow() {
       </Link>
 
       <div className="font-mono-cap mt-8 flex items-center gap-2 text-[10px] text-[color:var(--muted-foreground)]">
-        {dim.section} · {dim.italic}
+        Factor {dim.n}
         {dim.locked && <Lock className="h-3 w-3" />}
       </div>
 
       {step === -1 ? (
         <section className="mt-4">
           <h1 className="font-display text-[clamp(2.2rem,5vw,3.4rem)] leading-[1.05] tracking-tight">
-            {dim.title} <span className="italic text-[color:var(--royal)]">{dim.italic}</span>
+            Factor {dim.n}
           </h1>
           <p className="mt-6 max-w-2xl text-base leading-relaxed text-[color:var(--muted-foreground)]">
-            {dim.intro}
+            Answer the questions for this factor honestly. Your responses are encrypted and visible only to you.
           </p>
           {dim.locked && (
             <div className="mt-8 max-w-2xl">
