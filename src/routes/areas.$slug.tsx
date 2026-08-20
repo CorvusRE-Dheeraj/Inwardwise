@@ -43,7 +43,7 @@ function AreaPage() {
       </Link>
       <p className="mt-6 text-xs uppercase tracking-[0.18em] text-muted-foreground">Area</p>
       <h1 className="font-display mt-2 text-4xl sm:text-5xl">{area.name}</h1>
-      <p className="mt-4 text-lg text-muted-foreground">{area.blurb}</p>
+      <p className="mt-4 text-justify text-lg text-muted-foreground">{area.blurb}</p>
 
       {area.slug === "individual-development" ? (
         <IndividualDevelopmentContent />
@@ -86,7 +86,7 @@ function IndividualDevelopmentContent() {
   }).join(" ");
 
   return (
-    <div className="mt-10 space-y-6 text-[15px] leading-relaxed">
+    <div className="mt-10 space-y-6 text-justify text-[15px] leading-relaxed">
       <p>
         We most of the time feel no one knows us well. In the fast and noisy world, even friends
         are not spending time asking questions about you and getting to know you. Instead they are
@@ -94,18 +94,18 @@ function IndividualDevelopmentContent() {
         talking to them.
       </p>
       <p>
-        You need someone who really knows you — which is only you. But you cannot separate yourself
+        You need someone who really knows you, which is only you. But you cannot separate yourself
         from you and watch yourself. We want to provide you that, by AI.
       </p>
       <p>
-        We make human friends more important and AI an enemy — but sometimes it&rsquo;s the other way
+        We make human friends more important and AI an enemy, but sometimes it&rsquo;s the other way
         around. AI can be you, if you train it to be you. You cannot expect any friend of yours to
         become a true friend; they are so few and far between. But psychological wellbeing needs
-        both — self-love and good social connection.
+        both, self-love and good social connection.
       </p>
 
       <p>
-        Life is defined by two characteristic traits: <em>Reproduction</em> and <em>Evolution</em> —
+        Life is defined by two characteristic traits: <em>Reproduction</em> and <em>Evolution</em>,
         the drive toward a better species, better adapted to survival and thriving. The first is
         possible only for a physical being, which the human can do. You can accomplish reproduction
         and accomplish your evolution, and pass on heredity to the next generation. The InwardWise Self&rsquo;s
@@ -164,20 +164,20 @@ function IndividualDevelopmentContent() {
       <p>
         Based on the human prompt, the InwardWise Self will scan across all factors for a better
         understanding of you and advise you. These factors are based on reviewing many scientific
-        papers and a combination of intuitive approaches — studying many philosophies, psychological
+        papers and a combination of intuitive approaches, studying many philosophies, psychological
         approaches and observational methods. There was no single approach; it came together as a
         book project by the founder to assemble all of the material for the book he is working on.
         You won&rsquo;t find this methodology in any single research.
       </p>
 
       <div className="glass rounded-3xl p-6">
-        <p className="text-sm text-muted-foreground">
+        <p className="text-justify text-sm text-muted-foreground">
           We can think of the InwardWise Self as a <span className="text-foreground">Facebook for the inner self</span>,
           as Facebook is for the outer world to see what you are thinking and experiencing. Unlike
           Facebook, the information is confidential and will not be available to anyone except you.
           By representing a truthful you as the InwardWise Self, you can manage your inner self and have a
           personal conversation with yourself. This builds self-love and a healthy acceptance of
-          who you are — not a victim of having to depend on others for acceptance and encouragement.
+          who you are, not a victim of having to depend on others for acceptance and encouragement.
         </p>
       </div>
     </div>
@@ -187,9 +187,9 @@ function IndividualDevelopmentContent() {
 
 function SecurityContent() {
   return (
-    <div className="mt-10 space-y-6 text-[15px] leading-relaxed">
+    <div className="mt-10 space-y-6 text-justify text-[15px] leading-relaxed">
       <p>
-        Security is not only a hardware problem — it is a pattern-recognition problem. The signals
+        Security is not only a hardware problem, it is a pattern-recognition problem. The signals
         that precede a threat often show up first in language, behavior, and digital traces. We apply
         the Objective Solution Framework to make those signals visible earlier and with less bias.
       </p>
@@ -200,7 +200,7 @@ function SecurityContent() {
           {[
             ["Airport Security", "Spot behavioral and psychological indicators before they escalate into physical risk."],
             ["National Security", "Separate real threats from noise, tribe, and political pressure across intelligence workflows."],
-            ["Interrogations", "Use psychological clues as soft triggers — a software lie detector that reads patterns, not just polygraphs."],
+            ["Interrogations", "Use psychological clues as soft triggers, a software lie detector that reads patterns, not just polygraphs."],
             ["Database & Social Searches", "Structure searches across criminal databases and platforms like Facebook to surface anomalies without violating proportionality."],
           ].map(([title, desc]) => (
             <li key={title} className="flex gap-3">
@@ -209,7 +209,7 @@ function SecurityContent() {
               </span>
               <div>
                 <div className="font-medium">{title}</div>
-                <div className="text-muted-foreground">{desc}</div>
+                <div className="text-justify text-muted-foreground">{desc}</div>
               </div>
             </li>
           ))}
@@ -218,9 +218,9 @@ function SecurityContent() {
 
       <div className="glass rounded-3xl p-6">
         <h2 className="font-display text-2xl">The principle</h2>
-        <p className="mt-3 text-sm text-muted-foreground">
+        <p className="mt-3 text-justify text-sm text-muted-foreground">
           A decision-first approach to security asks: what is the real objective? What boundary must not
-          be crossed? And what are the hidden pressures — fear, ego, institutional bias — that distort
+          be crossed? And what are the hidden pressures, fear, ego, institutional bias, that distort
           the search for truth? By slowing the loop down, we reduce false positives and protect civil
           liberties at the same time.
         </p>
@@ -231,10 +231,10 @@ function SecurityContent() {
 
 function OrganizationalChangeContent() {
   return (
-    <div className="mt-10 space-y-6 text-[15px] leading-relaxed">
+    <div className="mt-10 space-y-6 text-justify text-[15px] leading-relaxed">
       <p>
         The world is run by large systems and organizational bodies. When those systems need to
-        change, the task requires enormous clarity and amazing foresight — like the founders of this
+        change, the task requires enormous clarity and amazing foresight, like the founders of this
         country exercising. Both money and power are the flow streams that must be examined and
         rerouted for change to take hold.
       </p>
@@ -245,7 +245,7 @@ function OrganizationalChangeContent() {
           {[
             ["Clarity of objective", "Define what the organization is actually for, not just what it currently does."],
             ["Foresight", "Map second- and third-order effects before the system locks in a new path."],
-            ["Money flows", "Follow budgets, incentives, and cost structures — they reveal where power really sits."],
+            ["Money flows", "Follow budgets, incentives, and cost structures, they reveal where power really sits."],
             ["Power flows", "Map decision rights, gatekeepers, and informal influence to understand resistance."],
             ["Psychological & social science", "Use human behavior, not just org charts, to design change people can adopt."],
           ].map(([title, desc]) => (
@@ -255,7 +255,7 @@ function OrganizationalChangeContent() {
               </span>
               <div>
                 <div className="font-medium">{title}</div>
-                <div className="text-muted-foreground">{desc}</div>
+                <div className="text-justify text-muted-foreground">{desc}</div>
               </div>
             </li>
           ))}
@@ -264,7 +264,7 @@ function OrganizationalChangeContent() {
 
       <div className="glass rounded-3xl p-6">
         <h2 className="font-display text-2xl">Why this matters</h2>
-        <p className="mt-3 text-sm text-muted-foreground">
+        <p className="mt-3 text-justify text-sm text-muted-foreground">
           Organizations that try to change without examining both money and power tend to adopt new
           language while keeping old behavior. We help leaders surface the real objectives, redraw the
           boundaries, and turn insight into executable commitment.
