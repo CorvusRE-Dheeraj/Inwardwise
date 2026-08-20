@@ -53,7 +53,7 @@ const PRODUCTS: {
     links: [
       { to: "/avatar", label: "Build Self", primary: true },
       { to: "/avatar/ask", label: "Self Aware" },
-      { to: "/meditation", label: "Calm" },
+      { to: "/meditation", label: "Self Aware · Meditation" },
     ],
   },
   {
