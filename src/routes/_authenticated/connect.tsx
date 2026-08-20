@@ -695,12 +695,16 @@ const STORY_FIELDS = [
 
 function ShareStoryModal({ onClose }: { onClose: () => void }) {
   const submit = useServerFn(submitConnectStory);
+  const scheduleCall = useServerFn(scheduleStoryCall);
+  const [mode, setMode] = useState<"write" | "call">("write");
   const [values, setValues] = useState<Record<string, string>>({});
   const [category, setCategory] = useState<string>(CONNECT_CATEGORIES[0]);
   const [agreed, setAgreed] = useState(false);
   const [busy, setBusy] = useState(false);
   const [done, setDone] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [phone, setPhone] = useState("");
+  const [when, setWhen] = useState("");
 
   return (
     <Modal onClose={onClose}>
@@ -711,8 +715,31 @@ function ShareStoryModal({ onClose }: { onClose: () => void }) {
         <>
           <p className="mt-3 text-[14px] text-[color:var(--muted-foreground)]">
             Your story is submitted anonymously as “Anonymous Member” and is never published
-            automatically — a moderator reviews it first.
+            automatically, a moderator reviews it first.
           </p>
+
+          <div className="mt-5 inline-flex rounded-full border border-[color:var(--rule)] p-1">
+            {([
+              ["write", "Write it"],
+              ["call", "Speak it on a call"],
+            ] as const).map(([key, label]) => (
+              <button
+                key={key}
+                onClick={() => {
+                  setMode(key);
+                  setError(null);
+                }}
+                className={`rounded-full px-4 py-1.5 text-[12px] transition ${
+                  mode === key
+                    ? "bg-[color:var(--ink)] text-[color:var(--paper)]"
+                    : "text-[color:var(--muted-foreground)]"
+                }`}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+
           <label className="mt-5 block text-sm">
             <span className="mb-1 block text-[color:var(--muted-foreground)]">Category</span>
             <select
@@ -727,17 +754,51 @@ function ShareStoryModal({ onClose }: { onClose: () => void }) {
               ))}
             </select>
           </label>
-          {STORY_FIELDS.map(([key, label]) => (
-            <label key={key} className="mt-4 block text-sm">
-              <span className="mb-1 block text-[color:var(--muted-foreground)]">{label}</span>
-              <textarea
-                rows={3}
-                value={values[key] ?? ""}
-                onChange={(e) => setValues((v) => ({ ...v, [key]: e.target.value }))}
-                className="w-full rounded-md border border-[color:var(--rule)] bg-transparent px-3 py-2 text-[15px]"
-              />
-            </label>
-          ))}
+
+          {mode === "write" ? (
+            STORY_FIELDS.map(([key, label]) => (
+              <label key={key} className="mt-4 block text-sm">
+                <span className="mb-1 block text-[color:var(--muted-foreground)]">{label}</span>
+                <textarea
+                  rows={3}
+                  value={values[key] ?? ""}
+                  onChange={(e) => setValues((v) => ({ ...v, [key]: e.target.value }))}
+                  className="w-full rounded-md border border-[color:var(--rule)] bg-transparent px-3 py-2 text-[15px]"
+                />
+              </label>
+            ))
+          ) : (
+            <>
+              <p className="mt-4 text-[14px] leading-relaxed text-[color:var(--muted-foreground)]">
+                At the time you choose, InwardWise calls you and walks you through the same six
+                questions out loud. What you say is written up as an anonymous story and sent for
+                review, exactly like a written one.
+              </p>
+              <label className="mt-4 block text-sm">
+                <span className="mb-1 block text-[color:var(--muted-foreground)]">
+                  Phone number (international format)
+                </span>
+                <input
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  placeholder="+14155550123"
+                  className="w-full rounded-md border border-[color:var(--rule)] bg-transparent px-3 py-2 text-[15px]"
+                />
+              </label>
+              <label className="mt-4 block text-sm">
+                <span className="mb-1 block text-[color:var(--muted-foreground)]">
+                  When should we call?
+                </span>
+                <input
+                  type="datetime-local"
+                  value={when}
+                  onChange={(e) => setWhen(e.target.value)}
+                  className="w-full rounded-md border border-[color:var(--rule)] bg-transparent px-3 py-2 text-[15px]"
+                />
+              </label>
+            </>
+          )}
+
           <label className="mt-5 flex items-start gap-3 text-[14px]">
             <input
               type="checkbox"
@@ -748,46 +809,71 @@ function ShareStoryModal({ onClose }: { onClose: () => void }) {
             I understand my submission will be reviewed before it can be shared.
           </label>
           {error && <p className="mt-3 text-sm text-destructive">{error}</p>}
+
           <div className="mt-6 flex flex-wrap gap-3">
-            <button
-              disabled={busy || !agreed || (values.situation ?? "").trim().length < 10}
-              onClick={async () => {
-                setBusy(true);
-                setError(null);
-                try {
-                  await submit({
-                    data: {
-                      category,
-                      situation: values.situation!.trim(),
-                      fear: values.fear,
-                      action_taken: values.action_taken,
-                      outcome: values.outcome,
-                      lesson: values.lesson,
-                      advice: values.advice,
-                    },
-                  });
-                  setDone("Thank you. Your story has been submitted for review and will only appear once a moderator approves it.");
-                } catch (e) {
-                  setError(e instanceof Error ? e.message : "Could not submit right now.");
-                } finally {
-                  setBusy(false);
-                }
-              }}
-              className="rounded-full bg-[color:var(--ink)] px-5 py-2.5 text-[13px] text-[color:var(--paper)] disabled:opacity-50"
-            >
-              {busy ? "Submitting…" : "Submit Story"}
-            </button>
-            <button
-              onClick={() =>
-                setDone("Story conversations by phone are being scheduled soon — we’ll be in touch to record your story if you’d prefer to speak it.")
-              }
-              className="rounded-full border border-[color:var(--rule)] px-5 py-2.5 text-[13px]"
-            >
-              Schedule a Story Conversation
-            </button>
+            {mode === "write" ? (
+              <button
+                disabled={busy || !agreed || (values.situation ?? "").trim().length < 10}
+                onClick={async () => {
+                  setBusy(true);
+                  setError(null);
+                  try {
+                    await submit({
+                      data: {
+                        category,
+                        situation: values.situation!.trim(),
+                        fear: values.fear,
+                        action_taken: values.action_taken,
+                        outcome: values.outcome,
+                        lesson: values.lesson,
+                        advice: values.advice,
+                      },
+                    });
+                    setDone("Thank you. Your story has been submitted for review and will only appear once a moderator approves it.");
+                  } catch (e) {
+                    setError(e instanceof Error ? e.message : "Could not submit right now.");
+                  } finally {
+                    setBusy(false);
+                  }
+                }}
+                className="rounded-full bg-[color:var(--ink)] px-5 py-2.5 text-[13px] text-[color:var(--paper)] disabled:opacity-50"
+              >
+                {busy ? "Submitting…" : "Submit Story"}
+              </button>
+            ) : (
+              <button
+                disabled={busy || !agreed || phone.trim().length < 8 || !when}
+                onClick={async () => {
+                  setBusy(true);
+                  setError(null);
+                  try {
+                    const res = await scheduleCall({
+                      data: {
+                        phoneNumber: phone,
+                        category,
+                        scheduledAt: new Date(when).toISOString(),
+                      },
+                    });
+                    setDone(
+                      `Your story call is scheduled. We will call ${res.phone} at ${new Date(
+                        res.scheduledAt,
+                      ).toLocaleString()}. Nothing is published until a moderator reviews it.`,
+                    );
+                  } catch (e) {
+                    setError(e instanceof Error ? e.message : "Could not schedule the call.");
+                  } finally {
+                    setBusy(false);
+                  }
+                }}
+                className="rounded-full bg-[color:var(--ink)] px-5 py-2.5 text-[13px] text-[color:var(--paper)] disabled:opacity-50"
+              >
+                {busy ? "Scheduling…" : "Schedule My Story Call"}
+              </button>
+            )}
           </div>
         </>
       )}
     </Modal>
   );
 }
+
