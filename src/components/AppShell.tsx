@@ -44,7 +44,6 @@ export function AppShell({ children }: { children: ReactNode }) {
 
   const nav: { to: string; label: string; external?: boolean }[] = [
     { to: "/areas", label: "Services" },
-    { to: "/meditation", label: "Meditation" },
     { to: "/science", label: "Science" },
     { to: "/history", label: "Message from Founder" },
     { to: "/testimonials", label: "Voices" },
@@ -53,13 +52,14 @@ export function AppShell({ children }: { children: ReactNode }) {
     ...(isAdmin ? [{ to: "/admin", label: "Admin" }] : []),
   ];
 
-  const startMenu: { to: string; label: string }[] = [
+  const startMenu: { to: string; label: string; sub?: boolean }[] = [
     { to: "/decision", label: "Decision" },
     { to: "/avatar", label: "Build Self" },
     { to: "/avatar/ask", label: "Self Aware" },
+    { to: "/meditation", label: "Meditation", sub: true },
     { to: "/avatar/consult", label: "Connect" },
-    { to: "/meditation", label: "Meditation" },
   ];
+
 
   const startActive = startMenu.some((item) => isActive(item.to));
   const topLevelNav = nav;
@@ -125,9 +125,9 @@ export function AppShell({ children }: { children: ReactNode }) {
                         key={item.to}
                         to={item.to}
                         onClick={() => setStartOpen(false)}
-                        className="block px-5 py-3 text-[14px] text-[color:var(--ink)] transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)]"
+                        className={`block py-3 text-[14px] text-[color:var(--ink)] transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)] ${item.sub ? "pl-9 pr-5 text-[13px] text-[color:var(--muted-foreground)]" : "px-5"}`}
                       >
-                        {item.label}
+                        {item.sub ? "↳ " : ""}{item.label}
                       </Link>
                     ))}
                   </div>
@@ -168,9 +168,9 @@ export function AppShell({ children }: { children: ReactNode }) {
                         key={item.to}
                         to={item.to}
                         onClick={() => setProductsOpen(false)}
-                        className="block px-5 py-3 text-[14px] text-[color:var(--ink)] transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)]"
+                        className={`block py-3 text-[14px] text-[color:var(--ink)] transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)] ${item.sub ? "pl-9 pr-5 text-[13px] text-[color:var(--muted-foreground)]" : "px-5"}`}
                       >
-                        {item.label}
+                        {item.sub ? "↳ " : ""}{item.label}
                       </Link>
                     ))}
                   </div>
@@ -246,9 +246,10 @@ export function AppShell({ children }: { children: ReactNode }) {
                       <Link
                         key={item.to}
                         to={item.to}
-                        className="text-[14px] text-[color:var(--muted-foreground)] transition hover:text-[color:var(--ink)]"
+                        className={`text-[14px] text-[color:var(--muted-foreground)] transition hover:text-[color:var(--ink)] ${item.sub ? "pl-4 text-[13px]" : ""}`}
                       >
-                        {item.label}
+                        {item.sub ? "↳ " : ""}{item.label}
+
                       </Link>
                     ))}
                   </div>
@@ -304,7 +305,9 @@ export function AppShell({ children }: { children: ReactNode }) {
               <li><Link to="/products" className="hover:text-[color:var(--royal)]">Products</Link></li>
               <li><Link to="/decision" className="hover:text-[color:var(--royal)]">Start a decision</Link></li>
               <li><Link to="/areas" className="hover:text-[color:var(--royal)]">Services</Link></li>
-              <li><Link to="/meditation" className="hover:text-[color:var(--royal)]">Meditation</Link></li>
+              <li><Link to="/avatar/ask" className="hover:text-[color:var(--royal)]">Self Aware</Link></li>
+              <li className="pl-4"><Link to="/meditation" className="hover:text-[color:var(--royal)]">↳ Meditation</Link></li>
+
               <li><Link to="/examples" className="hover:text-[color:var(--royal)]">Examples</Link></li>
               <li><Link to="/science" className="hover:text-[color:var(--royal)]">Science</Link></li>
               <li><Link to="/history" className="hover:text-[color:var(--royal)]">Message from Founder</Link></li>
