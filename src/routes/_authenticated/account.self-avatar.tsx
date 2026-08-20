@@ -51,12 +51,12 @@ function SelfAvatarPage() {
     <div>
       <h1 className="font-display text-3xl">InwardWise Self Design</h1>
 
-      <div className="mt-4 max-w-2xl space-y-4 text-sm leading-relaxed text-foreground/80">
+      <div className="mt-4 max-w-2xl space-y-4 text-justify text-sm leading-relaxed text-foreground/80">
         <p>
           Your inner InwardWise Self is a unique representation of you psychologically. But it's built from first
           principles that shaped you and will shape you based on future actions. Our unique approach does
           not classify you and use those attributes to build your InwardWise Self. That would not be unique, nor
-          a true representation of you — especially when you get triggered by certain things. Listing you
+          a true representation of you, especially when you get triggered by certain things. Listing you
           via classification would not be an inner representation.
         </p>
         <p>
@@ -74,7 +74,7 @@ function SelfAvatarPage() {
         </p>
         <p>
           In order to build your InwardWise Self you have to answer a series of questions in each of the 5 factors.
-          This is a laborious process — you really have to dig deeper in answering these questions. Set
+          This is a laborious process, and you really have to dig deeper in answering these questions. Set
           aside time and do this for each factor so you get an InwardWise Self that is accurate. You only have to
           do this once; the InwardWise Self will keep updating itself over time so it stays a representation of the
           current you. You can always review your answers and change them to revise your InwardWise Self.
