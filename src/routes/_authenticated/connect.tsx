@@ -281,7 +281,7 @@ function ConnectPage() {
             <Eyebrow>§ 01 · {result.selfBuilt ? "Personal path" : "Collective path"}</Eyebrow>
             <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-justify">
               {result.selfBuilt
-                ? "Because you have completed your InwardWise Self, this reading is written for someone who has already done that work. Your answers stay encrypted and private — only the fact that you finished them shaped this page."
+                ? "Because you have completed your InwardWise Self, this reading is written for someone who has already done that work. Alongside it you will find what others in the same situation have found, InwardWise book content, and reviewed stories from other members. Your answers stay encrypted and private."
                 : "You have not finished building your InwardWise Self yet, so this reading draws on what many people in the same situation have found, together with InwardWise book content and reviewed stories from other members."}
             </p>
             {!result.selfBuilt && (
@@ -357,13 +357,11 @@ function ConnectPage() {
           <section>
             <Eyebrow>§ 05 · From people who have been there</Eyebrow>
             <h2 className="font-display mt-3 text-2xl sm:text-3xl">
-              {result.selfBuilt ? "Stories you may relate to" : "What others have lived through"}
+              What others have lived through
             </h2>
-            {!result.selfBuilt && (
-              <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[color:var(--muted-foreground)]">
-                Written and recorded stories from other members, reviewed before publication.
-              </p>
-            )}
+            <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[color:var(--muted-foreground)]">
+              Written and recorded stories from other members, reviewed before publication.
+            </p>
             {result.stories.length === 0 ? (
               <p className="mt-4 text-sm text-[color:var(--muted-foreground)]">
                 No reviewed stories are available yet. You can be the first to share one below.

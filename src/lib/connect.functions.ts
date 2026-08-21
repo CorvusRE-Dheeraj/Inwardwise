@@ -81,7 +81,7 @@ export const analyzeConnectPrompt = createServerFn({ method: "POST" })
       reading_body: reading.body,
     });
 
-    const stories = rankStories(storyRows ?? [], category).slice(0, selfBuilt ? 4 : 8);
+    const stories = rankStories(storyRows ?? [], category).slice(0, 8);
     const groups = (groupRows ?? []).filter((g) => g.category === category);
 
     return {
@@ -89,7 +89,7 @@ export const analyzeConnectPrompt = createServerFn({ method: "POST" })
       path,
       selfBuilt,
       completedFactors,
-      book: selfBuilt ? null : bookContentFor(category),
+      book: bookContentFor(category),
       category,
       riskFlag: risk,
       reflection,
