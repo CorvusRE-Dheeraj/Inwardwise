@@ -57,6 +57,8 @@ function AreaPage() {
         <CourtsCounselingContent />
       ) : area.slug === "marriage-counseling" ? (
         <MarriageCounselingContent />
+      ) : area.slug === "family-decisions" ? (
+        <FamilyDecisionsContent />
       ) : (
         <div className="mt-10 glass rounded-3xl p-6 text-sm text-muted-foreground">
           Content for this area is being developed. In the meantime, you can start a facilitated
@@ -351,6 +353,21 @@ function MarriageCounselingContent() {
         marriage goes through a period of crisis. We like to help the individuals to navigate this
         difficult situation and period with judgements and decisions and the consequences by being
         their own sounding boards and thought provokers.
+      </p>
+    </div>
+  );
+}
+
+function FamilyDecisionsContent() {
+  return (
+    <div className="mt-10 space-y-6 text-justify text-[15px] leading-relaxed">
+      <p>
+        Family structures have dominant personalities to put it mildly and dogmatic to be realistic,
+        and then dormant, meek and troubled. When you have such a mix, trouble and hurt can follow.
+        Making decisions without your emotions affecting you could be difficult. But the decisions
+        you make cannot be reversed as the stakes are high as it&apos;s family. At least you need second
+        opinions on the decisions you make and sometimes you may need beyond friends for this second
+        opinion.
       </p>
     </div>
   );
