@@ -7,7 +7,13 @@ import {
   generateReflection,
   riskFlagFor,
 } from "./connect.server";
-import { activitiesFor, rankStories, readingFor, supportOptionsFor } from "./connect-matching";
+import {
+  activitiesFor,
+  bookContentFor,
+  rankStories,
+  readingFor,
+  supportOptionsFor,
+} from "./connect-matching";
 
 const promptSchema = z.object({ prompt: z.string().trim().min(8).max(4000) });
 
@@ -31,7 +37,8 @@ export const analyzeConnectPrompt = createServerFn({ method: "POST" })
       .single();
     if (promptError) throw new Error(promptError.message);
 
-    const [{ count }, { data: storyRows }, { data: groupRows }] = await Promise.all([
+    const [{ count }, { data: storyRows }, { data: groupRows }, { data: factorRows }] =
+      await Promise.all([
       context.supabase
         .from("connect_prompts")
         .select("id", { count: "exact", head: true })
@@ -48,9 +55,20 @@ export const analyzeConnectPrompt = createServerFn({ method: "POST" })
         .select("id, title, category, description, status, max_members, starts_at")
         .eq("moderation_status", "approved")
         .limit(12),
+      context.supabase
+        .from("avatar_dimensions")
+        .select("dimension_number, progress_pct")
+        .eq("user_id", context.userId),
     ]);
 
-    const reflection = await generateReflection(data.prompt, category);
+    // Two Connect paths: a member who has completed their Self build gets the
+    // personal path; everyone else gets the collective path (others' results,
+    // book content and reviewed stories from others).
+    const completedFactors = (factorRows ?? []).filter((f) => (f.progress_pct ?? 0) >= 100).length;
+    const selfBuilt = completedFactors >= 5;
+    const path = selfBuilt ? ("self" as const) : ("community" as const);
+
+    const reflection = await generateReflection(data.prompt, category, selfBuilt);
     const aggregate = aggregateInsight(count ?? 0, category);
     const reading = readingFor(category);
 
@@ -63,11 +81,15 @@ export const analyzeConnectPrompt = createServerFn({ method: "POST" })
       reading_body: reading.body,
     });
 
-    const stories = rankStories(storyRows ?? [], category).slice(0, 6);
+    const stories = rankStories(storyRows ?? [], category).slice(0, selfBuilt ? 4 : 8);
     const groups = (groupRows ?? []).filter((g) => g.category === category);
 
     return {
       promptId: promptRow.id,
+      path,
+      selfBuilt,
+      completedFactors,
+      book: selfBuilt ? null : bookContentFor(category),
       category,
       riskFlag: risk,
       reflection,
