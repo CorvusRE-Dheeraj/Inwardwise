@@ -61,6 +61,8 @@ function AreaPage() {
         <FamilyDecisionsContent />
       ) : area.slug === "business-decisions" ? (
         <BusinessDecisionsContent />
+      ) : area.slug === "ethics-counselling" ? (
+        <EthicsCounselingContent />
       ) : (
         <div className="mt-10 glass rounded-3xl p-6 text-sm text-muted-foreground">
           Content for this area is being developed. In the meantime, you can start a facilitated
@@ -386,6 +388,22 @@ function BusinessDecisionsContent() {
         society and media stokes this condition. No growth and sustainable co-existence is considered
         a failure in business. Business decisions need to examine a lot of the assumptions behind
         the decisions so such analysis can become easy using our platform.
+      </p>
+    </div>
+  );
+}
+
+function EthicsCounselingContent() {
+  return (
+    <div className="mt-10 space-y-6 text-justify text-[15px] leading-relaxed">
+      <p>
+        Boards, high level positions, doctors, engineers, lawyers pretty much everyone is supposed
+        to follow ethics. It turns into a burden rather than a necessity not imposed upon. But this
+        requires questioning the status quo and social norms and social definitions of success and
+        power. Especially the ethics of power and politics are more subtle than the straight forward
+        money ethics. If we can measure political power and influence and status power in the same
+        way we can count money, then ethics can become more clear. Our platform can allow such
+        decision making for ethics.
       </p>
     </div>
   );
