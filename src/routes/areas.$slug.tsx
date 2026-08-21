@@ -295,3 +295,26 @@ function OrganizationalChangeContent() {
     </div>
   );
 }
+
+function PoliticalDecisionsContent() {
+  return (
+    <div className="mt-10 space-y-6 text-justify text-[15px] leading-relaxed">
+      <p>
+        This area falls under decision making. Of course politics is riddled with biases far from
+        any neutral arguments. But once you realize the political system is a human invention to
+        take sides, you will abandon that line of thought and look at the original problem itself and
+        seek solutions to that original problem to remove political rifts.
+      </p>
+
+      <div className="glass rounded-3xl p-6">
+        <h2 className="font-display text-2xl">From taking sides to solving the real problem</h2>
+        <p className="mt-3 text-justify text-sm text-muted-foreground">
+          Our method systematically opens that possibility of moving from having to take a side,
+          even if it is political ideology, to actual problem solving which does not have a side.
+          The goal is not to win an argument. It is to make the original problem visible enough
+          that the argument becomes unnecessary.
+        </p>
+      </div>
+    </div>
+  );
+}
