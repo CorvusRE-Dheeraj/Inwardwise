@@ -59,6 +59,8 @@ function AreaPage() {
         <MarriageCounselingContent />
       ) : area.slug === "family-decisions" ? (
         <FamilyDecisionsContent />
+      ) : area.slug === "business-decisions" ? (
+        <BusinessDecisionsContent />
       ) : (
         <div className="mt-10 glass rounded-3xl p-6 text-sm text-muted-foreground">
           Content for this area is being developed. In the meantime, you can start a facilitated
@@ -368,6 +370,22 @@ function FamilyDecisionsContent() {
         you make cannot be reversed as the stakes are high as it&apos;s family. At least you need second
         opinions on the decisions you make and sometimes you may need beyond friends for this second
         opinion.
+      </p>
+    </div>
+  );
+}
+
+function BusinessDecisionsContent() {
+  return (
+    <div className="mt-10 space-y-6 text-justify text-[15px] leading-relaxed">
+      <p>
+        Business decisions tend to have two aspects to them. One you have to predict the future ie
+        you have insufficient information to predict presenting a challenge. Secondly, you make
+        decisions based on growth but life is not a business so these decisions become one sided
+        rather than life balanced. Business is more like a sport where winning is more important and
+        society and media stokes this condition. No growth and sustainable co-existence is considered
+        a failure in business. Business decisions need to examine a lot of the assumptions behind
+        the decisions so such analysis can become easy using our platform.
       </p>
     </div>
   );
