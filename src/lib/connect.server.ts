@@ -33,6 +33,7 @@ export function fallbackReflection(category: ConnectCategory): string {
 export async function generateReflection(
   promptText: string,
   category: ConnectCategory,
+  selfBuilt = false,
 ): Promise<string> {
   const apiKey = process.env.LOVABLE_API_KEY;
   if (!apiKey) return fallbackReflection(category);
@@ -54,6 +55,11 @@ Rules:
 - End with one constructive, reversible next consideration — never an instruction, diagnosis, or promise.
 - You are not therapy, medical care, legal advice, or emergency support. Do not imply otherwise.
 - No headings, no lists, no quotation marks. Plain prose only.
+${
+  selfBuilt
+    ? "This member has completed their own InwardWise Self build, so write to someone who already knows their own patterns: refer to the work they have already done on themselves in general terms only (you cannot see their answers), and point them back to their own Self for the specifics."
+    : "This member has NOT completed their InwardWise Self build, so do not assume any self-knowledge. Lean on what is common in this situation for many people, and keep the perspective general and collective rather than personal."
+}
 Situation category: ${category}.`,
           },
           { role: "user", content: promptText },
