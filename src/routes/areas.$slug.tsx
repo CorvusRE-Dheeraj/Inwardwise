@@ -364,12 +364,28 @@ function FamilyDecisionsContent() {
   return (
     <div className="mt-10 space-y-6 text-justify text-[15px] leading-relaxed">
       <p>
-        Family structures have dominant personalities to put it mildly and dogmatic to be realistic,
+        Family structures have dominant personalities to put it mild and dogmatic to be realistic,
         and then dormant, meek and troubled. When you have such a mix, trouble and hurt can follow.
         Making decisions without your emotions affecting you could be difficult. But the decisions
         you make cannot be reversed as the stakes are high as it&apos;s family. At least you need second
         opinions on the decisions you make and sometimes you may need beyond friends for this second
         opinion.
+      </p>
+    </div>
+  );
+}
+
+function BusinessDecisionsContent() {
+  return (
+    <div className="mt-10 space-y-6 text-justify text-[15px] leading-relaxed">
+      <p>
+        Business decisions tend to have two aspects to them. One you have to predict the future ie
+        you have insufficient information to predict presenting a challenge. Secondly, you make
+        decisions based on growth but life is not a business so these decisions become one sided
+        rather than life balanced. Business is more like a sport where winning is more important and
+        society and media stokes this condition. No growth and sustainable co-existence is considered
+        a failure in business. Business decisions need to examine a lot of the assumptions behind
+        the decisions so such analysis can become easy using our platform.
       </p>
     </div>
   );
