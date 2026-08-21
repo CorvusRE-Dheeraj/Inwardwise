@@ -342,3 +342,16 @@ function CourtsCounselingContent() {
     </div>
   );
 }
+
+function MarriageCounselingContent() {
+  return (
+    <div className="mt-10 space-y-6 text-justify text-[15px] leading-relaxed">
+      <p>
+        We are not looking to replace the marriage counselors. Before it reaches that stage, the
+        marriage goes through a period of crisis. We like to help the individuals to navigate this
+        difficult situation and period with judgements and decisions and the consequences by being
+        their own sounding boards and thought provokers.
+      </p>
+    </div>
+  );
+}
