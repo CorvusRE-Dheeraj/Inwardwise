@@ -183,3 +183,67 @@ export function rankStories<T extends { category: string }>(stories: T[], catego
     return av - bv;
   });
 }
+
+/**
+ * Book content shown on the community path (members who have not completed
+ * their Self build yet). Never contains another member's private material.
+ */
+export type ConnectBookContent = {
+  chapter: string;
+  title: string;
+  excerpt: string;
+  takeaways: string[];
+};
+
+export function bookContentFor(category: ConnectCategory): ConnectBookContent {
+  const reading = READINGS[category];
+  const index = CONNECT_CATEGORIES.indexOf(category) + 1;
+  const takeaways: Record<ConnectCategory, string[]> = {
+    "Belonging & loneliness": [
+      "Choose fewer rooms and return to them more often.",
+      "Familiarity, not charm, produces belonging.",
+      "Measure weeks of repetition, not number of people met.",
+    ],
+    "Career uncertainty": [
+      "Separate the situation from the objective underneath it.",
+      "Design the smallest reversible test of that objective.",
+      "Treat fatigue as information, not as a verdict.",
+    ],
+    Relationships: [
+      "State the objective before defending it.",
+      "Renegotiate tactics, never character.",
+      "Write the shared objective down where both can see it.",
+    ],
+    Family: [
+      "Each person writes their objective in one sentence.",
+      "Choose between methods, not identities.",
+      "Name unavoidable trade-offs out loud.",
+    ],
+    "Major life transitions": [
+      "Keep three rituals from the life before.",
+      "Build three that belong only to the life ahead.",
+      "Continuity is scaffolding, not nostalgia.",
+    ],
+    "Feeling stuck": [
+      "Stuckness is usually a scale problem, not a courage problem.",
+      "Take the cheapest reversible step available.",
+      "Information arrives through motion.",
+    ],
+    "Overcoming adversity": [
+      "Ask what precedes the choice and what it relieves.",
+      "Change conditions before demanding willpower.",
+      "Write the system down so it can be adjusted.",
+    ],
+    "Comparison with others": [
+      "Write what you want before reading anyone else's list.",
+      "Mark each item as yours or inherited.",
+      "Being behind is usually a measurement error.",
+    ],
+  };
+  return {
+    chapter: `Chapter ${index}`,
+    title: reading.title,
+    excerpt: `${reading.summary} ${reading.body}`,
+    takeaways: takeaways[category],
+  };
+}
