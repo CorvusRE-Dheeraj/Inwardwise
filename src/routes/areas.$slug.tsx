@@ -59,6 +59,8 @@ function AreaPage() {
         <MarriageCounselingContent />
       ) : area.slug === "family-decisions" ? (
         <FamilyDecisionsContent />
+      ) : area.slug === "business-decisions" ? (
+        <BusinessDecisionsContent />
       ) : (
         <div className="mt-10 glass rounded-3xl p-6 text-sm text-muted-foreground">
           Content for this area is being developed. In the meantime, you can start a facilitated
