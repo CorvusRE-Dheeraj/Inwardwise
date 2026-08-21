@@ -51,6 +51,8 @@ function AreaPage() {
         <SecurityContent />
       ) : area.slug === "organizational-change" ? (
         <OrganizationalChangeContent />
+      ) : area.slug === "political-decisions" ? (
+        <PoliticalDecisionsContent />
       ) : (
         <div className="mt-10 glass rounded-3xl p-6 text-sm text-muted-foreground">
           Content for this area is being developed. In the meantime, you can start a facilitated
