@@ -47,6 +47,8 @@ function AreaPage() {
 
       {area.slug === "individual-development" ? (
         <IndividualDevelopmentContent />
+      ) : area.slug === "individual-wellbeing" ? (
+        <IndividualWellbeingContent />
       ) : area.slug === "security" ? (
         <SecurityContent />
       ) : area.slug === "organizational-change" ? (
@@ -404,6 +406,30 @@ function EthicsCounselingContent() {
         money ethics. If we can measure political power and influence and status power in the same
         way we can count money, then ethics can become more clear. Our platform can allow such
         decision making for ethics.
+      </p>
+    </div>
+  );
+}
+
+function IndividualWellbeingContent() {
+  return (
+    <div className="mt-10 space-y-6 text-justify text-[15px] leading-relaxed">
+      <p>
+        We can define individual wellbeing as more of a mental and physical combined activity. So
+        both meditation and the act of repeating things and reminding yourself will fall into that
+        category. Why are these things important? Meditation is an intermediate state between being
+        fully alert and active and being asleep. A state where you can be aware of your thoughts and
+        remember what occurred. A subconscious state not completely resting so insights and deeper
+        connections come to life in that semi active state. Any auto suggestions in that state can
+        have a profound influence on you. Therefore such suggestions can be repeated so you can
+        induce patterns of habits like feeling thankful and forgiving yourself among other
+        autosuggestions that are healing.
+      </p>
+      <p>
+        Religion can achieve these results with rituals but a scientifically developed approach can
+        be applied to everyone irrespective of their religious beliefs. Both brain images and
+        empirical results support the power of these meditative suggestions prescribed on our
+        platform.
       </p>
     </div>
   );
