@@ -55,6 +55,8 @@ function AreaPage() {
         <PoliticalDecisionsContent />
       ) : area.slug === "courts-counseling" ? (
         <CourtsCounselingContent />
+      ) : area.slug === "marriage-counseling" ? (
+        <MarriageCounselingContent />
       ) : (
         <div className="mt-10 glass rounded-3xl p-6 text-sm text-muted-foreground">
           Content for this area is being developed. In the meantime, you can start a facilitated
@@ -336,6 +338,19 @@ function CourtsCounselingContent() {
         made than punishment as a cure. This requires removing some of these natural biases and
         looking for a holistic solution. Our platform opens the doors for such a thought process
         and decision making.
+      </p>
+    </div>
+  );
+}
+
+function MarriageCounselingContent() {
+  return (
+    <div className="mt-10 space-y-6 text-justify text-[15px] leading-relaxed">
+      <p>
+        We are not looking to replace the marriage counselors. Before it reaches that stage, the
+        marriage goes through a period of crisis. We like to help the individuals to navigate this
+        difficult situation and period with judgements and decisions and the consequences by being
+        their own sounding boards and thought provokers.
       </p>
     </div>
   );
