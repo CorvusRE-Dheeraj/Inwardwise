@@ -61,7 +61,7 @@ function AreaPage() {
         <FamilyDecisionsContent />
       ) : area.slug === "business-decisions" ? (
         <BusinessDecisionsContent />
-      ) : area.slug === "ethics-counselling" ? (
+      ) : area.slug === "ethics-counseling" ? (
         <EthicsCounselingContent />
       ) : (
         <div className="mt-10 glass rounded-3xl p-6 text-sm text-muted-foreground">
