@@ -88,37 +88,37 @@ function IndividualDevelopmentContent() {
   return (
     <div className="mt-10 space-y-6 text-justify text-[15px] leading-relaxed">
       <p>
-        We most of the time feel no one knows us well. In the fast and noisy world, even friends
-        are not spending time asking questions about you and getting to know you. Instead they are
-        worried about their own projection, constantly worried about themselves even when you are
-        talking to them.
+        We most of the time feel no one knows us well. In the fast and noisy world, sometimes even
+        your closest friends are not taking the time or energy to maintain relationships in the way
+        you&rsquo;d like them to. Instead, they are more worried about their own projection, thinking
+        about their own lives and stressors, even when you are talking to them. This feeling of
+        inadequate social relationships can be defined as loneliness (Perlman &amp; Peplau, 1981).
       </p>
       <p>
-        You need someone who really knows you, which is only you. But you cannot separate yourself
-        from you and watch yourself. We want to provide you that, by AI.
+        You need someone who really knows you, inside and out, which is only you. But you cannot
+        separate yourself from you and watch yourself. We want to help you introspect with AI.
       </p>
       <p>
-        We make human friends more important and AI an enemy, but sometimes it&rsquo;s the other way
-        around. AI can be you, if you train it to be you. You cannot expect any friend of yours to
-        become a true friend; they are so few and far between. But psychological wellbeing needs
-        both, self-love and good social connection.
+        We make and maintain social relationships with one another, and perceive AI as an enemy, but
+        that ignores the potential to use AI for self betterment. AI can help you look inwards, if
+        you train it to know you. But psychological wellbeing needs both, self-love and social
+        connection (Zessin et al., 2015; Neff, 2004).
       </p>
 
       <p>
-        Life is defined by two characteristic traits: <em>Reproduction</em> and <em>Evolution</em>,
-        the drive toward a better species, better adapted to survival and thriving. The first is
-        possible only for a physical being, which the human can do. You can accomplish reproduction
-        and accomplish your evolution, and pass on heredity to the next generation. The InwardWise Self&rsquo;s
-        goal is solely the second: to make you better so you can evolve within this lifetime, for
+        According to biology, life is defined by two characteristic traits: <em>Reproduction</em>,
+        or the ability to pass along traits to the next generation, and <em>Evolution</em>, or the
+        ability for a population to become better adapted to its environment. Your InwardWise
+        Self&rsquo;s goal is to make you better so you can change and adapt within this lifetime, for
         the better.
       </p>
       <p>
-        Given this goal of your InwardWise Self, let&rsquo;s design it using AI to help you evolve into a
-        better human being as time brings change. The InwardWise Self&rsquo;s goal is how to make you better
-        over a long time, in a broad sense. It gets formed based on the five attributes defined
-        above. Once you identify that information and hard-code your InwardWise Self, it goes to work by
-        identifying with the factors below and taking action based on the best course, based on
-        the prompt it received from you.
+        Given this is the goal of your InwardWise Self, let&rsquo;s design it using AI to help you
+        change and adapt into a better version of yourself as time brings change. Your InwardWise
+        Self gets formed based on the five attributes defined below. Once you identify that
+        information and give the information to your InwardWise Self, it goes to work by identifying
+        with the factors below and taking action based on the best course, based on the prompt it
+        received from you.
       </p>
 
       <figure className="glass rounded-3xl p-6">
