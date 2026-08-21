@@ -320,3 +320,23 @@ function PoliticalDecisionsContent() {
     </div>
   );
 }
+
+function CourtsCounselingContent() {
+  return (
+    <div className="mt-10 space-y-6 text-justify text-[15px] leading-relaxed">
+      <p>
+        A lot of the prison systems are a different type of underworld. The regular humanity and laws
+        don&apos;t apply there because they need to be punished therefore what better way than to deny
+        them humanity. But the problem is we are not looking at the original law and its enactment and
+        how judgements were reached and laws were applied. Did they match the crime? Did they apply to
+        others or only the few that were caught? If so, is it being applied selectively? Were there
+        people who committed far worse crimes and got away? Then how do we justify punishing only a
+        few disproportionately? So rather than considering the justice system as accurate, flawless
+        and just, we need to look towards improving the human condition for all so true change is
+        made than punishment as a cure. This requires removing some of these natural biases and
+        looking for a holistic solution. Our platform opens the doors for such a thought process
+        and decision making.
+      </p>
+    </div>
+  );
+}
