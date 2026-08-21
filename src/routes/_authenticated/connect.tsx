@@ -357,13 +357,11 @@ function ConnectPage() {
           <section>
             <Eyebrow>§ 05 · From people who have been there</Eyebrow>
             <h2 className="font-display mt-3 text-2xl sm:text-3xl">
-              {result.selfBuilt ? "Stories you may relate to" : "What others have lived through"}
+              What others have lived through
             </h2>
-            {!result.selfBuilt && (
-              <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[color:var(--muted-foreground)]">
-                Written and recorded stories from other members, reviewed before publication.
-              </p>
-            )}
+            <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[color:var(--muted-foreground)]">
+              Written and recorded stories from other members, reviewed before publication.
+            </p>
             {result.stories.length === 0 ? (
               <p className="mt-4 text-sm text-[color:var(--muted-foreground)]">
                 No reviewed stories are available yet. You can be the first to share one below.
