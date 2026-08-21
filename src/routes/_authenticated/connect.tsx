@@ -276,6 +276,24 @@ function ConnectPage() {
             </Card>
           )}
 
+          {/* Path banner: personal (Self built) vs collective */}
+          <Card className="border-[color:var(--royal)]/30">
+            <Eyebrow>§ 01 · {result.selfBuilt ? "Personal path" : "Collective path"}</Eyebrow>
+            <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-justify">
+              {result.selfBuilt
+                ? "Because you have completed your InwardWise Self, this reading is written for someone who has already done that work. Your answers stay encrypted and private — only the fact that you finished them shaped this page."
+                : "You have not finished building your InwardWise Self yet, so this reading draws on what many people in the same situation have found, together with InwardWise book content and reviewed stories from other members."}
+            </p>
+            {!result.selfBuilt && (
+              <Link
+                to="/avatar"
+                className="mt-5 inline-flex items-center gap-2 rounded-full border border-[color:var(--rule)] px-5 py-2.5 text-[13px] transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)]"
+              >
+                Build your InwardWise Self <ArrowRight className="h-3.5 w-3.5" />
+              </Link>
+            )}
+          </Card>
+
           {/* A. You are not alone */}
           <Card className="bg-[color:var(--royal)]/[0.04]">
             <Eyebrow>§ 02 · {result.category}</Eyebrow>
@@ -301,22 +319,51 @@ function ConnectPage() {
               >
                 Explore this privately <ArrowRight className="h-3.5 w-3.5" />
               </Link>
-              <Link
-                to="/avatar/ask"
-                className="inline-flex items-center gap-2 rounded-full border border-[color:var(--rule)] px-5 py-2.5 text-[13px] transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)]"
-              >
-                Ask your InwardWise Self
-              </Link>
+              {result.selfBuilt && (
+                <Link
+                  to="/avatar/ask"
+                  className="inline-flex items-center gap-2 rounded-full border border-[color:var(--rule)] px-5 py-2.5 text-[13px] transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)]"
+                >
+                  Ask InwardWise Self
+                </Link>
+              )}
             </div>
           </Card>
 
           {/* C. Reading */}
           <ReadingCard reading={result.reading} />
 
+          {result.book && (
+            <Card>
+              <Eyebrow>§ 04b · From the InwardWise book</Eyebrow>
+              <h3 className="font-display mt-3 text-2xl italic text-[color:var(--royal)]">
+                {result.book.chapter} · {result.book.title}
+              </h3>
+              <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-justify">
+                {result.book.excerpt}
+              </p>
+              <ul className="mt-5 space-y-2">
+                {result.book.takeaways.map((t) => (
+                  <li key={t} className="flex gap-3 text-[15px] leading-relaxed">
+                    <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-[color:var(--royal)]" />
+                    {t}
+                  </li>
+                ))}
+              </ul>
+            </Card>
+          )}
+
           {/* D. Stories */}
           <section>
             <Eyebrow>§ 05 · From people who have been there</Eyebrow>
-            <h2 className="font-display mt-3 text-2xl sm:text-3xl">Stories you may relate to</h2>
+            <h2 className="font-display mt-3 text-2xl sm:text-3xl">
+              {result.selfBuilt ? "Stories you may relate to" : "What others have lived through"}
+            </h2>
+            {!result.selfBuilt && (
+              <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[color:var(--muted-foreground)]">
+                Written and recorded stories from other members, reviewed before publication.
+              </p>
+            )}
             {result.stories.length === 0 ? (
               <p className="mt-4 text-sm text-[color:var(--muted-foreground)]">
                 No reviewed stories are available yet. You can be the first to share one below.
