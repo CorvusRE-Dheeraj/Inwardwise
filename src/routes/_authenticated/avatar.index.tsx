@@ -210,7 +210,7 @@ function AvatarDashboard() {
                         {d.locked && <Lock className="h-3.5 w-3.5" />}
                       </div>
                       <p className="mt-1 text-sm text-[color:var(--muted-foreground)]">
-                        Answer the questions for this factor.
+                        A guided conversation, in your own words.
                       </p>
                     </div>
                     <div>
@@ -229,9 +229,69 @@ function AvatarDashboard() {
               })}
             </div>
 
+            {complete < AVATAR_DIMENSIONS.length && (
+              <div className="mt-8 rounded-lg border border-[color:var(--rule)] p-6">
+                <div className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)]">
+                  Pick up where you stopped
+                </div>
+                <p className="mt-3 max-w-2xl text-justify text-sm text-[color:var(--muted-foreground)]">
+                  Your self is not built yet. There is no fixed number of questions to get through —
+                  it is a conversation, and it resumes exactly where you left it. You can carry on
+                  here, or have your InwardWise Self call you and take it verbally.
+                </p>
+                <div className="mt-5 flex flex-wrap gap-3">
+                  <Link
+                    to="/avatar/dimension/$n"
+                    params={{
+                      n: String(
+                        (AVATAR_DIMENSIONS.find((d) => (progress[d.n] ?? 0) < 100) ??
+                          AVATAR_DIMENSIONS[0]).n,
+                      ),
+                    }}
+                    className="rounded-full bg-[color:var(--ink)] px-5 py-2 text-[13px] text-[color:var(--paper)]"
+                  >
+                    Continue where I stopped →
+                  </Link>
+                  <Link
+                    to="/avatar/demo"
+                    className="rounded-full border border-[color:var(--rule)] px-5 py-2 text-[13px]"
+                  >
+                    Test drive as Alex or Mary
+                  </Link>
+                  <Link
+                    to="/connect"
+                    className="rounded-full border border-[color:var(--rule)] px-5 py-2 text-[13px]"
+                  >
+                    See what others found
+                  </Link>
+                </div>
+              </div>
+            )}
+
+            {complete === AVATAR_DIMENSIONS.length && (
+              <div className="mt-8 rounded-lg border border-[color:var(--rule)] p-6">
+                <div className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)]">
+                  Next
+                </div>
+                <p className="mt-3 max-w-2xl text-justify text-sm text-[color:var(--muted-foreground)]">
+                  Your self is complete. Consult it on a decision, or take it into Connect, where it
+                  matches you privately with people whose patterns rhyme with yours.
+                </p>
+                <div className="mt-5 flex flex-wrap gap-3">
+                  <Link
+                    to="/connect"
+                    className="rounded-full border border-[color:var(--rule)] px-5 py-2 text-[13px]"
+                  >
+                    Go to Connect →
+                  </Link>
+                </div>
+              </div>
+            )}
+
             <div className="mt-8 grid gap-6 md:grid-cols-2">
+
               <Caution>
-                Without completely answering all of the questions, your InwardWise Self cannot fully form —
+                Until the conversation is finished, your InwardWise Self cannot fully form —
                 partial answers produce partial reflections. If typing is the obstacle, turn on
                 voice and schedule times when you can take a phone call; your InwardWise Self will call you
                 and fill in the factors conversationally.
