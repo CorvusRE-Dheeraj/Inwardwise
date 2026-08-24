@@ -176,7 +176,7 @@ function DimensionFlow() {
             disabled={!loaded}
             className="mt-10 rounded-full bg-[color:var(--ink)] px-6 py-2.5 text-[13px] text-[color:var(--paper)] disabled:opacity-50"
           >
-            Begin — {total} {total === 1 ? "question" : "questions"}
+            Begin the conversation
           </button>
         </section>
       ) : (
