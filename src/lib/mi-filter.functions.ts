@@ -66,7 +66,7 @@ export const runMiFilter = createServerFn({ method: "POST" })
   .handler(async ({ data }): Promise<MiFilterResult> => {
     const apiKey = process.env.LOVABLE_API_KEY;
     if (!apiKey) {
-      return { sufficient: true, affirmation: "Thank you for writing that down.", nextQuestion: null };
+      return { sufficient: true, affirmation: "Thank you for writing that down.", nextQuestion: null, safety: "none" };
     }
 
     const transcript = data.turns
@@ -106,12 +106,14 @@ export const runMiFilter = createServerFn({ method: "POST" })
         sufficient: Boolean(parsed.sufficient),
         affirmation: String(parsed.affirmation ?? "").slice(0, 600),
         nextQuestion: parsed.sufficient ? null : (parsed.nextQuestion ?? null),
+        safety: parsed.safety === "concern" ? "concern" : "none",
       };
     } catch {
       return {
         sufficient: true,
         affirmation: "Thank you — that is written down and kept private.",
         nextQuestion: null,
+        safety: "none",
       };
     }
   });
