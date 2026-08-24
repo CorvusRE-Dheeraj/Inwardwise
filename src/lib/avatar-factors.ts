@@ -1,4 +1,14 @@
-export type AvatarQuestion = { key: string; prompt: string; helper?: string };
+export type AvatarQuestion = {
+  key: string;
+  prompt: string;
+  helper?: string;
+  /** An easier warm-up question asked first; its answer is compared against `prompt`. */
+  opener?: string;
+  /** What counts as a real internal answer, used by the MI filter. */
+  intent?: string;
+  /** Self-help examples shown on request to make answering easier. */
+  examples?: string[];
+};
 
 export type AvatarDimension = {
   n: number;
