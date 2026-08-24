@@ -29,19 +29,27 @@ export const AVATAR_DIMENSIONS: AvatarDimension[] = [
     questions: [
       {
         key: "d1_q1",
+        opening:
+          "Growing up, between five and fifteen, tell me about what you liked and did not like, how you handled the problems that came at you, and what happened when you could not solve one.",
         prompt: "Growing up, between the ages of five and fifteen, what were your real fears?",
         helper: "Not the ones you told people about — the ones that were actually true.",
       },
       {
         key: "d1_q2",
+        opening:
+          "When something like that was coming your way, what did you usually do? Walk me through it.",
         prompt: "What did you do to avoid the situations that exposed you to those fears?",
       },
       {
         key: "d1_q3",
+        opening:
+          "Was there anything back then that you kept to yourself, that you would rather nobody knew about?",
         prompt: "Growing up, what were you ashamed of and wanted to hide?",
       },
       {
         key: "d1_q4",
+        opening:
+          "As a game, and only for a moment: what did adults call your \"bad behaviour\" back then, and what might it have been protecting?",
         prompt:
           "What “bad behaviour” did you have as a child — and how would you describe it charitably, as a protective response rather than a flaw?",
       },
@@ -59,6 +67,8 @@ export const AVATAR_DIMENSIONS: AvatarDimension[] = [
     questions: [
       {
         key: "d2_q1",
+        opening:
+          "Nobody sees this but you. What habits or patterns have pulled you off course, and how often have they had you?",
         prompt:
           "Whatever the reason, list those vices, destructive habits or repeated patterns — and how often you have succumbed to them before.",
         helper:
@@ -77,12 +87,16 @@ export const AVATAR_DIMENSIONS: AvatarDimension[] = [
     questions: [
       {
         key: "d3_q1",
+        opening:
+          "What are you noticeably better at than most people around you, and what did the road to that look like?",
         prompt: "What are your skills, and how did they develop?",
         helper:
           "Channelled abilities built by necessity and repetition — writing, self-reflection, recruiting, surgery, cooking. Keep interests out; they belong in Factor 4.",
       },
       {
         key: "d3_q2",
+        opening:
+          "What comes so easily to you that you barely count it as work, and what do others say you are known for?",
         prompt:
           "What single talent do you — or others — identify you with, that you admire and have used effortlessly to create?",
         helper:
@@ -101,6 +115,8 @@ export const AVATAR_DIMENSIONS: AvatarDimension[] = [
     questions: [
       {
         key: "d4_q1",
+        opening:
+          "When you have time entirely to yourself, what do you find yourself returning to?",
         prompt:
           "How do you connect to the outer world through solo interests, hobbies or activities?",
         helper:
@@ -108,6 +124,8 @@ export const AVATAR_DIMENSIONS: AvatarDimension[] = [
       },
       {
         key: "d4_q2",
+        opening:
+          "And when you are with other people by choice, what are you doing together?",
         prompt:
           "How do you connect to the outer world through non-solo activities — social or group?",
         helper: "Clubs, conferences, teams, communities, gatherings you attend or once attended.",
@@ -125,11 +143,15 @@ export const AVATAR_DIMENSIONS: AvatarDimension[] = [
     questions: [
       {
         key: "d5_q1",
+        opening:
+          "Tell me about a few experiences that shaped you, without sorting them into good or bad.",
         prompt:
           "What are some of your unique life experiences — without regard to good or bad?",
       },
       {
         key: "d5_q2",
+        opening:
+          "If you lay those side by side, what do you notice running through them?",
         prompt: "If you connect these experiences like dots, is there a pattern?",
       },
     ],
