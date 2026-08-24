@@ -48,6 +48,7 @@ function DimensionFlow() {
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [loaded, setLoaded] = useState(false);
   const [thinking, setThinking] = useState(false);
+  const [careNote, setCareNote] = useState(false);
 
   useEffect(() => {
     if (vault.status !== "unlocked" || !vault.key || !vault.profile || !dim) return;
@@ -199,6 +200,7 @@ function DimensionFlow() {
       });
 
       setAffirmation(result.affirmation || null);
+      if (result.safety === "concern") setCareNote(true);
 
       if (result.sufficient || round >= MAX_ROUNDS || !result.nextQuestion) {
         moveToNextQuestion(nextAnswers);
@@ -276,6 +278,20 @@ function DimensionFlow() {
                   <p className="mt-1 text-justify text-[15px] leading-relaxed">{t.answer}</p>
                 </div>
               ))}
+            </div>
+          )}
+
+          {careNote && (
+            <div className="mb-6 rounded-lg border border-[color:var(--rule)] p-5">
+              <div className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)]">
+                Before we carry on
+              </div>
+              <p className="mt-3 text-justify text-sm text-[color:var(--muted-foreground)]">
+                What you wrote matters more than this exercise. If you are unsafe or having thoughts
+                of harming yourself, please reach a person now: call or text{" "}
+                <span className="text-[color:var(--ink)]">988</span> in the US, or your local
+                emergency number. This page will wait for you.
+              </p>
             </div>
           )}
 
