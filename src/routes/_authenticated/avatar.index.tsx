@@ -210,7 +210,7 @@ function AvatarDashboard() {
                         {d.locked && <Lock className="h-3.5 w-3.5" />}
                       </div>
                       <p className="mt-1 text-sm text-[color:var(--muted-foreground)]">
-                        Answer the questions for this factor.
+                        A guided conversation, in your own words.
                       </p>
                     </div>
                     <div>
@@ -291,7 +291,7 @@ function AvatarDashboard() {
             <div className="mt-8 grid gap-6 md:grid-cols-2">
 
               <Caution>
-                Without completely answering all of the questions, your InwardWise Self cannot fully form —
+                Until the conversation is finished, your InwardWise Self cannot fully form —
                 partial answers produce partial reflections. If typing is the obstacle, turn on
                 voice and schedule times when you can take a phone call; your InwardWise Self will call you
                 and fill in the factors conversationally.
