@@ -95,6 +95,8 @@ export const runMiFilter = createServerFn({ method: "POST" })
           sufficient: true,
           affirmation: "Thank you — that is written down and kept private.",
           nextQuestion: null,
+          safety: "none",
+
         };
       }
 
