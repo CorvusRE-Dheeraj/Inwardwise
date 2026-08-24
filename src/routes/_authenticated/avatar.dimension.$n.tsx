@@ -5,6 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { AVATAR_DIMENSIONS, getDimension } from "@/lib/avatar-factors";
 import { useAvatarVault } from "@/lib/avatar-vault";
 import { Caution, PinKeypad } from "@/components/avatar/PinKeypad";
+import { MIInterview } from "@/components/mi/MIInterview";
 import { decryptText, encryptText } from "@/lib/avatar-crypto";
 
 export const Route = createFileRoute("/_authenticated/avatar/dimension/$n")({
@@ -175,7 +176,7 @@ function DimensionFlow() {
             disabled={!loaded}
             className="mt-10 rounded-full bg-[color:var(--ink)] px-6 py-2.5 text-[13px] text-[color:var(--paper)] disabled:opacity-50"
           >
-            Begin — {total} {total === 1 ? "question" : "questions"}
+            Begin the conversation
           </button>
         </section>
       ) : (
@@ -186,28 +187,38 @@ function DimensionFlow() {
               style={{ width: `${((step + 1) / total) * 100}%` }}
             />
           </div>
-          <div className="font-mono-cap mt-3 text-[10px] text-[color:var(--muted-foreground)]">
-            Question {step + 1} of {total}
-          </div>
 
-          <h1 className="mt-8 font-display text-[clamp(1.6rem,3.4vw,2.4rem)] leading-[1.15] tracking-tight">
-            {q!.prompt}
-          </h1>
-          {q!.helper && (
-            <p className="mt-3 text-sm text-[color:var(--muted-foreground)]">{q!.helper}</p>
-          )}
           {dim.locked && (
             <div className="font-mono-cap mt-4 inline-flex items-center gap-2 rounded-full border border-[color:var(--rule)] px-3 py-1 text-[10px]">
               <Lock className="h-3 w-3" /> Encrypted · only visible to you
             </div>
           )}
 
-          <textarea
-            value={answers[q!.key] ?? ""}
-            onChange={(e) => setAnswers((a) => ({ ...a, [q!.key]: e.target.value }))}
-            placeholder="Write in your own words…"
-            className="mt-6 min-h-[220px] w-full resize-y rounded-md border border-[color:var(--rule)] bg-transparent px-4 py-3 text-[15px] leading-relaxed focus:outline-none focus:ring-2 focus:ring-[color:var(--royal)]/30"
-          />
+          <p className="mt-6 text-sm text-[color:var(--muted-foreground)]">
+            A conversation, not a form. Answer in whatever way feels natural — by typing or by
+            speaking. It will keep exploring with you until the thread is genuinely there.
+          </p>
+
+          <div className="mt-6">
+            <MIInterview
+              key={q!.key}
+              targetQuestion={q!.prompt}
+              openingQuestion={q!.opening}
+              context={`${dim.intro}${q!.helper ? `\n\n${q!.helper}` : ""}`}
+              initialAnswer={answers[q!.key] ?? ""}
+              onCapture={(text) => setAnswers((a) => ({ ...a, [q!.key]: text }))}
+              completeLabel={step + 1 < total ? "Move on" : "Finish factor"}
+              onComplete={async () => {
+                if (step + 1 < total) {
+                  await persist(false);
+                  setStep((s) => s + 1);
+                } else {
+                  const allDone = await persist(true);
+                  navigate({ to: allDone ? "/avatar/consult" : "/avatar" });
+                }
+              }}
+            />
+          </div>
 
           <div className="mt-8 flex flex-wrap items-center gap-3 border-t border-[color:var(--rule)] pt-6">
             <button
@@ -218,21 +229,6 @@ function DimensionFlow() {
               className="rounded-full border border-[color:var(--rule)] px-5 py-2 text-[13px]"
             >
               Back
-            </button>
-            <button
-              onClick={async () => {
-                if (step + 1 < total) {
-                  await persist(false);
-                  setStep((s) => s + 1);
-                } else {
-                  const allDone = await persist(true);
-                  navigate({ to: allDone ? "/avatar/consult" : "/avatar" });
-                }
-              }}
-              disabled={saving}
-              className="rounded-full bg-[color:var(--ink)] px-6 py-2 text-[13px] text-[color:var(--paper)] disabled:opacity-50"
-            >
-              {step + 1 < total ? "Continue" : "Finish factor"}
             </button>
             {saving && (
               <span className="text-sm text-[color:var(--muted-foreground)]">Saving…</span>
