@@ -1,4 +1,10 @@
-export type AvatarQuestion = { key: string; prompt: string; helper?: string };
+export type AvatarQuestion = {
+  key: string;
+  prompt: string;
+  helper?: string;
+  /** Easy, indirect opening used by the motivational-interviewing agent. */
+  opening?: string;
+};
 
 export type AvatarDimension = {
   n: number;
