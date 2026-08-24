@@ -40,7 +40,6 @@ import { Route as ApiPublicMeditationDispatchRouteImport } from './routes/api/pu
 import { Route as ApiPublicConnectStoryDispatchRouteImport } from './routes/api/public/connect-story-dispatch'
 import { Route as ApiPublicConnectStoryCallWebhookRouteImport } from './routes/api/public/connect-story-call-webhook'
 import { Route as AuthenticatedMeditationPracticeRouteImport } from './routes/_authenticated/meditation.practice'
-import { Route as AuthenticatedAvatarDemoRouteImport } from './routes/_authenticated/avatar.demo'
 import { Route as AuthenticatedAvatarConsultRouteImport } from './routes/_authenticated/avatar.consult'
 import { Route as AuthenticatedAvatarAskRouteImport } from './routes/_authenticated/avatar.ask'
 import { Route as AuthenticatedAccountSelfAvatarRouteImport } from './routes/_authenticated/account.self-avatar'
@@ -209,11 +208,6 @@ const AuthenticatedMeditationPracticeRoute =
     path: '/meditation/practice',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedAvatarDemoRoute = AuthenticatedAvatarDemoRouteImport.update({
-  id: '/avatar/demo',
-  path: '/avatar/demo',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
 const AuthenticatedAvatarConsultRoute =
   AuthenticatedAvatarConsultRouteImport.update({
     id: '/avatar/consult',
@@ -286,7 +280,6 @@ export interface FileRoutesByFullPath {
   '/account/self-avatar': typeof AuthenticatedAccountSelfAvatarRoute
   '/avatar/ask': typeof AuthenticatedAvatarAskRoute
   '/avatar/consult': typeof AuthenticatedAvatarConsultRoute
-  '/avatar/demo': typeof AuthenticatedAvatarDemoRoute
   '/meditation/practice': typeof AuthenticatedMeditationPracticeRoute
   '/api/public/connect-story-call-webhook': typeof ApiPublicConnectStoryCallWebhookRoute
   '/api/public/connect-story-dispatch': typeof ApiPublicConnectStoryDispatchRoute
@@ -324,7 +317,6 @@ export interface FileRoutesByTo {
   '/account/self-avatar': typeof AuthenticatedAccountSelfAvatarRoute
   '/avatar/ask': typeof AuthenticatedAvatarAskRoute
   '/avatar/consult': typeof AuthenticatedAvatarConsultRoute
-  '/avatar/demo': typeof AuthenticatedAvatarDemoRoute
   '/meditation/practice': typeof AuthenticatedMeditationPracticeRoute
   '/api/public/connect-story-call-webhook': typeof ApiPublicConnectStoryCallWebhookRoute
   '/api/public/connect-story-dispatch': typeof ApiPublicConnectStoryDispatchRoute
@@ -366,7 +358,6 @@ export interface FileRoutesById {
   '/_authenticated/account/self-avatar': typeof AuthenticatedAccountSelfAvatarRoute
   '/_authenticated/avatar/ask': typeof AuthenticatedAvatarAskRoute
   '/_authenticated/avatar/consult': typeof AuthenticatedAvatarConsultRoute
-  '/_authenticated/avatar/demo': typeof AuthenticatedAvatarDemoRoute
   '/_authenticated/meditation/practice': typeof AuthenticatedMeditationPracticeRoute
   '/api/public/connect-story-call-webhook': typeof ApiPublicConnectStoryCallWebhookRoute
   '/api/public/connect-story-dispatch': typeof ApiPublicConnectStoryDispatchRoute
@@ -408,7 +399,6 @@ export interface FileRouteTypes {
     | '/account/self-avatar'
     | '/avatar/ask'
     | '/avatar/consult'
-    | '/avatar/demo'
     | '/meditation/practice'
     | '/api/public/connect-story-call-webhook'
     | '/api/public/connect-story-dispatch'
@@ -446,7 +436,6 @@ export interface FileRouteTypes {
     | '/account/self-avatar'
     | '/avatar/ask'
     | '/avatar/consult'
-    | '/avatar/demo'
     | '/meditation/practice'
     | '/api/public/connect-story-call-webhook'
     | '/api/public/connect-story-dispatch'
@@ -487,7 +476,6 @@ export interface FileRouteTypes {
     | '/_authenticated/account/self-avatar'
     | '/_authenticated/avatar/ask'
     | '/_authenticated/avatar/consult'
-    | '/_authenticated/avatar/demo'
     | '/_authenticated/meditation/practice'
     | '/api/public/connect-story-call-webhook'
     | '/api/public/connect-story-dispatch'
@@ -742,13 +730,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedMeditationPracticeRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/avatar/demo': {
-      id: '/_authenticated/avatar/demo'
-      path: '/avatar/demo'
-      fullPath: '/avatar/demo'
-      preLoaderRoute: typeof AuthenticatedAvatarDemoRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
     '/_authenticated/avatar/consult': {
       id: '/_authenticated/avatar/consult'
       path: '/avatar/consult'
@@ -826,7 +807,6 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedDecisionRoute: typeof AuthenticatedDecisionRoute
   AuthenticatedAvatarAskRoute: typeof AuthenticatedAvatarAskRoute
   AuthenticatedAvatarConsultRoute: typeof AuthenticatedAvatarConsultRoute
-  AuthenticatedAvatarDemoRoute: typeof AuthenticatedAvatarDemoRoute
   AuthenticatedMeditationPracticeRoute: typeof AuthenticatedMeditationPracticeRoute
   AuthenticatedAvatarIndexRoute: typeof AuthenticatedAvatarIndexRoute
   AuthenticatedAvatarDimensionNRoute: typeof AuthenticatedAvatarDimensionNRoute
@@ -840,7 +820,6 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDecisionRoute: AuthenticatedDecisionRoute,
   AuthenticatedAvatarAskRoute: AuthenticatedAvatarAskRoute,
   AuthenticatedAvatarConsultRoute: AuthenticatedAvatarConsultRoute,
-  AuthenticatedAvatarDemoRoute: AuthenticatedAvatarDemoRoute,
   AuthenticatedMeditationPracticeRoute: AuthenticatedMeditationPracticeRoute,
   AuthenticatedAvatarIndexRoute: AuthenticatedAvatarIndexRoute,
   AuthenticatedAvatarDimensionNRoute: AuthenticatedAvatarDimensionNRoute,
