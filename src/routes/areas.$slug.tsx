@@ -18,7 +18,7 @@ export const Route = createFileRoute("/areas/$slug")({
   }),
   notFoundComponent: () => (
     <div>
-      <h1 className="font-display text-3xl">Area not found</h1>
+      <h1 className="text-3xl">Area not found</h1>
       <Link to="/areas" className="mt-4 inline-flex items-center gap-2 text-sm text-accent">
         <ArrowLeft className="h-4 w-4" /> Back to areas
       </Link>
@@ -26,7 +26,7 @@ export const Route = createFileRoute("/areas/$slug")({
   ),
   errorComponent: ({ error }) => (
     <div>
-      <h1 className="font-display text-3xl">Something went wrong</h1>
+      <h1 className="text-3xl">Something went wrong</h1>
       <p className="mt-2 text-sm text-muted-foreground">{error.message}</p>
     </div>
   ),
@@ -35,15 +35,13 @@ export const Route = createFileRoute("/areas/$slug")({
 
 function AreaPage() {
   const area = Route.useLoaderData();
-  const titleFont = area.slug === "political-decisions" ? "font-sans" : "font-display";
-
   return (
     <article className="mx-auto max-w-3xl">
       <Link to="/areas" className="inline-flex items-center gap-2 text-xs text-muted-foreground hover:text-foreground">
         <ArrowLeft className="h-3.5 w-3.5" /> All areas
       </Link>
       <p className="mt-6 text-xs uppercase tracking-[0.18em] text-muted-foreground">Area</p>
-      <h1 className={`${titleFont} mt-2 text-4xl sm:text-5xl`}>{area.name}</h1>
+      <h1 className="mt-2 text-4xl sm:text-5xl">{area.name}</h1>
       {area.slug === "political-decisions" && (
         <>
           <h2 className="font-sans mt-2 text-2xl sm:text-3xl">From taking sides to solving the real problem</h2>
@@ -208,7 +206,7 @@ function IndividualDevelopmentContent() {
       </div>
 
       <div>
-        <h2 className="font-display text-2xl">Bibliography</h2>
+        <h2 className="text-2xl">Bibliography</h2>
         <ul className="mt-4 space-y-3 text-sm text-muted-foreground">
           <li>
             Neff, K. D. (2004). Self-compassion and psychological well-being.{" "}
@@ -241,7 +239,7 @@ function SecurityContent() {
       </p>
 
       <div className="glass rounded-3xl p-6">
-        <h2 className="font-display text-2xl">Where this framework applies</h2>
+        <h2 className="text-2xl">Where this framework applies</h2>
         <ul className="mt-4 space-y-3 text-sm">
           {[
             ["Airport Security", "Spot behavioral and psychological indicators before they escalate into physical risk."],
@@ -263,7 +261,7 @@ function SecurityContent() {
       </div>
 
       <div className="glass rounded-3xl p-6">
-        <h2 className="font-display text-2xl">The principle</h2>
+        <h2 className="text-2xl">The principle</h2>
         <p className="mt-3 text-justify text-sm text-muted-foreground">
           A decision-first approach to security asks: what is the real objective? What boundary must not
           be crossed? And what are the hidden pressures, fear, ego, institutional bias, that distort
@@ -286,7 +284,7 @@ function OrganizationalChangeContent() {
       </p>
 
       <div className="glass rounded-3xl p-6">
-        <h2 className="font-display text-2xl">The levers of change</h2>
+        <h2 className="text-2xl">The levers of change</h2>
         <ul className="mt-4 space-y-3 text-sm">
           {[
             ["Clarity of objective", "Define what the organization is actually for, not just what it currently does."],
@@ -309,7 +307,7 @@ function OrganizationalChangeContent() {
       </div>
 
       <div className="glass rounded-3xl p-6">
-        <h2 className="font-display text-2xl">Why this matters</h2>
+        <h2 className="text-2xl">Why this matters</h2>
         <p className="mt-3 text-justify text-sm text-muted-foreground">
           Organizations that try to change without examining both money and power tend to adopt new
           language while keeping old behavior. We help leaders surface the real objectives, redraw the
