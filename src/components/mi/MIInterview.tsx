@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Mic, Square } from "lucide-react";
 import { useServerFn } from "@tanstack/react-start";
 import { miInterviewTurn } from "@/lib/mi.functions";
-import { buildMiOpening, MI_MAX_ROUNDS } from "@/lib/mi-filter";
+import { buildMiOpening, MI_MAX_ROUNDS, MI_PRIVACY_NOTICE } from "@/lib/mi-filter";
 import { startRecording, transcribe, type Recorder } from "@/lib/voice";
 
 export interface MIInterviewProps {
