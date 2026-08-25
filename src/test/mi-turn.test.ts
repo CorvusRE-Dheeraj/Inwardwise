@@ -133,10 +133,12 @@ describe("MI interview turn — common user inputs", () => {
     expect(res.reply.length).toBeGreaterThan(10);
   });
 
-  it("rejects a closed-question-only transcript shape that is empty", async () => {
-    mockGateway({ reply: "ok" });
-    await expect(turn({ transcript: [] })).rejects.toThrow();
+  it("validates the input and refuses an empty transcript", () => {
+    expect(() => turn({ transcript: [] })).toThrow(/Too small/i);
+    expect(() => turn({ round: 99 })).toThrow();
+    expect(() => turn({ targetQuestion: "hi" })).toThrow();
   });
+
 
   it("surfaces a clear message when the workspace has no AI credits", async () => {
     mockGateway({ error: "no credits" }, 402);
