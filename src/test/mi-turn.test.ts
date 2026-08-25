@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { miInterviewTurn } from "@/lib/mi.functions";
+import { MiTurnInputSchema, runMiTurn, type MiTurnInput } from "@/lib/mi-turn";
 import { MI_MAX_ROUNDS } from "@/lib/mi-filter";
 
 type GatewayCall = { system: string; messages: Array<{ role: string; content: string }> };
@@ -22,41 +22,27 @@ function mockGateway(payload: Record<string, unknown>, status = 200) {
   );
 }
 
-type TurnData = {
-  targetQuestion: string;
-  context?: string;
-  round: number;
-  transcript: Array<{ role: "user" | "assistant"; content: string }>;
-};
-
-const turn = (over: Partial<TurnData> = {}) =>
-  (miInterviewTurn as unknown as (args: { data: TurnData }) => Promise<{
-    reply: string;
-    satisfied: boolean;
-    capturedAnswer: string;
-    resistance: string;
-    crisis: boolean;
-    roundsLeft: number;
-  }>)({
-    data: {
+const turn = (over: Partial<MiTurnInput> = {}) =>
+  runMiTurn(
+    MiTurnInputSchema.parse({
       targetQuestion: "Growing up, what were your real fears?",
       context: "Factor One",
       round: 1,
       transcript: [{ role: "user", content: "I was scared of my father's temper." }],
       ...over,
-    },
-  });
-
+    }),
+    "test-key",
+  );
 
 beforeEach(() => {
   calls.length = 0;
-  process.env.LOVABLE_API_KEY = "test-key";
 });
 
 afterEach(() => {
   vi.unstubAllGlobals();
   vi.restoreAllMocks();
 });
+
 
 describe("MI interview turn — filters reach the model", () => {
   it("sends the ten supporting filters and the eight-step loop in the system prompt", async () => {
