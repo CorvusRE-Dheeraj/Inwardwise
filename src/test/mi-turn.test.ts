@@ -10,9 +10,7 @@ function mockGateway(payload: Record<string, unknown>, status = 200) {
   vi.stubGlobal(
     "fetch",
     vi.fn(async (_url: string, init: { body: string }) => {
-      const body = JSON.parse(init.body) as GatewayCall["messages"] extends never
-        ? never
-        : { messages: Array<{ role: string; content: string }> };
+      const body = JSON.parse(init.body) as { messages: Array<{ role: string; content: string }> };
       calls.push({ system: body.messages[0]!.content, messages: body.messages });
       return {
         ok: status === 200,
@@ -24,16 +22,31 @@ function mockGateway(payload: Record<string, unknown>, status = 200) {
   );
 }
 
-const turn = (over: Partial<Parameters<typeof miInterviewTurn>[0] extends { data: infer D } ? D : never> = {}) =>
-  miInterviewTurn({
+type TurnData = {
+  targetQuestion: string;
+  context?: string;
+  round: number;
+  transcript: Array<{ role: "user" | "assistant"; content: string }>;
+};
+
+const turn = (over: Partial<TurnData> = {}) =>
+  (miInterviewTurn as unknown as (args: { data: TurnData }) => Promise<{
+    reply: string;
+    satisfied: boolean;
+    capturedAnswer: string;
+    resistance: string;
+    crisis: boolean;
+    roundsLeft: number;
+  }>)({
     data: {
       targetQuestion: "Growing up, what were your real fears?",
       context: "Factor One",
       round: 1,
-      transcript: [{ role: "user" as const, content: "I was scared of my father's temper." }],
+      transcript: [{ role: "user", content: "I was scared of my father's temper." }],
       ...over,
     },
   });
+
 
 beforeEach(() => {
   calls.length = 0;
