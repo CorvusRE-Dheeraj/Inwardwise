@@ -113,10 +113,14 @@ export function MIInterview({
 
   return (
     <div className="space-y-4">
+      <p className="rounded-lg border border-[color:var(--rule)] bg-white/40 px-4 py-3 text-[13px] leading-relaxed text-justify text-[color:var(--muted-foreground)]">
+        {MI_PRIVACY_NOTICE}
+      </p>
       <div
         ref={scrollRef}
         className="max-h-[420px] space-y-4 overflow-y-auto rounded-lg border border-[color:var(--rule)] bg-white/60 p-5"
       >
+
         {turns.map((t, i) => (
           <div
             key={i}
