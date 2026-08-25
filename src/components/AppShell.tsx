@@ -63,7 +63,7 @@ export function AppShell({ children }: { children: ReactNode }) {
     { to: "/areas", label: "Services" },
     { to: "/science", label: "Science" },
     { to: "/history", label: "Message from Founder" },
-    { to: "/testimonials", label: "Feedback" },
+    { to: "/testimonials", label: "Voices" },
     { to: "/pricing", label: "Pricing" },
     ...(user ? [{ to: "/account", label: "Account" }] : []),
     ...(isAdmin ? [{ to: "/admin", label: "Admin" }] : []),
