@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Mic, Square } from "lucide-react";
 import { useServerFn } from "@tanstack/react-start";
 import { miInterviewTurn } from "@/lib/mi.functions";
-import { buildMiOpening, MI_MAX_ROUNDS } from "@/lib/mi-filter";
+import { buildMiOpening, MI_MAX_ROUNDS, MI_PRIVACY_NOTICE } from "@/lib/mi-filter";
 import { startRecording, transcribe, type Recorder } from "@/lib/voice";
 
 export interface MIInterviewProps {
@@ -113,10 +113,14 @@ export function MIInterview({
 
   return (
     <div className="space-y-4">
+      <p className="rounded-lg border border-[color:var(--rule)] bg-white/40 px-4 py-3 text-[13px] leading-relaxed text-justify text-[color:var(--muted-foreground)]">
+        {MI_PRIVACY_NOTICE}
+      </p>
       <div
         ref={scrollRef}
         className="max-h-[420px] space-y-4 overflow-y-auto rounded-lg border border-[color:var(--rule)] bg-white/60 p-5"
       >
+
         {turns.map((t, i) => (
           <div
             key={i}
