@@ -18,7 +18,7 @@ export const Route = createFileRoute("/areas/$slug")({
   }),
   notFoundComponent: () => (
     <div>
-      <h1 className="font-display text-3xl">Area not found</h1>
+      <h1 className="text-3xl">Area not found</h1>
       <Link to="/areas" className="mt-4 inline-flex items-center gap-2 text-sm text-accent">
         <ArrowLeft className="h-4 w-4" /> Back to areas
       </Link>
@@ -26,7 +26,7 @@ export const Route = createFileRoute("/areas/$slug")({
   ),
   errorComponent: ({ error }) => (
     <div>
-      <h1 className="font-display text-3xl">Something went wrong</h1>
+      <h1 className="text-3xl">Something went wrong</h1>
       <p className="mt-2 text-sm text-muted-foreground">{error.message}</p>
     </div>
   ),
