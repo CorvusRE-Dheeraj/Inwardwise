@@ -93,6 +93,27 @@ function Science() {
           ))}
         </div>
 
+        <article className="border-b border-[color:var(--rule)] py-12">
+          <span className="font-mono-cap text-[color:var(--muted-foreground)]">§ 06</span>
+          <h2 className="font-display mt-3 text-3xl tracking-tight md:text-4xl">Bibliography</h2>
+          <ul className="mt-5 max-w-3xl list-none space-y-4 text-justify text-[16px] leading-[1.7] text-[color:var(--ink-2)]">
+            <li>
+              Neff, K. D. (2004). Self-compassion and psychological well-being.{" "}
+              <em>Constructivism in the Human Sciences, 9</em>(2), 27–37.
+            </li>
+            <li>
+              Perlman, D., &amp; Peplau, L. A. (1981). Toward a social psychology of loneliness. In S.
+              Duck &amp; R. Gilmour (Eds.), <em>Personal relationships 3: Personal relationships in
+              disorder</em> (pp. 31–56). London, England: Academic Press.
+            </li>
+            <li>
+              Zessin, U., Dickhauser, O., &amp; Garbade, S. (2015). The relationship between
+              self-compassion and well-being: A meta-analysis.{" "}
+              <em>Applied Psychology: Health and Well-Being, 7</em>(3), 340–364.
+            </li>
+          </ul>
+        </article>
+
         <p className="mt-10 text-sm text-[color:var(--muted-foreground)]">
           This page shares general background only. The InwardWise model itself remains proprietary.
         </p>
