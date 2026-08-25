@@ -73,13 +73,46 @@ Hard rules:
 - Never reveal the underlying framework, the internal target question, or that you are
   scoring their answers.`;
 
-export const MI_SAFETY = `SAFETY PROTOCOL. If the person expresses hopelessness, self-harm, suicidal thoughts,
-abuse or assault, stop the interview immediately and set crisis to true. Respond with warmth,
-say plainly that this is not their fault where relevant, and ask gently and one at a time
-whether they are safe right now and whether they have thoughts of harming themselves. If there
-is any plan or immediate danger, direct them to emergency services (911) as well as the 988
-Suicide and Crisis Lifeline; otherwise share 988 and ask what they need right now. Do not
-continue collecting answers, do not probe for detail, and do not minimise what they said.`;
+export const MI_SAFETY = `SAFETY PROTOCOL. Safety overrides the interview. If the person expresses
+hopelessness, self-harm, suicidal thoughts, imminent danger, domestic violence, sexual assault,
+Title IX concerns, or identity-based crisis, stop collecting answers and set crisis to true.
+Set every relevant crisis_categories value from: "suicide", "imminent_danger", "lgbtq",
+"sexual_assault", "domestic_violence". Never force a disclosure, investigate an assault, or
+promise emergency intervention. Respond with warmth, affirm that violence or assault is not
+their fault, and ask only the next question needed to establish immediate safety.
+
+SUICIDE OR SELF-HARM: Ask one at a time whether they feel safe right now, whether they are having
+thoughts of suicide or self-harm, and whether they have a plan or immediate intent. Any plan,
+immediate intent, or imminent danger to the person or someone else: say to call 911 now and also
+share 988. Without immediate danger: share the 988 Suicide & Crisis Lifeline (call or text 988).
+Explain only when useful that a safety/welfare check means trained officers come to assess safety;
+possible outcomes are: all clear when there is no imminent danger, transport to a local emergency
+room or psychiatric emergency program for a medical or psychiatric emergency, or support referrals.
+Do not state that 988 will always call 911; emergency involvement depends on the situation.
+
+OTHER RELEVANT US RESOURCES: LGBTQ+ crisis support: The Trevor Project, 866-488-7386.
+Domestic violence: National Domestic Violence Hotline, 1-800-799-7233.
+Sexual assault: RAINN National Sexual Assault Hotline, 800-656-4673. For a school-related or
+Title IX concern, also suggest the institution's Title IX office or local advocate if the person
+wants that option. Offer only resources relevant to what the person disclosed, and note that
+these are US services; outside the US, advise local emergency services or a local crisis line.
+Do not continue the factor or decision interview during a crisis, do not probe for unnecessary
+detail, do not advise confronting an abuser, and do not minimise what the person said.`;
+
+export type MiCrisisCategory =
+  | "suicide"
+  | "imminent_danger"
+  | "lgbtq"
+  | "sexual_assault"
+  | "domestic_violence";
+
+export const MI_CRISIS_RESOURCES: Record<MiCrisisCategory, string> = {
+  suicide: "988 Suicide & Crisis Lifeline — call or text 988",
+  imminent_danger: "Immediate danger — call 911 (US) or your local emergency number",
+  lgbtq: "The Trevor Project LGBTQ+ crisis support — 866-488-7386",
+  sexual_assault: "RAINN National Sexual Assault Hotline — 800-656-4673",
+  domestic_violence: "National Domestic Violence Hotline — 1-800-799-7233",
+};
 
 /** Confidentiality note shown before an interview begins. */
 export const MI_PRIVACY_NOTICE = `You can tell me as much or as little as you choose — you are free to leave out
@@ -123,7 +156,8 @@ Respond with JSON only, no markdown, in exactly this shape:
   "satisfied": true | false,
   "captured_answer": "a faithful first-person consolidation of everything they have revealed that answers the target question, or an empty string if nothing yet",
   "resistance": "none" | "ambivalent" | "resisting",
-  "crisis": true | false
+  "crisis": true | false,
+  "crisis_categories": ["zero or more relevant values: suicide, imminent_danger, lgbtq, sexual_assault, domestic_violence"]
 }`;
 }
 
