@@ -35,6 +35,7 @@ export const Route = createFileRoute("/areas/$slug")({
 
 function AreaPage() {
   const area = Route.useLoaderData();
+  const titleFont = area.slug === "political-decisions" ? "font-sans" : "font-display";
 
   return (
     <article className="mx-auto max-w-3xl">
@@ -42,10 +43,10 @@ function AreaPage() {
         <ArrowLeft className="h-3.5 w-3.5" /> All areas
       </Link>
       <p className="mt-6 text-xs uppercase tracking-[0.18em] text-muted-foreground">Area</p>
-      <h1 className="font-display mt-2 text-4xl sm:text-5xl">{area.name}</h1>
+      <h1 className={`${titleFont} mt-2 text-4xl sm:text-5xl`}>{area.name}</h1>
       {area.slug === "political-decisions" && (
         <>
-          <h2 className="font-display mt-2 text-2xl sm:text-3xl">From taking sides to solving the real problem</h2>
+          <h2 className="font-sans mt-2 text-2xl sm:text-3xl">From taking sides to solving the real problem</h2>
           <p className="mt-3 text-justify text-lg text-muted-foreground">
             Our method systematically opens that possibility of moving from having to take a side,
             even if it is political ideology, to actual problem solving which does not have a side.
