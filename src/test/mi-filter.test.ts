@@ -18,7 +18,7 @@ const prompt = buildMiSystemPrompt({
 const TEN_FILTERS: Array<[string, RegExp[]]> = [
   ["Rapport (Carnegie)", [/no criticism, condemnation or blame/i, /never say "you are wrong"/i]],
   ["Motivational interviewing core (QARS/OARS)", [/QARS \/ OARS/i, /cultivate change talk/i]],
-  ["Tactical empathy", [/label likely emotions/i, /calibrated what\/how questions/i]],
+  ["Tactical empathy", [/label likely emotions/i, /calibrated what\/how\s+questions/i]],
   ["Active listening", [/separate facts, emotions, needs/i, /still explaining/i]],
   ["Non-violent communication", [/separate observation from judgement/i, /requests not demands/i]],
   ["Ethical influence (Cialdini)", [/never fabricate scarcity, social proof/i]],
