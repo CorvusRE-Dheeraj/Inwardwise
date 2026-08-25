@@ -322,8 +322,7 @@ function PoliticalDecisionsContent() {
       </p>
 
       <div className="glass rounded-3xl p-6">
-        <h2 className="font-display text-2xl">From taking sides to solving the real problem</h2>
-        <p className="mt-3 text-justify text-sm text-muted-foreground">
+        <p className="text-justify text-sm text-muted-foreground">
           Our method systematically opens that possibility of moving from having to take a side,
           even if it is political ideology, to actual problem solving which does not have a side.
           The goal is not to win an argument. It is to make the original problem visible enough
