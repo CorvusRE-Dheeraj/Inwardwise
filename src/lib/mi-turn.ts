@@ -1,7 +1,11 @@
 // Pure MI interview turn logic — no framework/runtime dependencies, so it is
 // directly unit-testable and reused by the miInterviewTurn server function.
 import { z } from "zod";
-import { buildMiSystemPrompt, MI_MAX_ROUNDS } from "@/lib/mi-filter";
+import {
+  buildMiSystemPrompt,
+  MI_MAX_ROUNDS,
+  type MiCrisisCategory,
+} from "@/lib/mi-filter";
 
 const TurnSchema = z.object({
   role: z.enum(["user", "assistant"]),
@@ -23,8 +27,17 @@ export interface MiTurnResult {
   capturedAnswer: string;
   resistance: "none" | "ambivalent" | "resisting";
   crisis: boolean;
+  crisisCategories: MiCrisisCategory[];
   roundsLeft: number;
 }
+
+const CRISIS_CATEGORIES: MiCrisisCategory[] = [
+  "suicide",
+  "imminent_danger",
+  "lgbtq",
+  "sexual_assault",
+  "domestic_violence",
+];
 
 export async function runMiTurn(data: MiTurnInput, apiKey: string): Promise<MiTurnResult> {
   const system = buildMiSystemPrompt({
@@ -79,6 +92,12 @@ export async function runMiTurn(data: MiTurnInput, apiKey: string): Promise<MiTu
   }
 
   const resistance = parsed["resistance"];
+  const parsedCategories = Array.isArray(parsed["crisis_categories"])
+    ? parsed["crisis_categories"].filter(
+        (value): value is MiCrisisCategory =>
+          typeof value === "string" && CRISIS_CATEGORIES.includes(value as MiCrisisCategory),
+      )
+    : [];
   return {
     reply:
       typeof parsed["reply"] === "string" && parsed["reply"].trim()
@@ -89,6 +108,7 @@ export async function runMiTurn(data: MiTurnInput, apiKey: string): Promise<MiTu
       typeof parsed["captured_answer"] === "string" ? (parsed["captured_answer"] as string) : "",
     resistance: resistance === "ambivalent" || resistance === "resisting" ? resistance : "none",
     crisis: parsed["crisis"] === true,
+    crisisCategories: parsedCategories,
     roundsLeft: Math.max(0, MI_MAX_ROUNDS - data.round),
   };
 }

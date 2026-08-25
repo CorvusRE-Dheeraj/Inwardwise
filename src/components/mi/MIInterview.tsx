@@ -2,7 +2,13 @@ import { useEffect, useRef, useState } from "react";
 import { Mic, Square } from "lucide-react";
 import { useServerFn } from "@tanstack/react-start";
 import { miInterviewTurn } from "@/lib/mi.functions";
-import { buildMiOpening, MI_MAX_ROUNDS, MI_PRIVACY_NOTICE } from "@/lib/mi-filter";
+import {
+  buildMiOpening,
+  MI_CRISIS_RESOURCES,
+  MI_MAX_ROUNDS,
+  MI_PRIVACY_NOTICE,
+  type MiCrisisCategory,
+} from "@/lib/mi-filter";
 import { startRecording, transcribe, type Recorder } from "@/lib/voice";
 
 export interface MIInterviewProps {
@@ -43,6 +49,7 @@ export function MIInterview({
   const [captured, setCaptured] = useState(initialAnswer);
   const [satisfied, setSatisfied] = useState(false);
   const [crisis, setCrisis] = useState(false);
+  const [crisisCategories, setCrisisCategories] = useState<MiCrisisCategory[]>([]);
   const [recorder, setRecorder] = useState<Recorder | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -53,6 +60,7 @@ export function MIInterview({
     setRound(1);
     setSatisfied(false);
     setCrisis(false);
+    setCrisisCategories([]);
     setError(null);
     setCaptured(initialAnswer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -80,6 +88,7 @@ export function MIInterview({
         onCapture?.(res.capturedAnswer.trim());
       }
       setCrisis(res.crisis);
+      setCrisisCategories(res.crisisCategories);
       setSatisfied(res.satisfied);
       setRound((r) => Math.min(MI_MAX_ROUNDS, r + 1));
     } catch (e) {
@@ -146,9 +155,20 @@ export function MIInterview({
       </div>
 
       {crisis && (
-        <div className="rounded-md border border-destructive/40 bg-destructive/5 px-4 py-3 text-sm">
-          If you are in immediate danger or thinking of harming yourself, please contact emergency
-          services or call 988 (US suicide and crisis line) now. This interview can wait.
+        <div className="space-y-2 rounded-md border border-destructive/40 bg-destructive/5 px-4 py-3 text-sm">
+          <p className="font-medium">Your safety matters more than this interview.</p>
+          <ul className="list-disc space-y-1 pl-5">
+            {(crisisCategories.length > 0
+              ? crisisCategories
+              : (["suicide", "imminent_danger"] as MiCrisisCategory[])
+            ).map((category) => (
+              <li key={category}>{MI_CRISIS_RESOURCES[category]}</li>
+            ))}
+          </ul>
+          <p className="text-[color:var(--muted-foreground)]">
+            These numbers are for the US. Elsewhere, contact your local emergency service or crisis
+            line. You can pause here and seek support now.
+          </p>
         </div>
       )}
 

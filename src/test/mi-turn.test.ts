@@ -82,6 +82,7 @@ describe("MI interview turn — common user inputs", () => {
     expect(res.satisfied).toBe(true);
     expect(res.capturedAnswer).toContain("temper");
     expect(res.crisis).toBe(false);
+    expect(res.crisisCategories).toEqual([]);
     expect(res.roundsLeft).toBe(MI_MAX_ROUNDS - 1);
   });
 
@@ -112,9 +113,43 @@ describe("MI interview turn — common user inputs", () => {
       captured_answer: "",
       resistance: "none",
       crisis: true,
+      crisis_categories: ["suicide"],
     });
     const res = await turn({ transcript: [{ role: "user", content: "Honestly I have thought about ending it." }] });
     expect(res.crisis).toBe(true);
+    expect(res.crisisCategories).toEqual(["suicide"]);
+  });
+
+  it.each([
+    ["I have a plan to end my life tonight.", ["suicide", "imminent_danger"]],
+    ["My partner hits me and I am scared to go home.", ["domestic_violence"]],
+    ["I was sexually assaulted at school.", ["sexual_assault"]],
+    ["I am LGBTQ and in crisis because my family rejected me.", ["lgbtq"]],
+  ])("preserves relevant crisis routing for: %s", async (content, categories) => {
+    mockGateway({
+      reply: "Thank you for telling me. Are you safe right now?",
+      satisfied: false,
+      captured_answer: "",
+      resistance: "none",
+      crisis: true,
+      crisis_categories: categories,
+    });
+    const res = await turn({ transcript: [{ role: "user", content }] });
+    expect(res.crisis).toBe(true);
+    expect(res.crisisCategories).toEqual(categories);
+  });
+
+  it("drops unknown crisis categories returned by the model", async () => {
+    mockGateway({
+      reply: "Are you safe right now?",
+      satisfied: false,
+      captured_answer: "",
+      resistance: "none",
+      crisis: true,
+      crisis_categories: ["suicide", "unknown"],
+    });
+    const res = await turn();
+    expect(res.crisisCategories).toEqual(["suicide"]);
   });
 
   it("closes out on the final round even if the model does not say satisfied", async () => {

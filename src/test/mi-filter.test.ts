@@ -3,6 +3,7 @@ import {
   buildMiOpening,
   buildMiSystemPrompt,
   MI_FILTER,
+  MI_CRISIS_RESOURCES,
   MI_MAX_ROUNDS,
   MI_PRIVACY_NOTICE,
   MI_SAFETY,
@@ -109,6 +110,23 @@ describe("MI filter — hard rules and safety", () => {
     for (const field of ["reply", "satisfied", "captured_answer", "resistance", "crisis"]) {
       expect(prompt).toContain(`"${field}"`);
     }
+  });
+
+  it("includes the emergency routing and all requested specialist hotlines", () => {
+    expect(MI_SAFETY).toContain("call or text 988");
+    expect(MI_SAFETY).toContain("call 911 now");
+    expect(MI_SAFETY).toContain("866-488-7386");
+    expect(MI_SAFETY).toContain("1-800-799-7233");
+    expect(MI_SAFETY).toContain("800-656-4673");
+    expect(MI_SAFETY).toMatch(/Title IX office/i);
+    expect(MI_SAFETY).toMatch(/safety\/welfare check/i);
+    expect(Object.keys(MI_CRISIS_RESOURCES)).toEqual([
+      "suicide",
+      "imminent_danger",
+      "lgbtq",
+      "sexual_assault",
+      "domestic_violence",
+    ]);
   });
 
   it("offers a privacy notice that promises confidentiality with a safety exception", () => {
