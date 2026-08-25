@@ -188,10 +188,10 @@ function IndividualDevelopmentContent() {
       <p>
         Based on the human prompt, the InwardWise Self will scan across all factors for a better
         understanding of you and try to advise you. These factors are based on reviewing many
-        scientific papers (which can be found in the bibliography below) and a combination of
-        approaches, studying many philosophies, psychological approaches and observational methods.
-        There was no single approach; it came together as a book project by the founder. You
-        won&rsquo;t find this methodology in any single research project or paper.
+        scientific papers and a combination of approaches, studying many philosophies,
+        psychological approaches and observational methods. There was no single approach; it came
+        together as a book project by the founder. You won&rsquo;t find this methodology in any single
+        research project or paper. A full bibliography is available on the Science page.
       </p>
 
       <div className="glass rounded-3xl p-6">
@@ -203,26 +203,6 @@ function IndividualDevelopmentContent() {
           personal conversation with yourself. This builds self-love and a healthy acceptance of
           who you are, not a victim of having to depend on others for acceptance and encouragement.
         </p>
-      </div>
-
-      <div>
-        <h2 className="text-2xl">Bibliography</h2>
-        <ul className="mt-4 space-y-3 text-sm text-muted-foreground">
-          <li>
-            Neff, K. D. (2004). Self-compassion and psychological well-being.{" "}
-            <em>Constructivism in the Human Sciences, 9</em>(2), 27&ndash;37.
-          </li>
-          <li>
-            Perlman, D., &amp; Peplau, L. A. (1981). Toward a social psychology of loneliness. In S.
-            Duck &amp; R. Gilmour (Eds.), <em>Personal relationships 3: Personal relationships in
-            disorder</em> (pp. 31&ndash;56). London, England: Academic Press.
-          </li>
-          <li>
-            Zessin, U., Dickhauser, O., &amp; Garbade, S. (2015). The relationship between
-            self-compassion and well-being: A meta-analysis.{" "}
-            <em>Applied Psychology: Health and Well-Being, 7</em>(3), 340&ndash;364.
-          </li>
-        </ul>
       </div>
     </div>
   );
