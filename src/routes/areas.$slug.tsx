@@ -44,7 +44,15 @@ function AreaPage() {
       <p className="mt-6 text-xs uppercase tracking-[0.18em] text-muted-foreground">Area</p>
       <h1 className="font-display mt-2 text-4xl sm:text-5xl">{area.name}</h1>
       {area.slug === "political-decisions" && (
-        <h2 className="font-display mt-2 text-2xl sm:text-3xl">From taking sides to solving the real problem</h2>
+        <>
+          <h2 className="font-display mt-2 text-2xl sm:text-3xl">From taking sides to solving the real problem</h2>
+          <p className="mt-3 text-justify text-lg text-muted-foreground">
+            Our method systematically opens that possibility of moving from having to take a side,
+            even if it is political ideology, to actual problem solving which does not have a side.
+            The goal is not to win an argument. It is to make the original problem visible enough
+            that the argument becomes unnecessary.
+          </p>
+        </>
       )}
       <p className="mt-4 text-justify text-lg text-muted-foreground">{area.blurb}</p>
 
