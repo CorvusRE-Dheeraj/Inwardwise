@@ -26,14 +26,31 @@ export function AppShell({ children }: { children: ReactNode }) {
   }, []);
 
   useEffect(() => {
-    if (!user) { setIsAdmin(false); return; }
+    if (!user) {
+      setIsAdmin(false);
+      return;
+    }
     let cancelled = false;
-    supabase.from("user_roles").select("role").eq("user_id", user.id).eq("role", "admin").maybeSingle()
-      .then(({ data }) => { if (!cancelled) setIsAdmin(!!data); });
-    return () => { cancelled = true; };
+    supabase
+      .from("user_roles")
+      .select("role")
+      .eq("user_id", user.id)
+      .eq("role", "admin")
+      .maybeSingle()
+      .then(({ data }) => {
+        if (!cancelled) setIsAdmin(!!data);
+      });
+    return () => {
+      cancelled = true;
+    };
   }, [user]);
 
-  useEffect(() => { setMenuOpen(false); setStartOpen(false); setMobileStartOpen(false); setProductsOpen(false); }, [pathname]);
+  useEffect(() => {
+    setMenuOpen(false);
+    setStartOpen(false);
+    setMobileStartOpen(false);
+    setProductsOpen(false);
+  }, [pathname]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -46,7 +63,7 @@ export function AppShell({ children }: { children: ReactNode }) {
     { to: "/areas", label: "Services" },
     { to: "/science", label: "Science" },
     { to: "/history", label: "Message from Founder" },
-    { to: "/testimonials", label: "Voices" },
+    { to: "/testimonials", label: "Feedback" },
     { to: "/pricing", label: "Pricing" },
     ...(user ? [{ to: "/account", label: "Account" }] : []),
     ...(isAdmin ? [{ to: "/admin", label: "Admin" }] : []),
@@ -60,7 +77,6 @@ export function AppShell({ children }: { children: ReactNode }) {
     { to: "/connect", label: "Connect" },
   ];
 
-
   const startActive = startMenu.some((item) => isActive(item.to));
   const topLevelNav = nav;
   const mobileNav: { to: string; label: string; external?: boolean }[] = [
@@ -70,7 +86,6 @@ export function AppShell({ children }: { children: ReactNode }) {
     { to: "/feedback", label: "Feedback" },
     { to: "/contact", label: "Contact Us" },
   ];
-
 
   function isActive(to: string): boolean {
     return pathname === to || (to !== "/" && pathname.startsWith(to));
@@ -86,7 +101,9 @@ export function AppShell({ children }: { children: ReactNode }) {
     <div className="relative min-h-screen">
       <header
         className={`sticky top-0 z-40 w-full transition-colors duration-300 ${
-          scrolled ? "bg-[color:var(--paper)]/85 backdrop-blur-md border-b border-[color:var(--rule)]" : "bg-transparent"
+          scrolled
+            ? "bg-[color:var(--paper)]/85 backdrop-blur-md border-b border-[color:var(--rule)]"
+            : "bg-transparent"
         }`}
       >
         <div className="mx-auto flex w-[min(1280px,calc(100%-2rem))] items-center justify-between py-4 md:py-5">
@@ -99,19 +116,13 @@ export function AppShell({ children }: { children: ReactNode }) {
           </Link>
 
           <nav className="hidden items-center gap-7 md:flex">
-            <div
-              className="relative"
-              onMouseEnter={() => setStartOpen(true)}
-              onMouseLeave={() => setStartOpen(false)}
-            >
+            <div className="relative" onMouseEnter={() => setStartOpen(true)} onMouseLeave={() => setStartOpen(false)}>
               <button
                 onClick={() => setStartOpen((v) => !v)}
                 aria-expanded={startOpen}
                 aria-haspopup="menu"
                 className={`inline-flex items-center gap-2 rounded-full px-6 py-2.5 text-[15px] tracking-wide transition hover:opacity-90 ${
-                  startActive
-                    ? "bg-[color:var(--ink)] text-[color:var(--paper)]"
-                    : "bg-[color:var(--royal)] text-white"
+                  startActive ? "bg-[color:var(--ink)] text-[color:var(--paper)]" : "bg-[color:var(--royal)] text-white"
                 }`}
               >
                 Start
@@ -127,7 +138,8 @@ export function AppShell({ children }: { children: ReactNode }) {
                         onClick={() => setStartOpen(false)}
                         className={`block py-3 text-[14px] text-[color:var(--ink)] transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)] ${item.sub ? "pl-9 pr-5 text-[13px] text-[color:var(--muted-foreground)]" : "px-5"}`}
                       >
-                        {item.sub ? "↳ " : ""}{item.label}
+                        {item.sub ? "↳ " : ""}
+                        {item.label}
                       </Link>
                     ))}
                   </div>
@@ -170,7 +182,8 @@ export function AppShell({ children }: { children: ReactNode }) {
                         onClick={() => setProductsOpen(false)}
                         className={`block py-3 text-[14px] text-[color:var(--ink)] transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)] ${item.sub ? "pl-9 pr-5 text-[13px] text-[color:var(--muted-foreground)]" : "px-5"}`}
                       >
-                        {item.sub ? "↳ " : ""}{item.label}
+                        {item.sub ? "↳ " : ""}
+                        {item.label}
                       </Link>
                     ))}
                   </div>
@@ -178,12 +191,12 @@ export function AppShell({ children }: { children: ReactNode }) {
               )}
             </div>
 
-
-
             {topLevelNav.map((item) => {
               const active = isActive(item.to);
               const className = `group relative text-[13px] tracking-wide transition ${
-                active ? "text-[color:var(--ink)]" : "text-[color:var(--muted-foreground)] hover:text-[color:var(--ink)]"
+                active
+                  ? "text-[color:var(--ink)]"
+                  : "text-[color:var(--muted-foreground)] hover:text-[color:var(--ink)]"
               }`;
               const underline = (
                 <span
@@ -248,8 +261,8 @@ export function AppShell({ children }: { children: ReactNode }) {
                         to={item.to}
                         className={`text-[14px] text-[color:var(--muted-foreground)] transition hover:text-[color:var(--ink)] ${item.sub ? "pl-4 text-[13px]" : ""}`}
                       >
-                        {item.sub ? "↳ " : ""}{item.label}
-
+                        {item.sub ? "↳ " : ""}
+                        {item.label}
                       </Link>
                     ))}
                   </div>
@@ -276,11 +289,17 @@ export function AppShell({ children }: { children: ReactNode }) {
               </nav>
               <div className="mt-5 flex gap-3">
                 {!user && (
-                  <Link to="/auth" className="flex-1 rounded-full border border-[color:var(--rule)] px-4 py-2 text-center text-[13px]">
+                  <Link
+                    to="/auth"
+                    className="flex-1 rounded-full border border-[color:var(--rule)] px-4 py-2 text-center text-[13px]"
+                  >
                     Sign in
                   </Link>
                 )}
-                <Link to="/decision" className="flex-1 rounded-full bg-[color:var(--royal)] px-4 py-2 text-center text-[14px] text-white">
+                <Link
+                  to="/decision"
+                  className="flex-1 rounded-full bg-[color:var(--royal)] px-4 py-2 text-center text-[14px] text-white"
+                >
                   Decision
                 </Link>
               </div>
@@ -294,7 +313,9 @@ export function AppShell({ children }: { children: ReactNode }) {
       <footer className="mt-24 rule-top">
         <div className="mx-auto grid w-[min(1280px,calc(100%-2rem))] grid-cols-1 gap-8 py-12 md:grid-cols-4">
           <div>
-            <div className="font-display text-xl">Inward<span className="italic text-[color:var(--royal)]">Wise</span></div>
+            <div className="font-display text-xl">
+              Inward<span className="italic text-[color:var(--royal)]">Wise</span>
+            </div>
             <p className="mt-3 text-sm text-[color:var(--muted-foreground)]">
               A laboratory for thinking. Removing bias, fear, and ego — one decision at a time.
             </p>
@@ -302,25 +323,77 @@ export function AppShell({ children }: { children: ReactNode }) {
           <div>
             <div className="font-mono-cap mb-3">Explore</div>
             <ul className="space-y-2 text-sm">
-              <li><Link to="/products" className="hover:text-[color:var(--royal)]">Products</Link></li>
-              <li><Link to="/decision" className="hover:text-[color:var(--royal)]">Start a decision</Link></li>
-              <li><Link to="/areas" className="hover:text-[color:var(--royal)]">Services</Link></li>
-              <li><Link to="/avatar/ask" className="hover:text-[color:var(--royal)]">Self Aware</Link></li>
-              <li className="pl-4"><Link to="/meditation" className="hover:text-[color:var(--royal)]">↳ Meditation</Link></li>
+              <li>
+                <Link to="/products" className="hover:text-[color:var(--royal)]">
+                  Products
+                </Link>
+              </li>
+              <li>
+                <Link to="/decision" className="hover:text-[color:var(--royal)]">
+                  Start a decision
+                </Link>
+              </li>
+              <li>
+                <Link to="/areas" className="hover:text-[color:var(--royal)]">
+                  Services
+                </Link>
+              </li>
+              <li>
+                <Link to="/avatar/ask" className="hover:text-[color:var(--royal)]">
+                  Self Aware
+                </Link>
+              </li>
+              <li className="pl-4">
+                <Link to="/meditation" className="hover:text-[color:var(--royal)]">
+                  ↳ Meditation
+                </Link>
+              </li>
 
-              <li><Link to="/examples" className="hover:text-[color:var(--royal)]">Examples</Link></li>
-              <li><Link to="/science" className="hover:text-[color:var(--royal)]">Science</Link></li>
-              <li><Link to="/history" className="hover:text-[color:var(--royal)]">Message from Founder</Link></li>
+              <li>
+                <Link to="/examples" className="hover:text-[color:var(--royal)]">
+                  Examples
+                </Link>
+              </li>
+              <li>
+                <Link to="/science" className="hover:text-[color:var(--royal)]">
+                  Science
+                </Link>
+              </li>
+              <li>
+                <Link to="/history" className="hover:text-[color:var(--royal)]">
+                  Message from Founder
+                </Link>
+              </li>
             </ul>
           </div>
           <div>
             <div className="font-mono-cap mb-3">Community</div>
             <ul className="space-y-2 text-sm">
-              <li><Link to="/testimonials" className="hover:text-[color:var(--royal)]">Voices</Link></li>
-              <li><Link to="/feedback" className="hover:text-[color:var(--royal)]">Feedback</Link></li>
-              <li><Link to="/donate" className="hover:text-[color:var(--royal)]">Donate</Link></li>
-              <li><Link to="/pricing" className="hover:text-[color:var(--royal)]">Pricing</Link></li>
-              <li><Link to="/contact" className="hover:text-[color:var(--royal)]">Contact Us</Link></li>
+              <li>
+                <Link to="/testimonials" className="hover:text-[color:var(--royal)]">
+                  Voices
+                </Link>
+              </li>
+              <li>
+                <Link to="/feedback" className="hover:text-[color:var(--royal)]">
+                  Feedback
+                </Link>
+              </li>
+              <li>
+                <Link to="/donate" className="hover:text-[color:var(--royal)]">
+                  Donate
+                </Link>
+              </li>
+              <li>
+                <Link to="/pricing" className="hover:text-[color:var(--royal)]">
+                  Pricing
+                </Link>
+              </li>
+              <li>
+                <Link to="/contact" className="hover:text-[color:var(--royal)]">
+                  Contact Us
+                </Link>
+              </li>
             </ul>
           </div>
           <div>
