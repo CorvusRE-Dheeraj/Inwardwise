@@ -1,5 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { ArrowLeft, Sparkles } from "lucide-react";
+import { ArrowLeft, ArrowRight, Sparkles } from "lucide-react";
 import { findArea } from "@/lib/areas";
 
 export const Route = createFileRoute("/areas/$slug")({
@@ -83,12 +83,21 @@ function AreaPage() {
       )}
 
       <div className="mt-10">
-        <Link
-          to="/account/self-avatar"
-          className="inline-flex items-center gap-2 rounded-full bg-foreground px-4 py-2 text-sm text-background transition hover:opacity-90"
-        >
-          <Sparkles className="h-4 w-4" /> Design Your InwardWise Self
-        </Link>
+        {area.slug === "political-decisions" ? (
+          <Link
+            to="/decision"
+            className="inline-flex items-center gap-2 rounded-full bg-foreground px-4 py-2 text-sm text-background transition hover:opacity-90"
+          >
+            Start a Decision <ArrowRight className="h-4 w-4" />
+          </Link>
+        ) : (
+          <Link
+            to="/account/self-avatar"
+            className="inline-flex items-center gap-2 rounded-full bg-foreground px-4 py-2 text-sm text-background transition hover:opacity-90"
+          >
+            <Sparkles className="h-4 w-4" /> Design Your InwardWise Self
+          </Link>
+        )}
       </div>
     </article>
   );
