@@ -53,8 +53,6 @@ function AreaPage() {
           </p>
         </>
       )}
-      <p className="mt-4 text-justify text-lg text-muted-foreground">{area.blurb}</p>
-
       {area.slug === "individual-development" ? (
         <IndividualDevelopmentContent />
       ) : area.slug === "individual-wellbeing" ? (
@@ -77,6 +75,7 @@ function AreaPage() {
         <EthicsCounselingContent />
       ) : (
         <div className="mt-10 glass rounded-3xl p-6 text-sm text-muted-foreground">
+          <p className="mb-4 text-justify text-lg text-muted-foreground">{area.blurb}</p>
           Content for this area is being developed. In the meantime, you can start a facilitated
           decision session and select <span className="text-foreground">{area.name}</span> as your context.
         </div>

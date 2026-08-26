@@ -655,6 +655,24 @@ export type Database = {
           suggestions: string
         }[]
       }
+      get_published_stories: {
+        Args: never
+        Returns: {
+          action_taken: string
+          advice: string
+          audio_url: string
+          category: string
+          created_at: string
+          fear: string
+          id: string
+          is_published: boolean
+          lesson: string
+          moderation_status: string
+          outcome: string
+          pseudonym: string
+          situation: string
+        }[]
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
