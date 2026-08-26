@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import type { Database } from "@/integrations/supabase/types";
 import {
   aggregateInsight,
   categoryFor,
@@ -14,6 +15,11 @@ import {
   readingFor,
   supportOptionsFor,
 } from "./connect-matching";
+
+type PublishedStory = Omit<
+  Database["public"]["Tables"]["connect_stories"]["Row"],
+  "owner_user_id"
+>;
 
 const promptSchema = z.object({ prompt: z.string().trim().min(8).max(4000) });
 
