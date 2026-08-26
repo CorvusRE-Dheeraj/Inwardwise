@@ -632,33 +632,7 @@ export type Database = {
       }
     }
     Views: {
-      public_feedback: {
-        Row: {
-          created_at: string | null
-          id: string | null
-          improved: string | null
-          paid: string | null
-          recommend: string | null
-          suggestions: string | null
-        }
-        Insert: {
-          created_at?: string | null
-          id?: string | null
-          improved?: string | null
-          paid?: string | null
-          recommend?: string | null
-          suggestions?: string | null
-        }
-        Update: {
-          created_at?: string | null
-          id?: string | null
-          improved?: string | null
-          paid?: string | null
-          recommend?: string | null
-          suggestions?: string | null
-        }
-        Relationships: []
-      }
+      [_ in never]: never
     }
     Functions: {
       delete_email: {
@@ -669,6 +643,17 @@ export type Database = {
       enqueue_email: {
         Args: { payload: Json; queue_name: string }
         Returns: number
+      }
+      get_public_feedback: {
+        Args: { _limit?: number }
+        Returns: {
+          created_at: string
+          id: string
+          improved: string
+          paid: string
+          recommend: string
+          suggestions: string
+        }[]
       }
       has_role: {
         Args: {
