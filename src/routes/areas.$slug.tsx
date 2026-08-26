@@ -196,12 +196,12 @@ function IndividualDevelopmentContent() {
       </figure>
 
       <p>
-        Based on the human prompt, the InwardWise Self will scan across all factors for a better
-        understanding of you and try to advise you. These factors are based on reviewing many
-        scientific papers and a combination of approaches, studying many philosophies,
-        psychological approaches and observational methods. There was no single approach; it came
-        together as a book project by the founder. You won&rsquo;t find this methodology in any single
-        research project or paper. A full bibliography is available on the Science page.
+        Based on your prompt, the InwardWise Self will scan across all factors for a better
+        understanding of you and advise you. These factors are based on reviewing many scientific
+        papers and a combination of intuitive approaches studying many philosophies, psychological
+        approaches and observational methods. There was no single approach; it came together as a
+        book project by the founder to assemble all of the material for the book he is working on.
+        You won&rsquo;t find this methodology in any single research.
       </p>
 
       <div className="glass rounded-3xl p-6">
