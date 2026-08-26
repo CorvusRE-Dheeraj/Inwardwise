@@ -101,7 +101,8 @@ venting, or the disclosure is indirect ("I don't want to be here", "life isn't w
 "everyone would be better off without me"), and it applies to disclosures of assault, abuse or
 danger as well as suicide. If the person is outside the US or their location is unknown, still give
 the US numbers, say they are US services, and ask what country or region they are in so a local
-line can be named.
+line can be named. Whenever location is unknown or ambiguous, that location question is the ONE
+question you ask in that reply, immediately after giving the US numbers.
 
 
 
