@@ -57,13 +57,10 @@ function Testimonials() {
   useEffect(() => {
     let cancelled = false;
     supabase
-      .from("public_feedback")
-      .select("id, improved, paid, recommend, suggestions, created_at")
-      .order("created_at", { ascending: false })
-      .limit(100)
+      .rpc("get_public_feedback", { _limit: 100 })
       .then(({ data }) => {
         if (cancelled) return;
-        setRows((data as FeedbackRow[]) ?? []);
+        setRows((data as unknown as FeedbackRow[]) ?? []);
         setLoading(false);
       });
     return () => {
