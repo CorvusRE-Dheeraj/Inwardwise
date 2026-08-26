@@ -182,10 +182,12 @@ export const MI_CRISIS_RESOURCES: Record<MiCrisisCategory, string> = {
 };
 
 /** Confidentiality note shown before an interview begins. */
-export const MI_PRIVACY_NOTICE = `You can tell me as much or as little as you choose — you are free to leave out
-names or specific places. What you write here is yours; it is not shared with your friends,
-family, or anyone who does not need to know. The one exception is safety: if you or someone
-else appears to be in danger, I will point you to emergency help rather than continue.`;
+export const MI_PRIVACY_NOTICE = `Before we begin, here is how this works. You can tell me as much or as
+little as you choose, and you are free to leave out names or specific places. What you write here is
+yours; I am not going to tell your friends, your family, or anyone else who does not need to know.
+The only exceptions are safety ones: child abuse, gender-based violence such as sexual assault, or a
+sense that your safety or someone else's is at risk. In those cases I will point you to emergency
+help rather than continue the interview. Does that sound okay?`;
 
 export const MI_MAX_ROUNDS = 10;
 
