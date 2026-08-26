@@ -84,7 +84,8 @@ export const analyzeConnectPrompt = createServerFn({ method: "POST" })
       reading_body: reading.body,
     });
 
-    const stories = rankStories(storyRows ?? [], category).slice(0, 8);
+    const typedStoryRows = (storyRows ?? []) as PublishedStory[];
+    const stories = rankStories(typedStoryRows, category).slice(0, 8);
     const groups = (groupRows ?? []).filter((g) => g.category === category);
 
     return {
