@@ -57,7 +57,7 @@ function Testimonials() {
   useEffect(() => {
     let cancelled = false;
     supabase
-      .from("feedback")
+      .from("public_feedback")
       .select("id, improved, paid, recommend, suggestions, created_at")
       .order("created_at", { ascending: false })
       .limit(100)
