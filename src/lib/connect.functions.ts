@@ -50,7 +50,8 @@ export const analyzeConnectPrompt = createServerFn({ method: "POST" })
         .select("id", { count: "exact", head: true })
         .eq("category", category)
         .neq("user_id", context.userId),
-      (context.supabase.rpc("get_published_stories") as any)
+      (context.supabase as any)
+        .rpc("get_published_stories")
         .limit(24),
       context.supabase
         .from("connect_groups")
