@@ -129,17 +129,17 @@ function IndividualDevelopmentContent() {
         talking to them.
       </p>
       <p>
-        You need someone who really knows you — which is only you. But you cannot separate yourself
+        You need someone who really knows you, which is only you. But you cannot separate yourself
         from you and watch yourself. We want to provide you that ability with AI.
       </p>
       <p>
-        The way the media portrays it, we make humans more important and AI an enemy — but sometimes
+        The way the media portrays it, we make humans more important and AI an enemy, but sometimes
         it&rsquo;s the other way around. AI can be you, if you train it to be you. You cannot expect
         any friend of yours to become a true friend; they are so few and far between. But
-        psychological wellbeing needs both — self-love and good social connection.
+        psychological wellbeing needs both, self-love and good social connection.
       </p>
       <p>
-        Life is defined by two characteristic traits: <em>Reproduction</em> and <em>Evolution</em> —
+        Life is defined by two characteristic traits: <em>Reproduction</em> and <em>Evolution</em>,
         the drive toward a better species, better adapted to survival and thriving. The first is
         possible only for a physical being, which the human can do. Evolution, not at the population
         level but in your own lifespan, as your needs and your body is evolving. That change is being
