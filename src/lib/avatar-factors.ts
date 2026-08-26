@@ -53,6 +53,12 @@ export const AVATAR_DIMENSIONS: AvatarDimension[] = [
         prompt:
           "What “bad behaviour” did you have as a child — and how would you describe it charitably, as a protective response rather than a flaw?",
       },
+      {
+        key: "d1_q5",
+        opening:
+          "Now the other side of it: what did you do back then that you felt genuinely good about?",
+        prompt: "Growing up, between the ages of five and fifteen, what were you proud of?",
+      },
     ],
   },
   {
@@ -63,7 +69,8 @@ export const AVATAR_DIMENSIONS: AvatarDimension[] = [
     oneLine: "Private. Encrypted with your PIN. Visible only to you.",
     locked: true,
     intro:
-      "You succumb to certain vices, destructive or unproductive habits and actions. They have derailed your life before, or carry the potential to. You may not think you have them, or hate to admit them, or fear being discovered. But your InwardWise Self will not be accurate or complete unless you recognise them and list them here. No one else sees this — it is designed that way.",
+      "Everyone makes mistakes. This factor is about what makes you imperfect, which is to say what makes you human. Here we ask for the habits, actions or vices you may not be proud of but which are part of your story, along with how often you find yourself engaging in them. Your InwardWise Self will not be accurate or complete unless you recognise them and list them here. No one else sees this; it is designed that way.",
+
     questions: [
       {
         key: "d2_q1",
