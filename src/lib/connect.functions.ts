@@ -45,10 +45,7 @@ export const analyzeConnectPrompt = createServerFn({ method: "POST" })
         .eq("category", category)
         .neq("user_id", context.userId),
       context.supabase
-        .from("connect_stories")
-        .select("id, pseudonym, category, situation, fear, action_taken, outcome, lesson, advice, audio_url")
-        .eq("is_published", true)
-        .eq("moderation_status", "approved")
+        .rpc("get_published_stories")
         .limit(24),
       context.supabase
         .from("connect_groups")
