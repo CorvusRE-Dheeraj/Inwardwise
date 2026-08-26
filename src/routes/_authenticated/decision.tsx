@@ -17,6 +17,8 @@ import {
 } from "lucide-react";
 import { z } from "zod";
 import { AppShell } from "@/components/AppShell";
+import { CrisisNotice } from "@/components/CrisisNotice";
+import { detectCrisisInMessages } from "@/lib/crisis-detect";
 import { STAGES, parseStageTag, stripStageTag } from "@/lib/ooi-stages";
 import {
   CATEGORIES,
@@ -82,6 +84,15 @@ function DecisionChat() {
     }
     return 1;
   }, [messages]);
+
+  // Deterministic safety net: surface hotlines whenever the person describes a crisis.
+  const crisisCategories = useMemo(
+    () =>
+      detectCrisisInMessages(
+        messages.filter((m) => m.role === "user").map((m) => extractText(m)),
+      ),
+    [messages],
+  );
 
   // Autosave.
   useEffect(() => {
@@ -304,6 +315,7 @@ function DecisionChat() {
 
         <div className="glass-strong flex min-h-[600px] flex-col overflow-hidden rounded-3xl">
           <div ref={listRef} className="flex-1 space-y-4 overflow-y-auto p-5 md:p-6">
+            <CrisisNotice categories={crisisCategories} />
             {messages.length === 0 ? (
               <EmptyIntro onPick={submit} />
             ) : (
