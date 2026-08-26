@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import type { Database } from "@/integrations/supabase/types";
 import {
   aggregateInsight,
   categoryFor,
@@ -14,6 +15,11 @@ import {
   readingFor,
   supportOptionsFor,
 } from "./connect-matching";
+
+type PublishedStory = Omit<
+  Database["public"]["Tables"]["connect_stories"]["Row"],
+  "owner_user_id"
+>;
 
 const promptSchema = z.object({ prompt: z.string().trim().min(8).max(4000) });
 
@@ -44,11 +50,8 @@ export const analyzeConnectPrompt = createServerFn({ method: "POST" })
         .select("id", { count: "exact", head: true })
         .eq("category", category)
         .neq("user_id", context.userId),
-      context.supabase
-        .from("connect_stories")
-        .select("id, pseudonym, category, situation, fear, action_taken, outcome, lesson, advice, audio_url")
-        .eq("is_published", true)
-        .eq("moderation_status", "approved")
+      (context.supabase as any)
+        .rpc("get_published_stories")
         .limit(24),
       context.supabase
         .from("connect_groups")
@@ -81,7 +84,8 @@ export const analyzeConnectPrompt = createServerFn({ method: "POST" })
       reading_body: reading.body,
     });
 
-    const stories = rankStories(storyRows ?? [], category).slice(0, 8);
+    const typedStoryRows = (storyRows ?? []) as PublishedStory[];
+    const stories = rankStories(typedStoryRows, category).slice(0, 8);
     const groups = (groupRows ?? []).filter((g) => g.category === category);
 
     return {
