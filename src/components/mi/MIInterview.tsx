@@ -10,6 +10,7 @@ import {
   type MiCrisisCategory,
 } from "@/lib/mi-filter";
 import { startRecording, transcribe, type Recorder } from "@/lib/voice";
+import { detectCrisisInMessages } from "@/lib/crisis-detect";
 
 export interface MIInterviewProps {
   /** The real question we need answered internally. */
@@ -120,6 +121,12 @@ export function MIInterview({
     }
   }
 
+  const detected = detectCrisisInMessages(
+    turns.filter((t) => t.role === "user").map((t) => t.content),
+  );
+  const showCrisis = crisis || detected.length > 0;
+  const shownCategories = crisisCategories.length > 0 ? crisisCategories : detected;
+
   return (
     <div className="space-y-4">
       <p className="rounded-lg border border-[color:var(--rule)] bg-white/40 px-4 py-3 text-[13px] leading-relaxed text-justify text-[color:var(--muted-foreground)]">
@@ -154,12 +161,12 @@ export function MIInterview({
         )}
       </div>
 
-      {crisis && (
+      {showCrisis && (
         <div className="space-y-2 rounded-md border border-destructive/40 bg-destructive/5 px-4 py-3 text-sm">
           <p className="font-medium">Your safety matters more than this interview.</p>
           <ul className="list-disc space-y-1 pl-5">
-            {(crisisCategories.length > 0
-              ? crisisCategories
+            {(shownCategories.length > 0
+              ? shownCategories
               : (["suicide", "imminent_danger"] as MiCrisisCategory[])
             ).map((category) => (
               <li key={category}>{MI_CRISIS_RESOURCES[category]}</li>
