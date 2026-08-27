@@ -376,13 +376,24 @@ function DecisionChat() {
         </div>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-[240px_1fr]">
-        <StageRail current={currentStage} />
+      <div className={started ? "grid gap-6 lg:grid-cols-[240px_1fr]" : ""}>
+        {started && (
+          <div className="hidden lg:block">
+            <StageRail current={currentStage} />
+          </div>
+        )}
 
         <div className="glass-strong flex min-h-[600px] flex-col overflow-hidden rounded-3xl">
+          {started && <JourneyProgress current={currentStage} />}
           <div ref={listRef} className="flex-1 space-y-4 overflow-y-auto p-5 md:p-6">
             <CrisisNotice categories={crisisCategories} />
-            {messages.length === 0 ? (
+            {!started ? (
+              <DecisionIntro
+                onStart={() => setStarted(true)}
+                resumable={resumable}
+                onResume={resumeSession}
+              />
+            ) : messages.length === 0 ? (
               <EmptyIntro onPick={submit} />
             ) : (
               <AnimatePresence initial={false}>
@@ -390,6 +401,16 @@ function DecisionChat() {
                   <MessageBubble key={m.id} m={m} />
                 ))}
               </AnimatePresence>
+            )}
+            {milestone && messages.length > 0 && (
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                role="status"
+                className="text-center text-[11px] text-muted-foreground"
+              >
+                ✓ {milestone}
+              </motion.p>
             )}
             {status === "submitted" && (
               <div className="flex items-center gap-2 text-xs text-muted-foreground">
@@ -403,8 +424,12 @@ function DecisionChat() {
                 className="glass-strong mt-4 rounded-2xl border border-accent/40 p-5 text-center"
               >
                 <div className="mb-1 text-[10px] uppercase tracking-[0.18em] text-accent">
-                  All 8 stages complete
+                  Your Decision Journey is Complete
                 </div>
+                <p className="mx-auto mb-2 max-w-md text-xs text-muted-foreground">
+                  You've worked through your situation, objective, constraints, boundary and
+                  options.
+                </p>
                 <h3 className="font-display text-xl">Your decision session is ready</h3>
                 <p className="mx-auto mt-1 max-w-md text-xs text-muted-foreground">
                   Download the full transcript — every stage's questions, your answers, and the facilitator's recommendation.
