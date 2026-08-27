@@ -234,7 +234,7 @@ function DimensionFlow() {
                   setStep((s) => s + 1);
                 } else {
                   const allDone = await persist(true);
-                  navigate({ to: allDone ? "/avatar/consult" : "/avatar" });
+                  setFinished({ allDone });
                 }
               }}
             />
