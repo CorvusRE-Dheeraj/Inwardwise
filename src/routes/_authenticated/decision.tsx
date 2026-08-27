@@ -214,9 +214,39 @@ function DecisionChat() {
     const fresh = newSession(category);
     setSession(fresh);
     setMessages([]);
+    setStarted(false);
+    prevStageRef.current = 1;
+    setMilestone(null);
     if (typeof window !== "undefined") {
       const url = new URL(window.location.href);
       url.searchParams.delete("id");
+      window.history.replaceState(null, "", url);
+    }
+  };
+
+  // Save & continue later — uses the same persistence as the autosave.
+  const saveAndContinueLater = () => {
+    saveSession({
+      ...session,
+      category,
+      stage: currentStage,
+      title: deriveTitle(messages) || session.title,
+      messages,
+      updatedAt: Date.now(),
+    });
+    setSavedNote(true);
+    setTimeout(() => setSavedNote(false), 6000);
+  };
+
+  const resumeSession = (s: DecisionSession) => {
+    setSession(s);
+    setCategory(s.category);
+    setMessages(s.messages);
+    prevStageRef.current = s.stage;
+    setStarted(true);
+    if (typeof window !== "undefined") {
+      const url = new URL(window.location.href);
+      url.searchParams.set("id", s.id);
       window.history.replaceState(null, "", url);
     }
   };
