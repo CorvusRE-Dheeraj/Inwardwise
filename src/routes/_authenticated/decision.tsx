@@ -352,10 +352,7 @@ function DecisionChat() {
       const raw = extractText(m).trim();
       if (!raw) return;
       if (m.role === "assistant") {
-        const n = parseStageTag(raw) ?? stageAt(i);
-        const stage = n ? STAGES.find((s) => s.n === n) : null;
-        const header = stage ? `Stage ${stage.n} — ${stage.name} · Facilitator` : `Facilitator`;
-        writeBlock(header, { size: 12, style: "bold", color: [20, 90, 190], gap: 4 });
+        writeBlock("Facilitator", { size: 12, style: "bold", color: [20, 90, 190], gap: 4 });
         writeBlock(stripStageTag(raw), { size: 11, gap: 12 });
       } else {
         writeBlock(`You`, { size: 12, style: "bold", color: [40, 40, 40], gap: 4 });
