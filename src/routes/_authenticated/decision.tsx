@@ -291,16 +291,6 @@ function DecisionChat() {
 
   const downloadSession = async () => {
     const { jsPDF } = await import("jspdf");
-    const stageAt = (idx: number) => {
-      for (let i = idx; i >= 0; i--) {
-        const msg = messages[i];
-        if (msg.role === "assistant") {
-          const n = parseStageTag(extractText(msg));
-          if (n) return n;
-        }
-      }
-      return null;
-    };
     const title = deriveTitle(messages) || session.title;
     const dateStr = new Date(session.updatedAt).toLocaleString();
 
@@ -352,10 +342,7 @@ function DecisionChat() {
       const raw = extractText(m).trim();
       if (!raw) return;
       if (m.role === "assistant") {
-        const n = parseStageTag(raw) ?? stageAt(i);
-        const stage = n ? STAGES.find((s) => s.n === n) : null;
-        const header = stage ? `Stage ${stage.n} — ${stage.name} · Facilitator` : `Facilitator`;
-        writeBlock(header, { size: 12, style: "bold", color: [20, 90, 190], gap: 4 });
+        writeBlock("Facilitator", { size: 12, style: "bold", color: [20, 90, 190], gap: 4 });
         writeBlock(stripStageTag(raw), { size: 11, gap: 12 });
       } else {
         writeBlock(`You`, { size: 12, style: "bold", color: [40, 40, 40], gap: 4 });
@@ -646,9 +633,7 @@ function StageRail({ current }: { current: number }) {
 function MessageBubble({ m }: { m: UIMessage }) {
   const raw = extractText(m);
   const isUser = m.role === "user";
-  const stageN = !isUser ? parseStageTag(raw) : null;
   const text = !isUser ? stripStageTag(raw) : raw;
-  const stage = stageN ? STAGES.find((s) => s.n === stageN) : null;
 
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -697,12 +682,6 @@ function MessageBubble({ m }: { m: UIMessage }) {
       className={`flex ${isUser ? "justify-end" : "justify-start"}`}
     >
       <div className={`max-w-[85%] ${isUser ? "" : "w-full"}`}>
-        {stage && (
-          <div className="mb-1.5 flex items-center gap-2 text-[10px] uppercase tracking-[0.14em] text-accent">
-            <span className="h-1 w-1 rounded-full bg-accent" />
-            Stage {stage.n} · {stage.name}
-          </div>
-        )}
         <div
           className={`rounded-2xl px-4 py-3 text-sm leading-relaxed ${
             isUser
