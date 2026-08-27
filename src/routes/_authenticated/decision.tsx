@@ -83,12 +83,9 @@ function DecisionChat() {
 
   useEffect(() => {
     if (routeId) return;
-    const unfinished = loadSessions().find(
-      (s) => s.messages.length > 0 && s.stage < TOTAL_STAGES,
-    );
+    const unfinished = loadSessions().find((s) => s.messages.length > 0 && s.stage < TOTAL_STAGES);
     setResumable(unfinished ?? null);
   }, [routeId]);
-
 
   const { messages, sendMessage, status, stop, regenerate, setMessages } = useChat({
     id: session.id,
@@ -124,9 +121,7 @@ function DecisionChat() {
   // Deterministic safety net: surface hotlines whenever the person describes a crisis.
   const crisisCategories = useMemo(
     () =>
-      detectCrisisInMessages(
-        messages.filter((m) => m.role === "user").map((m) => extractText(m)),
-      ),
+      detectCrisisInMessages(messages.filter((m) => m.role === "user").map((m) => extractText(m))),
     [messages],
   );
 
@@ -194,9 +189,7 @@ function DecisionChat() {
       recorderRef.current = rec;
       setIsRecording(true);
     } catch (err) {
-      setVoiceError(
-        err instanceof Error ? err.message : "Microphone access was denied.",
-      );
+      setVoiceError(err instanceof Error ? err.message : "Microphone access was denied.");
     }
   };
 
@@ -281,7 +274,12 @@ function DecisionChat() {
     };
     const writeBlock = (
       text: string,
-      opts: { size?: number; style?: "normal" | "bold" | "italic"; color?: [number, number, number]; gap?: number } = {},
+      opts: {
+        size?: number;
+        style?: "normal" | "bold" | "italic";
+        color?: [number, number, number];
+        gap?: number;
+      } = {},
     ) => {
       const { size = 11, style = "normal", color = [30, 30, 30], gap = 6 } = opts;
       doc.setFont("helvetica", style);
@@ -330,10 +328,13 @@ function DecisionChat() {
       doc.text("InwardWise — Objective Solution Framework", margin, pageH - 24);
     }
 
-    const safe = title.replace(/[^a-z0-9\-_. ]/gi, "").slice(0, 60).trim() || "decision-session";
+    const safe =
+      title
+        .replace(/[^a-z0-9\-_. ]/gi, "")
+        .slice(0, 60)
+        .trim() || "decision-session";
     doc.save(`${safe}.pdf`);
   };
-
 
   const canDownload = currentStage >= 8;
 
@@ -432,7 +433,8 @@ function DecisionChat() {
                 </p>
                 <h3 className="font-display text-xl">Your decision session is ready</h3>
                 <p className="mx-auto mt-1 max-w-md text-xs text-muted-foreground">
-                  Download the full transcript — every stage's questions, your answers, and the facilitator's recommendation.
+                  Download the full transcript — every stage's questions, your answers, and the
+                  facilitator's recommendation.
                 </p>
                 <button
                   onClick={downloadSession}
@@ -519,10 +521,7 @@ function DecisionChat() {
               </span>
               <div className="flex items-center gap-3">
                 {messages.length > 0 && (
-                  <button
-                    onClick={saveAndContinueLater}
-                    className="min-h-8 hover:text-foreground"
-                  >
+                  <button onClick={saveAndContinueLater} className="min-h-8 hover:text-foreground">
                     Save &amp; Continue Later
                   </button>
                 )}
@@ -592,7 +591,8 @@ function StageRail({ current }: { current: number }) {
         })}
       </ol>
       <p className="mt-4 rounded-xl border border-glass-border bg-foreground/[0.02] p-3 text-[10px] leading-relaxed text-muted-foreground">
-        The facilitator asks 2–5 questions per stage and waits for your confirmation before advancing. Recommendations only come after Stage 8.
+        The facilitator asks 2–5 questions per stage and waits for your confirmation before
+        advancing. Recommendations only come after Stage 8.
       </p>
     </aside>
   );
@@ -752,8 +752,8 @@ function EmptyIntro({ onPick }: { onPick: (t: string) => void }) {
         Describe the situation you are facing
       </h2>
       <p className="mt-2 text-sm text-muted-foreground">
-        Speak or type. The facilitator will not answer directly. It will guide you through 8 stages —
-        starting with facts, never with recommendations.
+        Speak or type. The facilitator will not answer directly. It will guide you through 8 stages
+        — starting with facts, never with recommendations.
       </p>
       <div className="mt-6 grid gap-2 sm:grid-cols-2">
         {STARTERS.map((s) => (
