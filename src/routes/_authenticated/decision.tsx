@@ -72,6 +72,24 @@ function DecisionChat() {
 
   const [category, setCategory] = useState(session.category);
 
+  // Orientation screen shown before the conversation begins (presentation only).
+  const [started, setStarted] = useState(
+    () => Boolean(routeId) && (session.messages?.length ?? 0) > 0,
+  );
+  const [resumable, setResumable] = useState<DecisionSession | null>(null);
+  const [savedNote, setSavedNote] = useState(false);
+  const [milestone, setMilestone] = useState<string | null>(null);
+  const prevStageRef = useRef(1);
+
+  useEffect(() => {
+    if (routeId) return;
+    const unfinished = loadSessions().find(
+      (s) => s.messages.length > 0 && s.stage < TOTAL_STAGES,
+    );
+    setResumable(unfinished ?? null);
+  }, [routeId]);
+
+
   const { messages, sendMessage, status, stop, regenerate, setMessages } = useChat({
     id: session.id,
     messages: session.messages,
