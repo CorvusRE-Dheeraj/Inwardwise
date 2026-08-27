@@ -37,3 +37,19 @@ describe("deterministic crisis detection", () => {
     expect(c).toContain("imminent_danger");
   });
 });
+
+describe("everyday phrases do not trigger the crisis banner", () => {
+  const benign = [
+    "I get a panic attack before every board meeting",
+    "My father had a heart attack last year",
+    "He attacked my proposal in front of the whole team",
+    "The company is bleeding money and I must decide",
+    "My job is in danger if I speak up",
+    "This deal is in danger of falling apart",
+  ];
+  for (const t of benign) {
+    it(`stays quiet for: ${t}`, () => {
+      expect(detectCrisis(t)).toEqual([]);
+    });
+  }
+});
