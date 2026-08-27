@@ -7,9 +7,14 @@ export interface DecisionSession {
   category: string;
   stage: number;                 // 1..7 current stage detected from AI output
   messages: UIMessage[];
+  /** Unsent text the person had typed, so a resumed session looks untouched. */
+  draft?: string;
+  /** Whether the person moved past the orientation screen. */
+  started?: boolean;
   createdAt: number;
   updatedAt: number;
 }
+
 
 const KEY = "ooi.sessions.v3";
 
@@ -51,10 +56,13 @@ export function newSession(category = "Personal Growth"): DecisionSession {
     category,
     stage: 1,
     messages: [],
+    draft: "",
+    started: false,
     createdAt: Date.now(),
     updatedAt: Date.now(),
   };
 }
+
 
 export function deriveTitle(messages: UIMessage[]): string {
   const first = messages.find((m) => m.role === "user");
