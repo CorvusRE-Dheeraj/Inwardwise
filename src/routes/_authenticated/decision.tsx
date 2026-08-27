@@ -74,24 +74,44 @@ function DecisionChat() {
 
   // Orientation screen shown before the conversation begins (presentation only).
   const [started, setStarted] = useState(
-    () => Boolean(routeId) && (session.messages?.length ?? 0) > 0,
+    () => Boolean(routeId) && ((session.messages?.length ?? 0) > 0 || Boolean(session.started)),
   );
   const [resumable, setResumable] = useState<DecisionSession | null>(null);
   const [savedNote, setSavedNote] = useState(false);
   const [milestone, setMilestone] = useState<string | null>(null);
   const prevStageRef = useRef(1);
-
-  useEffect(() => {
-    if (routeId) return;
-    const unfinished = loadSessions().find((s) => s.messages.length > 0 && s.stage < TOTAL_STAGES);
-    setResumable(unfinished ?? null);
-  }, [routeId]);
+  const [input, setInput] = useState(session.draft ?? "");
+  const listRef = useRef<HTMLDivElement>(null);
+  const hydratedRef = useRef(false);
 
   const { messages, sendMessage, status, stop, regenerate, setMessages } = useChat({
     id: session.id,
     messages: session.messages,
     transport: useMemo(() => new DefaultChatTransport({ api: "/api/chat" }), []),
   });
+
+  // Restore exactly where the person left off. Runs once on the client, after
+  // hydration, so a session opened by URL (or reloaded mid-wizard) comes back
+  // with its messages, stage, category and unsent draft intact.
+  useEffect(() => {
+    if (hydratedRef.current) return;
+    hydratedRef.current = true;
+    const saved = routeId ? getSession(routeId) : null;
+    if (saved) {
+      setSession(saved);
+      setCategory(saved.category);
+      if (saved.messages.length) setMessages(saved.messages);
+      setInput(saved.draft ?? "");
+      prevStageRef.current = saved.stage;
+      setStarted(saved.messages.length > 0 || Boolean(saved.started));
+      requestAnimationFrame(() =>
+        listRef.current?.scrollTo({ top: listRef.current.scrollHeight }),
+      );
+      return;
+    }
+    const unfinished = loadSessions().find((s) => s.messages.length > 0 && s.stage < TOTAL_STAGES);
+    setResumable(unfinished ?? null);
+  }, [routeId, setMessages]);
 
   // Track current stage from the latest assistant message's [STAGE: n] tag.
   const currentStage = useMemo(() => {
@@ -125,17 +145,26 @@ function DecisionChat() {
     [messages],
   );
 
-  // Autosave.
+  // Single source of truth for what gets persisted at any moment.
+  const snapshot = (): DecisionSession => ({
+    ...session,
+    category,
+    stage: currentStage,
+    title: deriveTitle(messages) || session.title,
+    messages,
+    draft: input,
+    started,
+    updatedAt: Date.now(),
+  });
+  const snapshotRef = useRef(snapshot);
+  snapshotRef.current = snapshot;
+
+  // Autosave on every wizard step: new messages, stage changes, category,
+  // starting the journey, and the unsent draft the person is typing.
   useEffect(() => {
+    if (!started && messages.length === 0 && !input) return;
     const t = setTimeout(() => {
-      const next: DecisionSession = {
-        ...session,
-        category,
-        stage: currentStage,
-        title: deriveTitle(messages) || session.title,
-        messages,
-        updatedAt: Date.now(),
-      };
+      const next = snapshotRef.current();
       saveSession(next);
       setSession(next);
       // Update URL with id so it's shareable/resumable.
@@ -144,16 +173,34 @@ function DecisionChat() {
         url.searchParams.set("id", next.id);
         window.history.replaceState(null, "", url);
       }
-    }, 500);
+    }, 400);
     return () => clearTimeout(t);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [messages, category, currentStage]);
+  }, [messages, category, currentStage, started, input]);
 
-  const [input, setInput] = useState("");
-  const listRef = useRef<HTMLDivElement>(null);
+  // Flush the latest state when the tab is hidden or closed, so nothing typed
+  // in the last moment is lost.
+  useEffect(() => {
+    const flush = () => {
+      const s = snapshotRef.current();
+      if (s.messages.length === 0 && !s.draft && !s.started) return;
+      saveSession(s);
+    };
+    const onVisibility = () => {
+      if (document.visibilityState === "hidden") flush();
+    };
+    window.addEventListener("pagehide", flush);
+    document.addEventListener("visibilitychange", onVisibility);
+    return () => {
+      window.removeEventListener("pagehide", flush);
+      document.removeEventListener("visibilitychange", onVisibility);
+    };
+  }, []);
+
   useEffect(() => {
     listRef.current?.scrollTo({ top: listRef.current.scrollHeight, behavior: "smooth" });
   }, [messages, status]);
+
 
   const isBusy = status === "streaming" || status === "submitted";
 
