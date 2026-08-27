@@ -444,7 +444,7 @@ function DecisionChat() {
             )}
           </div>
 
-          <div className="border-t border-glass-border p-3 md:p-4">
+          <div className={`border-t border-glass-border p-3 md:p-4 ${started ? "" : "hidden"}`}>
             <form
               onSubmit={(e) => {
                 e.preventDefault();
