@@ -291,16 +291,6 @@ function DecisionChat() {
 
   const downloadSession = async () => {
     const { jsPDF } = await import("jspdf");
-    const stageAt = (idx: number) => {
-      for (let i = idx; i >= 0; i--) {
-        const msg = messages[i];
-        if (msg.role === "assistant") {
-          const n = parseStageTag(extractText(msg));
-          if (n) return n;
-        }
-      }
-      return null;
-    };
     const title = deriveTitle(messages) || session.title;
     const dateStr = new Date(session.updatedAt).toLocaleString();
 
