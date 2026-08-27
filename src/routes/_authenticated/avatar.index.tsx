@@ -70,7 +70,10 @@ function AvatarDashboard() {
     setTimeout(() => setSavedNote(null), 4000);
   }
 
-  const complete = AVATAR_DIMENSIONS.filter((d) => (progress[d.n] ?? 0) >= 100).length;
+  const completedStages = AVATAR_DIMENSIONS.filter((d) => (progress[d.n] ?? 0) >= 100).map(
+    (d) => d.n,
+  );
+  const complete = completedStages.length;
 
   return (
     <div className="mx-auto w-[min(1100px,calc(100%-2rem))] py-14 sm:py-20">
