@@ -3,9 +3,7 @@ import { MI_CRISIS_RESOURCES, type MiCrisisCategory } from "@/lib/mi-filter";
 
 export function CrisisNotice({ categories }: { categories: MiCrisisCategory[] }) {
   if (categories.length === 0) return null;
-  const list = categories.includes("imminent_danger")
-    ? categories
-    : (["imminent_danger", ...categories] as MiCrisisCategory[]);
+  const list = categories;
 
   return (
     <div
