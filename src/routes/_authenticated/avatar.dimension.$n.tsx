@@ -152,7 +152,54 @@ function DimensionFlow() {
   }
 
   const stage = getStage(dim.n) ?? SELF_JOURNEY[0];
-  const stageNo = stageIndex(dim.n) + 1;
+
+  if (finished) {
+    const nextStage = SELF_JOURNEY.find((s) => s.n > dim.n);
+    return (
+      <div className="mx-auto w-[min(820px,calc(100%-2rem))] py-20">
+        <SelfJourneyProgress current={dim.n} compact />
+        <h1 className="mt-10 font-display text-[clamp(2rem,4.5vw,3rem)] leading-tight">
+          {finished.allDone ? "Your Self Journey is Complete" : stage.milestone}
+        </h1>
+        <p className="mt-5 max-w-2xl text-base leading-relaxed text-[color:var(--muted-foreground)]">
+          {finished.allDone
+            ? "We've explored different parts of your story to build a richer picture of you. Now let's bring it together."
+            : nextStage
+              ? nextStage.n === SELF_JOURNEY[SELF_JOURNEY.length - 1].n
+                ? "You're getting close. Let's bring everything together."
+                : `Next: ${nextStage.blurb}`
+              : ""}
+        </p>
+        <div className="mt-10 flex flex-wrap gap-3">
+          {finished.allDone ? (
+            <button
+              onClick={() => navigate({ to: "/avatar/consult" })}
+              className="min-h-11 rounded-full bg-[color:var(--ink)] px-6 py-2.5 text-[13px] text-[color:var(--paper)]"
+            >
+              View My Avatar
+            </button>
+          ) : (
+            nextStage && (
+              <Link
+                to="/avatar/dimension/$n"
+                params={{ n: String(nextStage.n) }}
+                className="inline-flex min-h-11 items-center rounded-full bg-[color:var(--ink)] px-6 py-2.5 text-[13px] text-[color:var(--paper)]"
+              >
+                Continue
+              </Link>
+            )
+          )}
+          <Link
+            to="/avatar"
+            className="inline-flex min-h-11 items-center rounded-full border border-[color:var(--rule)] px-6 py-2.5 text-[13px]"
+          >
+            Back to my journey
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
 
   return (
     <div className="mx-auto w-[min(820px,calc(100%-2rem))] py-14 sm:py-20">
