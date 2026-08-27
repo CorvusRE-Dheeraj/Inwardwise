@@ -134,7 +134,7 @@ function AvatarDashboard() {
               </div>
               <p className="mt-3 text-sm text-[color:var(--muted-foreground)]">
                 Rather than typing, schedule a call — your InwardWise Self phones you and takes the
-                factor questions conversationally.
+                journey questions conversationally.
               </p>
               <div className="mt-6 space-y-4">
                 <label className="flex items-center justify-between gap-4 text-sm">
@@ -293,7 +293,7 @@ function AvatarDashboard() {
             <div className="font-mono-cap text-[10px] text-destructive">Irreversible</div>
             <h2 className="mt-3 font-display text-2xl">Self-destruct your InwardWise Self?</h2>
             <p className="mt-3 text-sm text-[color:var(--muted-foreground)]">
-              Every answer, every factor, and your PIN will be permanently deleted. This
+              Every answer, every stage, and your PIN will be permanently deleted. This
               cannot be undone or recovered.
             </p>
             <div className="mt-6 flex gap-3">
