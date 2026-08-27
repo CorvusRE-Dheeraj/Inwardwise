@@ -255,6 +255,7 @@ function DecisionChat() {
     setSession(fresh);
     setMessages([]);
     setStarted(false);
+    setInput("");
     prevStageRef.current = 1;
     setMilestone(null);
     if (typeof window !== "undefined") {
@@ -266,14 +267,9 @@ function DecisionChat() {
 
   // Save & continue later — uses the same persistence as the autosave.
   const saveAndContinueLater = () => {
-    saveSession({
-      ...session,
-      category,
-      stage: currentStage,
-      title: deriveTitle(messages) || session.title,
-      messages,
-      updatedAt: Date.now(),
-    });
+    const next = snapshotRef.current();
+    saveSession(next);
+    setSession(next);
     setSavedNote(true);
     setTimeout(() => setSavedNote(false), 6000);
   };
@@ -282,12 +278,14 @@ function DecisionChat() {
     setSession(s);
     setCategory(s.category);
     setMessages(s.messages);
+    setInput(s.draft ?? "");
     prevStageRef.current = s.stage;
     setStarted(true);
     if (typeof window !== "undefined") {
       const url = new URL(window.location.href);
       url.searchParams.set("id", s.id);
       window.history.replaceState(null, "", url);
+
     }
   };
 
