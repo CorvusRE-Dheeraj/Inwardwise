@@ -152,6 +152,8 @@ function DimensionFlow() {
   }
 
   const stage = getStage(dim.n) ?? SELF_JOURNEY[0];
+  const stageNo = stageIndex(dim.n) + 1;
+
 
   if (finished) {
     const nextStage = SELF_JOURNEY.find((s) => s.n > dim.n);
