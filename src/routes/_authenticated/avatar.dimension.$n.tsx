@@ -46,6 +46,7 @@ function DimensionFlow() {
   const [saving, setSaving] = useState(false);
   const [showWhy, setShowWhy] = useState(false);
   const [savedNote, setSavedNote] = useState<string | null>(null);
+  const [finished, setFinished] = useState<{ allDone: boolean } | null>(null);
 
   useEffect(() => {
     if (vault.status !== "unlocked" || !vault.key || !vault.profile || !dim) return;
