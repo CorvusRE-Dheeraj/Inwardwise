@@ -141,63 +141,74 @@ function DimensionFlow() {
     }
   }
 
+  const stage = getStage(dim.n) ?? SELF_JOURNEY[0];
+  const stageNo = stageIndex(dim.n) + 1;
+
   return (
     <div className="mx-auto w-[min(820px,calc(100%-2rem))] py-14 sm:py-20">
       <Link
         to="/avatar"
         className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)] transition hover:text-[color:var(--ink)]"
       >
-        ← InwardWise Self Design
+        ← Your Self Journey
       </Link>
 
-      <div className="font-mono-cap mt-8 flex items-center gap-2 text-[10px] text-[color:var(--muted-foreground)]">
-        Factor {dim.n}
-        {dim.locked && <Lock className="h-3 w-3" />}
+      <div className="mt-8">
+        <SelfJourneyProgress current={dim.n} compact={step === -1} />
       </div>
 
       {step === -1 ? (
-        <section className="mt-4">
-          <h1 className="font-display text-[clamp(2.2rem,5vw,3.4rem)] leading-[1.05] tracking-tight">
-            Factor {dim.n}
+        <section className="mt-8">
+          <div className="font-mono-cap flex items-center gap-2 text-[10px] text-[color:var(--muted-foreground)]">
+            Stage {stageNo} of {TOTAL_JOURNEY_STAGES}
+            {dim.locked && <Lock className="h-3 w-3" />}
+          </div>
+          <h1 className="mt-3 font-display text-[clamp(2.2rem,5vw,3.4rem)] leading-[1.05] tracking-tight">
+            {stage.label}
           </h1>
           <p className="mt-6 max-w-2xl text-base leading-relaxed text-[color:var(--muted-foreground)]">
-            Answer the questions for this factor honestly. Your responses are encrypted and visible only to you.
+            {stage.blurb} This is a conversation, not a test. There are no right or wrong answers,
+            and you can share only what you are comfortable sharing.
           </p>
           {dim.locked && (
             <div className="mt-8 max-w-2xl">
               <Caution>
-                This factor is private and encrypted with your PIN. It is stored as written —
-                unread, unmoderated, and invisible to administrators.
+                This part of the conversation is private and encrypted with your PIN. It is stored
+                as written, unread, unmoderated, and invisible to administrators.
               </Caution>
             </div>
           )}
           <button
             onClick={() => setStep(0)}
             disabled={!loaded}
-            className="mt-10 rounded-full bg-[color:var(--ink)] px-6 py-2.5 text-[13px] text-[color:var(--paper)] disabled:opacity-50"
+            className="mt-10 min-h-11 rounded-full bg-[color:var(--ink)] px-6 py-2.5 text-[13px] text-[color:var(--paper)] disabled:opacity-50"
           >
-            Begin the conversation
+            {stageNo === 1 ? "Start My Self Journey" : "Continue"}
           </button>
         </section>
       ) : (
-        <section className="mt-4">
-          <div className="h-px w-full bg-[color:var(--rule)]">
-            <div
-              className="h-px bg-[color:var(--ink)] transition-all"
-              style={{ width: `${((step + 1) / total) * 100}%` }}
-            />
-          </div>
-
+        <section className="mt-8">
           {dim.locked && (
             <div className="font-mono-cap mt-4 inline-flex items-center gap-2 rounded-full border border-[color:var(--rule)] px-3 py-1 text-[10px]">
               <Lock className="h-3 w-3" /> Encrypted · only visible to you
             </div>
           )}
 
-          <p className="mt-6 text-sm text-[color:var(--muted-foreground)]">
-            A conversation, not a form. Answer in whatever way feels natural — by typing or by
-            speaking. It will keep exploring with you until the thread is genuinely there.
-          </p>
+          <div className="mt-6 flex flex-wrap items-center gap-3">
+            <button
+              type="button"
+              onClick={() => setShowWhy((v) => !v)}
+              aria-expanded={showWhy}
+              className="font-mono-cap min-h-11 text-[10px] text-[color:var(--muted-foreground)] underline-offset-4 hover:underline"
+            >
+              Why are we asking this?
+            </button>
+          </div>
+          {showWhy && (
+            <p className="mt-2 max-w-2xl text-sm text-[color:var(--muted-foreground)]">
+              {stage.why}
+            </p>
+          )}
 
           <div className="mt-6">
             <MIInterview
@@ -207,7 +218,7 @@ function DimensionFlow() {
               context={`${dim.intro}${q!.helper ? `\n\n${q!.helper}` : ""}`}
               initialAnswer={answers[q!.key] ?? ""}
               onCapture={(text) => setAnswers((a) => ({ ...a, [q!.key]: text }))}
-              completeLabel={step + 1 < total ? "Move on" : "Finish factor"}
+              completeLabel={step + 1 < total ? "Continue" : "Complete this stage"}
               onComplete={async () => {
                 if (step + 1 < total) {
                   await persist(false);
@@ -226,12 +237,29 @@ function DimensionFlow() {
                 await persist(false);
                 setStep((s) => s - 1);
               }}
-              className="rounded-full border border-[color:var(--rule)] px-5 py-2 text-[13px]"
+              className="min-h-11 rounded-full border border-[color:var(--rule)] px-5 py-2 text-[13px]"
             >
               Back
             </button>
+            <button
+              onClick={async () => {
+                await persist(false);
+                setSavedNote(
+                  `Your progress has been saved. You can return and continue your Self Journey later.`,
+                );
+                setTimeout(() => setSavedNote(null), 6000);
+              }}
+              className="min-h-11 rounded-full border border-[color:var(--rule)] px-5 py-2 text-[13px]"
+            >
+              Save &amp; Continue Later
+            </button>
             {saving && (
               <span className="text-sm text-[color:var(--muted-foreground)]">Saving…</span>
+            )}
+            {savedNote && (
+              <span className="text-sm text-[color:var(--royal)]" role="status">
+                {savedNote}
+              </span>
             )}
           </div>
         </section>
@@ -239,3 +267,4 @@ function DimensionFlow() {
     </div>
   );
 }
+
