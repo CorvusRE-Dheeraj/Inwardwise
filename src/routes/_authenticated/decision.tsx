@@ -18,6 +18,9 @@ import {
 import { z } from "zod";
 import { AppShell } from "@/components/AppShell";
 import { CrisisNotice } from "@/components/CrisisNotice";
+import { DecisionIntro } from "@/components/decision/DecisionIntro";
+import { JourneyProgress } from "@/components/decision/JourneyProgress";
+import { TOTAL_STAGES, journeyStage } from "@/lib/decision-journey";
 import { detectCrisisInMessages } from "@/lib/crisis-detect";
 import { STAGES, parseStageTag, stripStageTag } from "@/lib/ooi-stages";
 import {
@@ -25,6 +28,7 @@ import {
   deriveTitle,
   extractText,
   getSession,
+  loadSessions,
   newSession,
   saveSession,
   type DecisionSession,
@@ -68,6 +72,21 @@ function DecisionChat() {
 
   const [category, setCategory] = useState(session.category);
 
+  // Orientation screen shown before the conversation begins (presentation only).
+  const [started, setStarted] = useState(
+    () => Boolean(routeId) && (session.messages?.length ?? 0) > 0,
+  );
+  const [resumable, setResumable] = useState<DecisionSession | null>(null);
+  const [savedNote, setSavedNote] = useState(false);
+  const [milestone, setMilestone] = useState<string | null>(null);
+  const prevStageRef = useRef(1);
+
+  useEffect(() => {
+    if (routeId) return;
+    const unfinished = loadSessions().find((s) => s.messages.length > 0 && s.stage < TOTAL_STAGES);
+    setResumable(unfinished ?? null);
+  }, [routeId]);
+
   const { messages, sendMessage, status, stop, regenerate, setMessages } = useChat({
     id: session.id,
     messages: session.messages,
@@ -85,12 +104,24 @@ function DecisionChat() {
     return 1;
   }, [messages]);
 
+  // Quiet milestone when a stage is left behind. Display only.
+  useEffect(() => {
+    if (currentStage > prevStageRef.current) {
+      const note = journeyStage(currentStage - 1).milestone;
+      prevStageRef.current = currentStage;
+      if (note) {
+        setMilestone(note);
+        const t = setTimeout(() => setMilestone(null), 9000);
+        return () => clearTimeout(t);
+      }
+    }
+    prevStageRef.current = Math.max(prevStageRef.current, currentStage);
+  }, [currentStage]);
+
   // Deterministic safety net: surface hotlines whenever the person describes a crisis.
   const crisisCategories = useMemo(
     () =>
-      detectCrisisInMessages(
-        messages.filter((m) => m.role === "user").map((m) => extractText(m)),
-      ),
+      detectCrisisInMessages(messages.filter((m) => m.role === "user").map((m) => extractText(m))),
     [messages],
   );
 
@@ -158,9 +189,7 @@ function DecisionChat() {
       recorderRef.current = rec;
       setIsRecording(true);
     } catch (err) {
-      setVoiceError(
-        err instanceof Error ? err.message : "Microphone access was denied.",
-      );
+      setVoiceError(err instanceof Error ? err.message : "Microphone access was denied.");
     }
   };
 
@@ -178,9 +207,39 @@ function DecisionChat() {
     const fresh = newSession(category);
     setSession(fresh);
     setMessages([]);
+    setStarted(false);
+    prevStageRef.current = 1;
+    setMilestone(null);
     if (typeof window !== "undefined") {
       const url = new URL(window.location.href);
       url.searchParams.delete("id");
+      window.history.replaceState(null, "", url);
+    }
+  };
+
+  // Save & continue later — uses the same persistence as the autosave.
+  const saveAndContinueLater = () => {
+    saveSession({
+      ...session,
+      category,
+      stage: currentStage,
+      title: deriveTitle(messages) || session.title,
+      messages,
+      updatedAt: Date.now(),
+    });
+    setSavedNote(true);
+    setTimeout(() => setSavedNote(false), 6000);
+  };
+
+  const resumeSession = (s: DecisionSession) => {
+    setSession(s);
+    setCategory(s.category);
+    setMessages(s.messages);
+    prevStageRef.current = s.stage;
+    setStarted(true);
+    if (typeof window !== "undefined") {
+      const url = new URL(window.location.href);
+      url.searchParams.set("id", s.id);
       window.history.replaceState(null, "", url);
     }
   };
@@ -215,7 +274,12 @@ function DecisionChat() {
     };
     const writeBlock = (
       text: string,
-      opts: { size?: number; style?: "normal" | "bold" | "italic"; color?: [number, number, number]; gap?: number } = {},
+      opts: {
+        size?: number;
+        style?: "normal" | "bold" | "italic";
+        color?: [number, number, number];
+        gap?: number;
+      } = {},
     ) => {
       const { size = 11, style = "normal", color = [30, 30, 30], gap = 6 } = opts;
       doc.setFont("helvetica", style);
@@ -264,10 +328,13 @@ function DecisionChat() {
       doc.text("InwardWise — Objective Solution Framework", margin, pageH - 24);
     }
 
-    const safe = title.replace(/[^a-z0-9\-_. ]/gi, "").slice(0, 60).trim() || "decision-session";
+    const safe =
+      title
+        .replace(/[^a-z0-9\-_. ]/gi, "")
+        .slice(0, 60)
+        .trim() || "decision-session";
     doc.save(`${safe}.pdf`);
   };
-
 
   const canDownload = currentStage >= 8;
 
@@ -310,13 +377,24 @@ function DecisionChat() {
         </div>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-[240px_1fr]">
-        <StageRail current={currentStage} />
+      <div className={started ? "grid gap-6 lg:grid-cols-[240px_1fr]" : ""}>
+        {started && (
+          <div className="hidden lg:block">
+            <StageRail current={currentStage} />
+          </div>
+        )}
 
         <div className="glass-strong flex min-h-[600px] flex-col overflow-hidden rounded-3xl">
+          {started && <JourneyProgress current={currentStage} />}
           <div ref={listRef} className="flex-1 space-y-4 overflow-y-auto p-5 md:p-6">
             <CrisisNotice categories={crisisCategories} />
-            {messages.length === 0 ? (
+            {!started ? (
+              <DecisionIntro
+                onStart={() => setStarted(true)}
+                resumable={resumable}
+                onResume={resumeSession}
+              />
+            ) : messages.length === 0 ? (
               <EmptyIntro onPick={submit} />
             ) : (
               <AnimatePresence initial={false}>
@@ -324,6 +402,16 @@ function DecisionChat() {
                   <MessageBubble key={m.id} m={m} />
                 ))}
               </AnimatePresence>
+            )}
+            {milestone && messages.length > 0 && (
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                role="status"
+                className="text-center text-[11px] text-muted-foreground"
+              >
+                ✓ {milestone}
+              </motion.p>
             )}
             {status === "submitted" && (
               <div className="flex items-center gap-2 text-xs text-muted-foreground">
@@ -337,11 +425,16 @@ function DecisionChat() {
                 className="glass-strong mt-4 rounded-2xl border border-accent/40 p-5 text-center"
               >
                 <div className="mb-1 text-[10px] uppercase tracking-[0.18em] text-accent">
-                  All 8 stages complete
+                  Your Decision Journey is Complete
                 </div>
+                <p className="mx-auto mb-2 max-w-md text-xs text-muted-foreground">
+                  You've worked through your situation, objective, constraints, boundary and
+                  options.
+                </p>
                 <h3 className="font-display text-xl">Your decision session is ready</h3>
                 <p className="mx-auto mt-1 max-w-md text-xs text-muted-foreground">
-                  Download the full transcript — every stage's questions, your answers, and the facilitator's recommendation.
+                  Download the full transcript — every stage's questions, your answers, and the
+                  facilitator's recommendation.
                 </p>
                 <button
                   onClick={downloadSession}
@@ -353,7 +446,7 @@ function DecisionChat() {
             )}
           </div>
 
-          <div className="border-t border-glass-border p-3 md:p-4">
+          <div className={`border-t border-glass-border p-3 md:p-4 ${started ? "" : "hidden"}`}>
             <form
               onSubmit={(e) => {
                 e.preventDefault();
@@ -426,16 +519,29 @@ function DecisionChat() {
                   ? voiceError
                   : "Autosaved locally · Speak or type. The facilitator will not recommend until all 8 stages complete."}
               </span>
-              {messages.length > 0 && (
-                <button
-                  onClick={() => regenerate()}
-                  disabled={isBusy}
-                  className="hover:text-foreground disabled:opacity-40"
-                >
-                  Regenerate last
-                </button>
-              )}
+              <div className="flex items-center gap-3">
+                {messages.length > 0 && (
+                  <button onClick={saveAndContinueLater} className="min-h-8 hover:text-foreground">
+                    Save &amp; Continue Later
+                  </button>
+                )}
+                {messages.length > 0 && (
+                  <button
+                    onClick={() => regenerate()}
+                    disabled={isBusy}
+                    className="hover:text-foreground disabled:opacity-40"
+                  >
+                    Regenerate last
+                  </button>
+                )}
+              </div>
             </div>
+            {savedNote && (
+              <p role="status" className="mt-2 text-[10px] text-accent">
+                Your progress has been saved. You can return and continue your Decision journey
+                later.
+              </p>
+            )}
           </div>
         </div>
       </div>
@@ -485,7 +591,8 @@ function StageRail({ current }: { current: number }) {
         })}
       </ol>
       <p className="mt-4 rounded-xl border border-glass-border bg-foreground/[0.02] p-3 text-[10px] leading-relaxed text-muted-foreground">
-        The facilitator asks 2–5 questions per stage and waits for your confirmation before advancing. Recommendations only come after Stage 8.
+        The facilitator asks 2–5 questions per stage and waits for your confirmation before
+        advancing. Recommendations only come after Stage 8.
       </p>
     </aside>
   );
@@ -645,8 +752,8 @@ function EmptyIntro({ onPick }: { onPick: (t: string) => void }) {
         Describe the situation you are facing
       </h2>
       <p className="mt-2 text-sm text-muted-foreground">
-        Speak or type. The facilitator will not answer directly. It will guide you through 8 stages —
-        starting with facts, never with recommendations.
+        Speak or type. The facilitator will not answer directly. It will guide you through 8 stages
+        — starting with facts, never with recommendations.
       </p>
       <div className="mt-6 grid gap-2 sm:grid-cols-2">
         {STARTERS.map((s) => (
