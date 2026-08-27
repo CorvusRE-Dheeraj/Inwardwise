@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { Lock, Phone } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { AVATAR_DIMENSIONS } from "@/lib/avatar-factors";
+import { SELF_JOURNEY } from "@/lib/self-journey";
+import { SelfJourneyIntro } from "@/components/avatar/SelfJourneyIntro";
 import { useAvatarVault } from "@/lib/avatar-vault";
 import { Caution, PinKeypad } from "@/components/avatar/PinKeypad";
 import { AvatarPortrait } from "@/components/avatar/AvatarPortrait";
