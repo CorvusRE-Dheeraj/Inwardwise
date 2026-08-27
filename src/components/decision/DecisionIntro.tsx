@@ -1,6 +1,5 @@
-import { useState } from "react";
 import { ArrowRight, Clock, Save } from "lucide-react";
-import { JOURNEY, TOTAL_STAGES } from "@/lib/decision-journey";
+import { TOTAL_STAGES } from "@/lib/decision-journey";
 import type { DecisionSession } from "@/lib/ooi-storage";
 
 export interface DecisionIntroProps {
@@ -12,11 +11,9 @@ export interface DecisionIntroProps {
 
 /**
  * Pre-decision orientation screen. Purely informational: nothing here changes
- * the decision process, it only explains it before the conversation begins.
+ * the decision process, it only sets expectations before the conversation begins.
  */
 export function DecisionIntro({ onStart, resumable, onResume }: DecisionIntroProps) {
-  const [showStages, setShowStages] = useState(false);
-
   return (
     <div className="mx-auto max-w-2xl py-6">
       {resumable && onResume && (
@@ -53,29 +50,6 @@ export function DecisionIntro({ onStart, resumable, onResume }: DecisionIntroPro
         options you have.
       </p>
 
-      <button
-        type="button"
-        onClick={() => setShowStages((v) => !v)}
-        aria-expanded={showStages}
-        className="mt-4 text-xs text-muted-foreground underline-offset-2 hover:text-foreground hover:underline md:hidden"
-      >
-        {showStages ? "Hide the stages" : "Learn How It Works"}
-      </button>
-
-      <ol className={`mt-5 space-y-3 ${showStages ? "" : "hidden md:block"}`}>
-        {JOURNEY.map((s) => (
-          <li key={s.n} className="flex gap-3">
-            <span className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full border border-glass-border text-[11px] text-muted-foreground">
-              {s.n}
-            </span>
-            <div>
-              <p className="text-sm font-medium text-foreground">{s.label}</p>
-              <p className="text-xs text-muted-foreground">{s.blurb}</p>
-            </div>
-          </li>
-        ))}
-      </ol>
-
       <div className="glass mt-6 rounded-2xl p-4 text-xs leading-relaxed text-muted-foreground">
         <p className="text-foreground">There are no right or wrong answers.</p>
         <p className="mt-1">
@@ -96,13 +70,6 @@ export function DecisionIntro({ onStart, resumable, onResume }: DecisionIntroPro
           className="inline-flex min-h-11 items-center gap-2 rounded-full bg-foreground px-6 py-2.5 text-sm font-medium text-background transition hover:opacity-90"
         >
           Start My Decision <ArrowRight className="h-4 w-4" />
-        </button>
-        <button
-          type="button"
-          onClick={() => setShowStages(true)}
-          className="glass min-h-11 rounded-full px-5 py-2.5 text-sm text-foreground transition hover:bg-foreground/5"
-        >
-          Learn How It Works
         </button>
       </div>
     </div>
