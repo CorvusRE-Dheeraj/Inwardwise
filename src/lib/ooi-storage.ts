@@ -7,9 +7,14 @@ export interface DecisionSession {
   category: string;
   stage: number;                 // 1..7 current stage detected from AI output
   messages: UIMessage[];
+  /** Unsent text the person had typed, so a resumed session looks untouched. */
+  draft?: string;
+  /** Whether the person moved past the orientation screen. */
+  started?: boolean;
   createdAt: number;
   updatedAt: number;
 }
+
 
 const KEY = "ooi.sessions.v3";
 
