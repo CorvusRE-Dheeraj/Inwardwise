@@ -18,6 +18,9 @@ import {
 import { z } from "zod";
 import { AppShell } from "@/components/AppShell";
 import { CrisisNotice } from "@/components/CrisisNotice";
+import { DecisionIntro } from "@/components/decision/DecisionIntro";
+import { JourneyProgress } from "@/components/decision/JourneyProgress";
+import { TOTAL_STAGES, journeyStage } from "@/lib/decision-journey";
 import { detectCrisisInMessages } from "@/lib/crisis-detect";
 import { STAGES, parseStageTag, stripStageTag } from "@/lib/ooi-stages";
 import {
@@ -25,6 +28,7 @@ import {
   deriveTitle,
   extractText,
   getSession,
+  loadSessions,
   newSession,
   saveSession,
   type DecisionSession,
