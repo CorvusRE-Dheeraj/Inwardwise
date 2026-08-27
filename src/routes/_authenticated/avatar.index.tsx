@@ -17,10 +17,10 @@ export const Route = createFileRoute("/_authenticated/avatar/")({
       {
         name: "description",
         content:
-          "Design your Inner InwardWise Self across five factors of self-knowledge — private, encrypted, and yours alone.",
+          "Build your Self Avatar through a guided five-stage conversation — private, encrypted, and yours alone.",
       },
       { property: "og:title", content: "InwardWise Self Design — InwardWise" },
-      { property: "og:description", content: "Five factors. One inner mirror." },
+      { property: "og:description", content: "Five stages. One inner mirror." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "robots", content: "noindex, nofollow" },
@@ -92,8 +92,8 @@ function AvatarDashboard() {
           Design Your <span className="italic text-[color:var(--royal)]">Inner InwardWise Self</span>
         </h1>
         <p className="mt-5 text-base leading-relaxed text-[color:var(--muted-foreground)]">
-          A digital representation of you, assembled from five factors of self-knowledge.
-          Answer honestly — the InwardWise Self is only as useful as it is accurate.
+          A digital representation of you, built through a guided conversation across five stages.
+          There are no right or wrong answers; share only what you are comfortable sharing.
         </p>
       </header>
 
@@ -110,7 +110,7 @@ function AvatarDashboard() {
             />
           </div>
           <Caution>
-            This 4-digit PIN is separate from your sign-in and encrypts your InwardWise Self answers.
+            This 4-digit PIN is separate from your sign-in and encrypts your Self Journey answers.
             There is no recovery: if you lose it, the answers cannot be retrieved — not by us,
             not by an administrator. You may permanently self-destruct your InwardWise Self data at any
             time, and data auto-purges after twelve months of account inactivity.

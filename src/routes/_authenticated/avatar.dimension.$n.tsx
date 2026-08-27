@@ -18,13 +18,13 @@ import { decryptText, encryptText } from "@/lib/avatar-crypto";
 export const Route = createFileRoute("/_authenticated/avatar/dimension/$n")({
   head: () => ({
     meta: [
-      { title: "Factor — InwardWise Self · InwardWise" },
+      { title: "Your Self Journey — InwardWise" },
       {
         name: "description",
         content:
-          "Answer the questions of this factor to build your Inner InwardWise Self. Private and encrypted.",
+          "A guided conversation that builds your Self Avatar, one stage at a time. Private and encrypted.",
       },
-      { property: "og:title", content: "Factor — InwardWise Self · InwardWise" },
+      { property: "og:title", content: "Your Self Journey — InwardWise" },
       { property: "og:description", content: "One question at a time, in your own words." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -74,9 +74,9 @@ function DimensionFlow() {
   if (!dim) {
     return (
       <div className="mx-auto w-[min(700px,calc(100%-2rem))] py-24 text-center">
-        <p className="font-display text-3xl">That factor does not exist.</p>
+        <p className="font-display text-3xl">That stage does not exist.</p>
         <Link to="/avatar" className="mt-6 inline-block text-sm underline">
-          Back to InwardWise Self Design
+          Back to your Self Journey
         </Link>
       </div>
     );
