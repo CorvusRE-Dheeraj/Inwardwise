@@ -517,16 +517,32 @@ function DecisionChat() {
                   ? voiceError
                   : "Autosaved locally · Speak or type. The facilitator will not recommend until all 8 stages complete."}
               </span>
-              {messages.length > 0 && (
-                <button
-                  onClick={() => regenerate()}
-                  disabled={isBusy}
-                  className="hover:text-foreground disabled:opacity-40"
-                >
-                  Regenerate last
-                </button>
-              )}
+              <div className="flex items-center gap-3">
+                {messages.length > 0 && (
+                  <button
+                    onClick={saveAndContinueLater}
+                    className="min-h-8 hover:text-foreground"
+                  >
+                    Save &amp; Continue Later
+                  </button>
+                )}
+                {messages.length > 0 && (
+                  <button
+                    onClick={() => regenerate()}
+                    disabled={isBusy}
+                    className="hover:text-foreground disabled:opacity-40"
+                  >
+                    Regenerate last
+                  </button>
+                )}
+              </div>
             </div>
+            {savedNote && (
+              <p role="status" className="mt-2 text-[10px] text-accent">
+                Your progress has been saved. You can return and continue your Decision journey
+                later.
+              </p>
+            )}
           </div>
         </div>
       </div>
