@@ -3,6 +3,13 @@ import { useEffect, useMemo, useState } from "react";
 import { Lock } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { AVATAR_DIMENSIONS, getDimension } from "@/lib/avatar-factors";
+import {
+  SELF_JOURNEY,
+  TOTAL_JOURNEY_STAGES,
+  getStage,
+  stageIndex,
+} from "@/lib/self-journey";
+import { SelfJourneyProgress } from "@/components/avatar/SelfJourneyProgress";
 import { useAvatarVault } from "@/lib/avatar-vault";
 import { Caution, PinKeypad } from "@/components/avatar/PinKeypad";
 import { MIInterview } from "@/components/mi/MIInterview";
