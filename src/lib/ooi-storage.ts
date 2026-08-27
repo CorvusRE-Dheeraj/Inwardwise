@@ -56,10 +56,13 @@ export function newSession(category = "Personal Growth"): DecisionSession {
     category,
     stage: 1,
     messages: [],
+    draft: "",
+    started: false,
     createdAt: Date.now(),
     updatedAt: Date.now(),
   };
 }
+
 
 export function deriveTitle(messages: UIMessage[]): string {
   const first = messages.find((m) => m.role === "user");
