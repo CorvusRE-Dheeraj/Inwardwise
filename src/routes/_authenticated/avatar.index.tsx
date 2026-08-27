@@ -188,30 +188,36 @@ function AvatarDashboard() {
           </section>
 
           <section className="mt-14">
+            <SelfJourneyIntro
+              completed={completedStages}
+              nextStage={
+                SELF_JOURNEY.find((s) => !completedStages.includes(s.n))?.n ?? SELF_JOURNEY[0].n
+              }
+            />
+          </section>
+
+          <section className="mt-14">
             <div className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)]">
-              § 02 · The Five Factors
+              § 02 · Your Self Journey
             </div>
             <div className="mt-6 border-t border-[color:var(--rule)]">
-              {AVATAR_DIMENSIONS.map((d) => {
-                const pct = progress[d.n] ?? 0;
+              {SELF_JOURNEY.map((s, i) => {
+                const pct = progress[s.n] ?? 0;
                 return (
                   <Link
-                    key={d.n}
+                    key={s.n}
                     to="/avatar/dimension/$n"
-                    params={{ n: String(d.n) }}
-                    className="group grid gap-3 border-b border-[color:var(--rule)] py-6 transition hover:bg-[color:var(--ink)]/[0.02] sm:grid-cols-[80px_1fr_200px] sm:items-center"
+                    params={{ n: String(s.n) }}
+                    className="group grid gap-3 border-b border-[color:var(--rule)] py-6 transition hover:bg-[color:var(--ink)]/[0.02] sm:grid-cols-[110px_1fr_200px] sm:items-center"
                   >
                     <span className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)]">
-                      § 0{d.n}
+                      Stage {i + 1} of {SELF_JOURNEY.length}
                     </span>
                     <div>
-                      <div className="flex items-center gap-2 font-display text-2xl">
-                        <span className="italic text-[color:var(--royal)]">Factor {d.n}</span>
-                        {d.locked && <Lock className="h-3.5 w-3.5" />}
+                      <div className="font-display text-2xl">
+                        <span className="italic text-[color:var(--royal)]">{s.label}</span>
                       </div>
-                      <p className="mt-1 text-sm text-[color:var(--muted-foreground)]">
-                        Answer the questions for this factor.
-                      </p>
+                      <p className="mt-1 text-sm text-[color:var(--muted-foreground)]">{s.blurb}</p>
                     </div>
                     <div>
                       <div className="h-px w-full bg-[color:var(--rule)]">
@@ -221,7 +227,7 @@ function AvatarDashboard() {
                         />
                       </div>
                       <div className="font-mono-cap mt-2 text-[10px] text-[color:var(--muted-foreground)]">
-                        {pct}% complete
+                        {pct >= 100 ? "Complete" : pct > 0 ? "In progress" : "Not started"}
                       </div>
                     </div>
                   </Link>
@@ -231,11 +237,12 @@ function AvatarDashboard() {
 
             <div className="mt-8 grid gap-6 md:grid-cols-2">
               <Caution>
-                Without completely answering all of the questions, your InwardWise Self cannot fully form —
-                partial answers produce partial reflections. If typing is the obstacle, turn on
-                voice and schedule times when you can take a phone call; your InwardWise Self will call you
-                and fill in the factors conversationally.
+                Your Avatar becomes richer the more of the journey you complete — partial answers
+                produce partial reflections. If typing is the obstacle, turn on voice and schedule
+                times when you can take a phone call; your InwardWise Self will call you and
+                continue the conversation with you.
               </Caution>
+
 
               <div className="rounded-lg border border-[color:var(--rule)] p-5">
                 <div className="font-mono-cap mb-2 text-[10px] text-[color:var(--muted-foreground)]">
