@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { Lock, Phone } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { AVATAR_DIMENSIONS } from "@/lib/avatar-factors";
+import { SELF_JOURNEY } from "@/lib/self-journey";
+import { SelfJourneyIntro } from "@/components/avatar/SelfJourneyIntro";
 import { useAvatarVault } from "@/lib/avatar-vault";
 import { Caution, PinKeypad } from "@/components/avatar/PinKeypad";
 import { AvatarPortrait } from "@/components/avatar/AvatarPortrait";
@@ -15,10 +17,10 @@ export const Route = createFileRoute("/_authenticated/avatar/")({
       {
         name: "description",
         content:
-          "Design your Inner InwardWise Self across five factors of self-knowledge — private, encrypted, and yours alone.",
+          "Build your Self Avatar through a guided five-stage conversation — private, encrypted, and yours alone.",
       },
       { property: "og:title", content: "InwardWise Self Design — InwardWise" },
-      { property: "og:description", content: "Five factors. One inner mirror." },
+      { property: "og:description", content: "Five stages. One inner mirror." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "robots", content: "noindex, nofollow" },
@@ -68,7 +70,10 @@ function AvatarDashboard() {
     setTimeout(() => setSavedNote(null), 4000);
   }
 
-  const complete = AVATAR_DIMENSIONS.filter((d) => (progress[d.n] ?? 0) >= 100).length;
+  const completedStages = AVATAR_DIMENSIONS.filter((d) => (progress[d.n] ?? 0) >= 100).map(
+    (d) => d.n,
+  );
+  const complete = completedStages.length;
 
   return (
     <div className="mx-auto w-[min(1100px,calc(100%-2rem))] py-14 sm:py-20">
@@ -87,8 +92,8 @@ function AvatarDashboard() {
           Design Your <span className="italic text-[color:var(--royal)]">Inner InwardWise Self</span>
         </h1>
         <p className="mt-5 text-base leading-relaxed text-[color:var(--muted-foreground)]">
-          A digital representation of you, assembled from five factors of self-knowledge.
-          Answer honestly — the InwardWise Self is only as useful as it is accurate.
+          A digital representation of you, built through a guided conversation across five stages.
+          There are no right or wrong answers; share only what you are comfortable sharing.
         </p>
       </header>
 
@@ -105,7 +110,7 @@ function AvatarDashboard() {
             />
           </div>
           <Caution>
-            This 4-digit PIN is separate from your sign-in and encrypts your InwardWise Self answers.
+            This 4-digit PIN is separate from your sign-in and encrypts your Self Journey answers.
             There is no recovery: if you lose it, the answers cannot be retrieved — not by us,
             not by an administrator. You may permanently self-destruct your InwardWise Self data at any
             time, and data auto-purges after twelve months of account inactivity.
@@ -129,7 +134,7 @@ function AvatarDashboard() {
               </div>
               <p className="mt-3 text-sm text-[color:var(--muted-foreground)]">
                 Rather than typing, schedule a call — your InwardWise Self phones you and takes the
-                factor questions conversationally.
+                journey questions conversationally.
               </p>
               <div className="mt-6 space-y-4">
                 <label className="flex items-center justify-between gap-4 text-sm">
@@ -188,30 +193,36 @@ function AvatarDashboard() {
           </section>
 
           <section className="mt-14">
+            <SelfJourneyIntro
+              completed={completedStages}
+              nextStage={
+                SELF_JOURNEY.find((s) => !completedStages.includes(s.n))?.n ?? SELF_JOURNEY[0].n
+              }
+            />
+          </section>
+
+          <section className="mt-14">
             <div className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)]">
-              § 02 · The Five Factors
+              § 02 · Your Self Journey
             </div>
             <div className="mt-6 border-t border-[color:var(--rule)]">
-              {AVATAR_DIMENSIONS.map((d) => {
-                const pct = progress[d.n] ?? 0;
+              {SELF_JOURNEY.map((s, i) => {
+                const pct = progress[s.n] ?? 0;
                 return (
                   <Link
-                    key={d.n}
+                    key={s.n}
                     to="/avatar/dimension/$n"
-                    params={{ n: String(d.n) }}
-                    className="group grid gap-3 border-b border-[color:var(--rule)] py-6 transition hover:bg-[color:var(--ink)]/[0.02] sm:grid-cols-[80px_1fr_200px] sm:items-center"
+                    params={{ n: String(s.n) }}
+                    className="group grid gap-3 border-b border-[color:var(--rule)] py-6 transition hover:bg-[color:var(--ink)]/[0.02] sm:grid-cols-[110px_1fr_200px] sm:items-center"
                   >
                     <span className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)]">
-                      § 0{d.n}
+                      Stage {i + 1} of {SELF_JOURNEY.length}
                     </span>
                     <div>
-                      <div className="flex items-center gap-2 font-display text-2xl">
-                        <span className="italic text-[color:var(--royal)]">Factor {d.n}</span>
-                        {d.locked && <Lock className="h-3.5 w-3.5" />}
+                      <div className="font-display text-2xl">
+                        <span className="italic text-[color:var(--royal)]">{s.label}</span>
                       </div>
-                      <p className="mt-1 text-sm text-[color:var(--muted-foreground)]">
-                        Answer the questions for this factor.
-                      </p>
+                      <p className="mt-1 text-sm text-[color:var(--muted-foreground)]">{s.blurb}</p>
                     </div>
                     <div>
                       <div className="h-px w-full bg-[color:var(--rule)]">
@@ -221,7 +232,7 @@ function AvatarDashboard() {
                         />
                       </div>
                       <div className="font-mono-cap mt-2 text-[10px] text-[color:var(--muted-foreground)]">
-                        {pct}% complete
+                        {pct >= 100 ? "Complete" : pct > 0 ? "In progress" : "Not started"}
                       </div>
                     </div>
                   </Link>
@@ -231,11 +242,12 @@ function AvatarDashboard() {
 
             <div className="mt-8 grid gap-6 md:grid-cols-2">
               <Caution>
-                Without completely answering all of the questions, your InwardWise Self cannot fully form —
-                partial answers produce partial reflections. If typing is the obstacle, turn on
-                voice and schedule times when you can take a phone call; your InwardWise Self will call you
-                and fill in the factors conversationally.
+                Your Avatar becomes richer the more of the journey you complete — partial answers
+                produce partial reflections. If typing is the obstacle, turn on voice and schedule
+                times when you can take a phone call; your InwardWise Self will call you and
+                continue the conversation with you.
               </Caution>
+
 
               <div className="rounded-lg border border-[color:var(--rule)] p-5">
                 <div className="font-mono-cap mb-2 text-[10px] text-[color:var(--muted-foreground)]">
@@ -281,7 +293,7 @@ function AvatarDashboard() {
             <div className="font-mono-cap text-[10px] text-destructive">Irreversible</div>
             <h2 className="mt-3 font-display text-2xl">Self-destruct your InwardWise Self?</h2>
             <p className="mt-3 text-sm text-[color:var(--muted-foreground)]">
-              Every answer, every factor, and your PIN will be permanently deleted. This
+              Every answer, every stage, and your PIN will be permanently deleted. This
               cannot be undone or recovered.
             </p>
             <div className="mt-6 flex gap-3">
