@@ -107,6 +107,20 @@ function DecisionChat() {
     return 1;
   }, [messages]);
 
+  // Quiet milestone when a stage is left behind. Display only.
+  useEffect(() => {
+    if (currentStage > prevStageRef.current) {
+      const note = journeyStage(currentStage - 1).milestone;
+      prevStageRef.current = currentStage;
+      if (note) {
+        setMilestone(note);
+        const t = setTimeout(() => setMilestone(null), 9000);
+        return () => clearTimeout(t);
+      }
+    }
+    prevStageRef.current = Math.max(prevStageRef.current, currentStage);
+  }, [currentStage]);
+
   // Deterministic safety net: surface hotlines whenever the person describes a crisis.
   const crisisCategories = useMemo(
     () =>
