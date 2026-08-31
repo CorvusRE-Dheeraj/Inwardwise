@@ -25,6 +25,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProductsIndexRouteImport } from './routes/products.index'
 import { Route as AreasIndexRouteImport } from './routes/areas.index'
+import { Route as ProductsSelfRouteImport } from './routes/products.self'
 import { Route as ProductsDecisionRouteImport } from './routes/products.decision'
 import { Route as AreasSlugRouteImport } from './routes/areas.$slug'
 import { Route as ApiTtsRouteImport } from './routes/api/tts'
@@ -127,6 +128,11 @@ const AreasIndexRoute = AreasIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AreasRoute,
+} as any)
+const ProductsSelfRoute = ProductsSelfRouteImport.update({
+  id: '/products/self',
+  path: '/products/self',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const ProductsDecisionRoute = ProductsDecisionRouteImport.update({
   id: '/products/decision',
@@ -280,6 +286,7 @@ export interface FileRoutesByFullPath {
   '/api/tts': typeof ApiTtsRoute
   '/areas/$slug': typeof AreasSlugRoute
   '/products/decision': typeof ProductsDecisionRoute
+  '/products/self': typeof ProductsSelfRoute
   '/areas/': typeof AreasIndexRoute
   '/products/': typeof ProductsIndexRoute
   '/account/billing': typeof AuthenticatedAccountBillingRoute
@@ -318,6 +325,7 @@ export interface FileRoutesByTo {
   '/api/tts': typeof ApiTtsRoute
   '/areas/$slug': typeof AreasSlugRoute
   '/products/decision': typeof ProductsDecisionRoute
+  '/products/self': typeof ProductsSelfRoute
   '/areas': typeof AreasIndexRoute
   '/products': typeof ProductsIndexRoute
   '/account/billing': typeof AuthenticatedAccountBillingRoute
@@ -360,6 +368,7 @@ export interface FileRoutesById {
   '/api/tts': typeof ApiTtsRoute
   '/areas/$slug': typeof AreasSlugRoute
   '/products/decision': typeof ProductsDecisionRoute
+  '/products/self': typeof ProductsSelfRoute
   '/areas/': typeof AreasIndexRoute
   '/products/': typeof ProductsIndexRoute
   '/_authenticated/account/billing': typeof AuthenticatedAccountBillingRoute
@@ -402,6 +411,7 @@ export interface FileRouteTypes {
     | '/api/tts'
     | '/areas/$slug'
     | '/products/decision'
+    | '/products/self'
     | '/areas/'
     | '/products/'
     | '/account/billing'
@@ -440,6 +450,7 @@ export interface FileRouteTypes {
     | '/api/tts'
     | '/areas/$slug'
     | '/products/decision'
+    | '/products/self'
     | '/areas'
     | '/products'
     | '/account/billing'
@@ -481,6 +492,7 @@ export interface FileRouteTypes {
     | '/api/tts'
     | '/areas/$slug'
     | '/products/decision'
+    | '/products/self'
     | '/areas/'
     | '/products/'
     | '/_authenticated/account/billing'
@@ -517,6 +529,7 @@ export interface RootRouteChildren {
   ApiTranscribeRoute: typeof ApiTranscribeRoute
   ApiTtsRoute: typeof ApiTtsRoute
   ProductsDecisionRoute: typeof ProductsDecisionRoute
+  ProductsSelfRoute: typeof ProductsSelfRoute
   ProductsIndexRoute: typeof ProductsIndexRoute
   ApiPublicConnectStoryCallWebhookRoute: typeof ApiPublicConnectStoryCallWebhookRoute
   ApiPublicConnectStoryDispatchRoute: typeof ApiPublicConnectStoryDispatchRoute
@@ -637,6 +650,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/areas/'
       preLoaderRoute: typeof AreasIndexRouteImport
       parentRoute: typeof AreasRoute
+    }
+    '/products/self': {
+      id: '/products/self'
+      path: '/products/self'
+      fullPath: '/products/self'
+      preLoaderRoute: typeof ProductsSelfRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/products/decision': {
       id: '/products/decision'
@@ -879,6 +899,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiTranscribeRoute: ApiTranscribeRoute,
   ApiTtsRoute: ApiTtsRoute,
   ProductsDecisionRoute: ProductsDecisionRoute,
+  ProductsSelfRoute: ProductsSelfRoute,
   ProductsIndexRoute: ProductsIndexRoute,
   ApiPublicConnectStoryCallWebhookRoute: ApiPublicConnectStoryCallWebhookRoute,
   ApiPublicConnectStoryDispatchRoute: ApiPublicConnectStoryDispatchRoute,
