@@ -5,7 +5,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
   ArrowUp,
-  Check,
   Download,
   Loader2,
   Mic,
@@ -13,7 +12,6 @@ import {
   Play,
   RotateCcw,
   Square,
-  Sparkles,
 } from "lucide-react";
 import { z } from "zod";
 import { AppShell } from "@/components/AppShell";
@@ -22,7 +20,7 @@ import { DecisionIntro } from "@/components/decision/DecisionIntro";
 import { JourneyProgress } from "@/components/decision/JourneyProgress";
 import { TOTAL_STAGES, journeyStage } from "@/lib/decision-journey";
 import { detectCrisisInMessages } from "@/lib/crisis-detect";
-import { STAGES, parseStageTag, stripStageTag } from "@/lib/ooi-stages";
+import { parseStageTag, stripStageTag } from "@/lib/ooi-stages";
 import {
   CATEGORIES,
   deriveTitle,
