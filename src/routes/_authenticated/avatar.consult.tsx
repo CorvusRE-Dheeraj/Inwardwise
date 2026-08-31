@@ -235,12 +235,17 @@ function ConsultAvatar() {
             }
           }}
           rows={2}
-          placeholder="Speak to your inner self…"
-          className="flex-1 resize-none rounded-md border border-[var(--rule)] bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-royal/40"
+          placeholder={
+            disclaimerAcknowledged
+              ? "Speak to your inner self…"
+              : "Please read and acknowledge the disclaimer above to begin."
+          }
+          disabled={!disclaimerAcknowledged}
+          className="flex-1 resize-none rounded-md border border-[var(--rule)] bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-royal/40 disabled:bg-muted/40 disabled:text-muted-foreground"
         />
         <button
           onClick={send}
-          disabled={sending || !input.trim() || !answers}
+          disabled={sending || !input.trim() || !answers || !disclaimerAcknowledged}
           className="ink-btn self-end rounded-full px-6 py-2.5 text-sm font-medium hover:ink-btn-hover disabled:opacity-50"
         >
           Send
