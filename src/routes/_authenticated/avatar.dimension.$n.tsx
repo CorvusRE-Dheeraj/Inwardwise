@@ -316,27 +316,15 @@ function DimensionFlow() {
             <button
               onClick={async () => {
                 await persist(false);
-                setStep((s) => s - 1);
+                setStep((s) => Math.max(0, s - 1));
               }}
               className="min-h-11 rounded-full border border-[color:var(--rule)] px-5 py-2 text-[13px]"
             >
               Back
             </button>
-            <button
-              onClick={async () => {
-                await persist(false);
-                setSavedNote(
-                  `Your progress has been saved. You can return and continue your Self Journey later.`,
-                );
-                setTimeout(() => setSavedNote(null), 6000);
-              }}
-              className="min-h-11 rounded-full border border-[color:var(--rule)] px-5 py-2 text-[13px]"
-            >
-              Save &amp; Continue Later
-            </button>
-            {saving && (
-              <span className="text-sm text-[color:var(--muted-foreground)]">Saving…</span>
-            )}
+            <span className="text-sm text-[color:var(--muted-foreground)]">
+              {saving ? "Saving…" : "Everything you write is saved automatically."}
+            </span>
             {savedNote && (
               <span className="text-sm text-[color:var(--royal)]" role="status">
                 {savedNote}
