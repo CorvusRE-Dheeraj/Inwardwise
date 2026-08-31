@@ -22,8 +22,12 @@ export interface MIInterviewProps {
   context?: string;
   /** Answer already captured before (resumes the panel). */
   initialAnswer?: string;
+  /** Stable key used to remember the conversation while navigating stages. */
+  sessionKey?: string;
   /** Fires whenever the consolidated answer changes. */
   onCapture?: (answer: string) => void;
+  /** Fires as the person types, before anything is sent. */
+  onDraft?: (text: string) => void;
   /** Fires when the interviewer is satisfied, or the person moves on. */
   onComplete?: (answer: string) => void;
   completeLabel?: string;
@@ -31,12 +35,17 @@ export interface MIInterviewProps {
 
 type Turn = { role: "user" | "assistant"; content: string };
 
+/** In-memory transcript cache so going Back and Forward keeps the conversation. */
+const transcriptCache = new Map<string, { turns: Turn[]; round: number; input: string }>();
+
 export function MIInterview({
   targetQuestion,
   openingQuestion,
   context,
   initialAnswer = "",
+  sessionKey,
   onCapture,
+  onDraft,
   onComplete,
   completeLabel = "Continue",
 }: MIInterviewProps) {
