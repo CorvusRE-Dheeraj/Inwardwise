@@ -52,9 +52,14 @@ export function MIInterview({
   const turnFn = useServerFn(miInterviewTurn);
   const opening = buildMiOpening({ targetQuestion, openingQuestion, context });
 
-  const [turns, setTurns] = useState<Turn[]>([{ role: "assistant", content: opening }]);
-  const [input, setInput] = useState("");
-  const [round, setRound] = useState(1);
+  const cacheKey = sessionKey ?? targetQuestion;
+  const cached = transcriptCache.get(cacheKey);
+
+  const [turns, setTurns] = useState<Turn[]>(
+    cached?.turns ?? [{ role: "assistant", content: opening }],
+  );
+  const [input, setInput] = useState(cached?.input ?? "");
+  const [round, setRound] = useState(cached?.round ?? 1);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [captured, setCaptured] = useState(initialAnswer);
