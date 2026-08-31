@@ -147,7 +147,9 @@ export function MIInterview({
                 : "mr-auto max-w-[92%] rounded-lg border border-[color:var(--rule)] bg-white px-4 py-3 text-sm leading-relaxed"
             }
           >
-            <div className="whitespace-pre-wrap text-justify">{t.content}</div>
+            <div className="text-justify">
+              <FormattedText text={t.content} />
+            </div>
           </div>
         ))}
         {busy && (
