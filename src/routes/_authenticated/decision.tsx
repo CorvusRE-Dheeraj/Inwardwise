@@ -17,6 +17,7 @@ import { z } from "zod";
 import { AppShell } from "@/components/AppShell";
 import { CrisisNotice } from "@/components/CrisisNotice";
 import { DecisionIntro } from "@/components/decision/DecisionIntro";
+import { FormattedText } from "@/components/FormattedText";
 import { JourneyProgress } from "@/components/decision/JourneyProgress";
 import { TOTAL_STAGES, journeyStage } from "@/lib/decision-journey";
 import { detectCrisisInMessages } from "@/lib/crisis-detect";
@@ -682,55 +683,6 @@ function MessageBubble({ m }: { m: UIMessage }) {
         </div>
       </div>
     </motion.div>
-  );
-}
-
-// Lightweight markdown-ish renderer: paragraphs, bullets, numbered lists, bold.
-function FormattedText({ text }: { text: string }) {
-  const blocks = text.split(/\n{2,}/);
-  return (
-    <div className="space-y-2.5">
-      {blocks.map((block, i) => {
-        const lines = block.split("\n");
-        const isBulleted = lines.every((l) => /^\s*[-•*]\s+/.test(l));
-        const isNumbered = lines.every((l) => /^\s*\d+[.)]\s+/.test(l));
-        if (isBulleted) {
-          return (
-            <ul key={i} className="list-disc space-y-1 pl-5">
-              {lines.map((l, j) => (
-                <li key={j}>{inline(l.replace(/^\s*[-•*]\s+/, ""))}</li>
-              ))}
-            </ul>
-          );
-        }
-        if (isNumbered) {
-          return (
-            <ol key={i} className="list-decimal space-y-1 pl-5">
-              {lines.map((l, j) => (
-                <li key={j}>{inline(l.replace(/^\s*\d+[.)]\s+/, ""))}</li>
-              ))}
-            </ol>
-          );
-        }
-        return (
-          <p key={i} className="whitespace-pre-wrap">
-            {inline(block)}
-          </p>
-        );
-      })}
-    </div>
-  );
-}
-
-function inline(s: string): React.ReactNode {
-  // Bold **text** support.
-  const parts = s.split(/(\*\*[^*]+\*\*)/g);
-  return parts.map((p, i) =>
-    p.startsWith("**") && p.endsWith("**") ? (
-      <strong key={i}>{p.slice(2, -2)}</strong>
-    ) : (
-      <span key={i}>{p}</span>
-    ),
   );
 }
 
