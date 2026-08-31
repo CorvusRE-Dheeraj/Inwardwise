@@ -32,6 +32,9 @@ export const Route = createFileRoute("/_authenticated/avatar/consult")({
 
 type ChatMessage = { role: "user" | "assistant"; content: string };
 
+const LEGAL_DISCLAIMER =
+  "This InwardWise Self consultation is an AI-assisted reflection tool, not a substitute for professional medical, mental health, legal, financial, or other qualified advice. It does not diagnose, treat, or create a professional relationship. If you are in crisis or need urgent help, contact a licensed professional or emergency service near you. Use your own judgment and seek qualified support for decisions that affect your health, safety, rights, or wellbeing.";
+
 function ConsultAvatar() {
   const chatFn = useServerFn(chatWithAvatar);
   const vault = useAvatarVault();
@@ -42,6 +45,7 @@ function ConsultAvatar() {
   const [input, setInput] = useState("");
   const [sending, setSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [disclaimerAcknowledged, setDisclaimerAcknowledged] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   // Load and decrypt the user's own factor answers.
