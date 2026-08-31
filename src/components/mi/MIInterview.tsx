@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Mic, Square } from "lucide-react";
 import { useServerFn } from "@tanstack/react-start";
+import { FormattedText } from "@/components/FormattedText";
 import { miInterviewTurn } from "@/lib/mi.functions";
 import {
   buildMiOpening,
