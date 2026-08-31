@@ -102,9 +102,9 @@ export function MIInterview({
       .concat(input.trim() ? [input.trim()] : [])
       .join("\n\n")
       .trim();
-    if (spoken) onDraft?.(spoken);
+    if (spoken && !captured.trim()) onDraft?.(spoken);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [turns, input]);
+  }, [turns, input, captured]);
 
 
   async function send(text: string) {
