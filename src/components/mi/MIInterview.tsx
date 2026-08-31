@@ -161,6 +161,7 @@ export function MIInterview({
     turns.filter((t) => t.role === "user").map((t) => t.content),
   );
   const showCrisis = crisis || detected.length > 0;
+  const hasAnswer = captured.trim().length > 0 || turns.some((t) => t.role === "user");
   const shownCategories = crisisCategories.length > 0 ? crisisCategories : detected;
 
   return (
