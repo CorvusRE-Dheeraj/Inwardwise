@@ -13,7 +13,9 @@ import type { MiCrisisCategory } from "@/lib/mi-filter";
 const BENIGN = [
   /\b(panic|anxiety|asthma|heart|angina|cardiac|migraine)\s+attacks?\b/gi,
   /\battack(s|ed|ing)?\s+(my|his|her|their|our|the)\s+(idea|ideas|proposal|plan|plans|argument|position|work|character|credibility|point|view|thesis|record|policy)\w*/gi,
-  /\b(attack|attacks|attacked|attacking)\b(?=[^.\n]*\b(idea|proposal|argument|plan|work|character|credibility|reputation|point|market|stocks?|price|deadline|problem|task)\b)/gi,
+  // Only strip "attack" when it is clearly aimed at an idea/market/reputation
+  // AND not aimed at a person ("attacked me", "attacked my daughter").
+  /\b(attack|attacks|attacked|attacking)\b(?!\s+(me|us|him|her|them|my\s+\w+))(?=[^.\n]*\b(idea|proposal|argument|thesis|credibility|reputation|market|stocks?|share price)\b)/gi,
   /\b(bleeding)\s+(money|cash|customers|users|talent|edge)\b/gi,
   /\b(market|company|business|stock|budget|team)\s+\w*\s?bleeding\b/gi,
   /\bin danger of\b/gi,
