@@ -256,7 +256,7 @@ function DimensionFlow() {
             </div>
           )}
           <button
-            onClick={() => setStep(0)}
+            onClick={() => setStep(resumeStep)}
             disabled={!loaded}
             className="mt-10 min-h-11 rounded-full bg-[color:var(--ink)] px-6 py-2.5 text-[13px] text-[color:var(--paper)] disabled:opacity-50"
           >
