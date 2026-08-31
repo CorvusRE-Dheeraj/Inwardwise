@@ -33,7 +33,7 @@ const PATTERNS: Array<{ category: MiCrisisCategory; re: RegExp }> = [
   },
   {
     category: "imminent_danger",
-    re: /((\bi\s?(a|')m not safe|\bi am not safe|\bi do ?n'?t feel safe|\bi'?m in danger|\bi am in danger|\bmy life is in danger|\bmy (life|safety) is at risk)\b)|\b(being followed|stalking me|stalked me|is stalking|going to kill me|threaten\w* to kill|has a (gun|knife|weapon)|pointed a (gun|knife)|about to hurt me|hurt me again|need medical (aid|help|attention) (right )?now|i(')?m bleeding|i am bleeding|wo ?n'?t stop bleeding|bleeding badly)\b/i,
+    re: /((\bi\s?(a|')m not safe|\bi am not safe|\bi do ?n'?t feel safe|\bi'?m in danger|\bi am in danger|\bmy life is in danger|\bmy (life|safety) is at risk|\bmy (child|children|kids?|son|daughter|family|baby)\s+(is|are)\s+not safe|\bwe are not safe|\bwe'?re not safe)\b)|\b(being followed|stalking me|stalked me|is stalking|going to kill me|threaten\w* to kill|has a (gun|knife|weapon)|pointed a (gun|knife)|about to hurt me|hurt me again|need medical (aid|help|attention)|need (a )?(doctor|ambulance)|call an ambulance|i(')?m bleeding|i am bleeding|wo ?n'?t stop bleeding|bleeding badly)\b/i,
   },
   {
     category: "sexual_assault",
