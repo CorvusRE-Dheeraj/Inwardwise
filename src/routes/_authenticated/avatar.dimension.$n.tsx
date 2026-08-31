@@ -64,6 +64,9 @@ function DimensionFlow() {
       }
       if (!cancelled) {
         setAnswers(out);
+        // Resume on the first question that has nothing written yet.
+        const firstEmpty = dim.questions.findIndex((q) => !(out[q.key] ?? "").trim());
+        setResumeStep(firstEmpty === -1 ? dim.questions.length - 1 : firstEmpty);
         setLoaded(true);
       }
     })();
