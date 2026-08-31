@@ -93,6 +93,20 @@ export function MIInterview({
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
   }, [turns, busy]);
 
+  // Nothing typed is ever lost: everything said (plus the half-typed line) is
+  // reported upward continuously so it can be saved.
+  useEffect(() => {
+    const spoken = turns
+      .filter((t) => t.role === "user")
+      .map((t) => t.content)
+      .concat(input.trim() ? [input.trim()] : [])
+      .join("\n\n")
+      .trim();
+    if (spoken) onDraft?.(spoken);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [turns, input]);
+
+
   async function send(text: string) {
     const trimmed = text.trim();
     if (!trimmed || busy) return;
