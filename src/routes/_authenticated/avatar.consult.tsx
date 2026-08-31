@@ -161,7 +161,20 @@ function ConsultAvatar() {
       )}
 
       <div ref={scrollRef} className="paper-card flex-1 space-y-4 overflow-y-auto rounded-lg p-6">
-        {messages.length === 0 && (
+        <div className="rounded-lg border border-amber-200 bg-amber-50/60 p-4 text-sm text-amber-900">
+          <p className="font-medium">Important legal disclaimer</p>
+          <p className="mt-1 leading-relaxed">{LEGAL_DISCLAIMER}</p>
+          {!disclaimerAcknowledged && (
+            <button
+              onClick={() => setDisclaimerAcknowledged(true)}
+              className="mt-3 inline-flex items-center rounded-full bg-foreground px-4 py-2 text-xs font-medium text-background transition hover:opacity-90"
+            >
+              I understand — begin consultation
+            </button>
+          )}
+        </div>
+
+        {disclaimerAcknowledged && messages.length === 0 && (
           <div className="text-sm text-muted-foreground">
             <p className="mb-3">Ask your avatar anything about you. Try:</p>
             <ul className="space-y-2">
@@ -182,22 +195,23 @@ function ConsultAvatar() {
             </ul>
           </div>
         )}
-        {messages.map((m, i) => (
-          <div
-            key={i}
-            className={
-              m.role === "user"
-                ? "ml-auto max-w-[85%] rounded-lg bg-secondary px-4 py-3 text-sm"
-                : "mr-auto max-w-[90%] rounded-lg border border-[var(--rule)] bg-white px-4 py-3 text-sm leading-relaxed"
-            }
-          >
-            {m.role === "assistant" && (
-              <div className="font-mono-cap mb-1 text-[10px] text-royal">InwardWise Self</div>
-            )}
-            <div className="whitespace-pre-wrap">{m.content}</div>
-          </div>
-        ))}
-        {sending && (
+        {disclaimerAcknowledged &&
+          messages.map((m, i) => (
+            <div
+              key={i}
+              className={
+                m.role === "user"
+                  ? "ml-auto max-w-[85%] rounded-lg bg-secondary px-4 py-3 text-sm"
+                  : "mr-auto max-w-[90%] rounded-lg border border-[var(--rule)] bg-white px-4 py-3 text-sm leading-relaxed"
+              }
+            >
+              {m.role === "assistant" && (
+                <div className="font-mono-cap mb-1 text-[10px] text-royal">InwardWise Self</div>
+              )}
+              <div className="whitespace-pre-wrap">{m.content}</div>
+            </div>
+          ))}
+        {disclaimerAcknowledged && sending && (
           <div className="mr-auto max-w-[90%] rounded-lg border border-[var(--rule)] bg-white px-4 py-3 text-sm text-muted-foreground">
             <span className="animate-pulse">Your InwardWise Self is reflecting…</span>
           </div>
