@@ -47,6 +47,7 @@ function DimensionFlow() {
   const [showWhy, setShowWhy] = useState(false);
   const [savedNote, setSavedNote] = useState<string | null>(null);
   const [finished, setFinished] = useState<{ allDone: boolean } | null>(null);
+  const [resumeStep, setResumeStep] = useState(0);
 
   useEffect(() => {
     if (vault.status !== "unlocked" || !vault.key || !vault.profile || !dim) return;
@@ -63,6 +64,9 @@ function DimensionFlow() {
       }
       if (!cancelled) {
         setAnswers(out);
+        // Resume on the first question that has nothing written yet.
+        const firstEmpty = dim.questions.findIndex((q) => !(out[q.key] ?? "").trim());
+        setResumeStep(firstEmpty === -1 ? dim.questions.length - 1 : firstEmpty);
         setLoaded(true);
       }
     })();
@@ -70,6 +74,20 @@ function DimensionFlow() {
       cancelled = true;
     };
   }, [vault.status, vault.key, vault.profile, dim]);
+
+  // Autosave: anything written is stored a moment after typing stops.
+  useEffect(() => {
+    if (!loaded || vault.status !== "unlocked") return;
+    const t = setTimeout(() => {
+      void persist(false).then(() => {
+        setSavedNote("Saved");
+        setTimeout(() => setSavedNote(null), 2000);
+      });
+    }, 1200);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [answers, loaded, vault.status]);
+
 
   if (!dim) {
     return (
@@ -238,7 +256,7 @@ function DimensionFlow() {
             </div>
           )}
           <button
-            onClick={() => setStep(0)}
+            onClick={() => setStep(resumeStep)}
             disabled={!loaded}
             className="mt-10 min-h-11 rounded-full bg-[color:var(--ink)] px-6 py-2.5 text-[13px] text-[color:var(--paper)] disabled:opacity-50"
           >
@@ -276,8 +294,12 @@ function DimensionFlow() {
               openingQuestion={q!.opening}
               context={`${dim.intro}${q!.helper ? `\n\n${q!.helper}` : ""}`}
               initialAnswer={answers[q!.key] ?? ""}
+              sessionKey={`${dim.n}:${q!.key}`}
               onCapture={(text) => setAnswers((a) => ({ ...a, [q!.key]: text }))}
-              completeLabel={step + 1 < total ? "Continue" : "Complete this stage"}
+              onDraft={(text) =>
+                setAnswers((a) => (a[q!.key] === text ? a : { ...a, [q!.key]: text }))
+              }
+              completeLabel={step + 1 < total ? "Next question" : "Complete this stage"}
               onComplete={async () => {
                 if (step + 1 < total) {
                   await persist(false);
@@ -294,27 +316,15 @@ function DimensionFlow() {
             <button
               onClick={async () => {
                 await persist(false);
-                setStep((s) => s - 1);
+                setStep((s) => Math.max(0, s - 1));
               }}
               className="min-h-11 rounded-full border border-[color:var(--rule)] px-5 py-2 text-[13px]"
             >
               Back
             </button>
-            <button
-              onClick={async () => {
-                await persist(false);
-                setSavedNote(
-                  `Your progress has been saved. You can return and continue your Self Journey later.`,
-                );
-                setTimeout(() => setSavedNote(null), 6000);
-              }}
-              className="min-h-11 rounded-full border border-[color:var(--rule)] px-5 py-2 text-[13px]"
-            >
-              Save &amp; Continue Later
-            </button>
-            {saving && (
-              <span className="text-sm text-[color:var(--muted-foreground)]">Saving…</span>
-            )}
+            <span className="text-sm text-[color:var(--muted-foreground)]">
+              {saving ? "Saving…" : "Everything you write is saved automatically."}
+            </span>
             {savedNote && (
               <span className="text-sm text-[color:var(--royal)]" role="status">
                 {savedNote}

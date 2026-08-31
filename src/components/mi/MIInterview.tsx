@@ -22,8 +22,12 @@ export interface MIInterviewProps {
   context?: string;
   /** Answer already captured before (resumes the panel). */
   initialAnswer?: string;
+  /** Stable key used to remember the conversation while navigating stages. */
+  sessionKey?: string;
   /** Fires whenever the consolidated answer changes. */
   onCapture?: (answer: string) => void;
+  /** Fires as the person types, before anything is sent. */
+  onDraft?: (text: string) => void;
   /** Fires when the interviewer is satisfied, or the person moves on. */
   onComplete?: (answer: string) => void;
   completeLabel?: string;
@@ -31,21 +35,31 @@ export interface MIInterviewProps {
 
 type Turn = { role: "user" | "assistant"; content: string };
 
+/** In-memory transcript cache so going Back and Forward keeps the conversation. */
+const transcriptCache = new Map<string, { turns: Turn[]; round: number; input: string }>();
+
 export function MIInterview({
   targetQuestion,
   openingQuestion,
   context,
   initialAnswer = "",
+  sessionKey,
   onCapture,
+  onDraft,
   onComplete,
   completeLabel = "Continue",
 }: MIInterviewProps) {
   const turnFn = useServerFn(miInterviewTurn);
   const opening = buildMiOpening({ targetQuestion, openingQuestion, context });
 
-  const [turns, setTurns] = useState<Turn[]>([{ role: "assistant", content: opening }]);
-  const [input, setInput] = useState("");
-  const [round, setRound] = useState(1);
+  const cacheKey = sessionKey ?? targetQuestion;
+  const cached = transcriptCache.get(cacheKey);
+
+  const [turns, setTurns] = useState<Turn[]>(
+    cached?.turns ?? [{ role: "assistant", content: opening }],
+  );
+  const [input, setInput] = useState(cached?.input ?? "");
+  const [round, setRound] = useState(cached?.round ?? 1);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [captured, setCaptured] = useState(initialAnswer);
@@ -55,22 +69,43 @@ export function MIInterview({
   const [recorder, setRecorder] = useState<Recorder | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  // Reset when the target question changes (moving to the next question).
+  // Restore (or start) the conversation when the question changes.
   useEffect(() => {
-    setTurns([{ role: "assistant", content: opening }]);
-    setInput("");
-    setRound(1);
+    const prev = transcriptCache.get(cacheKey);
+    setTurns(prev?.turns ?? [{ role: "assistant", content: opening }]);
+    setInput(prev?.input ?? "");
+    setRound(prev?.round ?? 1);
     setSatisfied(false);
     setCrisis(false);
     setCrisisCategories([]);
     setError(null);
     setCaptured(initialAnswer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [targetQuestion]);
+  }, [cacheKey]);
+
+  // Keep the conversation so Back / Continue resumes exactly where it stopped.
+  useEffect(() => {
+    transcriptCache.set(cacheKey, { turns, round, input });
+  }, [cacheKey, turns, round, input]);
+
 
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
   }, [turns, busy]);
+
+  // Nothing typed is ever lost: everything said (plus the half-typed line) is
+  // reported upward continuously so it can be saved.
+  useEffect(() => {
+    const spoken = turns
+      .filter((t) => t.role === "user")
+      .map((t) => t.content)
+      .concat(input.trim() ? [input.trim()] : [])
+      .join("\n\n")
+      .trim();
+    if (spoken && !captured.trim()) onDraft?.(spoken);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [turns, input, captured]);
+
 
   async function send(text: string) {
     const trimmed = text.trim();
@@ -126,6 +161,7 @@ export function MIInterview({
     turns.filter((t) => t.role === "user").map((t) => t.content),
   );
   const showCrisis = crisis || detected.length > 0;
+  const hasAnswer = captured.trim().length > 0 || turns.some((t) => t.role === "user");
   const shownCategories = crisisCategories.length > 0 ? crisisCategories : detected;
 
   return (
@@ -212,7 +248,7 @@ export function MIInterview({
             disabled={busy || !input.trim()}
             className="rounded-full bg-[color:var(--ink)] px-5 py-2 text-[13px] text-[color:var(--paper)] disabled:opacity-50"
           >
-            Send
+            Continue
           </button>
         </div>
       </div>
@@ -233,20 +269,22 @@ export function MIInterview({
         </div>
       )}
 
-      <div className="flex flex-wrap items-center gap-3">
-        <button
-          type="button"
-          onClick={() => onComplete?.(captured)}
-          className="rounded-full bg-[color:var(--ink)] px-6 py-2 text-[13px] text-[color:var(--paper)]"
-        >
-          {satisfied ? `${completeLabel} →` : `${completeLabel} anyway →`}
-        </button>
-        {satisfied && (
-          <span className="text-sm text-[color:var(--muted-foreground)]">
-            This one feels answered.
-          </span>
-        )}
-      </div>
+      {hasAnswer && (
+        <div className="flex flex-wrap items-center gap-3">
+          <button
+            type="button"
+            onClick={() => onComplete?.(captured)}
+            className="rounded-full bg-[color:var(--ink)] px-6 py-2 text-[13px] text-[color:var(--paper)]"
+          >
+            {completeLabel} →
+          </button>
+          {satisfied && (
+            <span className="text-sm text-[color:var(--muted-foreground)]">
+              This one feels answered.
+            </span>
+          )}
+        </div>
+      )}
     </div>
   );
 }
