@@ -75,6 +75,20 @@ function DimensionFlow() {
     };
   }, [vault.status, vault.key, vault.profile, dim]);
 
+  // Autosave: anything written is stored a moment after typing stops.
+  useEffect(() => {
+    if (!loaded || vault.status !== "unlocked") return;
+    const t = setTimeout(() => {
+      void persist(false).then(() => {
+        setSavedNote("Saved");
+        setTimeout(() => setSavedNote(null), 2000);
+      });
+    }, 1200);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [answers, loaded, vault.status]);
+
+
   if (!dim) {
     return (
       <div className="mx-auto w-[min(700px,calc(100%-2rem))] py-24 text-center">
