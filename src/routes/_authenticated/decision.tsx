@@ -409,15 +409,27 @@ function DecisionChat() {
         </div>
       </div>
 
-      <div className={started ? "grid gap-6 lg:grid-cols-[240px_1fr]" : ""}>
+      <div className={started ? "grid gap-6 lg:grid-cols-[260px_1fr]" : ""}>
         {started && (
-          <div className="hidden lg:block">
-            <StageRail current={currentStage} />
-          </div>
+          <>
+            {/* Desktop: sticky left sidebar — stays visible while the chat scrolls */}
+            <div className="hidden lg:block">
+              <aside className="glass-strong sticky top-24 h-fit rounded-3xl">
+                <JourneyProgress current={currentStage} vertical />
+                <p className="mx-4 mb-4 rounded-xl border border-glass-border bg-foreground/[0.02] p-3 text-[10px] leading-relaxed text-muted-foreground">
+                  The facilitator asks 2–5 questions per stage and waits for your confirmation
+                  before advancing. Recommendations only come after the final step.
+                </p>
+              </aside>
+            </div>
+            {/* Mobile: compact bar pinned to the top of the viewport */}
+            <div className="glass-strong sticky top-16 z-20 -mx-1 rounded-2xl lg:hidden">
+              <JourneyProgress current={currentStage} />
+            </div>
+          </>
         )}
 
         <div className="glass-strong flex min-h-[600px] flex-col overflow-hidden rounded-3xl">
-          {started && <JourneyProgress current={currentStage} />}
           <div ref={listRef} className="flex-1 space-y-4 overflow-y-auto p-5 md:p-6">
             <CrisisNotice categories={crisisCategories} />
             {!started ? (
