@@ -69,18 +69,25 @@ export function MIInterview({
   const [recorder, setRecorder] = useState<Recorder | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  // Reset when the target question changes (moving to the next question).
+  // Restore (or start) the conversation when the question changes.
   useEffect(() => {
-    setTurns([{ role: "assistant", content: opening }]);
-    setInput("");
-    setRound(1);
+    const prev = transcriptCache.get(cacheKey);
+    setTurns(prev?.turns ?? [{ role: "assistant", content: opening }]);
+    setInput(prev?.input ?? "");
+    setRound(prev?.round ?? 1);
     setSatisfied(false);
     setCrisis(false);
     setCrisisCategories([]);
     setError(null);
     setCaptured(initialAnswer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [targetQuestion]);
+  }, [cacheKey]);
+
+  // Keep the conversation so Back / Continue resumes exactly where it stopped.
+  useEffect(() => {
+    transcriptCache.set(cacheKey, { turns, round, input });
+  }, [cacheKey, turns, round, input]);
+
 
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
