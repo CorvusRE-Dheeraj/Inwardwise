@@ -12,7 +12,6 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as TestimonialsRouteImport } from './routes/testimonials'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ScienceRouteImport } from './routes/science'
-import { Route as ProductsRouteImport } from './routes/products'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as MeditationRouteImport } from './routes/meditation'
 import { Route as HistoryRouteImport } from './routes/history'
@@ -24,7 +23,12 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AreasRouteImport } from './routes/areas'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ProductsIndexRouteImport } from './routes/products.index'
 import { Route as AreasIndexRouteImport } from './routes/areas.index'
+import { Route as ProductsSelfRouteImport } from './routes/products.self'
+import { Route as ProductsDecisionRouteImport } from './routes/products.decision'
+import { Route as ProductsConnectRouteImport } from './routes/products.connect'
+import { Route as ProductsCalmMantraRouteImport } from './routes/products.calm-mantra'
 import { Route as AreasSlugRouteImport } from './routes/areas.$slug'
 import { Route as ApiTtsRouteImport } from './routes/api/tts'
 import { Route as ApiTranscribeRouteImport } from './routes/api/transcribe'
@@ -61,11 +65,6 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
 const ScienceRoute = ScienceRouteImport.update({
   id: '/science',
   path: '/science',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ProductsRoute = ProductsRouteImport.update({
-  id: '/products',
-  path: '/products',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PricingRoute = PricingRouteImport.update({
@@ -122,10 +121,35 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProductsIndexRoute = ProductsIndexRouteImport.update({
+  id: '/products/',
+  path: '/products/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AreasIndexRoute = AreasIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AreasRoute,
+} as any)
+const ProductsSelfRoute = ProductsSelfRouteImport.update({
+  id: '/products/self',
+  path: '/products/self',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProductsDecisionRoute = ProductsDecisionRouteImport.update({
+  id: '/products/decision',
+  path: '/products/decision',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProductsConnectRoute = ProductsConnectRouteImport.update({
+  id: '/products/connect',
+  path: '/products/connect',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProductsCalmMantraRoute = ProductsCalmMantraRouteImport.update({
+  id: '/products/calm-mantra',
+  path: '/products/calm-mantra',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AreasSlugRoute = AreasSlugRouteImport.update({
   id: '/$slug',
@@ -261,7 +285,6 @@ export interface FileRoutesByFullPath {
   '/history': typeof HistoryRoute
   '/meditation': typeof MeditationRoute
   '/pricing': typeof PricingRoute
-  '/products': typeof ProductsRoute
   '/science': typeof ScienceRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/testimonials': typeof TestimonialsRoute
@@ -274,7 +297,12 @@ export interface FileRoutesByFullPath {
   '/api/transcribe': typeof ApiTranscribeRoute
   '/api/tts': typeof ApiTtsRoute
   '/areas/$slug': typeof AreasSlugRoute
+  '/products/calm-mantra': typeof ProductsCalmMantraRoute
+  '/products/connect': typeof ProductsConnectRoute
+  '/products/decision': typeof ProductsDecisionRoute
+  '/products/self': typeof ProductsSelfRoute
   '/areas/': typeof AreasIndexRoute
+  '/products/': typeof ProductsIndexRoute
   '/account/billing': typeof AuthenticatedAccountBillingRoute
   '/account/dashboard': typeof AuthenticatedAccountDashboardRoute
   '/account/self-avatar': typeof AuthenticatedAccountSelfAvatarRoute
@@ -299,7 +327,6 @@ export interface FileRoutesByTo {
   '/history': typeof HistoryRoute
   '/meditation': typeof MeditationRoute
   '/pricing': typeof PricingRoute
-  '/products': typeof ProductsRoute
   '/science': typeof ScienceRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/testimonials': typeof TestimonialsRoute
@@ -311,7 +338,12 @@ export interface FileRoutesByTo {
   '/api/transcribe': typeof ApiTranscribeRoute
   '/api/tts': typeof ApiTtsRoute
   '/areas/$slug': typeof AreasSlugRoute
+  '/products/calm-mantra': typeof ProductsCalmMantraRoute
+  '/products/connect': typeof ProductsConnectRoute
+  '/products/decision': typeof ProductsDecisionRoute
+  '/products/self': typeof ProductsSelfRoute
   '/areas': typeof AreasIndexRoute
+  '/products': typeof ProductsIndexRoute
   '/account/billing': typeof AuthenticatedAccountBillingRoute
   '/account/dashboard': typeof AuthenticatedAccountDashboardRoute
   '/account/self-avatar': typeof AuthenticatedAccountSelfAvatarRoute
@@ -339,7 +371,6 @@ export interface FileRoutesById {
   '/history': typeof HistoryRoute
   '/meditation': typeof MeditationRoute
   '/pricing': typeof PricingRoute
-  '/products': typeof ProductsRoute
   '/science': typeof ScienceRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/testimonials': typeof TestimonialsRoute
@@ -352,7 +383,12 @@ export interface FileRoutesById {
   '/api/transcribe': typeof ApiTranscribeRoute
   '/api/tts': typeof ApiTtsRoute
   '/areas/$slug': typeof AreasSlugRoute
+  '/products/calm-mantra': typeof ProductsCalmMantraRoute
+  '/products/connect': typeof ProductsConnectRoute
+  '/products/decision': typeof ProductsDecisionRoute
+  '/products/self': typeof ProductsSelfRoute
   '/areas/': typeof AreasIndexRoute
+  '/products/': typeof ProductsIndexRoute
   '/_authenticated/account/billing': typeof AuthenticatedAccountBillingRoute
   '/_authenticated/account/dashboard': typeof AuthenticatedAccountDashboardRoute
   '/_authenticated/account/self-avatar': typeof AuthenticatedAccountSelfAvatarRoute
@@ -380,7 +416,6 @@ export interface FileRouteTypes {
     | '/history'
     | '/meditation'
     | '/pricing'
-    | '/products'
     | '/science'
     | '/sitemap.xml'
     | '/testimonials'
@@ -393,7 +428,12 @@ export interface FileRouteTypes {
     | '/api/transcribe'
     | '/api/tts'
     | '/areas/$slug'
+    | '/products/calm-mantra'
+    | '/products/connect'
+    | '/products/decision'
+    | '/products/self'
     | '/areas/'
+    | '/products/'
     | '/account/billing'
     | '/account/dashboard'
     | '/account/self-avatar'
@@ -418,7 +458,6 @@ export interface FileRouteTypes {
     | '/history'
     | '/meditation'
     | '/pricing'
-    | '/products'
     | '/science'
     | '/sitemap.xml'
     | '/testimonials'
@@ -430,7 +469,12 @@ export interface FileRouteTypes {
     | '/api/transcribe'
     | '/api/tts'
     | '/areas/$slug'
+    | '/products/calm-mantra'
+    | '/products/connect'
+    | '/products/decision'
+    | '/products/self'
     | '/areas'
+    | '/products'
     | '/account/billing'
     | '/account/dashboard'
     | '/account/self-avatar'
@@ -457,7 +501,6 @@ export interface FileRouteTypes {
     | '/history'
     | '/meditation'
     | '/pricing'
-    | '/products'
     | '/science'
     | '/sitemap.xml'
     | '/testimonials'
@@ -470,7 +513,12 @@ export interface FileRouteTypes {
     | '/api/transcribe'
     | '/api/tts'
     | '/areas/$slug'
+    | '/products/calm-mantra'
+    | '/products/connect'
+    | '/products/decision'
+    | '/products/self'
     | '/areas/'
+    | '/products/'
     | '/_authenticated/account/billing'
     | '/_authenticated/account/dashboard'
     | '/_authenticated/account/self-avatar'
@@ -498,13 +546,17 @@ export interface RootRouteChildren {
   HistoryRoute: typeof HistoryRoute
   MeditationRoute: typeof MeditationRoute
   PricingRoute: typeof PricingRoute
-  ProductsRoute: typeof ProductsRoute
   ScienceRoute: typeof ScienceRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TestimonialsRoute: typeof TestimonialsRoute
   ApiChatRoute: typeof ApiChatRoute
   ApiTranscribeRoute: typeof ApiTranscribeRoute
   ApiTtsRoute: typeof ApiTtsRoute
+  ProductsCalmMantraRoute: typeof ProductsCalmMantraRoute
+  ProductsConnectRoute: typeof ProductsConnectRoute
+  ProductsDecisionRoute: typeof ProductsDecisionRoute
+  ProductsSelfRoute: typeof ProductsSelfRoute
+  ProductsIndexRoute: typeof ProductsIndexRoute
   ApiPublicConnectStoryCallWebhookRoute: typeof ApiPublicConnectStoryCallWebhookRoute
   ApiPublicConnectStoryDispatchRoute: typeof ApiPublicConnectStoryDispatchRoute
   ApiPublicMeditationDispatchRoute: typeof ApiPublicMeditationDispatchRoute
@@ -532,13 +584,6 @@ declare module '@tanstack/react-router' {
       path: '/science'
       fullPath: '/science'
       preLoaderRoute: typeof ScienceRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/products': {
-      id: '/products'
-      path: '/products'
-      fullPath: '/products'
-      preLoaderRoute: typeof ProductsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/pricing': {
@@ -618,12 +663,47 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/products/': {
+      id: '/products/'
+      path: '/products'
+      fullPath: '/products/'
+      preLoaderRoute: typeof ProductsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/areas/': {
       id: '/areas/'
       path: '/'
       fullPath: '/areas/'
       preLoaderRoute: typeof AreasIndexRouteImport
       parentRoute: typeof AreasRoute
+    }
+    '/products/self': {
+      id: '/products/self'
+      path: '/products/self'
+      fullPath: '/products/self'
+      preLoaderRoute: typeof ProductsSelfRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/products/decision': {
+      id: '/products/decision'
+      path: '/products/decision'
+      fullPath: '/products/decision'
+      preLoaderRoute: typeof ProductsDecisionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/products/connect': {
+      id: '/products/connect'
+      path: '/products/connect'
+      fullPath: '/products/connect'
+      preLoaderRoute: typeof ProductsConnectRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/products/calm-mantra': {
+      id: '/products/calm-mantra'
+      path: '/products/calm-mantra'
+      fullPath: '/products/calm-mantra'
+      preLoaderRoute: typeof ProductsCalmMantraRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/areas/$slug': {
       id: '/areas/$slug'
@@ -852,13 +932,17 @@ const rootRouteChildren: RootRouteChildren = {
   HistoryRoute: HistoryRoute,
   MeditationRoute: MeditationRoute,
   PricingRoute: PricingRoute,
-  ProductsRoute: ProductsRoute,
   ScienceRoute: ScienceRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   TestimonialsRoute: TestimonialsRoute,
   ApiChatRoute: ApiChatRoute,
   ApiTranscribeRoute: ApiTranscribeRoute,
   ApiTtsRoute: ApiTtsRoute,
+  ProductsCalmMantraRoute: ProductsCalmMantraRoute,
+  ProductsConnectRoute: ProductsConnectRoute,
+  ProductsDecisionRoute: ProductsDecisionRoute,
+  ProductsSelfRoute: ProductsSelfRoute,
+  ProductsIndexRoute: ProductsIndexRoute,
   ApiPublicConnectStoryCallWebhookRoute: ApiPublicConnectStoryCallWebhookRoute,
   ApiPublicConnectStoryDispatchRoute: ApiPublicConnectStoryDispatchRoute,
   ApiPublicMeditationDispatchRoute: ApiPublicMeditationDispatchRoute,
