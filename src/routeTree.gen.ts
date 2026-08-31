@@ -23,6 +23,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AreasRouteImport } from './routes/areas'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ProductsIndexRouteImport } from './routes/products.index'
 import { Route as AreasIndexRouteImport } from './routes/areas.index'
 import { Route as AreasSlugRouteImport } from './routes/areas.$slug'
 import { Route as ApiTtsRouteImport } from './routes/api/tts'
@@ -114,6 +115,11 @@ const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProductsIndexRoute = ProductsIndexRouteImport.update({
+  id: '/products/',
+  path: '/products/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AreasIndexRoute = AreasIndexRouteImport.update({
@@ -268,6 +274,7 @@ export interface FileRoutesByFullPath {
   '/api/tts': typeof ApiTtsRoute
   '/areas/$slug': typeof AreasSlugRoute
   '/areas/': typeof AreasIndexRoute
+  '/products/': typeof ProductsIndexRoute
   '/account/billing': typeof AuthenticatedAccountBillingRoute
   '/account/dashboard': typeof AuthenticatedAccountDashboardRoute
   '/account/self-avatar': typeof AuthenticatedAccountSelfAvatarRoute
@@ -304,6 +311,7 @@ export interface FileRoutesByTo {
   '/api/tts': typeof ApiTtsRoute
   '/areas/$slug': typeof AreasSlugRoute
   '/areas': typeof AreasIndexRoute
+  '/products': typeof ProductsIndexRoute
   '/account/billing': typeof AuthenticatedAccountBillingRoute
   '/account/dashboard': typeof AuthenticatedAccountDashboardRoute
   '/account/self-avatar': typeof AuthenticatedAccountSelfAvatarRoute
@@ -344,6 +352,7 @@ export interface FileRoutesById {
   '/api/tts': typeof ApiTtsRoute
   '/areas/$slug': typeof AreasSlugRoute
   '/areas/': typeof AreasIndexRoute
+  '/products/': typeof ProductsIndexRoute
   '/_authenticated/account/billing': typeof AuthenticatedAccountBillingRoute
   '/_authenticated/account/dashboard': typeof AuthenticatedAccountDashboardRoute
   '/_authenticated/account/self-avatar': typeof AuthenticatedAccountSelfAvatarRoute
@@ -384,6 +393,7 @@ export interface FileRouteTypes {
     | '/api/tts'
     | '/areas/$slug'
     | '/areas/'
+    | '/products/'
     | '/account/billing'
     | '/account/dashboard'
     | '/account/self-avatar'
@@ -420,6 +430,7 @@ export interface FileRouteTypes {
     | '/api/tts'
     | '/areas/$slug'
     | '/areas'
+    | '/products'
     | '/account/billing'
     | '/account/dashboard'
     | '/account/self-avatar'
@@ -459,6 +470,7 @@ export interface FileRouteTypes {
     | '/api/tts'
     | '/areas/$slug'
     | '/areas/'
+    | '/products/'
     | '/_authenticated/account/billing'
     | '/_authenticated/account/dashboard'
     | '/_authenticated/account/self-avatar'
@@ -492,6 +504,7 @@ export interface RootRouteChildren {
   ApiChatRoute: typeof ApiChatRoute
   ApiTranscribeRoute: typeof ApiTranscribeRoute
   ApiTtsRoute: typeof ApiTtsRoute
+  ProductsIndexRoute: typeof ProductsIndexRoute
   ApiPublicConnectStoryCallWebhookRoute: typeof ApiPublicConnectStoryCallWebhookRoute
   ApiPublicConnectStoryDispatchRoute: typeof ApiPublicConnectStoryDispatchRoute
   ApiPublicMeditationDispatchRoute: typeof ApiPublicMeditationDispatchRoute
@@ -596,6 +609,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/products/': {
+      id: '/products/'
+      path: '/products'
+      fullPath: '/products/'
+      preLoaderRoute: typeof ProductsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/areas/': {
@@ -838,6 +858,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiChatRoute: ApiChatRoute,
   ApiTranscribeRoute: ApiTranscribeRoute,
   ApiTtsRoute: ApiTtsRoute,
+  ProductsIndexRoute: ProductsIndexRoute,
   ApiPublicConnectStoryCallWebhookRoute: ApiPublicConnectStoryCallWebhookRoute,
   ApiPublicConnectStoryDispatchRoute: ApiPublicConnectStoryDispatchRoute,
   ApiPublicMeditationDispatchRoute: ApiPublicMeditationDispatchRoute,
