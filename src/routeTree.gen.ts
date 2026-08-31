@@ -27,6 +27,7 @@ import { Route as ProductsIndexRouteImport } from './routes/products.index'
 import { Route as AreasIndexRouteImport } from './routes/areas.index'
 import { Route as ProductsSelfRouteImport } from './routes/products.self'
 import { Route as ProductsDecisionRouteImport } from './routes/products.decision'
+import { Route as ProductsConnectRouteImport } from './routes/products.connect'
 import { Route as ProductsCalmMantraRouteImport } from './routes/products.calm-mantra'
 import { Route as AreasSlugRouteImport } from './routes/areas.$slug'
 import { Route as ApiTtsRouteImport } from './routes/api/tts'
@@ -138,6 +139,11 @@ const ProductsSelfRoute = ProductsSelfRouteImport.update({
 const ProductsDecisionRoute = ProductsDecisionRouteImport.update({
   id: '/products/decision',
   path: '/products/decision',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProductsConnectRoute = ProductsConnectRouteImport.update({
+  id: '/products/connect',
+  path: '/products/connect',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProductsCalmMantraRoute = ProductsCalmMantraRouteImport.update({
@@ -292,6 +298,7 @@ export interface FileRoutesByFullPath {
   '/api/tts': typeof ApiTtsRoute
   '/areas/$slug': typeof AreasSlugRoute
   '/products/calm-mantra': typeof ProductsCalmMantraRoute
+  '/products/connect': typeof ProductsConnectRoute
   '/products/decision': typeof ProductsDecisionRoute
   '/products/self': typeof ProductsSelfRoute
   '/areas/': typeof AreasIndexRoute
@@ -332,6 +339,7 @@ export interface FileRoutesByTo {
   '/api/tts': typeof ApiTtsRoute
   '/areas/$slug': typeof AreasSlugRoute
   '/products/calm-mantra': typeof ProductsCalmMantraRoute
+  '/products/connect': typeof ProductsConnectRoute
   '/products/decision': typeof ProductsDecisionRoute
   '/products/self': typeof ProductsSelfRoute
   '/areas': typeof AreasIndexRoute
@@ -376,6 +384,7 @@ export interface FileRoutesById {
   '/api/tts': typeof ApiTtsRoute
   '/areas/$slug': typeof AreasSlugRoute
   '/products/calm-mantra': typeof ProductsCalmMantraRoute
+  '/products/connect': typeof ProductsConnectRoute
   '/products/decision': typeof ProductsDecisionRoute
   '/products/self': typeof ProductsSelfRoute
   '/areas/': typeof AreasIndexRoute
@@ -420,6 +429,7 @@ export interface FileRouteTypes {
     | '/api/tts'
     | '/areas/$slug'
     | '/products/calm-mantra'
+    | '/products/connect'
     | '/products/decision'
     | '/products/self'
     | '/areas/'
@@ -460,6 +470,7 @@ export interface FileRouteTypes {
     | '/api/tts'
     | '/areas/$slug'
     | '/products/calm-mantra'
+    | '/products/connect'
     | '/products/decision'
     | '/products/self'
     | '/areas'
@@ -503,6 +514,7 @@ export interface FileRouteTypes {
     | '/api/tts'
     | '/areas/$slug'
     | '/products/calm-mantra'
+    | '/products/connect'
     | '/products/decision'
     | '/products/self'
     | '/areas/'
@@ -541,6 +553,7 @@ export interface RootRouteChildren {
   ApiTranscribeRoute: typeof ApiTranscribeRoute
   ApiTtsRoute: typeof ApiTtsRoute
   ProductsCalmMantraRoute: typeof ProductsCalmMantraRoute
+  ProductsConnectRoute: typeof ProductsConnectRoute
   ProductsDecisionRoute: typeof ProductsDecisionRoute
   ProductsSelfRoute: typeof ProductsSelfRoute
   ProductsIndexRoute: typeof ProductsIndexRoute
@@ -676,6 +689,13 @@ declare module '@tanstack/react-router' {
       path: '/products/decision'
       fullPath: '/products/decision'
       preLoaderRoute: typeof ProductsDecisionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/products/connect': {
+      id: '/products/connect'
+      path: '/products/connect'
+      fullPath: '/products/connect'
+      preLoaderRoute: typeof ProductsConnectRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/products/calm-mantra': {
@@ -919,6 +939,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiTranscribeRoute: ApiTranscribeRoute,
   ApiTtsRoute: ApiTtsRoute,
   ProductsCalmMantraRoute: ProductsCalmMantraRoute,
+  ProductsConnectRoute: ProductsConnectRoute,
   ProductsDecisionRoute: ProductsDecisionRoute,
   ProductsSelfRoute: ProductsSelfRoute,
   ProductsIndexRoute: ProductsIndexRoute,

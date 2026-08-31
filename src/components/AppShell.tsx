@@ -175,15 +175,15 @@ export function AppShell({ children }: { children: ReactNode }) {
                     >
                       All products
                     </Link>
-                    {startMenu.map((item) => (
+                    {PRODUCTS.map((p) => (
                       <Link
-                        key={item.to}
-                        to={item.to}
+                        key={p.id}
+                        to="/products"
+                        hash={p.anchor}
                         onClick={() => setProductsOpen(false)}
-                        className={`block py-3 text-[14px] text-[color:var(--ink)] transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)] ${item.sub ? "pl-9 pr-5 text-[13px] text-[color:var(--muted-foreground)]" : "px-5"}`}
+                        className="block px-5 py-3 text-[14px] text-[color:var(--ink)] transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)]"
                       >
-                        {item.sub ? "↳ " : ""}
-                        {item.label}
+                        {p.shortName}
                       </Link>
                     ))}
                   </div>
