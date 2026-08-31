@@ -597,48 +597,6 @@ function DecisionChat() {
   );
 }
 
-function StageRail({ current }: { current: number }) {
-  return (
-    <aside className="glass sticky top-24 h-fit rounded-3xl p-4">
-      <div className="mb-3 flex items-center gap-1.5 text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
-        <Sparkles className="h-3 w-3 text-accent" /> 8-Step progress
-      </div>
-      <ol className="space-y-1.5">
-        {STAGES.map((s) => {
-          const done = s.n < current;
-          const active = s.n === current;
-          return (
-            <li
-              key={s.id}
-              className={`flex items-center gap-2 rounded-xl px-2 py-1.5 text-xs transition ${
-                active ? "bg-foreground/5" : ""
-              }`}
-            >
-              <span
-                className={`grid h-5 w-5 shrink-0 place-items-center rounded-full text-[10px] ${
-                  done
-                    ? "bg-accent text-background"
-                    : active
-                      ? "bg-foreground text-background"
-                      : "bg-foreground/5 text-muted-foreground"
-                }`}
-              >
-                {done ? <Check className="h-3 w-3" /> : s.n}
-              </span>
-              <span className={active ? "font-medium text-foreground" : "text-foreground/80"}>
-                Step {s.n}
-              </span>
-            </li>
-          );
-        })}
-      </ol>
-      <p className="mt-4 rounded-xl border border-glass-border bg-foreground/[0.02] p-3 text-[10px] leading-relaxed text-muted-foreground">
-        The facilitator asks 2–5 questions per stage and waits for your confirmation before
-        advancing. Recommendations only come after Stage 8.
-      </p>
-    </aside>
-  );
-}
 
 function MessageBubble({ m }: { m: UIMessage }) {
   const raw = extractText(m);
