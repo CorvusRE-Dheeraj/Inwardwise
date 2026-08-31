@@ -247,7 +247,7 @@ export function MIInterview({
             disabled={busy || !input.trim()}
             className="rounded-full bg-[color:var(--ink)] px-5 py-2 text-[13px] text-[color:var(--paper)] disabled:opacity-50"
           >
-            Send
+            Continue
           </button>
         </div>
       </div>
