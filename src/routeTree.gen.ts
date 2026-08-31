@@ -25,6 +25,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProductsIndexRouteImport } from './routes/products.index'
 import { Route as AreasIndexRouteImport } from './routes/areas.index'
+import { Route as ProductsDecisionRouteImport } from './routes/products.decision'
 import { Route as AreasSlugRouteImport } from './routes/areas.$slug'
 import { Route as ApiTtsRouteImport } from './routes/api/tts'
 import { Route as ApiTranscribeRouteImport } from './routes/api/transcribe'
@@ -126,6 +127,11 @@ const AreasIndexRoute = AreasIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AreasRoute,
+} as any)
+const ProductsDecisionRoute = ProductsDecisionRouteImport.update({
+  id: '/products/decision',
+  path: '/products/decision',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AreasSlugRoute = AreasSlugRouteImport.update({
   id: '/$slug',
@@ -273,6 +279,7 @@ export interface FileRoutesByFullPath {
   '/api/transcribe': typeof ApiTranscribeRoute
   '/api/tts': typeof ApiTtsRoute
   '/areas/$slug': typeof AreasSlugRoute
+  '/products/decision': typeof ProductsDecisionRoute
   '/areas/': typeof AreasIndexRoute
   '/products/': typeof ProductsIndexRoute
   '/account/billing': typeof AuthenticatedAccountBillingRoute
@@ -310,6 +317,7 @@ export interface FileRoutesByTo {
   '/api/transcribe': typeof ApiTranscribeRoute
   '/api/tts': typeof ApiTtsRoute
   '/areas/$slug': typeof AreasSlugRoute
+  '/products/decision': typeof ProductsDecisionRoute
   '/areas': typeof AreasIndexRoute
   '/products': typeof ProductsIndexRoute
   '/account/billing': typeof AuthenticatedAccountBillingRoute
@@ -351,6 +359,7 @@ export interface FileRoutesById {
   '/api/transcribe': typeof ApiTranscribeRoute
   '/api/tts': typeof ApiTtsRoute
   '/areas/$slug': typeof AreasSlugRoute
+  '/products/decision': typeof ProductsDecisionRoute
   '/areas/': typeof AreasIndexRoute
   '/products/': typeof ProductsIndexRoute
   '/_authenticated/account/billing': typeof AuthenticatedAccountBillingRoute
@@ -392,6 +401,7 @@ export interface FileRouteTypes {
     | '/api/transcribe'
     | '/api/tts'
     | '/areas/$slug'
+    | '/products/decision'
     | '/areas/'
     | '/products/'
     | '/account/billing'
@@ -429,6 +439,7 @@ export interface FileRouteTypes {
     | '/api/transcribe'
     | '/api/tts'
     | '/areas/$slug'
+    | '/products/decision'
     | '/areas'
     | '/products'
     | '/account/billing'
@@ -469,6 +480,7 @@ export interface FileRouteTypes {
     | '/api/transcribe'
     | '/api/tts'
     | '/areas/$slug'
+    | '/products/decision'
     | '/areas/'
     | '/products/'
     | '/_authenticated/account/billing'
@@ -504,6 +516,7 @@ export interface RootRouteChildren {
   ApiChatRoute: typeof ApiChatRoute
   ApiTranscribeRoute: typeof ApiTranscribeRoute
   ApiTtsRoute: typeof ApiTtsRoute
+  ProductsDecisionRoute: typeof ProductsDecisionRoute
   ProductsIndexRoute: typeof ProductsIndexRoute
   ApiPublicConnectStoryCallWebhookRoute: typeof ApiPublicConnectStoryCallWebhookRoute
   ApiPublicConnectStoryDispatchRoute: typeof ApiPublicConnectStoryDispatchRoute
@@ -624,6 +637,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/areas/'
       preLoaderRoute: typeof AreasIndexRouteImport
       parentRoute: typeof AreasRoute
+    }
+    '/products/decision': {
+      id: '/products/decision'
+      path: '/products/decision'
+      fullPath: '/products/decision'
+      preLoaderRoute: typeof ProductsDecisionRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/areas/$slug': {
       id: '/areas/$slug'
@@ -858,6 +878,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiChatRoute: ApiChatRoute,
   ApiTranscribeRoute: ApiTranscribeRoute,
   ApiTtsRoute: ApiTtsRoute,
+  ProductsDecisionRoute: ProductsDecisionRoute,
   ProductsIndexRoute: ProductsIndexRoute,
   ApiPublicConnectStoryCallWebhookRoute: ApiPublicConnectStoryCallWebhookRoute,
   ApiPublicConnectStoryDispatchRoute: ApiPublicConnectStoryDispatchRoute,
