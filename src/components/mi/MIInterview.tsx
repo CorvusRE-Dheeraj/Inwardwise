@@ -268,20 +268,22 @@ export function MIInterview({
         </div>
       )}
 
-      <div className="flex flex-wrap items-center gap-3">
-        <button
-          type="button"
-          onClick={() => onComplete?.(captured)}
-          className="rounded-full bg-[color:var(--ink)] px-6 py-2 text-[13px] text-[color:var(--paper)]"
-        >
-          {satisfied ? `${completeLabel} →` : `${completeLabel} anyway →`}
-        </button>
-        {satisfied && (
-          <span className="text-sm text-[color:var(--muted-foreground)]">
-            This one feels answered.
-          </span>
-        )}
-      </div>
+      {hasAnswer && (
+        <div className="flex flex-wrap items-center gap-3">
+          <button
+            type="button"
+            onClick={() => onComplete?.(captured)}
+            className="rounded-full bg-[color:var(--ink)] px-6 py-2 text-[13px] text-[color:var(--paper)]"
+          >
+            {completeLabel} →
+          </button>
+          {satisfied && (
+            <span className="text-sm text-[color:var(--muted-foreground)]">
+              This one feels answered.
+            </span>
+          )}
+        </div>
+      )}
     </div>
   );
 }
