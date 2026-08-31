@@ -32,6 +32,9 @@ export const Route = createFileRoute("/_authenticated/avatar/consult")({
 
 type ChatMessage = { role: "user" | "assistant"; content: string };
 
+const LEGAL_DISCLAIMER =
+  "This InwardWise Self consultation is an AI-assisted reflection tool, not a substitute for professional medical, mental health, legal, financial, or other qualified advice. It does not diagnose, treat, or create a professional relationship. If you are in crisis or need urgent help, contact a licensed professional or emergency service near you. Use your own judgment and seek qualified support for decisions that affect your health, safety, rights, or wellbeing.";
+
 function ConsultAvatar() {
   const chatFn = useServerFn(chatWithAvatar);
   const vault = useAvatarVault();
@@ -42,6 +45,7 @@ function ConsultAvatar() {
   const [input, setInput] = useState("");
   const [sending, setSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [disclaimerAcknowledged, setDisclaimerAcknowledged] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   // Load and decrypt the user's own factor answers.
@@ -157,7 +161,20 @@ function ConsultAvatar() {
       )}
 
       <div ref={scrollRef} className="paper-card flex-1 space-y-4 overflow-y-auto rounded-lg p-6">
-        {messages.length === 0 && (
+        <div className="rounded-lg border border-amber-200 bg-amber-50/60 p-4 text-sm text-amber-900">
+          <p className="font-medium">Important legal disclaimer</p>
+          <p className="mt-1 leading-relaxed">{LEGAL_DISCLAIMER}</p>
+          {!disclaimerAcknowledged && (
+            <button
+              onClick={() => setDisclaimerAcknowledged(true)}
+              className="mt-3 inline-flex items-center rounded-full bg-foreground px-4 py-2 text-xs font-medium text-background transition hover:opacity-90"
+            >
+              I understand — begin consultation
+            </button>
+          )}
+        </div>
+
+        {disclaimerAcknowledged && messages.length === 0 && (
           <div className="text-sm text-muted-foreground">
             <p className="mb-3">Ask your avatar anything about you. Try:</p>
             <ul className="space-y-2">
@@ -178,22 +195,23 @@ function ConsultAvatar() {
             </ul>
           </div>
         )}
-        {messages.map((m, i) => (
-          <div
-            key={i}
-            className={
-              m.role === "user"
-                ? "ml-auto max-w-[85%] rounded-lg bg-secondary px-4 py-3 text-sm"
-                : "mr-auto max-w-[90%] rounded-lg border border-[var(--rule)] bg-white px-4 py-3 text-sm leading-relaxed"
-            }
-          >
-            {m.role === "assistant" && (
-              <div className="font-mono-cap mb-1 text-[10px] text-royal">InwardWise Self</div>
-            )}
-            <div className="whitespace-pre-wrap">{m.content}</div>
-          </div>
-        ))}
-        {sending && (
+        {disclaimerAcknowledged &&
+          messages.map((m, i) => (
+            <div
+              key={i}
+              className={
+                m.role === "user"
+                  ? "ml-auto max-w-[85%] rounded-lg bg-secondary px-4 py-3 text-sm"
+                  : "mr-auto max-w-[90%] rounded-lg border border-[var(--rule)] bg-white px-4 py-3 text-sm leading-relaxed"
+              }
+            >
+              {m.role === "assistant" && (
+                <div className="font-mono-cap mb-1 text-[10px] text-royal">InwardWise Self</div>
+              )}
+              <div className="whitespace-pre-wrap">{m.content}</div>
+            </div>
+          ))}
+        {disclaimerAcknowledged && sending && (
           <div className="mr-auto max-w-[90%] rounded-lg border border-[var(--rule)] bg-white px-4 py-3 text-sm text-muted-foreground">
             <span className="animate-pulse">Your InwardWise Self is reflecting…</span>
           </div>
@@ -217,12 +235,17 @@ function ConsultAvatar() {
             }
           }}
           rows={2}
-          placeholder="Speak to your inner self…"
-          className="flex-1 resize-none rounded-md border border-[var(--rule)] bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-royal/40"
+          placeholder={
+            disclaimerAcknowledged
+              ? "Speak to your inner self…"
+              : "Please read and acknowledge the disclaimer above to begin."
+          }
+          disabled={!disclaimerAcknowledged}
+          className="flex-1 resize-none rounded-md border border-[var(--rule)] bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-royal/40 disabled:bg-muted/40 disabled:text-muted-foreground"
         />
         <button
           onClick={send}
-          disabled={sending || !input.trim() || !answers}
+          disabled={sending || !input.trim() || !answers || !disclaimerAcknowledged}
           className="ink-btn self-end rounded-full px-6 py-2.5 text-sm font-medium hover:ink-btn-hover disabled:opacity-50"
         >
           Send
