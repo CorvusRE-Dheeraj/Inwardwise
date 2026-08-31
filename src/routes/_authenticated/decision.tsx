@@ -685,8 +685,6 @@ function MessageBubble({ m }: { m: UIMessage }) {
   );
 }
 
-import { FormattedText } from "@/components/FormattedText";
-
 function EmptyIntro({ onPick }: { onPick: (t: string) => void }) {
   return (
     <div className="mx-auto max-w-xl py-8 text-center">
