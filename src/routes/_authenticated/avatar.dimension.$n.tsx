@@ -294,8 +294,12 @@ function DimensionFlow() {
               openingQuestion={q!.opening}
               context={`${dim.intro}${q!.helper ? `\n\n${q!.helper}` : ""}`}
               initialAnswer={answers[q!.key] ?? ""}
+              sessionKey={`${dim.n}:${q!.key}`}
               onCapture={(text) => setAnswers((a) => ({ ...a, [q!.key]: text }))}
-              completeLabel={step + 1 < total ? "Continue" : "Complete this stage"}
+              onDraft={(text) =>
+                setAnswers((a) => (a[q!.key] === text ? a : { ...a, [q!.key]: text }))
+              }
+              completeLabel={step + 1 < total ? "Next question" : "Complete this stage"}
               onComplete={async () => {
                 if (step + 1 < total) {
                   await persist(false);
