@@ -110,7 +110,9 @@ async function dispatch(request: Request) {
 
   const { data: due, error } = await supabaseAdmin
     .from("meditation_settings")
-    .select("id, user_id, phone_number, voice_enabled, scheduled_at, script, duration_minutes")
+    .select(
+      "id, user_id, phone_number, voice_enabled, scheduled_at, script, duration_minutes, call_attempts",
+    )
     .eq("status", "scheduled")
     .lte("scheduled_at", new Date().toISOString())
     .limit(25);
