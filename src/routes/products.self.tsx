@@ -1,7 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { AppShell } from "@/components/AppShell";
 import {
-  ApprovedCopyPlaceholder,
   CtaRow,
   Disclaimer,
   ProductHeader,
@@ -44,8 +43,31 @@ function SelfProduct() {
         <Disclaimer>{SELF_DISCLAIMER}</Disclaimer>
 
         <section className="mt-16 space-y-6">
-          <h2 className="font-display text-3xl tracking-tight">In depth</h2>
-          <ApprovedCopyPlaceholder section="Full InwardWise Self narrative from the approved Website Edits document: what the Self is, how the guided conversation works, privacy, and how the Self is used afterwards." />
+          <h2 className="font-display text-3xl tracking-tight">What the InwardWise Self is</h2>
+          <div className="max-w-2xl space-y-4 text-base leading-relaxed text-justify text-[color:var(--muted-foreground)]">
+            <p>
+              The InwardWise Self is a private, structured reflection of who you are across five
+              factors. It is not a diagnostic label, a personality score, or a public profile. It is
+              a working map you build yourself, one question at a time, so the system can advise
+              you in a way that actually fits your life.
+            </p>
+            <p>
+              The interview uses a guided, conversational style. Each question is designed to
+              help you notice patterns, values, and history without forcing you into categories you
+              do not recognise. You answer only what you want to answer, and you can stop and resume
+              at any point.
+            </p>
+            <p>
+              Your Self is encrypted behind a PIN that never leaves your browser. We cannot read it,
+              sell it, or use it to target you. It exists only to make your own decisions and
+              reflections more grounded.
+            </p>
+            <p>
+              Once built, your Self can be used in InwardWise Decision, InwardWise Connect, or the
+              Self Aware consultation chat to give answers that feel like they came from someone who
+              knows you, because the model is reading from your own words.
+            </p>
+          </div>
         </section>
 
         <section className="mt-16">

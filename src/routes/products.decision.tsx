@@ -1,10 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/AppShell";
-import {
-  ApprovedCopyPlaceholder,
-  CtaRow,
-  ProductHeader,
-} from "@/components/products/ProductChrome";
+import { CtaRow, ProductHeader } from "@/components/products/ProductChrome";
 import { getProduct, OOOI_PROMISE, OOOI_STAGES } from "@/lib/products";
 
 const product = getProduct("decision");
@@ -62,8 +58,29 @@ function DecisionProduct() {
         </section>
 
         <section className="mt-16 space-y-6">
-          <h2 className="font-display text-3xl tracking-tight">In depth</h2>
-          <ApprovedCopyPlaceholder section="Full InwardWise Decision narrative from the approved Website Edits document: what the product is, who it is for, how a session runs, and what you leave with." />
+          <h2 className="font-display text-3xl tracking-tight">What a session gives you</h2>
+          <div className="max-w-2xl space-y-4 text-base leading-relaxed text-justify text-[color:var(--muted-foreground)]">
+            <p>
+              InwardWise Decision is for choices that carry real weight: career moves, financial
+              trade-offs, relationship transitions, health decisions, or any situation where the
+              answer feels unclear because the question itself is unclear.
+            </p>
+            <p>
+              You work through the seven stages in conversation with an AI guide. At each stage the
+              guide asks one focused question, reflects back what it hears, and only moves forward
+              once the answer is solid enough to build on. You can type or speak your responses, and
+              you can pause, go back, or revise at any point.
+            </p>
+            <p>
+              By the end you leave with a clarified objective, the assumptions and fears that were
+              distorting it, a set of viable solutions, and a concrete boundary that tells you which
+              option actually fits.
+            </p>
+            <p>
+              Everything you share is private to your account. Sessions are saved so you can return,
+              compare, and build a personal decision history over time.
+            </p>
+          </div>
         </section>
 
         <div className="mt-14">
