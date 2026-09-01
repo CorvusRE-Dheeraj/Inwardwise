@@ -84,7 +84,7 @@ function SelfAvatarPage() {
 
       <form onSubmit={onSave} className="mt-10 grid gap-4 max-w-2xl">
         <label className="block">
-          <span className="mb-1 block text-xs text-muted-foreground">InwardWise Self symbol (emoji or short text)</span>
+          <span className="mb-1 block text-xs text-muted-foreground"><ProductName id="self" /> symbol (emoji or short text)</span>
           <input
             value={form.avatar}
             onChange={(e) => update("avatar", e.target.value)}
@@ -122,7 +122,7 @@ function SelfAvatarPage() {
             </svg>
           </div>
           <p className="mt-4 text-center text-xs uppercase tracking-[0.18em] text-muted-foreground">
-            The InwardWise Self and its five factors
+            The <ProductName id="self" /> and its five factors
           </p>
         </div>
 
