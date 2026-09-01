@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { ProductName } from "@/components/products/ProductChrome";
 
 export const Route = createFileRoute("/_authenticated/avatar/ask")({
   head: () => ({
