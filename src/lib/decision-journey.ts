@@ -44,23 +44,24 @@ export const JOURNEY: JourneyStage[] = [
   },
   {
     n: 5,
-    label: "Step Back",
-    blurb: "Look past the moment at what you want in the long run.",
-    milestone: "You can see the wider picture now.",
+    label: "Refine Your Objective",
+    blurb: "Your objective is reconsidered in light of everything you have shared.",
+    milestone: "Your objective has been refined.",
   },
   {
     n: 6,
-    label: "Define Your Boundary",
-    blurb: "Clarify what is acceptable and what is not.",
-    why: "Your boundary helps distinguish what you are willing to accept from what you are not.",
-    milestone: "Your boundary is set.",
+    label: "Review the Objective",
+    blurb: "Observe the objective being rewritten and redefined after filtering through everything.",
+    why: "Seeing the objective restated helps you check whether it still reflects what you want.",
+    milestone: "The refined objective is confirmed.",
   },
   {
     n: 7,
-    label: "Evaluate Your Options",
-    blurb: "Look at the options against your objective and your boundary.",
+    label: "Break It Into Parts",
+    blurb: "The objective is divided into smaller sub-objectives you can actually answer.",
     milestone: "Now let's bring everything together.",
   },
+
   {
     n: 8,
     label: "Make Your Decision",
