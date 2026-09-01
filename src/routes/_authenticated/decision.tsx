@@ -373,6 +373,7 @@ function DecisionChat() {
 
   return (
     <AppShell>
+      <div className="mx-auto w-[min(1280px,calc(100%-2rem))] py-10 md:py-14">
       <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
         <div>
           <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground">
