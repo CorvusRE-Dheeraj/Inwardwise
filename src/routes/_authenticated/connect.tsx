@@ -23,6 +23,7 @@ import {
   submitConnectStory,
 } from "@/lib/connect.functions";
 import { scheduleStoryCall } from "@/lib/connect-story-call.functions";
+import { ProductName } from "@/components/products/ProductChrome";
 
 export const Route = createFileRoute("/_authenticated/connect")({
   head: () => ({
