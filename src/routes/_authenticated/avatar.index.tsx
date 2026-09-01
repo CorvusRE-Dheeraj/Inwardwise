@@ -260,20 +260,20 @@ function AvatarDashboard() {
                       to="/avatar/consult"
                       className="rounded-full bg-[color:var(--ink)] px-5 py-2 text-[13px] text-[color:var(--paper)]"
                     >
-                      Consult your <ProductName id="self" /> →
+                      Consult your InwardWise Self →
                     </Link>
                   )}
                   <Link
                     to="/avatar/ask"
                     className="rounded-full border border-[color:var(--rule)] px-5 py-2 text-[13px] transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)]"
                   >
-                    Ask your <ProductName id="self" /> →
+                    Ask your InwardWise Self →
                   </Link>
                   <button
                     onClick={vault.lock}
                     className="rounded-full border border-[color:var(--rule)] px-5 py-2 text-[13px]"
                   >
-                    Lock <ProductName id="self" />
+                    Lock InwardWise Self
                   </button>
                   <button
                     onClick={() => setConfirmWipe(true)}
