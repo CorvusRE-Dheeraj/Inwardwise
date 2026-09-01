@@ -277,8 +277,8 @@ function ConnectPage() {
             <Eyebrow>§ 01 · {result.selfBuilt ? "Personal path" : "Collective path"}</Eyebrow>
             <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-justify">
               {result.selfBuilt
-                ? "Because you have completed your InwardWise Self, this reading is written for someone who has already done that work. Alongside it you will find what others in the same situation have found, InwardWise book content, and reviewed stories from other members. Your answers stay encrypted and private."
-                : "You have not finished building your InwardWise Self yet, so this reading draws on what many people in the same situation have found, together with InwardWise book content and reviewed stories from other members."}
+                ? <>Because you have completed your <ProductName id="self" />, this reading is written for someone who has already done that work. Alongside it you will find what others in the same situation have found, <ProductName id="connect" /> book content, and reviewed stories from other members. Your answers stay encrypted and private.</>
+                : <>You have not finished building your <ProductName id="self" /> yet, so this reading draws on what many people in the same situation have found, together with <ProductName id="connect" /> book content and reviewed stories from other members.</>}
             </p>
             {!result.selfBuilt && (
               <Link
