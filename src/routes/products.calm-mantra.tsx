@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/AppShell";
-import { CtaRow, Disclaimer, ProductHeader, ProductName } from "@/components/products/ProductChrome";
+import { CtaRow, Disclaimer, ProductName } from "@/components/products/ProductChrome";
 import { SELF_DISCLAIMER } from "@/lib/products";
 
 export const Route = createFileRoute("/products/calm-mantra")({
@@ -28,11 +28,6 @@ function CalmMantra() {
   return (
     <AppShell>
       <div className="mx-auto w-[min(1200px,calc(100%-2rem))] py-14 md:py-20">
-        <ProductHeader
-          eyebrow="Under Self · Calm & Mantra"
-          name={<><ProductName id="calm" /> & <ProductName id="mantra" /></>}
-          tagline={<>Two quiet practices that sit under <ProductName id="self" />.</>}
-        />
 
         <div className="mt-16 grid gap-8 lg:grid-cols-2 lg:gap-12">
           <section>
