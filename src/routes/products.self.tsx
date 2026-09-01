@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/AppShell";
-import { CtaRow, Disclaimer, ProductHeader } from "@/components/products/ProductChrome";
+import { CtaRow, Disclaimer, ProductHeader, ProductName } from "@/components/products/ProductChrome";
 import { getProduct } from "@/lib/products";
 
 const product = getProduct("self");
@@ -35,7 +35,7 @@ function SelfProduct() {
       <div className="mx-auto w-[min(1100px,calc(100%-2rem))] py-14 md:py-20">
         <ProductHeader
           eyebrow="Product II · Self"
-          name={product.name}
+          name={<ProductName id="self" />}
           tagline="Understand your inner self. Use that understanding to navigate the outer world."
         />
 

@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 import { APPROVED_COPY_REQUIRED, type ProductId } from "@/lib/products";
 
+
 const PRODUCT_SECOND_WORD: Record<ProductId, string> = {
   decision: "Decision",
   self: "Self",
@@ -56,7 +57,7 @@ export function ProductHeader({
   tagline,
 }: {
   eyebrow: string;
-  name: string;
+  name: ReactNode;
   tagline: string;
 }) {
   return (

@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/AppShell";
-import { CtaRow, ProductHeader } from "@/components/products/ProductChrome";
+import { CtaRow, ProductHeader, ProductName } from "@/components/products/ProductChrome";
 import { getProduct } from "@/lib/products";
 
 const product = getProduct("connect");
@@ -25,7 +25,7 @@ function ConnectProduct() {
       <div className="mx-auto w-[min(1100px,calc(100%-2rem))] py-14 md:py-20">
         <ProductHeader
           eyebrow="Product III · Connect"
-          name={product.name}
+          name={<ProductName id="connect" />}
           tagline="Understand how you connect. Find where you belong. Build connections that matter."
         />
 
