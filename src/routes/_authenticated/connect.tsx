@@ -443,7 +443,7 @@ function ReadingCard({ reading }: { reading: Analysis["reading"] }) {
   return (
     <Card>
       <Eyebrow>§ 04 · {reading.eyebrow}</Eyebrow>
-      <h2 className="font-display mt-3 text-2xl sm:text-3xl">From InwardWise</h2>
+      <h2 className="font-display mt-3 text-2xl sm:text-3xl">From <ProductName id="connect" /></h2>
       <h3 className="mt-4 font-display text-xl italic text-[color:var(--royal)]">{reading.title}</h3>
       <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-[color:var(--muted-foreground)]">
         {reading.summary}
