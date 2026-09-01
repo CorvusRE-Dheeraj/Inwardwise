@@ -339,7 +339,7 @@ function DimensionFlow() {
 
             <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-[color:var(--rule)] bg-white/60 px-3 py-1 text-[12px] text-[color:var(--muted-foreground)]">
               <Lock className="h-3 w-3" />
-              Remember: {stage.focus.replace(/^This (section|is the final section) ?/, "this stage ").trim()}
+              Remember: {stage.focus.replace(/^This section is about /, "").replace(/^This is the final section — /, "")}
             </div>
 
             <div className="mt-4 lg:hidden">
