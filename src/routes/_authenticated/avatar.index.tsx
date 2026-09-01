@@ -67,7 +67,7 @@ function AvatarDashboard() {
         scheduled_call_at: when ? new Date(when).toISOString() : null,
       })
       .eq("user_id", vault.profile.user_id);
-    setSavedNote("Saved. Your InwardWise Self will call at the time you chose.");
+    setSavedNote(<>Saved. Your <ProductName id="self" /> will call at the time you chose.</>);
     setTimeout(() => setSavedNote(null), 4000);
   }
 
