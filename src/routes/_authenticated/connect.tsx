@@ -320,7 +320,7 @@ function ConnectPage() {
                   to="/avatar/ask"
                   className="inline-flex items-center gap-2 rounded-full border border-[color:var(--rule)] px-5 py-2.5 text-[13px] transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)]"
                 >
-                  Ask InwardWise Self
+                  Ask <ProductName id="self" />
                 </Link>
               )}
             </div>
