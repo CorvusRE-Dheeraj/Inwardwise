@@ -54,6 +54,12 @@ function MeditationPractice() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const hydratedRef = useRef(false);
 
+  // Own prayer / mantra repetition
+  const [mantraText, setMantraText] = useState("");
+  const [mantraRepeats, setMantraRepeats] = useState(12);
+  const [mantraRunning, setMantraRunning] = useState(false);
+  const [mantraCount, setMantraCount] = useState(0);
+
   useEffect(() => {
     if (vault.status !== "unlocked" || !vault.key || !vault.profile) return;
     if (hydratedRef.current) return;
