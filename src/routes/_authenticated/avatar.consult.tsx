@@ -255,7 +255,7 @@ function ConsultAvatar() {
 
       <div className="mt-6 text-sm">
         <Link to="/avatar" className="text-muted-foreground hover:text-foreground">
-          ← Back to InwardWise Self
+          ← Back to <ProductName id="self" />
         </Link>
         <span className="mx-3 text-muted-foreground">·</span>
         <Link to="/avatar" className="text-muted-foreground hover:text-foreground">
