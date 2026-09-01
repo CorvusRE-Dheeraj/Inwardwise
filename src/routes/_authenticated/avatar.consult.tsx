@@ -207,14 +207,14 @@ function ConsultAvatar() {
               }
             >
               {m.role === "assistant" && (
-                <div className="font-mono-cap mb-1 text-[10px] text-royal">InwardWise Self</div>
+                <div className="font-mono-cap mb-1 text-[10px] text-royal"><ProductName id="self" /></div>
               )}
               <div className="whitespace-pre-wrap">{m.content}</div>
             </div>
           ))}
         {disclaimerAcknowledged && sending && (
           <div className="mr-auto max-w-[90%] rounded-lg border border-[var(--rule)] bg-white px-4 py-3 text-sm text-muted-foreground">
-            <span className="animate-pulse">Your InwardWise Self is reflecting…</span>
+            <span className="animate-pulse">Your <ProductName id="self" /> is reflecting…</span>
           </div>
         )}
         {error && (
