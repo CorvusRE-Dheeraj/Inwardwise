@@ -70,7 +70,7 @@ function ConnectProduct() {
           meaningfully.
         </p>
 
-        <CtaRow actions={[{ label: <>Use <ProductName id="connect" /></>, to: "/connect", primary: true }]} />
+        <CtaRow actions={[{ label: "Use Connect", to: "/connect", primary: true }]} />
       </div>
     </AppShell>
   );
