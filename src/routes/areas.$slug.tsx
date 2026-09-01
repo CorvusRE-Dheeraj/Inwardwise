@@ -47,7 +47,7 @@ function AreaPage() {
       </Link>
       <p className="mt-6 text-xs uppercase tracking-[0.18em] text-muted-foreground">Service</p>
       <h1 className="mt-2 text-4xl sm:text-5xl">{area.name}</h1>
-      <p className="mt-4 text-justify text-lg leading-relaxed text-foreground">{area.tagline}</p>
+      <p className="mt-4 text-justify text-lg leading-relaxed text-royal">{area.tagline}</p>
 
       <div className="mt-10 space-y-8 text-justify text-[15px] leading-relaxed">
         {area.sections.map((s, i) => (
