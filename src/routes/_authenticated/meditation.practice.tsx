@@ -173,6 +173,32 @@ function MeditationPractice() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [step, running, ready, autoAdvance, minutes, flat.length]);
 
+  // Repeat the person's own prayer, round by round.
+  useEffect(() => {
+    if (!mantraRunning) return;
+    if (mantraCount >= mantraRepeats) {
+      setMantraRunning(false);
+      return;
+    }
+    if (voiceEnabled) void speak(mantraText);
+    const t = setTimeout(() => setMantraCount((c) => c + 1), 12000);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mantraRunning, mantraCount, mantraRepeats]);
+
+  function startMantra() {
+    if (!mantraText.trim()) return;
+    audioRef.current?.pause();
+    setMantraCount(0);
+    setMantraRunning(true);
+  }
+
+  function stopMantra() {
+    audioRef.current?.pause();
+    setMantraRunning(false);
+  }
+
+
   if (vault.status === "loading") return <div className="min-h-[60vh]" />;
 
   if (vault.status !== "unlocked") {
