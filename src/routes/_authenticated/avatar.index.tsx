@@ -87,10 +87,10 @@ function AvatarDashboard() {
 
       <header className="mt-8 max-w-3xl">
         <div className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)]">
-          § 01 · InwardWise Self Design Dashboard
+          § 01 · <ProductName id="self" /> Design Dashboard
         </div>
         <h1 className="mt-4 font-display text-[clamp(2.4rem,6vw,4.2rem)] leading-[1.02] tracking-tight">
-          Design Your <span className="italic text-[color:var(--royal)]">Inner InwardWise Self</span>
+          Design Your <span className="italic text-[color:var(--royal)]">Inner <ProductName id="self" /></span>
         </h1>
         <p className="mt-5 text-base leading-relaxed text-[color:var(--muted-foreground)]">
           A digital representation of you, built through a guided conversation across five stages.
