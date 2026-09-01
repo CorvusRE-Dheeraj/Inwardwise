@@ -157,7 +157,7 @@ function ConsultAvatar() {
           <Link to="/avatar" className="underline">
             Answer them first
           </Link>{" "}
-          so your avatar can speak from you, not about people in general.
+          so your <ProductName id="self" /> can speak from you, not about people in general.
         </div>
       )}
 
