@@ -393,6 +393,16 @@ function DimensionFlow() {
               >
                 Back
               </button>
+              <button
+                onClick={async () => {
+                  await persist(false);
+                  setSavedNote("Saved — you can continue later");
+                  navigate({ to: "/avatar" });
+                }}
+                className="min-h-11 rounded-full border border-[color:var(--rule)] px-5 py-2 text-[13px]"
+              >
+                Save &amp; continue later
+              </button>
               <span className="text-sm text-[color:var(--muted-foreground)]">
                 {saving ? "Saving…" : "Everything you write is saved automatically."}
               </span>
