@@ -331,7 +331,7 @@ function ConnectPage() {
 
           {result.book && (
             <Card>
-              <Eyebrow>§ 04b · From the InwardWise book</Eyebrow>
+              <Eyebrow>§ 04b · From the <ProductName id="connect" /> book</Eyebrow>
               <h3 className="font-display mt-3 text-2xl italic text-[color:var(--royal)]">
                 {result.book.chapter} · {result.book.title}
               </h3>
