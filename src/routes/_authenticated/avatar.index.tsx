@@ -8,6 +8,7 @@ import { SelfJourneyIntro } from "@/components/avatar/SelfJourneyIntro";
 import { useAvatarVault } from "@/lib/avatar-vault";
 import { Caution, PinKeypad } from "@/components/avatar/PinKeypad";
 import { AvatarPortrait } from "@/components/avatar/AvatarPortrait";
+import { ProductName } from "@/components/products/ProductChrome";
 
 
 export const Route = createFileRoute("/_authenticated/avatar/")({
