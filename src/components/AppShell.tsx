@@ -169,13 +169,6 @@ export function AppShell({ children }: { children: ReactNode }) {
               {productsOpen && (
                 <div className="absolute left-0 top-full z-50 w-60 pt-3">
                   <div className="overflow-hidden rounded-xl border border-[color:var(--rule)] bg-[color:var(--paper)] shadow-lg">
-                    <Link
-                      to="/products"
-                      onClick={() => setProductsOpen(false)}
-                      className="block border-b border-[color:var(--rule)] px-5 py-3 text-[14px] text-[color:var(--ink)] transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)]"
-                    >
-                      All products
-                    </Link>
                     {PRODUCTS.map((p) => (
                       <Link
                         key={p.id}
