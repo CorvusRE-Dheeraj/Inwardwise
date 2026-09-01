@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import type { ReactNode } from "react";
 import { AppShell } from "@/components/AppShell";
 import { CtaRow, Disclaimer, ProductHeader, ProductName } from "@/components/products/ProductChrome";
 import { getProduct } from "@/lib/products";
@@ -19,7 +20,7 @@ export const Route = createFileRoute("/products/self")({
   component: SelfProduct,
 });
 
-function Volume({ n, children }: { n: string; children: React.ReactNode }) {
+function Volume({ n, children }: { n: ReactNode; children: React.ReactNode }) {
   return (
     <section className="mt-20 first:mt-0">
       <div className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)]">{n}</div>
@@ -39,10 +40,10 @@ function SelfProduct() {
           tagline="Understand your inner self. Use that understanding to navigate the outer world."
         />
 
-        <Volume n="V01 · InwardWise Self">
+        <Volume n={<>V01 · <ProductName id="self" /></>}>
           <div className="max-w-2xl space-y-5 text-base leading-relaxed text-justify text-[color:var(--muted-foreground)]">
             <p>
-              InwardWise Self grew from more than five years of the founder's interdisciplinary
+              <ProductName id="self" /> grew from more than five years of the founder&apos;s interdisciplinary
               research into human happiness, stress physiology, psychology, behavior, and the
               underlying factors that shape us as individuals. Through scientific literature,
               observation, and repeated refinement — asking whether an observed characteristic is
@@ -56,24 +57,25 @@ function SelfProduct() {
             </p>
             <p>
               With{" "}
-              <strong className="font-medium text-[color:var(--ink)]">InwardWise Self Build</strong>,
+              <strong className="font-medium text-[color:var(--ink)]"><ProductName id="self" /> Build</strong>,
               you explore these five dimensions through thoughtful, sometimes deeply personal
               questions. Once built,{" "}
-              <strong className="font-medium text-[color:var(--ink)]">InwardWise Self Aware</strong>{" "}
+              <strong className="font-medium text-[color:var(--ink)]"><ProductName id="self" /> Aware</strong>{" "}
               lets you ask questions, share feelings, examine recurring patterns, and explore your
               experiences with AI that can consider the personal context you have chosen to provide.
-              That understanding can also make InwardWise Decision, Calm, and Connect more
+              That understanding can also make <ProductName id="decision" />,{" "}
+              <ProductName id="calm" />, and <ProductName id="connect" /> more
               personally relevant — helping you examine how your motivations, experiences, fears,
               strengths, relationships, and patterns may influence your decisions and wellbeing.
             </p>
             <p>
               Your inner self is deeply personal, so you build it at your own pace and remain in
-              control of what you share. The objective isn't for AI to define who you are or tell
+              control of what you share. The objective isn&apos;t for AI to define who you are or tell
               you how to live.{" "}
               <strong className="font-medium text-[color:var(--ink)]">
                 You tell InwardWise who you are; AI helps you examine what that may mean.
               </strong>{" "}
-              As you change through life, your InwardWise Self can evolve with you — helping you
+              As you change through life, your <ProductName id="self" /> can evolve with you — helping you
               understand your patterns, adapt deliberately, make clearer decisions, and live more
               intentionally.
             </p>
@@ -86,12 +88,12 @@ function SelfProduct() {
 
           <p className="mt-6 max-w-2xl font-display text-[clamp(1.15rem,2.4vw,1.6rem)] italic leading-snug text-[color:var(--royal)]">
             Explore your five dimensions. Create a private, evolving understanding of yourself. Then
-            see what changes when AI doesn't just consider your question — it can also consider the
+            see what changes when AI doesn&apos;t just consider your question — it can also consider the
             person asking it.
           </p>
 
           <Disclaimer>
-            InwardWise Self is designed for self-reflection, personal development, and decision
+            <ProductName id="self" /> is designed for self-reflection, personal development, and decision
             support. Its five-dimensional framework is an InwardWise synthesis and should not be
             interpreted as a clinical psychological assessment or diagnostic model. InwardWise does
             not replace qualified medical or mental health professionals.
@@ -99,31 +101,31 @@ function SelfProduct() {
 
           <CtaRow
             actions={[
-              { label: "InwardWise Self Build", to: "/avatar", primary: true },
-              { label: "InwardWise Self Aware", to: "/avatar/ask" },
+              { label: <><ProductName id="self" /> Build</>, to: "/avatar", primary: true },
+              { label: <><ProductName id="self" /> Aware</>, to: "/avatar/ask" },
             ]}
           />
         </Volume>
 
-        <Volume n="V02 · InwardWise Calm">
+        <Volume n={<>V02 · <ProductName id="calm" /></>}>
           <h2 className="font-display text-[clamp(1.9rem,4vw,2.8rem)] tracking-tight">
-            InwardWise <span className="text-[color:var(--royal)]">Calm</span>
+            <ProductName id="calm" />
           </h2>
           <p className="mt-4 max-w-2xl text-lg leading-relaxed text-[color:var(--muted-foreground)]">
             Quiet the mental noise. Create space to reconnect with yourself.
           </p>
-          <CtaRow actions={[{ label: "InwardWise Calm", to: "/products/calm-mantra" }]} />
+          <CtaRow actions={[{ label: <><ProductName id="calm" /></>, to: "/products/calm-mantra" }]} />
         </Volume>
 
-        <Volume n="V03 · InwardWise Mantra">
+        <Volume n={<>V03 · <ProductName id="mantra" /></>}>
           <h2 className="font-display text-[clamp(1.9rem,4vw,2.8rem)] tracking-tight">
-            InwardWise <span className="text-[color:var(--royal)]">Mantra</span>
+            <ProductName id="mantra" />
           </h2>
           <p className="mt-4 max-w-2xl text-lg leading-relaxed text-[color:var(--muted-foreground)]">
             The messages you repeatedly tell yourself can influence how you approach your day. Make
             them worth repeating.
           </p>
-          <CtaRow actions={[{ label: "InwardWise Mantra", to: "/products/calm-mantra" }]} />
+          <CtaRow actions={[{ label: <><ProductName id="mantra" /></>, to: "/products/calm-mantra" }]} />
         </Volume>
       </div>
     </AppShell>

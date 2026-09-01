@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { ProductName } from "@/components/products/ProductChrome";
 import { loadSelfAvatar, saveSelfAvatar, selfAvatarDefaults, type SelfAvatar } from "@/lib/profile-storage";
 
 export const Route = createFileRoute("/_authenticated/account/self-avatar")({

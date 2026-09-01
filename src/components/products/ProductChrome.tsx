@@ -2,11 +2,14 @@ import { Link } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 import { APPROVED_COPY_REQUIRED, type ProductId } from "@/lib/products";
 
+export type InwardWiseProductId = ProductId | "calm" | "mantra";
 
-const PRODUCT_SECOND_WORD: Record<ProductId, string> = {
+const PRODUCT_SECOND_WORD: Record<InwardWiseProductId, string> = {
   decision: "Decision",
   self: "Self",
   connect: "Connect",
+  calm: "Calm",
+  mantra: "Mantra",
 };
 
 /** Two-tone product title used consistently across the site. */
@@ -14,7 +17,7 @@ export function ProductName({
   id,
   className = "",
 }: {
-  id: ProductId;
+  id: InwardWiseProductId;
   className?: string;
 }) {
   return (
@@ -58,7 +61,7 @@ export function ProductHeader({
 }: {
   eyebrow: string;
   name: ReactNode;
-  tagline: string;
+  tagline: ReactNode;
 }) {
   return (
     <header className="max-w-4xl">
@@ -84,13 +87,13 @@ export function ProductHeader({
 export function CtaRow({
   actions,
 }: {
-  actions: { label: string; to: string; primary?: boolean }[];
+  actions: { label: ReactNode; to: string; primary?: boolean }[];
 }) {
   return (
     <div className="mt-10 flex flex-wrap gap-4">
-      {actions.map((a) => (
+      {actions.map((a, i) => (
         <Link
-          key={a.label}
+          key={i}
           to={a.to}
           className={
             a.primary

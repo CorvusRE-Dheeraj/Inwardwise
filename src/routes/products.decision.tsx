@@ -31,7 +31,7 @@ function DecisionProduct() {
 
         <div className="mt-10 max-w-2xl space-y-5 text-base leading-relaxed text-justify text-[color:var(--muted-foreground)]">
           <p>
-            InwardWise Decision is built around the founder's{" "}
+            <ProductName id="decision" /> is built around the founder&apos;s{" "}
             <strong className="font-medium text-[color:var(--ink)]">
               seven-stage Objective-Oriented Out-In (OOOI) framework
             </strong>
@@ -45,7 +45,7 @@ function DecisionProduct() {
           </p>
           <p>
             What once required a lengthy paper-and-pencil exercise can now become an interactive
-            AI-guided process. InwardWise Decision takes you through{" "}
+            AI-guided process. <ProductName id="decision" /> takes you through{" "}
             <strong className="font-medium text-[color:var(--ink)]">
               Situation → Objective → Solutions → Remove Bias &amp; Fear → Abstract the Objective →
               Define the Boundary → Work Out-In.
@@ -58,7 +58,7 @@ function DecisionProduct() {
           <p>
             Most importantly,{" "}
             <strong className="font-medium text-[color:var(--ink)]">
-              InwardWise Decision does not make the decision for you.
+              <ProductName id="decision" /> does not make the decision for you.
             </strong>{" "}
             It helps you step above the immediate problem, see your assumptions and alternatives
             from a wider perspective, and then return to the decision with greater clarity.{" "}

@@ -36,14 +36,14 @@ function ConnectProduct() {
             people — it can depend on our personality, interests, experiences, communication style,
             priorities, and willingness to invest in relationships.{" "}
             <strong className="font-medium text-[color:var(--ink)]">
-              InwardWise Connect begins with understanding you.
+              <ProductName id="connect" /> begins with understanding you.
             </strong>{" "}
-            With insights from your InwardWise Self, it helps you reflect on why some connections
+            With insights from your <ProductName id="self" />, it helps you reflect on why some connections
             feel natural, why others are difficult to sustain, and what kinds of people, interests,
             and communities may create a stronger sense of belonging.
           </p>
           <p>
-            InwardWise Connect combines{" "}
+            <ProductName id="connect" /> combines{" "}
             <strong className="font-medium text-[color:var(--ink)]">
               AI-guided reflection, shared experiences, and Special Interest Groups
             </strong>{" "}
@@ -56,12 +56,12 @@ function ConnectProduct() {
           </p>
           <p>
             Connection also begins with how we respond to loneliness, rejection, disappointment, and
-            other difficult emotions. InwardWise can work alongside Self, Calm, and Mantra to help
-            you reflect, regain perspective, reinforce personally meaningful intentions, and
-            identify constructive ways to reconnect with the world around you. The objective isn't
-            to give you more followers or contacts. It is to help you understand how you connect,
-            discover where you may belong, and create opportunities for relationships and
-            communities that add meaning to your life.
+            other difficult emotions. InwardWise can work alongside <ProductName id="self" />,{" "}
+            <ProductName id="calm" />, and <ProductName id="mantra" /> to help you reflect, regain perspective,
+            reinforce personally meaningful intentions, and identify constructive ways to reconnect with
+            the world around you. The objective isn&apos;t to give you more followers or contacts. It is to
+            help you understand how you connect, discover where you may belong, and create opportunities
+            for relationships and communities that add meaning to your life.
           </p>
         </div>
 
@@ -70,7 +70,7 @@ function ConnectProduct() {
           meaningfully.
         </p>
 
-        <CtaRow actions={[{ label: "Use InwardWise Connect", to: "/connect", primary: true }]} />
+        <CtaRow actions={[{ label: <>Use <ProductName id="connect" /></>, to: "/connect", primary: true }]} />
       </div>
     </AppShell>
   );
