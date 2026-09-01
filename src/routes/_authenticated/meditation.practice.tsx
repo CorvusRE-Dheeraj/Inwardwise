@@ -1,31 +1,23 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useMemo, useRef, useState } from "react";
-import { useServerFn } from "@tanstack/react-start";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { supabase } from "@/integrations/supabase/client";
-import { chatWithAvatar } from "@/lib/avatar.functions";
 import { useAvatarVault } from "@/lib/avatar-vault";
-import { decryptText } from "@/lib/avatar-crypto";
-import type { AvatarAnswers } from "@/lib/avatar-prompt";
 import { Caution, PinKeypad } from "@/components/avatar/PinKeypad";
-import { PRAYER_SETS, dwellSecondsFor, linesPerSetFor, type PrayerLine } from "@/lib/meditation";
-import { AVATAR_DIMENSIONS } from "@/lib/avatar-factors";
-import { buildMeditationPrompt, parseMeditationLines } from "@/lib/meditation-prompt";
 import { synthesizeSpeech } from "@/lib/voice";
 
 export const Route = createFileRoute("/_authenticated/meditation/practice")({
   head: () => ({
     meta: [
-      { title: "Guided Meditation Practice — InwardWise" },
+      { title: "Mantra Practice — InwardWise" },
       {
         name: "description",
         content:
-          "A private, voice-guided four-prayer meditation built from the answers you wrote yourself.",
+          "Write your own prayer or intention and repeat it slowly, as many times as you choose.",
       },
-      { property: "og:title", content: "Guided Meditation Practice" },
+      { property: "og:title", content: "Mantra Practice" },
       {
         property: "og:description",
-        content: "Four prayers, spoken in your own life's words, before you sleep.",
+        content: "Write your own prayer or intention and repeat it slowly, as many times as you choose.",
       },
       { property: "og:type", content: "website" },
       { name: "robots", content: "noindex, nofollow" },
@@ -35,118 +27,15 @@ export const Route = createFileRoute("/_authenticated/meditation/practice")({
 });
 
 function MeditationPractice() {
-  const chatFn = useServerFn(chatWithAvatar);
   const vault = useAvatarVault();
 
-  const [answers, setAnswers] = useState<AvatarAnswers | null>(null);
-  const [name, setName] = useState("");
-  const [voiceEnabled, setVoiceEnabled] = useState(false);
-  const [minutes, setMinutes] = useState<number>(10);
-
-  const [lines, setLines] = useState<PrayerLine[] | null>(null);
-  const [building, setBuilding] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [step, setStep] = useState(0);
-  const [running, setRunning] = useState(false);
-  /** Set once the person confirms they are in a quiet place and ready. */
-  const [ready, setReady] = useState(false);
-  const [autoAdvance, setAutoAdvance] = useState(true);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-  const hydratedRef = useRef(false);
-
-  // Own prayer / mantra repetition
   const [mantraText, setMantraText] = useState("");
   const [mantraRepeats, setMantraRepeats] = useState(12);
   const [mantraRunning, setMantraRunning] = useState(false);
   const [mantraCount, setMantraCount] = useState(0);
-
-  useEffect(() => {
-    if (vault.status !== "unlocked" || !vault.key || !vault.profile) return;
-    if (hydratedRef.current) return;
-    hydratedRef.current = true;
-    const profile = vault.profile;
-    const key = vault.key;
-    (async () => {
-      try {
-        const { data: auth } = await supabase.auth.getUser();
-        const meta = auth.user?.user_metadata as { full_name?: string; name?: string } | undefined;
-        const { data } = await supabase
-          .from("avatar_answers")
-          .select("question_key, answer_text")
-          .eq("user_id", profile.user_id);
-        const out: AvatarAnswers = {};
-        for (const row of data ?? []) {
-          out[row.question_key] = await decryptText(key, row.answer_text);
-        }
-        setName(meta?.full_name || meta?.name || "");
-        setAnswers(out);
-        setVoiceEnabled(!!profile.voice_enabled);
-        setMinutes((profile as { session_minutes?: number | null }).session_minutes ?? 10);
-      } catch {
-        hydratedRef.current = false;
-        setAnswers({});
-      }
-    })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [vault.status, vault.key, vault.profile?.user_id]);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => () => audioRef.current?.pause(), []);
-
-  const grouped = useMemo(() => {
-    if (!lines) return [];
-    return PRAYER_SETS.map((s) => ({ set: s, items: lines.filter((l) => l.set === s.key) })).filter(
-      (g) => g.items.length > 0,
-    );
-  }, [lines]);
-
-  const flat = useMemo(
-    () => grouped.flatMap((g) => g.items.map((l) => ({ ...l, set: g.set }))),
-    [grouped],
-  );
-  const current = flat[step];
-
-  const totalQuestions = useMemo(
-    () => AVATAR_DIMENSIONS.reduce((n, d) => n + d.questions.length, 0),
-    [],
-  );
-  const answeredCount = useMemo(
-    () =>
-      answers
-        ? AVATAR_DIMENSIONS.flatMap((d) => d.questions).filter(
-            (q) => (answers[q.key] ?? "").trim().length > 0,
-          ).length
-        : 0,
-    [answers],
-  );
-  const avatarComplete = answers !== null && answeredCount === totalQuestions;
-
-  async function buildTonight() {
-    if (!answers || building || !avatarComplete) return;
-    setBuilding(true);
-    setError(null);
-    try {
-      const res = await chatFn({
-        data: {
-          systemPrompt: buildMeditationPrompt(answers, name, linesPerSetFor(minutes), minutes),
-          messages: [{ role: "user" as const, content: "Prepare tonight's meditation." }],
-        },
-      });
-      const parsed = parseMeditationLines(res.reply || "");
-      if (parsed.length === 0) throw new Error("Tonight's lines could not be prepared. Try again.");
-      setLines(parsed);
-      setStep(0);
-      setRunning(true);
-      if (voiceEnabled) {
-        void speak(
-          "Get ready for your meditation. Take a minute to find a quiet place. When you are ready, we will begin.",
-        );
-      }
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "Something went wrong.");
-    } finally {
-      setBuilding(false);
-    }
-  }
 
   async function speak(text: string) {
     try {
@@ -161,30 +50,16 @@ function MeditationPractice() {
   }
 
   useEffect(() => {
-    if (running && ready && voiceEnabled && current) void speak(current.text);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [step, running, ready]);
-
-  useEffect(() => {
-    if (!running || !ready || !autoAdvance || !current) return;
-    if (step >= flat.length - 1) return;
-    const t = setTimeout(() => setStep((s) => s + 1), dwellSecondsFor(minutes) * 1000);
-    return () => clearTimeout(t);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [step, running, ready, autoAdvance, minutes, flat.length]);
-
-  // Repeat the person's own prayer, round by round.
-  useEffect(() => {
     if (!mantraRunning) return;
     if (mantraCount >= mantraRepeats) {
       setMantraRunning(false);
       return;
     }
-    if (voiceEnabled) void speak(mantraText);
+    void speak(mantraText);
     const t = setTimeout(() => setMantraCount((c) => c + 1), 12000);
     return () => clearTimeout(t);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mantraRunning, mantraCount, mantraRepeats]);
+  }, [mantraRunning, mantraCount, mantraRepeats, mantraText]);
 
   function startMantra() {
     if (!mantraText.trim()) return;
@@ -197,7 +72,6 @@ function MeditationPractice() {
     audioRef.current?.pause();
     setMantraRunning(false);
   }
-
 
   if (vault.status === "loading") return <div className="min-h-[60vh]" />;
 
@@ -215,7 +89,7 @@ function MeditationPractice() {
           />
         </div>
         <Caution>
-          Tonight&apos;s meditation is written from the answers only you can unlock. They are
+          Your mantra practice is built from the answers only you can unlock. They are
           decrypted in your browser and never readable by anyone else.
         </Caution>
       </div>
@@ -231,222 +105,72 @@ function MeditationPractice() {
         ← Calm &amp; Mantra
       </Link>
 
-      <header className="mt-6">
-        <span className="font-mono-cap text-[color:var(--muted-foreground)]">
-          Volume III · The Practice
-        </span>
-        <h1 className="font-display mt-3 text-[clamp(2rem,5.5vw,3.6rem)] leading-[1.03] tracking-tight">
-          Four prayers, in your <em className="italic text-[color:var(--royal)]">own words</em>
-        </h1>
-        <p className="mt-5 max-w-xl text-[color:var(--muted-foreground)]">
-          Tonight&apos;s lines are written from what you answered across your five factors. Say each
-          one aloud, slowly, and stay with it before moving on.
-        </p>
-        <Link
-          to="/meditation/schedule"
-          className="mt-4 inline-block text-sm text-[color:var(--royal)] underline"
-        >
-          Change your schedule, length or voice settings →
-        </Link>
-      </header>
-
-      {!lines && (
-        <section className="mt-10 rounded-xl border border-[color:var(--rule)] p-8">
-          <span className="font-mono-cap text-[color:var(--royal)]">Your own prayer</span>
-          {!mantraRunning ? (
-            <>
-              <p className="mt-3 max-w-xl text-[color:var(--muted-foreground)]">
-                Write a prayer, line or intention in your own words. It will be repeated back to
-                you, slowly, as many times as you choose.
-              </p>
-              <textarea
-                value={mantraText}
-                onChange={(e) => setMantraText(e.target.value)}
-                rows={3}
-                placeholder="I am safe, and I let go of what I cannot carry."
-                className="mt-5 w-full rounded-lg border border-[color:var(--rule)] bg-transparent p-4 text-base outline-none focus:border-[color:var(--royal)]"
-              />
-              <div className="mt-5 flex flex-wrap items-center gap-3">
-                <label className="text-sm text-[color:var(--muted-foreground)]">Repetitions</label>
-                <select
-                  value={mantraRepeats}
-                  onChange={(e) => setMantraRepeats(Number(e.target.value))}
-                  className="rounded-full border border-[color:var(--rule)] bg-transparent px-4 py-2 text-sm"
-                >
-                  {[5, 12, 21, 33, 54, 108].map((n) => (
-                    <option key={n} value={n}>
-                      {n} times
-                    </option>
-                  ))}
-                </select>
-                <button
-                  onClick={startMantra}
-                  disabled={!mantraText.trim()}
-                  className="rounded-full bg-[color:var(--royal)] px-7 py-3 text-sm text-white transition hover:opacity-90 disabled:opacity-50"
-                >
-                  Start Mantra
-                </button>
-              </div>
-            </>
-          ) : (
-            <div className="text-center">
-              <p className="font-mono-cap mt-4 text-[color:var(--muted-foreground)]">
-                {Math.min(mantraCount + 1, mantraRepeats)} / {mantraRepeats}
-              </p>
-              <AnimatePresence mode="wait">
-                <motion.p
-                  key={mantraCount}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.7, ease: [0.2, 0.7, 0.2, 1] }}
-                  className="font-display mx-auto mt-6 max-w-2xl text-[clamp(1.4rem,3.2vw,2.2rem)] leading-[1.25] tracking-tight"
-                >
-                  {mantraText}
-                </motion.p>
-              </AnimatePresence>
-              <div className="mt-8 flex flex-wrap justify-center gap-3">
-                <button
-                  onClick={() => speak(mantraText)}
-                  className="rounded-full border border-[color:var(--rule)] px-5 py-2 text-sm"
-                >
-                  Speak this line
-                </button>
-                <button
-                  onClick={stopMantra}
-                  className="rounded-full bg-[color:var(--ink)] px-6 py-2.5 text-sm text-[color:var(--paper)]"
-                >
-                  Stop
-                </button>
-              </div>
-            </div>
-          )}
-        </section>
-      )}
-
-      <section className="mt-10">
-        {!lines && (
-          <div className="rounded-xl border border-[color:var(--rule)] p-8 text-center">
-            <p className="mx-auto max-w-md text-[color:var(--muted-foreground)]">
-              When you are ready to sleep, begin. Your {minutes}-minute session is prepared fresh
-              each time, so the prayer is never the same twice.
+      <section className="mt-10 rounded-xl border border-[color:var(--rule)] p-8">
+        <span className="font-mono-cap text-[color:var(--royal)]">Your own prayer</span>
+        {!mantraRunning ? (
+          <>
+            <p className="mt-3 max-w-xl text-[color:var(--muted-foreground)]">
+              Write a prayer, line or intention in your own words. It will be repeated back to
+              you, slowly, as many times as you choose.
             </p>
-            {answers && !avatarComplete && (
-              <p className="mx-auto mt-5 max-w-md text-sm text-[color:var(--muted-foreground)]">
-                Your meditation cannot begin until your InwardWise Self is fully built —{" "}
-                {answeredCount} of {totalQuestions} questions answered.{" "}
-                <Link to="/avatar" className="text-[color:var(--royal)] underline">
-                  Finish building your InwardWise Self →
-                </Link>
-              </p>
-            )}
-            <button
-              onClick={buildTonight}
-              disabled={building || !answers || !avatarComplete}
-              className="mt-6 rounded-full bg-[color:var(--royal)] px-7 py-3 text-sm text-white transition hover:opacity-90 disabled:opacity-50"
-            >
-              {building ? "Preparing tonight's meditation…" : "Start meditation"}
-            </button>
-            {error && <p className="mt-4 text-sm text-red-600">{error}</p>}
-          </div>
-        )}
-
-        {lines && !ready && (
-          <div className="rounded-xl border border-[color:var(--rule)] p-8 text-center md:p-12">
-            <p className="font-display text-[clamp(1.4rem,3vw,2.1rem)] leading-snug tracking-tight">
-              Get ready for your meditation. Take a minute to find a quiet place.
-            </p>
-            <p className="mt-4 text-sm text-[color:var(--muted-foreground)]">
-              Are you ready to begin?
-            </p>
-            <div className="mt-8 flex flex-wrap justify-center gap-3">
-              <button
-                onClick={() => setReady(true)}
-                className="rounded-full bg-[color:var(--royal)] px-7 py-3 text-sm text-white"
+            <textarea
+              value={mantraText}
+              onChange={(e) => setMantraText(e.target.value)}
+              rows={3}
+              placeholder="I am safe, and I let go of what I cannot carry."
+              className="mt-5 w-full rounded-lg border border-[color:var(--rule)] bg-transparent p-4 text-base outline-none focus:border-[color:var(--royal)]"
+            />
+            <div className="mt-5 flex flex-wrap items-center gap-3">
+              <label className="text-sm text-[color:var(--muted-foreground)]">Repetitions</label>
+              <select
+                value={mantraRepeats}
+                onChange={(e) => setMantraRepeats(Number(e.target.value))}
+                className="rounded-full border border-[color:var(--rule)] bg-transparent px-4 py-2 text-sm"
               >
-                Yes, I&apos;m ready
-              </button>
+                {[5, 12, 21, 33, 54, 108].map((n) => (
+                  <option key={n} value={n}>
+                    {n} times
+                  </option>
+                ))}
+              </select>
               <button
-                onClick={() => {
-                  audioRef.current?.pause();
-                  setLines(null);
-                  setRunning(false);
-                }}
-                className="rounded-full border border-[color:var(--rule)] px-6 py-3 text-sm"
+                onClick={startMantra}
+                disabled={!mantraText.trim()}
+                className="rounded-full bg-[color:var(--royal)] px-7 py-3 text-sm text-white transition hover:opacity-90 disabled:opacity-50"
               >
-                Not yet
+                Start Mantra
               </button>
             </div>
-          </div>
-        )}
-
-        {lines && ready && current && (
-          <div className="rounded-xl border border-[color:var(--rule)] p-8 md:p-12">
-            <div className="flex items-center justify-between">
-              <span className="font-mono-cap text-[color:var(--royal)]">
-                Prayer {current.set.n} · {current.set.title}
-              </span>
-              <span className="font-mono-cap text-[color:var(--muted-foreground)]">
-                {step + 1} / {flat.length}
-              </span>
-            </div>
-            <p className="mt-2 text-sm text-[color:var(--muted-foreground)]">
-              {current.set.invitation}
+          </>
+        ) : (
+          <div className="text-center">
+            <p className="font-mono-cap mt-4 text-[color:var(--muted-foreground)]">
+              {Math.min(mantraCount + 1, mantraRepeats)} / {mantraRepeats}
             </p>
-
             <AnimatePresence mode="wait">
               <motion.p
-                key={step}
-                initial={{ opacity: 0, y: 12 }}
+                key={mantraCount}
+                initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -12 }}
+                exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.7, ease: [0.2, 0.7, 0.2, 1] }}
-                className="font-display mt-10 min-h-[7rem] text-[clamp(1.5rem,3.4vw,2.4rem)] leading-[1.25] tracking-tight"
+                className="font-display mx-auto mt-6 max-w-2xl text-[clamp(1.4rem,3.2vw,2.2rem)] leading-[1.25] tracking-tight"
               >
-                {current.text}
+                {mantraText}
               </motion.p>
             </AnimatePresence>
-
-            <div className="mt-10 flex flex-wrap items-center gap-3">
+            <div className="mt-8 flex flex-wrap justify-center gap-3">
               <button
-                onClick={() => setStep((s) => Math.max(0, s - 1))}
-                disabled={step === 0}
-                className="rounded-full border border-[color:var(--rule)] px-5 py-2 text-sm disabled:opacity-40"
-              >
-                Back
-              </button>
-              {step < flat.length - 1 ? (
-                <button
-                  onClick={() => setStep((s) => s + 1)}
-                  className="rounded-full bg-[color:var(--ink)] px-6 py-2.5 text-sm text-[color:var(--paper)]"
-                >
-                  Next breath →
-                </button>
-              ) : (
-                <button
-                  onClick={() => {
-                    audioRef.current?.pause();
-                    setRunning(false);
-                    setReady(false);
-                    setLines(null);
-                    setStep(0);
-                  }}
-                  className="rounded-full bg-[color:var(--royal)] px-6 py-2.5 text-sm text-white"
-                >
-                  Close the practice
-                </button>
-              )}
-              <button
-                onClick={() => speak(current.text)}
+                onClick={() => speak(mantraText)}
                 className="rounded-full border border-[color:var(--rule)] px-5 py-2 text-sm"
               >
                 Speak this line
               </button>
               <button
-                onClick={() => setAutoAdvance((a) => !a)}
-                className="rounded-full border border-[color:var(--rule)] px-5 py-2 text-sm"
+                onClick={stopMantra}
+                className="rounded-full bg-[color:var(--ink)] px-6 py-2.5 text-sm text-[color:var(--paper)]"
               >
-                {autoAdvance ? `Paced · ${dwellSecondsFor(minutes)}s per line` : "Paced timing off"}
+                Stop
               </button>
             </div>
           </div>
