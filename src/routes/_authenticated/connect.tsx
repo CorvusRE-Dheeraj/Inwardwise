@@ -625,7 +625,7 @@ function ConnectChoices({
             ))}
           </div>
           <p className="mt-4 text-[13px] text-[color:var(--muted-foreground)]">
-            Nearby suggestions can be added later — InwardWise does not ask for your location.
+            Nearby suggestions can be added later — <ProductName id="connect" /> does not ask for your location.
           </p>
         </Card>
       )}
