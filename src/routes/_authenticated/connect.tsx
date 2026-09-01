@@ -133,7 +133,7 @@ function ConnectPage() {
         <div className="decision-grid pointer-events-none absolute inset-0 opacity-70" />
         <div className="mx-auto w-[min(1100px,calc(100%-2rem))] pt-12 md:pt-20">
           <div className="flex items-center justify-between">
-            <span className="font-mono-cap">InwardWise · Connect</span>
+            <span className="font-mono-cap"><ProductName id="connect" /></span>
             <span className="hidden font-mono-cap md:inline">Be Yourself and Belong</span>
           </div>
           <div className="hairline mt-4" />
