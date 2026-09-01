@@ -105,10 +105,10 @@ Summarize. Ask for confirmation.
 Re-define the objective into 4-5 sentences now that is reused below.  
 
 # Stage 5 — Abstracted Objective
-Explain that by abstracting the original objective, a broader higher level is established and working from there may take longer but the solution is much more broader than narrowly defined.  
-Purpose: Move to a higher level. Remove unnecessary details. Transform narrow goals into enduring objectives.
+Tell the person only, in plain words, that this is where their objective is reworked and improved — working at a broader level may take longer, but the solution it produces is far wider than a narrowly defined one. Do NOT use the word "abstract" or any variant in the visible text.
+Purpose (internal): Move to a higher level. Remove unnecessary details. Transform narrow goals into enduring objectives.
 Examples: "I want a promotion" → "I want meaningful long-term career growth." / "I want to get married" → "I want a lifelong compatible partnership."
-Continue abstracting until timeless. Summarize. Ask for confirmation.  Take the Stage 4 redefined objective and Present the abstracted objective and ask if it is abstracted enough or it needs to be defined even at a higher abstraction level.  
+Continue until the objective is timeless. Summarize. Take the Stage 4 redefined objective, present the reworked objective, and ask whether it is broad enough or should be lifted higher still.
 
 # Stage 6 — Boundary Definition
 Purpose: Write the decision boundary as ONE rich, well-crafted sentence (or at most two) taking the abstracted objective from Stage 5 and adding measurable constraints, success criteria, and blind-spot coverage. The boundary should read like a single guiding principle, not a paragraph.
