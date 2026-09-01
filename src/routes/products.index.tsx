@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { AppShell } from "@/components/AppShell";
+import { ProductName } from "@/components/products/ProductChrome";
 import { PRODUCTS } from "@/lib/products";
 
 export const Route = createFileRoute("/products/")({
@@ -27,23 +28,6 @@ export const Route = createFileRoute("/products/")({
 function ProductsOverview() {
   return (
     <AppShell>
-      <section className="relative overflow-hidden">
-        <div className="decision-grid pointer-events-none absolute inset-0 opacity-70" />
-        <div className="mx-auto w-[min(1280px,calc(100%-2rem))] pt-12 md:pt-20">
-          <div className="flex items-center justify-between">
-            <span className="font-mono-cap">InwardWise · Products</span>
-            <span className="hidden font-mono-cap md:inline">Decision · Self · Connect</span>
-          </div>
-          <div className="hairline mt-4" />
-          <h1 className="font-display mt-12 max-w-4xl text-[clamp(2.6rem,8vw,6rem)] leading-[0.98] tracking-tight">
-            Three products, one <em className="italic text-[color:var(--royal)]">inward practice</em>
-          </h1>
-          <p className="mt-8 max-w-xl text-lg leading-relaxed text-[color:var(--muted-foreground)]">
-            Choose the one that matches what you are carrying today.
-          </p>
-        </div>
-      </section>
-
       <section className="mx-auto w-[min(1280px,calc(100%-2rem))] py-16 md:py-24">
         <ul className="grid grid-cols-1 gap-6 md:grid-cols-3">
           {PRODUCTS.map((p, i) => (
@@ -61,13 +45,10 @@ function ProductsOverview() {
                   § 0{i + 1}
                 </div>
                 <h2 className="font-display mt-4 text-[1.9rem] leading-tight tracking-tight">
-                  {p.name}
+                  <ProductName id={p.id} />
                 </h2>
                 <p className="mt-4 text-base leading-relaxed text-[color:var(--ink)]">
                   {p.tagline}
-                </p>
-                <p className="mt-4 text-sm leading-relaxed text-justify text-[color:var(--muted-foreground)]">
-                  {p.summary}
                 </p>
                 <div className="mt-auto pt-8">
                   <Link
