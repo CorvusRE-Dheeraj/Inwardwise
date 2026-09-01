@@ -213,11 +213,21 @@ async function dispatch(request: Request) {
         continue;
       }
 
+      const placed = (await res.json().catch(() => null)) as { id?: string } | null;
+
+      // The call is in flight: the next cron pass checks how it ended and
+      // reschedules it when voicemail picked up instead of the person.
       await supabaseAdmin
         .from("meditation_settings")
-        .update({ status: "sent", last_error: null, last_call_at: new Date().toISOString() })
+        .update({
+          status: placed?.id ? "calling" : "sent",
+          provider_call_id: placed?.id ?? null,
+          call_attempts: (row.call_attempts ?? 0) + 1,
+          last_error: null,
+          last_call_at: new Date().toISOString(),
+        })
         .eq("id", row.id);
-      results.push({ id: row.id, status: "sent" });
+      results.push({ id: row.id, status: placed?.id ? "calling" : "sent" });
     } catch (err) {
       console.error("[meditation] dispatch error", err);
       await supabaseAdmin
