@@ -134,7 +134,7 @@ function AvatarDashboard() {
                 <Phone className="h-3 w-3" /> Calendar Scheduling for Voice Build
               </div>
               <p className="mt-3 text-sm text-[color:var(--muted-foreground)]">
-                Rather than typing, schedule a call — your InwardWise Self phones you and takes the
+                Rather than typing, schedule a call — your <ProductName id="self" /> phones you and takes the
                 journey questions conversationally.
               </p>
               <div className="mt-6 space-y-4">
