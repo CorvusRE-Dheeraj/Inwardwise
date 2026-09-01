@@ -405,6 +405,12 @@ function MeditationSchedule() {
             <span className="text-xs text-[color:var(--muted-foreground)]">
               {voiceEnabled ? "On — each line is spoken to you." : "Off — read the lines yourself."}
             </span>
+            {voiceEnabled && (
+              <span className="text-xs text-[color:var(--muted-foreground)]">
+                The call will come from{" "}
+                <span className="font-medium text-[color:var(--ink)]">{VAPI_FROM_NUMBER}</span>.
+              </span>
+            )}
           </div>
         </div>
         <div className="mt-6 flex flex-wrap items-center gap-4">
