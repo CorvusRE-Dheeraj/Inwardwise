@@ -45,6 +45,64 @@ async function dispatch(request: Request) {
   const phoneNumberId = process.env["VAPI_PHONE_NUMBER_ID"];
 
   const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+
+  // First, settle calls already placed: a call that reached voicemail or was
+  // never answered is retried a few minutes later instead of counting as done.
+  if (vapiKey) {
+    const { data: pending } = await supabaseAdmin
+      .from("meditation_settings")
+      .select("id, provider_call_id, call_attempts")
+      .eq("status", "calling")
+      .not("provider_call_id", "is", null)
+      .limit(25);
+
+    for (const row of pending ?? []) {
+      try {
+        const res = await fetch(`https://api.vapi.ai/call/${row.provider_call_id}`, {
+          headers: { Authorization: `Bearer ${vapiKey}` },
+        });
+        if (!res.ok) continue;
+        const call = (await res.json()) as { status?: string; endedReason?: string };
+        if (call.status !== "ended") continue;
+
+        const reason = (call.endedReason ?? "").toLowerCase();
+        const unreached =
+          reason.includes("voicemail") ||
+          reason.includes("no-answer") ||
+          reason.includes("noanswer") ||
+          reason.includes("busy") ||
+          reason.includes("customer-did-not-answer");
+
+        if (unreached && (row.call_attempts ?? 0) < MAX_CALL_ATTEMPTS) {
+          await supabaseAdmin
+            .from("meditation_settings")
+            .update({
+              status: "scheduled",
+              scheduled_at: new Date(Date.now() + RETRY_DELAY_MINUTES * 60_000).toISOString(),
+              last_error: "No answer — the call went to voicemail, so we will try again shortly.",
+            })
+            .eq("id", row.id);
+        } else if (unreached) {
+          await supabaseAdmin
+            .from("meditation_settings")
+            .update({
+              status: "failed",
+              last_error:
+                "We tried several times but the call kept going to voicemail. Reschedule when you can pick up.",
+            })
+            .eq("id", row.id);
+        } else {
+          await supabaseAdmin
+            .from("meditation_settings")
+            .update({ status: "sent", last_error: null })
+            .eq("id", row.id);
+        }
+      } catch (err) {
+        console.error("[meditation] status poll error", err);
+      }
+    }
+  }
+
   const { data: due, error } = await supabaseAdmin
     .from("meditation_settings")
     .select("id, user_id, phone_number, voice_enabled, scheduled_at, script, duration_minutes")
