@@ -812,7 +812,7 @@ function ShareStoryModal({ onClose }: { onClose: () => void }) {
           ) : (
             <>
               <p className="mt-4 text-[14px] leading-relaxed text-[color:var(--muted-foreground)]">
-                At the time you choose, InwardWise calls you and walks you through the same six
+                At the time you choose, <ProductName id="connect" /> calls you and walks you through the same six
                 questions out loud. What you say is written up as an anonymous story and sent for
                 review, exactly like a written one.
               </p>
