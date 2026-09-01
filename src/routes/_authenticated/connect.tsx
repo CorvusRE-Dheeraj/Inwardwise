@@ -145,10 +145,10 @@ function ConnectPage() {
             Be yourself. Discover that you are not alone.
           </p>
           <p className="mt-6 max-w-2xl text-base leading-relaxed text-[color:var(--muted-foreground)]">
-            Share what’s on your mind. InwardWise can help you. Type your prompt below. If you think
+            Share what’s on your mind. <ProductName id="connect" /> can help you. Type your prompt below. If you think
             you need to make a decision based on your prompt, then click that button. If you want to
-            become self aware and have already completed your Self build, then use the Self Aware
-            button below to get responses specific to your Self.
+            become self aware and have already completed your <ProductName id="self" /> build, then use the Self Aware
+            button below to get responses specific to your <ProductName id="self" />.
           </p>
 
           <div className="mt-8 flex flex-wrap gap-4">
