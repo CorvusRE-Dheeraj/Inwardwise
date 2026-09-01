@@ -42,6 +42,7 @@ import { Route as AuthenticatedAccountIndexRouteImport } from './routes/_authent
 import { Route as ApiPublicMeditationDispatchRouteImport } from './routes/api/public/meditation-dispatch'
 import { Route as ApiPublicConnectStoryDispatchRouteImport } from './routes/api/public/connect-story-dispatch'
 import { Route as ApiPublicConnectStoryCallWebhookRouteImport } from './routes/api/public/connect-story-call-webhook'
+import { Route as AuthenticatedMeditationScheduleRouteImport } from './routes/_authenticated/meditation.schedule'
 import { Route as AuthenticatedMeditationPracticeRouteImport } from './routes/_authenticated/meditation.practice'
 import { Route as AuthenticatedAvatarConsultRouteImport } from './routes/_authenticated/avatar.consult'
 import { Route as AuthenticatedAvatarAskRouteImport } from './routes/_authenticated/avatar.ask'
@@ -220,6 +221,12 @@ const ApiPublicConnectStoryCallWebhookRoute =
     path: '/api/public/connect-story-call-webhook',
     getParentRoute: () => rootRouteImport,
   } as any)
+const AuthenticatedMeditationScheduleRoute =
+  AuthenticatedMeditationScheduleRouteImport.update({
+    id: '/meditation/schedule',
+    path: '/meditation/schedule',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedMeditationPracticeRoute =
   AuthenticatedMeditationPracticeRouteImport.update({
     id: '/meditation/practice',
@@ -302,6 +309,7 @@ export interface FileRoutesByFullPath {
   '/avatar/ask': typeof AuthenticatedAvatarAskRoute
   '/avatar/consult': typeof AuthenticatedAvatarConsultRoute
   '/meditation/practice': typeof AuthenticatedMeditationPracticeRoute
+  '/meditation/schedule': typeof AuthenticatedMeditationScheduleRoute
   '/api/public/connect-story-call-webhook': typeof ApiPublicConnectStoryCallWebhookRoute
   '/api/public/connect-story-dispatch': typeof ApiPublicConnectStoryDispatchRoute
   '/api/public/meditation-dispatch': typeof ApiPublicMeditationDispatchRoute
@@ -342,6 +350,7 @@ export interface FileRoutesByTo {
   '/avatar/ask': typeof AuthenticatedAvatarAskRoute
   '/avatar/consult': typeof AuthenticatedAvatarConsultRoute
   '/meditation/practice': typeof AuthenticatedMeditationPracticeRoute
+  '/meditation/schedule': typeof AuthenticatedMeditationScheduleRoute
   '/api/public/connect-story-call-webhook': typeof ApiPublicConnectStoryCallWebhookRoute
   '/api/public/connect-story-dispatch': typeof ApiPublicConnectStoryDispatchRoute
   '/api/public/meditation-dispatch': typeof ApiPublicMeditationDispatchRoute
@@ -386,6 +395,7 @@ export interface FileRoutesById {
   '/_authenticated/avatar/ask': typeof AuthenticatedAvatarAskRoute
   '/_authenticated/avatar/consult': typeof AuthenticatedAvatarConsultRoute
   '/_authenticated/meditation/practice': typeof AuthenticatedMeditationPracticeRoute
+  '/_authenticated/meditation/schedule': typeof AuthenticatedMeditationScheduleRoute
   '/api/public/connect-story-call-webhook': typeof ApiPublicConnectStoryCallWebhookRoute
   '/api/public/connect-story-dispatch': typeof ApiPublicConnectStoryDispatchRoute
   '/api/public/meditation-dispatch': typeof ApiPublicMeditationDispatchRoute
@@ -430,6 +440,7 @@ export interface FileRouteTypes {
     | '/avatar/ask'
     | '/avatar/consult'
     | '/meditation/practice'
+    | '/meditation/schedule'
     | '/api/public/connect-story-call-webhook'
     | '/api/public/connect-story-dispatch'
     | '/api/public/meditation-dispatch'
@@ -470,6 +481,7 @@ export interface FileRouteTypes {
     | '/avatar/ask'
     | '/avatar/consult'
     | '/meditation/practice'
+    | '/meditation/schedule'
     | '/api/public/connect-story-call-webhook'
     | '/api/public/connect-story-dispatch'
     | '/api/public/meditation-dispatch'
@@ -513,6 +525,7 @@ export interface FileRouteTypes {
     | '/_authenticated/avatar/ask'
     | '/_authenticated/avatar/consult'
     | '/_authenticated/meditation/practice'
+    | '/_authenticated/meditation/schedule'
     | '/api/public/connect-story-call-webhook'
     | '/api/public/connect-story-dispatch'
     | '/api/public/meditation-dispatch'
@@ -783,6 +796,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicConnectStoryCallWebhookRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/meditation/schedule': {
+      id: '/_authenticated/meditation/schedule'
+      path: '/meditation/schedule'
+      fullPath: '/meditation/schedule'
+      preLoaderRoute: typeof AuthenticatedMeditationScheduleRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/meditation/practice': {
       id: '/_authenticated/meditation/practice'
       path: '/meditation/practice'
@@ -868,6 +888,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAvatarAskRoute: typeof AuthenticatedAvatarAskRoute
   AuthenticatedAvatarConsultRoute: typeof AuthenticatedAvatarConsultRoute
   AuthenticatedMeditationPracticeRoute: typeof AuthenticatedMeditationPracticeRoute
+  AuthenticatedMeditationScheduleRoute: typeof AuthenticatedMeditationScheduleRoute
   AuthenticatedAvatarIndexRoute: typeof AuthenticatedAvatarIndexRoute
   AuthenticatedAvatarDimensionNRoute: typeof AuthenticatedAvatarDimensionNRoute
 }
@@ -881,6 +902,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAvatarAskRoute: AuthenticatedAvatarAskRoute,
   AuthenticatedAvatarConsultRoute: AuthenticatedAvatarConsultRoute,
   AuthenticatedMeditationPracticeRoute: AuthenticatedMeditationPracticeRoute,
+  AuthenticatedMeditationScheduleRoute: AuthenticatedMeditationScheduleRoute,
   AuthenticatedAvatarIndexRoute: AuthenticatedAvatarIndexRoute,
   AuthenticatedAvatarDimensionNRoute: AuthenticatedAvatarDimensionNRoute,
 }

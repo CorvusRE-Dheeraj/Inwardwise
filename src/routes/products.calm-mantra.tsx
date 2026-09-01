@@ -78,7 +78,7 @@ function CalmMantra() {
           <p className="mt-8 max-w-3xl text-base leading-relaxed text-[color:var(--ink)]">
             Pause → Quiet the noise → Reflect → Reconnect → Return with greater clarity.
           </p>
-          <CtaRow actions={[{ label: "Start Calm", to: "/meditation/practice", primary: true }]} />
+          <CtaRow actions={[{ label: "Start Calm", to: "/meditation/schedule", primary: true }]} />
         </section>
 
         <section className="mt-20">
