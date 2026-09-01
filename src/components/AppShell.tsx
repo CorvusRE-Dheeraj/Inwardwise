@@ -74,7 +74,7 @@ export function AppShell({ children }: { children: ReactNode }) {
     { to: "/decision", label: "Decision" },
     { to: "/avatar", label: "Build Self" },
     { to: "/avatar/ask", label: "Self Aware" },
-    { to: "/meditation", label: "Meditation", sub: true },
+    { to: "/meditation/practice", label: "Meditation", sub: true },
     { to: "/connect", label: "Connect" },
   ];
 
@@ -337,7 +337,7 @@ export function AppShell({ children }: { children: ReactNode }) {
                 </Link>
               </li>
               <li className="pl-4">
-                <Link to="/meditation" className="hover:text-[color:var(--royal)]">
+                <Link to="/meditation/practice" className="hover:text-[color:var(--royal)]">
                   ↳ Meditation
                 </Link>
               </li>

@@ -77,7 +77,7 @@ export const SELF_SUB_PRODUCTS = [
     summary:
       "Guided calm practice for a mind that will not settle: short, spoken, and shaped around what you brought with you today.",
     href: "/products/calm-mantra",
-    cta: { label: "Start Calm", to: "/meditation" },
+    cta: { label: "Start Calm", to: "/meditation/practice" },
   },
   {
     id: "mantra",
@@ -85,7 +85,7 @@ export const SELF_SUB_PRODUCTS = [
     summary:
       "A personal phrase you can return to. Built from your own words, not borrowed from someone else's tradition.",
     href: "/products/calm-mantra",
-    cta: { label: "Create My Mantra", to: "/meditation" },
+    cta: { label: "Create My Mantra", to: "/meditation/practice" },
   },
 ] as const;
 
