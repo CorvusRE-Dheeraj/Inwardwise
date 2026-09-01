@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/AppShell";
-import { CtaRow, Disclaimer, ProductHeader, ProductName } from "@/components/products/ProductChrome";
+import { CtaRow, Disclaimer, ProductName } from "@/components/products/ProductChrome";
 import { SELF_DISCLAIMER } from "@/lib/products";
 
 export const Route = createFileRoute("/products/calm-mantra")({
