@@ -14,6 +14,7 @@ import { useAvatarVault } from "@/lib/avatar-vault";
 import { Caution, PinKeypad } from "@/components/avatar/PinKeypad";
 import { MIInterview } from "@/components/mi/MIInterview";
 import { decryptText, encryptText } from "@/lib/avatar-crypto";
+import { ProductName } from "@/components/products/ProductChrome";
 
 export const Route = createFileRoute("/_authenticated/avatar/dimension/$n")({
   head: () => ({
