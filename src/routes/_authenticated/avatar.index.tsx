@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { Lock, Phone } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { AVATAR_DIMENSIONS } from "@/lib/avatar-factors";
