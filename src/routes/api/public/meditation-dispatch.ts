@@ -161,6 +161,14 @@ async function dispatch(request: Request) {
             firstMessageMode: "assistant-speaks-first",
             maxDurationSeconds: Math.min(3600, Math.max(300, minutes * 60 + 120)),
             silenceTimeoutSeconds: 120,
+            // Answering machine: hang up rather than meditate to voicemail.
+            endCallOnSilence: false,
+            voicemailDetection: {
+              provider: "vapi",
+              backoffPlan: { startAtSeconds: 3, frequencySeconds: 3, maxRetries: 6 },
+            },
+            // No voicemail message is left, so the assistant simply ends the call.
+            voicemailMessage: "",
             model: {
               provider: "openai",
               model: "gpt-4o-mini",
