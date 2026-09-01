@@ -197,7 +197,7 @@ function DimensionFlow() {
               onClick={() => navigate({ to: "/avatar/consult" })}
               className="min-h-11 rounded-full bg-[color:var(--ink)] px-6 py-2.5 text-[13px] text-[color:var(--paper)]"
             >
-              View My <ProductName id="self" />
+              View My InwardWise Self
             </button>
           ) : (
             nextStage && (
@@ -261,7 +261,7 @@ function DimensionFlow() {
             disabled={!loaded}
             className="mt-10 min-h-11 rounded-full bg-[color:var(--ink)] px-6 py-2.5 text-[13px] text-[color:var(--paper)] disabled:opacity-50"
           >
-            {stageNo === 1 ? <>Start My <ProductName id="self" /> Journey</> : "Continue"}
+            {stageNo === 1 ? "Start My Self Journey" : "Continue"}
           </button>
         </section>
       ) : (
