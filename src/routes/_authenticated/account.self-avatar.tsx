@@ -50,13 +50,13 @@ function SelfAvatarPage() {
 
   return (
     <div>
-      <h1 className="font-display text-3xl">InwardWise Self Design</h1>
+      <h1 className="font-display text-3xl"><ProductName id="self" /> Design</h1>
 
       <div className="mt-4 max-w-2xl space-y-4 text-justify text-sm leading-relaxed text-foreground/80">
         <p>
-          Your inner InwardWise Self is a unique representation of you psychologically. But it's built from first
+          Your inner <ProductName id="self" /> is a unique representation of you psychologically. But it&apos;s built from first
           principles that shaped you and will shape you based on future actions. Our unique approach does
-          not classify you and use those attributes to build your InwardWise Self. That would not be unique, nor
+          not classify you and use those attributes to build your <ProductName id="self" />. That would not be unique, nor
           a true representation of you, especially when you get triggered by certain things. Listing you
           via classification would not be an inner representation.
         </p>
@@ -64,21 +64,21 @@ function SelfAvatarPage() {
           For countless years the founder of the company asked this question as a physicist: are there
           first principles that can define a human being? He did not just look into psychology research,
           because that is very limiting. Instead he used his physics-based approach of things that need
-          to be built from first principles. So he developed this approach to help you build your InwardWise Self.
+          to be built from first principles. So he developed this approach to help you build your <ProductName id="self" />.
         </p>
         <p>
-          For additional background information on the InwardWise Self model{" "}
+          For additional background information on the <ProductName id="self" /> model{" "}
           <Link to="/areas/$slug" params={{ slug: "individual-development" }} className="underline underline-offset-4 hover:text-accent">
             click here
           </Link>
           .
         </p>
         <p>
-          In order to build your InwardWise Self you have to answer a series of questions in each of the 5 factors.
+          In order to build your <ProductName id="self" /> you have to answer a series of questions in each of the 5 factors.
           This is a laborious process, and you really have to dig deeper in answering these questions. Set
-          aside time and do this for each factor so you get an InwardWise Self that is accurate. You only have to
-          do this once; the InwardWise Self will keep updating itself over time so it stays a representation of the
-          current you. You can always review your answers and change them to revise your InwardWise Self.
+          aside time and do this for each factor so you get an <ProductName id="self" /> that is accurate. You only have to
+          do this once; the <ProductName id="self" /> will keep updating itself over time so it stays a representation of the
+          current you. You can always review your answers and change them to revise your <ProductName id="self" />.
         </p>
       </div>
 
