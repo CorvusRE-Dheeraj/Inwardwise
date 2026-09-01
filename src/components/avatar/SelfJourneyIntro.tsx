@@ -95,13 +95,13 @@ export function SelfJourneyIntro({ completed, nextStage }: SelfJourneyIntroProps
               })}
             </ol>
             <p className="font-mono-cap mt-6 text-[10px] text-[color:var(--muted-foreground)]">
-              → Your Avatar
+              → Your InwardWise Self
             </p>
           </div>
 
           <div className="space-y-6 text-sm text-[color:var(--muted-foreground)]">
             <div>
-              <div className="text-[color:var(--ink)]">Why build an Avatar?</div>
+              <div className="text-[color:var(--ink)]">Why build your InwardWise Self?</div>
               <p className="mt-2 leading-relaxed text-justify">
                 The goal is not to label you. It is to build a richer understanding of you that can
                 become more useful as you continue using the platform. Your responses help create a
