@@ -1,6 +1,28 @@
 import { Link } from "@tanstack/react-router";
 import type { ReactNode } from "react";
-import { APPROVED_COPY_REQUIRED } from "@/lib/products";
+import { APPROVED_COPY_REQUIRED, type ProductId } from "@/lib/products";
+
+const PRODUCT_SECOND_WORD: Record<ProductId, string> = {
+  decision: "Decision",
+  self: "Self",
+  connect: "Connect",
+};
+
+/** Two-tone product title used consistently across the site. */
+export function ProductName({
+  id,
+  className = "",
+}: {
+  id: ProductId;
+  className?: string;
+}) {
+  return (
+    <span className={className}>
+      <span className="text-[color:var(--ink)]">InwardWise</span>{" "}
+      <span className="text-[color:var(--royal)]">{PRODUCT_SECOND_WORD[id]}</span>
+    </span>
+  );
+}
 
 /**
  * Visible marker for long-form sections that still need the approved
