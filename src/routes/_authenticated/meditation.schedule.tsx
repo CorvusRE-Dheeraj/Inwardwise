@@ -439,8 +439,10 @@ function MeditationSchedule() {
 
         {callStatus && (
           <p className="mt-3 text-xs text-[color:var(--muted-foreground)]">
-            {callStatus.status === "scheduled" && callStatus.voice_enabled && callStatus.scheduled_at
-              ? `Call queued for ${new Date(callStatus.scheduled_at).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" })}.`
+            {callStatus.status === "calling"
+              ? "Calling you now. If it reaches voicemail we hang up and try again in a few minutes."
+              : callStatus.status === "scheduled" && callStatus.voice_enabled && callStatus.scheduled_at
+              ? `Call queued for ${new Date(callStatus.scheduled_at).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" })}.${callStatus.last_error ? ` ${callStatus.last_error}` : ""}`
               : callStatus.status === "sent"
                 ? `Last call placed ${callStatus.last_call_at ? new Date(callStatus.last_call_at).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" }) : "recently"}.`
                 : callStatus.status === "failed"

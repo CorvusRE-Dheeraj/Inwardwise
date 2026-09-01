@@ -515,6 +515,7 @@ export type Database = {
       }
       meditation_settings: {
         Row: {
+          call_attempts: number
           call_token: string
           created_at: string
           duration_minutes: number
@@ -522,6 +523,7 @@ export type Database = {
           last_call_at: string | null
           last_error: string | null
           phone_number: string | null
+          provider_call_id: string | null
           scheduled_at: string | null
           script: Json | null
           status: string
@@ -531,6 +533,7 @@ export type Database = {
           voice_enabled: boolean
         }
         Insert: {
+          call_attempts?: number
           call_token?: string
           created_at?: string
           duration_minutes?: number
@@ -538,6 +541,7 @@ export type Database = {
           last_call_at?: string | null
           last_error?: string | null
           phone_number?: string | null
+          provider_call_id?: string | null
           scheduled_at?: string | null
           script?: Json | null
           status?: string
@@ -547,6 +551,7 @@ export type Database = {
           voice_enabled?: boolean
         }
         Update: {
+          call_attempts?: number
           call_token?: string
           created_at?: string
           duration_minutes?: number
@@ -554,6 +559,7 @@ export type Database = {
           last_call_at?: string | null
           last_error?: string | null
           phone_number?: string | null
+          provider_call_id?: string | null
           scheduled_at?: string | null
           script?: Json | null
           status?: string
