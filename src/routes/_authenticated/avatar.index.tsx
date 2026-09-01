@@ -36,7 +36,7 @@ function AvatarDashboard() {
   const [voice, setVoice] = useState(false);
   const [phone, setPhone] = useState("");
   const [when, setWhen] = useState("");
-  const [savedNote, setSavedNote] = useState<string | null>(null);
+  const [savedNote, setSavedNote] = useState<React.ReactNode | null>(null);
   const [confirmWipe, setConfirmWipe] = useState(false);
 
   useEffect(() => {
