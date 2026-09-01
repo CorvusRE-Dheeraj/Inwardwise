@@ -1,11 +1,7 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/AppShell";
-import {
-  CtaRow,
-  Disclaimer,
-  ProductHeader,
-} from "@/components/products/ProductChrome";
-import { getProduct, SELF_DISCLAIMER, SELF_SUB_PRODUCTS } from "@/lib/products";
+import { CtaRow, Disclaimer, ProductHeader } from "@/components/products/ProductChrome";
+import { getProduct } from "@/lib/products";
 
 const product = getProduct("self");
 
@@ -23,76 +19,112 @@ export const Route = createFileRoute("/products/self")({
   component: SelfProduct,
 });
 
+function Volume({ n, children }: { n: string; children: React.ReactNode }) {
+  return (
+    <section className="mt-20 first:mt-0">
+      <div className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)]">{n}</div>
+      <div className="hairline mt-4" />
+      <div className="mt-8">{children}</div>
+    </section>
+  );
+}
+
 function SelfProduct() {
   return (
     <AppShell>
       <div className="mx-auto w-[min(1100px,calc(100%-2rem))] py-14 md:py-20">
-        <ProductHeader eyebrow="Product II · Self" name={product.name} tagline={product.tagline} />
-
-        <p className="mt-8 max-w-2xl text-base leading-relaxed text-justify text-[color:var(--muted-foreground)]">
-          {product.summary}
-        </p>
-
-        <CtaRow
-          actions={[
-            { label: "Build My Self", to: "/avatar", primary: true },
-            { label: "Use Self Aware", to: "/avatar/ask" },
-          ]}
+        <ProductHeader
+          eyebrow="Product II · Self"
+          name={product.name}
+          tagline="Understand your inner self. Use that understanding to navigate the outer world."
         />
 
-        <Disclaimer>{SELF_DISCLAIMER}</Disclaimer>
-
-        <section className="mt-16 space-y-6">
-          <h2 className="font-display text-3xl tracking-tight">What the InwardWise Self is</h2>
-          <div className="max-w-2xl space-y-4 text-base leading-relaxed text-justify text-[color:var(--muted-foreground)]">
+        <Volume n="V01 · InwardWise Self">
+          <div className="max-w-2xl space-y-5 text-base leading-relaxed text-justify text-[color:var(--muted-foreground)]">
             <p>
-              The InwardWise Self is a private, structured reflection of who you are across five
-              factors. It is not a diagnostic label, a personality score, or a public profile. It is
-              a working map you build yourself, one question at a time, so the system can advise
-              you in a way that actually fits your life.
+              InwardWise Self grew from more than five years of the founder's interdisciplinary
+              research into human happiness, stress physiology, psychology, behavior, and the
+              underlying factors that shape us as individuals. Through scientific literature,
+              observation, and repeated refinement — asking whether an observed characteristic is
+              fundamental or can be explained by something deeper — this work evolved into{" "}
+              <strong className="font-medium text-[color:var(--ink)]">
+                five dimensions of the inner self
+              </strong>
+              . The framework is an InwardWise synthesis rather than a clinical psychological model:
+              its purpose is not to label you, but to create a structured and evolving understanding
+              of who you are.
             </p>
             <p>
-              The interview uses a guided, conversational style. Each question is designed to
-              help you notice patterns, values, and history without forcing you into categories you
-              do not recognise. You answer only what you want to answer, and you can stop and resume
-              at any point.
+              With{" "}
+              <strong className="font-medium text-[color:var(--ink)]">InwardWise Self Build</strong>,
+              you explore these five dimensions through thoughtful, sometimes deeply personal
+              questions. Once built,{" "}
+              <strong className="font-medium text-[color:var(--ink)]">InwardWise Self Aware</strong>{" "}
+              lets you ask questions, share feelings, examine recurring patterns, and explore your
+              experiences with AI that can consider the personal context you have chosen to provide.
+              That understanding can also make InwardWise Decision, Calm, and Connect more
+              personally relevant — helping you examine how your motivations, experiences, fears,
+              strengths, relationships, and patterns may influence your decisions and wellbeing.
             </p>
             <p>
-              Your Self is encrypted behind a PIN that never leaves your browser. We cannot read it,
-              sell it, or use it to target you. It exists only to make your own decisions and
-              reflections more grounded.
-            </p>
-            <p>
-              Once built, your Self can be used in InwardWise Decision, InwardWise Connect, or the
-              Self Aware consultation chat to give answers that feel like they came from someone who
-              knows you, because the model is reading from your own words.
+              Your inner self is deeply personal, so you build it at your own pace and remain in
+              control of what you share. The objective isn't for AI to define who you are or tell
+              you how to live.{" "}
+              <strong className="font-medium text-[color:var(--ink)]">
+                You tell InwardWise who you are; AI helps you examine what that may mean.
+              </strong>{" "}
+              As you change through life, your InwardWise Self can evolve with you — helping you
+              understand your patterns, adapt deliberately, make clearer decisions, and live more
+              intentionally.
             </p>
           </div>
-        </section>
 
-        <section className="mt-16">
-          <h2 className="font-display text-3xl tracking-tight">Also under Self</h2>
-          <ul className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2">
-            {SELF_SUB_PRODUCTS.map((s) => (
-              <li key={s.id}>
-                <article className="flex h-full flex-col rounded-2xl border border-[color:var(--rule)] p-7">
-                  <h3 className="font-display text-2xl tracking-tight">{s.name}</h3>
-                  <p className="mt-4 text-sm leading-relaxed text-justify text-[color:var(--muted-foreground)]">
-                    {s.summary}
-                  </p>
-                  <div className="mt-auto pt-6">
-                    <Link
-                      to="/products/calm-mantra"
-                      className="inline-flex min-h-11 items-center gap-2 rounded-full border border-[color:var(--ink)] px-5 py-2.5 text-sm transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)]"
-                    >
-                      Learn more <span aria-hidden>→</span>
-                    </Link>
-                  </div>
-                </article>
-              </li>
-            ))}
-          </ul>
-        </section>
+          <p className="mt-8 max-w-3xl text-base leading-relaxed text-[color:var(--ink)]">
+            Know yourself → Understand your patterns → Adapt deliberately → Decide with greater
+            clarity → Live more intentionally
+          </p>
+
+          <p className="mt-6 max-w-2xl font-display text-[clamp(1.15rem,2.4vw,1.6rem)] italic leading-snug text-[color:var(--royal)]">
+            Explore your five dimensions. Create a private, evolving understanding of yourself. Then
+            see what changes when AI doesn't just consider your question — it can also consider the
+            person asking it.
+          </p>
+
+          <Disclaimer>
+            InwardWise Self is designed for self-reflection, personal development, and decision
+            support. Its five-dimensional framework is an InwardWise synthesis and should not be
+            interpreted as a clinical psychological assessment or diagnostic model. InwardWise does
+            not replace qualified medical or mental health professionals.
+          </Disclaimer>
+
+          <CtaRow
+            actions={[
+              { label: "InwardWise Self Build", to: "/avatar", primary: true },
+              { label: "InwardWise Self Aware", to: "/avatar/ask" },
+            ]}
+          />
+        </Volume>
+
+        <Volume n="V02 · InwardWise Calm">
+          <h2 className="font-display text-[clamp(1.9rem,4vw,2.8rem)] tracking-tight">
+            InwardWise <span className="text-[color:var(--royal)]">Calm</span>
+          </h2>
+          <p className="mt-4 max-w-2xl text-lg leading-relaxed text-[color:var(--muted-foreground)]">
+            Quiet the mental noise. Create space to reconnect with yourself.
+          </p>
+          <CtaRow actions={[{ label: "InwardWise Calm", to: "/products/calm-mantra" }]} />
+        </Volume>
+
+        <Volume n="V03 · InwardWise Mantra">
+          <h2 className="font-display text-[clamp(1.9rem,4vw,2.8rem)] tracking-tight">
+            InwardWise <span className="text-[color:var(--royal)]">Mantra</span>
+          </h2>
+          <p className="mt-4 max-w-2xl text-lg leading-relaxed text-[color:var(--muted-foreground)]">
+            The messages you repeatedly tell yourself can influence how you approach your day. Make
+            them worth repeating.
+          </p>
+          <CtaRow actions={[{ label: "InwardWise Mantra", to: "/products/calm-mantra" }]} />
+        </Volume>
       </div>
     </AppShell>
   );
