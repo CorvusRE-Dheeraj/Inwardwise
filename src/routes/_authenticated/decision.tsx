@@ -17,6 +17,8 @@ import { z } from "zod";
 import { AppShell } from "@/components/AppShell";
 import { CrisisNotice } from "@/components/CrisisNotice";
 import { DecisionIntro } from "@/components/decision/DecisionIntro";
+import { SevenStagePanel } from "@/components/decision/SevenStagePanel";
+
 import { FormattedText } from "@/components/FormattedText";
 import { JourneyProgress } from "@/components/decision/JourneyProgress";
 import { TOTAL_STAGES, journeyStage } from "@/lib/decision-journey";
