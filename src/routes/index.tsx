@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import { AppShell } from "@/components/AppShell";
+import { ProductName } from "@/components/products/ProductChrome";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -129,14 +130,14 @@ function Landing() {
 
       {/* ============ VOLUME II — SELF ============ */}
       <Volume
-        eyebrow="Volume II · Self · Create and Connect with Your Inner InwardWise Self"
+        eyebrow={<>Volume II · <ProductName id="self" /> · Create and Connect with Your Inner <ProductName id="self" /></>}
         title={
           <>
             Your Inward Self Working for Your{" "}
             <em className="italic text-[color:var(--royal)]">Happiness</em>
           </>
         }
-        blurb="Create and connect with your inner InwardWise Self that is participating and helping you in your evolution over time."
+        blurb={<>Create and connect with your inner <ProductName id="self" /> that is participating and helping you in your evolution over time.</>}
         actions={
           <>
             <Link
@@ -163,14 +164,14 @@ function Landing() {
 
       {/* ============ VOLUME III — CONNECT ============ */}
       <Volume
-        eyebrow="Volume III · Connect"
+        eyebrow={<>Volume III · <ProductName id="connect" /></>}
         title={
           <>
             Connect — Be Yourself and{" "}
             <em className="italic text-[color:var(--royal)]">Belong</em>
           </>
         }
-        blurb="Speak with the InwardWise Self that knows you, and find your place among people without performing a version of yourself."
+        blurb={<>Speak with the <ProductName id="self" /> that knows you, and find your place among people without performing a version of yourself.</>}
         actions={
           <>
             <Link
@@ -207,9 +208,9 @@ function Volume({
   actions,
   meta,
 }: {
-  eyebrow: string;
+  eyebrow: React.ReactNode;
   title: React.ReactNode;
-  blurb: string;
+  blurb: React.ReactNode;
   actions: React.ReactNode;
   meta: string[][];
 }) {

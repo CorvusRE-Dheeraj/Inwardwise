@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { Lock, Phone } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { AVATAR_DIMENSIONS } from "@/lib/avatar-factors";
@@ -8,6 +8,7 @@ import { SelfJourneyIntro } from "@/components/avatar/SelfJourneyIntro";
 import { useAvatarVault } from "@/lib/avatar-vault";
 import { Caution, PinKeypad } from "@/components/avatar/PinKeypad";
 import { AvatarPortrait } from "@/components/avatar/AvatarPortrait";
+import { ProductName } from "@/components/products/ProductChrome";
 
 
 export const Route = createFileRoute("/_authenticated/avatar/")({
@@ -35,7 +36,7 @@ function AvatarDashboard() {
   const [voice, setVoice] = useState(false);
   const [phone, setPhone] = useState("");
   const [when, setWhen] = useState("");
-  const [savedNote, setSavedNote] = useState<string | null>(null);
+  const [savedNote, setSavedNote] = useState<ReactNode | null>(null);
   const [confirmWipe, setConfirmWipe] = useState(false);
 
   useEffect(() => {
@@ -66,7 +67,7 @@ function AvatarDashboard() {
         scheduled_call_at: when ? new Date(when).toISOString() : null,
       })
       .eq("user_id", vault.profile.user_id);
-    setSavedNote("Saved. Your InwardWise Self will call at the time you chose.");
+    setSavedNote(<>Saved. Your <ProductName id="self" /> will call at the time you chose.</>);
     setTimeout(() => setSavedNote(null), 4000);
   }
 
@@ -86,10 +87,10 @@ function AvatarDashboard() {
 
       <header className="mt-8 max-w-3xl">
         <div className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)]">
-          § 01 · InwardWise Self Design Dashboard
+          § 01 · <ProductName id="self" /> Design Dashboard
         </div>
         <h1 className="mt-4 font-display text-[clamp(2.4rem,6vw,4.2rem)] leading-[1.02] tracking-tight">
-          Design Your <span className="italic text-[color:var(--royal)]">Inner InwardWise Self</span>
+          Design Your <span className="italic text-[color:var(--royal)]">Inner <ProductName id="self" /></span>
         </h1>
         <p className="mt-5 text-base leading-relaxed text-[color:var(--muted-foreground)]">
           A digital representation of you, built through a guided conversation across five stages.
@@ -112,7 +113,7 @@ function AvatarDashboard() {
           <Caution>
             This 4-digit PIN is separate from your sign-in and encrypts your Self Journey answers.
             There is no recovery: if you lose it, the answers cannot be retrieved — not by us,
-            not by an administrator. You may permanently self-destruct your InwardWise Self data at any
+            not by an administrator. You may permanently self-destruct your <ProductName id="self" /> data at any
             time, and data auto-purges after twelve months of account inactivity.
           </Caution>
         </section>
@@ -133,7 +134,7 @@ function AvatarDashboard() {
                 <Phone className="h-3 w-3" /> Calendar Scheduling for Voice Build
               </div>
               <p className="mt-3 text-sm text-[color:var(--muted-foreground)]">
-                Rather than typing, schedule a call — your InwardWise Self phones you and takes the
+                Rather than typing, schedule a call — your <ProductName id="self" /> phones you and takes the
                 journey questions conversationally.
               </p>
               <div className="mt-6 space-y-4">
@@ -242,9 +243,9 @@ function AvatarDashboard() {
 
             <div className="mt-8 grid gap-6 md:grid-cols-2">
               <Caution>
-                Your Avatar becomes richer the more of the journey you complete — partial answers
+                Your Self becomes richer the more of the journey you complete — partial answers
                 produce partial reflections. If typing is the obstacle, turn on voice and schedule
-                times when you can take a phone call; your InwardWise Self will call you and
+                times when you can take a phone call; your <ProductName id="self" /> will call you and
                 continue the conversation with you.
               </Caution>
 
@@ -259,20 +260,20 @@ function AvatarDashboard() {
                       to="/avatar/consult"
                       className="rounded-full bg-[color:var(--ink)] px-5 py-2 text-[13px] text-[color:var(--paper)]"
                     >
-                      Consult your InwardWise Self →
+                      Consult your <ProductName id="self" /> →
                     </Link>
                   )}
                   <Link
                     to="/avatar/ask"
                     className="rounded-full border border-[color:var(--rule)] px-5 py-2 text-[13px] transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)]"
                   >
-                    Ask your InwardWise Self →
+                    Ask your <ProductName id="self" /> →
                   </Link>
                   <button
                     onClick={vault.lock}
                     className="rounded-full border border-[color:var(--rule)] px-5 py-2 text-[13px]"
                   >
-                    Lock InwardWise Self
+                    Lock <ProductName id="self" />
                   </button>
                   <button
                     onClick={() => setConfirmWipe(true)}
@@ -291,7 +292,7 @@ function AvatarDashboard() {
         <div className="fixed inset-0 z-50 grid place-items-center bg-black/40 p-4">
           <div className="w-full max-w-md rounded-lg border border-[color:var(--rule)] bg-[color:var(--paper)] p-8">
             <div className="font-mono-cap text-[10px] text-destructive">Irreversible</div>
-            <h2 className="mt-3 font-display text-2xl">Self-destruct your InwardWise Self?</h2>
+            <h2 className="mt-3 font-display text-2xl">Self-destruct your <ProductName id="self" />?</h2>
             <p className="mt-3 text-sm text-[color:var(--muted-foreground)]">
               Every answer, every stage, and your PIN will be permanently deleted. This
               cannot be undone or recovered.

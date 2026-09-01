@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { ProductName } from "@/components/products/ProductChrome";
 
 export const Route = createFileRoute("/_authenticated/avatar/ask")({
   head: () => ({
@@ -26,16 +27,16 @@ function AvatarAsk() {
         to="/avatar"
         className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)] transition hover:text-[color:var(--ink)]"
       >
-        ← InwardWise Self Design
+        ← <ProductName id="self" /> Design
       </Link>
       <div className="font-mono-cap mt-8 text-[10px] text-[color:var(--muted-foreground)]">
-        § 03 · InwardWise Self Processes
+        § 03 · <ProductName id="self" /> Processes
       </div>
       <h1 className="mt-4 font-display text-[clamp(2.2rem,5vw,3.4rem)] leading-[1.05] tracking-tight">
-        Ask <span className="italic text-[color:var(--royal)]">InwardWise Self</span>
+        Ask <span className="italic text-[color:var(--royal)]"><ProductName id="self" /></span>
       </h1>
       <p className="mt-6 max-w-2xl text-base leading-relaxed text-[color:var(--muted-foreground)] text-justify">
-        Your InwardWise Self is ready. Ask it anything that matters to you, about a decision, a
+        Your <ProductName id="self" /> is ready. Ask it anything that matters to you, about a decision, a
         relationship, a direction, or a recurring pattern. It will answer from the five factors you
         wrote, not from generic advice.
       </p>

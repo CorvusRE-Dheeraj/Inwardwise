@@ -1,6 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ArrowLeft, ArrowRight, Sparkles } from "lucide-react";
 import { findArea } from "@/lib/areas";
+import { ProductName } from "@/components/products/ProductChrome";
 
 export const Route = createFileRoute("/areas/$slug")({
   loader: ({ params }) => {
@@ -87,7 +88,7 @@ function AreaPage() {
             to="/account/self-avatar"
             className="inline-flex items-center gap-2 rounded-full bg-foreground px-4 py-2 text-sm text-background transition hover:opacity-90"
           >
-            <Sparkles className="h-4 w-4" /> Design Your InwardWise Self
+            <Sparkles className="h-4 w-4" /> Design Your <ProductName id="self" />
           </Link>
         ) : (
           <Link
@@ -120,7 +121,7 @@ function IndividualDevelopmentContent() {
   return (
     <div className="mt-10 space-y-6 text-justify text-[15px] leading-relaxed">
       <h2 className="text-2xl sm:text-3xl">
-        Build 5-Factor InwardWise Self that Defines You and Evolves with You
+        Build 5-Factor <ProductName id="self" /> that Defines You and Evolves with You
       </h2>
       <p>
         We most of the time feel no one knows us well. In the fast and noisy world, even friends are
@@ -143,11 +144,11 @@ function IndividualDevelopmentContent() {
         the drive toward a better species, better adapted to survival and thriving. The first is
         possible only for a physical being, which the human can do. Evolution, not at the population
         level but in your own lifespan, as your needs and your body is evolving. That change is being
-        taken up by epigenetics to pass on to your offspring. The InwardWise Self&rsquo;s goal is
+        taken up by epigenetics to pass on to your offspring. The <ProductName id="self" />&rsquo;s goal is
         solely to make you better adapted to the surroundings so you can evolve for the better.
       </p>
       <p>
-        We help you build that InwardWise Self by presenting five factors that are critical in
+        We help you build that <ProductName id="self" /> by presenting five factors that are critical in
         defining you. We present them as motivational interviews and questions to answer and
         crucial information is extracted. After defining the five factors completely then your Self
         can be defined and advise you on how you are evolving or adjusting to the surroundings and
@@ -191,12 +192,12 @@ function IndividualDevelopmentContent() {
           </svg>
         </div>
         <figcaption className="mt-4 text-center text-xs uppercase tracking-[0.18em] text-muted-foreground">
-          The InwardWise Self and its five factors
+          The <ProductName id="self" /> and its five factors
         </figcaption>
       </figure>
 
       <p>
-        Based on your prompt, the InwardWise Self will scan across all factors for a better
+        Based on your prompt, the <ProductName id="self" /> will scan across all factors for a better
         understanding of you and advise you. These factors are based on reviewing many scientific
         papers and a combination of intuitive approaches studying many philosophies, psychological
         approaches and observational methods. There was no single approach; it came together as a
@@ -206,10 +207,10 @@ function IndividualDevelopmentContent() {
 
       <div className="glass rounded-3xl p-6">
         <p className="text-justify text-sm text-muted-foreground">
-          We can think of the InwardWise Self as a <span className="text-foreground">Facebook for the inner self</span>,
+          We can think of the <ProductName id="self" /> as a <span className="text-foreground">Facebook for the inner self</span>,
           as Facebook is for the outer world to see what you are thinking and experiencing. Unlike
           Facebook, the information is confidential and will not be available to anyone except you.
-          By representing a truthful you as the InwardWise Self, you can manage your inner self and have a
+          By representing a truthful you as the <ProductName id="self" />, you can manage your inner self and have a
           personal conversation with yourself. This builds self-love and a healthy acceptance of
           who you are, not a victim of having to depend on others for acceptance and encouragement.
         </p>

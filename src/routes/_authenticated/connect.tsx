@@ -23,6 +23,7 @@ import {
   submitConnectStory,
 } from "@/lib/connect.functions";
 import { scheduleStoryCall } from "@/lib/connect-story-call.functions";
+import { ProductName } from "@/components/products/ProductChrome";
 
 export const Route = createFileRoute("/_authenticated/connect")({
   head: () => ({
@@ -132,7 +133,7 @@ function ConnectPage() {
         <div className="decision-grid pointer-events-none absolute inset-0 opacity-70" />
         <div className="mx-auto w-[min(1100px,calc(100%-2rem))] pt-12 md:pt-20">
           <div className="flex items-center justify-between">
-            <span className="font-mono-cap">InwardWise · Connect</span>
+            <span className="font-mono-cap"><ProductName id="connect" /></span>
             <span className="hidden font-mono-cap md:inline">Be Yourself and Belong</span>
           </div>
           <div className="hairline mt-4" />
@@ -144,10 +145,10 @@ function ConnectPage() {
             Be yourself. Discover that you are not alone.
           </p>
           <p className="mt-6 max-w-2xl text-base leading-relaxed text-[color:var(--muted-foreground)]">
-            Share what’s on your mind. InwardWise can help you. Type your prompt below. If you think
+            Share what’s on your mind. <ProductName id="connect" /> can help you. Type your prompt below. If you think
             you need to make a decision based on your prompt, then click that button. If you want to
-            become self aware and have already completed your Self build, then use the Self Aware
-            button below to get responses specific to your Self.
+            become self aware and have already completed your <ProductName id="self" /> build, then use the Self Aware
+            button below to get responses specific to your <ProductName id="self" />.
           </p>
 
           <div className="mt-8 flex flex-wrap gap-4">
@@ -276,15 +277,15 @@ function ConnectPage() {
             <Eyebrow>§ 01 · {result.selfBuilt ? "Personal path" : "Collective path"}</Eyebrow>
             <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-justify">
               {result.selfBuilt
-                ? "Because you have completed your InwardWise Self, this reading is written for someone who has already done that work. Alongside it you will find what others in the same situation have found, InwardWise book content, and reviewed stories from other members. Your answers stay encrypted and private."
-                : "You have not finished building your InwardWise Self yet, so this reading draws on what many people in the same situation have found, together with InwardWise book content and reviewed stories from other members."}
+                ? <>Because you have completed your <ProductName id="self" />, this reading is written for someone who has already done that work. Alongside it you will find what others in the same situation have found, <ProductName id="connect" /> book content, and reviewed stories from other members. Your answers stay encrypted and private.</>
+                : <>You have not finished building your <ProductName id="self" /> yet, so this reading draws on what many people in the same situation have found, together with <ProductName id="connect" /> book content and reviewed stories from other members.</>}
             </p>
             {!result.selfBuilt && (
               <Link
                 to="/avatar"
                 className="mt-5 inline-flex items-center gap-2 rounded-full border border-[color:var(--rule)] px-5 py-2.5 text-[13px] transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)]"
               >
-                Build your InwardWise Self <ArrowRight className="h-3.5 w-3.5" />
+                Build your <ProductName id="self" /> <ArrowRight className="h-3.5 w-3.5" />
               </Link>
             )}
           </Card>
@@ -319,7 +320,7 @@ function ConnectPage() {
                   to="/avatar/ask"
                   className="inline-flex items-center gap-2 rounded-full border border-[color:var(--rule)] px-5 py-2.5 text-[13px] transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)]"
                 >
-                  Ask InwardWise Self
+                  Ask <ProductName id="self" />
                 </Link>
               )}
             </div>
@@ -330,7 +331,7 @@ function ConnectPage() {
 
           {result.book && (
             <Card>
-              <Eyebrow>§ 04b · From the InwardWise book</Eyebrow>
+              <Eyebrow>§ 04b · From the <ProductName id="connect" /> book</Eyebrow>
               <h3 className="font-display mt-3 text-2xl italic text-[color:var(--royal)]">
                 {result.book.chapter} · {result.book.title}
               </h3>
@@ -442,7 +443,7 @@ function ReadingCard({ reading }: { reading: Analysis["reading"] }) {
   return (
     <Card>
       <Eyebrow>§ 04 · {reading.eyebrow}</Eyebrow>
-      <h2 className="font-display mt-3 text-2xl sm:text-3xl">From InwardWise</h2>
+      <h2 className="font-display mt-3 text-2xl sm:text-3xl">From <ProductName id="connect" /></h2>
       <h3 className="mt-4 font-display text-xl italic text-[color:var(--royal)]">{reading.title}</h3>
       <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-[color:var(--muted-foreground)]">
         {reading.summary}
@@ -505,7 +506,7 @@ function ConnectChoices({
       key: "private",
       icon: Lock,
       title: "Continue with InwardWise",
-      desc: "Explore this privately with your InwardWise Self and decision tools.",
+      desc: <>Explore this privately with your <ProductName id="self" /> and decision tools.</>,
       cta: "Continue Privately",
       to: "/avatar/ask" as const,
     },
@@ -624,7 +625,7 @@ function ConnectChoices({
             ))}
           </div>
           <p className="mt-4 text-[13px] text-[color:var(--muted-foreground)]">
-            Nearby suggestions can be added later — InwardWise does not ask for your location.
+            Nearby suggestions can be added later — <ProductName id="connect" /> does not ask for your location.
           </p>
         </Card>
       )}
@@ -811,7 +812,7 @@ function ShareStoryModal({ onClose }: { onClose: () => void }) {
           ) : (
             <>
               <p className="mt-4 text-[14px] leading-relaxed text-[color:var(--muted-foreground)]">
-                At the time you choose, InwardWise calls you and walks you through the same six
+                At the time you choose, <ProductName id="connect" /> calls you and walks you through the same six
                 questions out loud. What you say is written up as an anonymous story and sent for
                 review, exactly like a written one.
               </p>

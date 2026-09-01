@@ -14,6 +14,7 @@ import { useAvatarVault } from "@/lib/avatar-vault";
 import { Caution, PinKeypad } from "@/components/avatar/PinKeypad";
 import { MIInterview } from "@/components/mi/MIInterview";
 import { decryptText, encryptText } from "@/lib/avatar-crypto";
+import { ProductName } from "@/components/products/ProductChrome";
 
 export const Route = createFileRoute("/_authenticated/avatar/dimension/$n")({
   head: () => ({
@@ -196,7 +197,7 @@ function DimensionFlow() {
               onClick={() => navigate({ to: "/avatar/consult" })}
               className="min-h-11 rounded-full bg-[color:var(--ink)] px-6 py-2.5 text-[13px] text-[color:var(--paper)]"
             >
-              View My Avatar
+              View My <ProductName id="self" />
             </button>
           ) : (
             nextStage && (
@@ -227,7 +228,7 @@ function DimensionFlow() {
         to="/avatar"
         className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)] transition hover:text-[color:var(--ink)]"
       >
-        ← Your Self Journey
+        ← Your <ProductName id="self" /> Journey
       </Link>
 
       <div className="mt-8">
@@ -260,7 +261,7 @@ function DimensionFlow() {
             disabled={!loaded}
             className="mt-10 min-h-11 rounded-full bg-[color:var(--ink)] px-6 py-2.5 text-[13px] text-[color:var(--paper)] disabled:opacity-50"
           >
-            {stageNo === 1 ? "Start My Self Journey" : "Continue"}
+            {stageNo === 1 ? <>Start My <ProductName id="self" /> Journey</> : "Continue"}
           </button>
         </section>
       ) : (
