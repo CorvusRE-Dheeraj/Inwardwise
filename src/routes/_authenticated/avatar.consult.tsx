@@ -8,6 +8,7 @@ import { decryptText } from "@/lib/avatar-crypto";
 import { buildAvatarSystemPrompt, type AvatarAnswers } from "@/lib/avatar-prompt";
 import { AVATAR_DIMENSIONS } from "@/lib/avatar-factors";
 import { Caution, PinKeypad } from "@/components/avatar/PinKeypad";
+import { ProductName } from "@/components/products/ProductChrome";
 
 export const Route = createFileRoute("/_authenticated/avatar/consult")({
   head: () => ({
