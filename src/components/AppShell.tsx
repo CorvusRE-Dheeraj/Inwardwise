@@ -173,11 +173,11 @@ export function AppShell({ children }: { children: ReactNode }) {
                     {PRODUCTS.map((p) => (
                       <Link
                         key={p.id}
-                        to={p.href}
+                        to="/products"
                         onClick={() => setProductsOpen(false)}
                         className="block px-5 py-3 text-[14px] text-[color:var(--ink)] transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)]"
                       >
-                        <ProductName id={p.id} />
+                        {p.shortName}
                       </Link>
                     ))}
                   </div>
