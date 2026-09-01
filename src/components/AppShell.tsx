@@ -4,7 +4,6 @@ import { useEffect, useState, type ReactNode } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import type { User } from "@supabase/supabase-js";
 import { PRODUCTS } from "@/lib/products";
-import { ProductName } from "@/components/products/ProductChrome";
 
 export function AppShell({ children }: { children: ReactNode }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
@@ -173,11 +172,11 @@ export function AppShell({ children }: { children: ReactNode }) {
                     {PRODUCTS.map((p) => (
                       <Link
                         key={p.id}
-                        to={p.href}
+                        to="/products"
                         onClick={() => setProductsOpen(false)}
                         className="block px-5 py-3 text-[14px] text-[color:var(--ink)] transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)]"
                       >
-                        <ProductName id={p.id} />
+                        {p.shortName}
                       </Link>
                     ))}
                   </div>
