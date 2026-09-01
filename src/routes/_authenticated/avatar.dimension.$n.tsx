@@ -228,7 +228,7 @@ function DimensionFlow() {
         to="/avatar"
         className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)] transition hover:text-[color:var(--ink)]"
       >
-        ← Your Self Journey
+        ← Your <ProductName id="self" /> Journey
       </Link>
 
       <div className="mt-8">
