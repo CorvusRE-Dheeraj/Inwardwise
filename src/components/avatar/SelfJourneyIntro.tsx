@@ -22,7 +22,7 @@ export function SelfJourneyIntro({ completed, nextStage }: SelfJourneyIntroProps
     <section className="rounded-lg border border-[color:var(--rule)] p-6 sm:p-8">
       {started ? (
         <>
-          <h2 className="font-display text-2xl sm:text-3xl">Continue Your Self Journey</h2>
+          <h2 className="font-display text-2xl sm:text-3xl">Continue InwardWise Self Journey</h2>
           <p className="mt-3 text-sm text-[color:var(--muted-foreground)]">
             You've completed {completed.length} of {TOTAL_JOURNEY_STAGES} stages. Continue where you
             left off.
@@ -30,11 +30,11 @@ export function SelfJourneyIntro({ completed, nextStage }: SelfJourneyIntroProps
         </>
       ) : (
         <>
-          <h2 className="font-display text-2xl sm:text-3xl">Let's build your Self Avatar</h2>
+          <h2 className="font-display text-2xl sm:text-3xl">Start Your InwardWise Self Journey</h2>
           <p className="mt-3 max-w-2xl text-sm leading-relaxed text-justify text-[color:var(--muted-foreground)]">
-            Your Avatar is built through a guided conversation designed to understand different
-            aspects of who you are, the experiences that have shaped you, your patterns, strengths,
-            interests, and what makes your journey unique.
+            Your InwardWise Self is built through a guided conversation designed to understand
+            different aspects of who you are, the experiences that have shaped you, your patterns,
+            strengths, interests, and what makes your journey unique.
           </p>
           <p className="mt-3 max-w-2xl text-sm leading-relaxed text-justify text-[color:var(--muted-foreground)]">
             This is a conversation, not a test. There are no right or wrong answers. Share only what
@@ -49,7 +49,7 @@ export function SelfJourneyIntro({ completed, nextStage }: SelfJourneyIntroProps
           params={{ n: String(nextStage) }}
           className="inline-flex min-h-11 items-center rounded-full bg-[color:var(--ink)] px-6 py-2.5 text-[13px] text-[color:var(--paper)]"
         >
-          {started ? "Continue" : "Start My Self Journey"}
+          {started ? "Continue InwardWise Self Journey" : "Start My Self Journey"}
         </Link>
         <button
           type="button"
