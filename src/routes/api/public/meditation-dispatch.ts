@@ -2,6 +2,11 @@ import { createFileRoute } from "@tanstack/react-router";
 
 type Line = { set: string; text: string };
 
+/** How many times a meditation call is retried after landing in voicemail. */
+const MAX_CALL_ATTEMPTS = 3;
+/** Minutes to wait before ringing again after an unanswered call. */
+const RETRY_DELAY_MINUTES = 5;
+
 const SET_TITLES: Record<string, string> = {
   sorry: "I am sorry.",
   forgive: "Please forgive me.",
