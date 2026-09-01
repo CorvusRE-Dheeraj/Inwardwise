@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/AppShell";
 import {
-  ApprovedCopyPlaceholder,
   CtaRow,
   Disclaimer,
   ProductHeader,
@@ -41,21 +40,35 @@ function CalmMantra() {
 
         <section className="mt-16 space-y-6">
           <h2 className="font-display text-3xl tracking-tight">InwardWise Calm</h2>
-          <p className="max-w-2xl text-base leading-relaxed text-justify text-[color:var(--muted-foreground)]">
-            Short, spoken calm practice shaped around what you brought with you today, rather than a
-            generic recording.
-          </p>
-          <ApprovedCopyPlaceholder section="Full InwardWise Calm copy from the approved Website Edits document." />
+          <div className="max-w-2xl space-y-4 text-base leading-relaxed text-justify text-[color:var(--muted-foreground)]">
+            <p>
+              Calm is a short, spoken meditation built around what you brought with you today. It
+              does not ask you to clear your mind or follow a generic recording. Instead, you describe
+              what is happening, and the guide shapes a calm practice around that situation.
+            </p>
+            <p>
+              You can listen in your browser, receive it as a text message to read or share, or
+              connect it to a phone call for a fully guided experience. Each session is private
+              and generated fresh.
+            </p>
+          </div>
           <CtaRow actions={[{ label: "Start Calm", to: "/meditation", primary: true }]} />
         </section>
 
         <section className="mt-16 space-y-6">
           <h2 className="font-display text-3xl tracking-tight">InwardWise Mantra</h2>
-          <p className="max-w-2xl text-base leading-relaxed text-justify text-[color:var(--muted-foreground)]">
-            A personal phrase you can return to, built from your own words rather than borrowed from
-            someone else's tradition.
-          </p>
-          <ApprovedCopyPlaceholder section="Full InwardWise Mantra copy from the approved Website Edits document (single passage only — the duplicate Mantra passage in the source is intentionally omitted)." />
+          <div className="max-w-2xl space-y-4 text-base leading-relaxed text-justify text-[color:var(--muted-foreground)]">
+            <p>
+              Mantra creates a single phrase you can return to when you need to steady yourself. It
+              is built from your own words and values, not borrowed from a tradition that does not
+              belong to you.
+            </p>
+            <p>
+              The guide draws on what you have shared about your situation and your Self, then
+              offers a few candidates. You pick the one that lands, refine it, and keep it available
+              for whenever you need to come back to center.
+            </p>
+          </div>
           <CtaRow actions={[{ label: "Create My Mantra", to: "/meditation", primary: true }]} />
         </section>
 
