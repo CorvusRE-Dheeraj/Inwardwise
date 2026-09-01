@@ -113,7 +113,7 @@ function AvatarDashboard() {
           <Caution>
             This 4-digit PIN is separate from your sign-in and encrypts your Self Journey answers.
             There is no recovery: if you lose it, the answers cannot be retrieved — not by us,
-            not by an administrator. You may permanently self-destruct your InwardWise Self data at any
+            not by an administrator. You may permanently self-destruct your <ProductName id="self" /> data at any
             time, and data auto-purges after twelve months of account inactivity.
           </Caution>
         </section>
