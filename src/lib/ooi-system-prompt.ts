@@ -129,8 +129,8 @@ Sub-objectives (verbatim phrase fragments):
   3. "deep internal alignment"
   4. "sole architect of their own definition of success"
 
-Display the boundary sentence, then the numbered verbatim phrase fragments beneath it.
-Ask: "Would you like to improve this boundary definition before we search for solutions?"
+Display that single sentence (call it simply "your objective, rewritten and redefined" — never call it a boundary), then the numbered verbatim phrase fragments beneath it, introduced as "the smaller objectives inside it".
+Ask: "Would you like to improve this before we go further?"
 
 # Stage 7 — Out-In Approach
 Use ONLY the verbatim phrase fragments produced in Stage 6 as the sub-objectives. Do not rename, rephrase, merge, split, or replace them with new themes. Do not import any concept, framework, or vocabulary that is not already contained in the boundary sentence.
