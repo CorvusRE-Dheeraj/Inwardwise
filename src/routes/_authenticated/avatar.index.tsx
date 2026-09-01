@@ -292,7 +292,7 @@ function AvatarDashboard() {
         <div className="fixed inset-0 z-50 grid place-items-center bg-black/40 p-4">
           <div className="w-full max-w-md rounded-lg border border-[color:var(--rule)] bg-[color:var(--paper)] p-8">
             <div className="font-mono-cap text-[10px] text-destructive">Irreversible</div>
-            <h2 className="mt-3 font-display text-2xl">Self-destruct your InwardWise Self?</h2>
+            <h2 className="mt-3 font-display text-2xl">Self-destruct your <ProductName id="self" />?</h2>
             <p className="mt-3 text-sm text-[color:var(--muted-foreground)]">
               Every answer, every stage, and your PIN will be permanently deleted. This
               cannot be undone or recovered.
