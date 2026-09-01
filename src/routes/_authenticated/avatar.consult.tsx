@@ -118,7 +118,7 @@ function ConsultAvatar() {
           />
         </div>
         <Caution>
-          Your InwardWise Self can only speak once your PIN unlocks the answers you wrote. They are decrypted
+          Your <ProductName id="self" /> can only speak once your PIN unlocks the answers you wrote. They are decrypted
           in your browser and never readable by anyone else.
         </Caution>
       </div>
