@@ -172,8 +172,7 @@ export function AppShell({ children }: { children: ReactNode }) {
                     {PRODUCTS.map((p) => (
                       <Link
                         key={p.id}
-                        to="/products"
-                        hash={p.anchor}
+                        to={p.href}
                         onClick={() => setProductsOpen(false)}
                         className="block px-5 py-3 text-[14px] text-[color:var(--ink)] transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)]"
                       >
