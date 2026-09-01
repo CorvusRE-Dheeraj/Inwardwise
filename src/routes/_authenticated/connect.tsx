@@ -144,32 +144,27 @@ function ConnectPage() {
             Be yourself. Discover that you are not alone.
           </p>
           <p className="mt-6 max-w-2xl text-base leading-relaxed text-[color:var(--muted-foreground)]">
-            Share what is on your mind. InwardWise can help you find relevant perspectives, shared
-            experiences, and constructive ways to connect — while keeping your private Self
-            information private.
+            Share what’s on your mind. InwardWise can help you. Type your prompt below. If you think
+            you need to make a decision based on your prompt, then click that button. If you want to
+            become self aware and have already completed your Self build, then use the Self Aware
+            button below to get responses specific to your Self.
           </p>
 
-          {/* Identity distinction */}
-          <div className="mt-8 grid gap-3 sm:grid-cols-2">
-            <div className="flex items-start gap-3 rounded-lg border border-[color:var(--rule)] px-4 py-3">
-              <Lock className="mt-0.5 h-4 w-4 shrink-0 text-[color:var(--royal)]" />
-              <div>
-                <div className="text-sm">Private InwardWise Self</div>
-                <p className="mt-1 text-[13px] text-[color:var(--muted-foreground)]">
-                  Your five factors and answers stay encrypted and are never shown to anyone.
-                </p>
-              </div>
-            </div>
-            <div className="flex items-start gap-3 rounded-lg border border-[color:var(--rule)] px-4 py-3">
-              <Users className="mt-0.5 h-4 w-4 shrink-0 text-[color:var(--royal)]" />
-              <div>
-                <div className="text-sm">Connect identity</div>
-                <p className="mt-1 text-[13px] text-[color:var(--muted-foreground)]">
-                  You appear to others only as “Anonymous Member”, with no profile and no history.
-                </p>
-              </div>
-            </div>
+          <div className="mt-8 flex flex-wrap gap-4">
+            <Link
+              to="/decision"
+              className="inline-flex min-h-11 items-center gap-2 rounded-full bg-[color:var(--ink)] px-6 py-3 text-sm text-[color:var(--paper)] transition hover:opacity-90"
+            >
+              Make Decision <span aria-hidden>→</span>
+            </Link>
+            <Link
+              to="/avatar/ask"
+              className="inline-flex min-h-11 items-center gap-2 rounded-full border border-[color:var(--ink)] px-6 py-3 text-sm transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)]"
+            >
+              Self Aware <span aria-hidden>→</span>
+            </Link>
           </div>
+
         </div>
       </section>
 

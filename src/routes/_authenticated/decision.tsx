@@ -17,6 +17,8 @@ import { z } from "zod";
 import { AppShell } from "@/components/AppShell";
 import { CrisisNotice } from "@/components/CrisisNotice";
 import { DecisionIntro } from "@/components/decision/DecisionIntro";
+import { SevenStagePanel } from "@/components/decision/SevenStagePanel";
+
 import { FormattedText } from "@/components/FormattedText";
 import { JourneyProgress } from "@/components/decision/JourneyProgress";
 import { TOTAL_STAGES, journeyStage } from "@/lib/decision-journey";
@@ -408,7 +410,12 @@ function DecisionChat() {
         </div>
       </div>
 
-      <div className={started ? "grid gap-6 lg:grid-cols-[260px_1fr]" : ""}>
+      <div className={started ? "grid gap-6 lg:grid-cols-[260px_1fr]" : "grid gap-8 lg:grid-cols-[1fr_1fr]"}>
+        {!started && (
+          <div className="order-2 lg:order-1">
+            <SevenStagePanel />
+          </div>
+        )}
         {started && (
           <>
             {/* Desktop: sticky left sidebar — stays visible while the chat scrolls */}
@@ -428,7 +435,8 @@ function DecisionChat() {
           </>
         )}
 
-        <div className="glass-strong flex min-h-[600px] flex-col overflow-hidden rounded-3xl">
+        <div className={`glass-strong flex min-h-[600px] flex-col overflow-hidden rounded-3xl ${started ? "" : "order-1 lg:order-2"}`}>
+
           <div ref={listRef} className="flex-1 space-y-4 overflow-y-auto p-5 md:p-6">
             <CrisisNotice categories={crisisCategories} />
             {!started ? (
