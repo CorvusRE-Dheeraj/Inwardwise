@@ -603,6 +603,7 @@ function DecisionChat() {
           View all decision sessions →
         </Link>
       </div>
+      </div>
     </AppShell>
   );
 }
