@@ -415,10 +415,10 @@ function MeditationPractice() {
   return (
     <div className="mx-auto w-[min(980px,calc(100%-2rem))] py-14 md:py-20">
       <Link
-        to="/meditation"
+        to="/products/calm-mantra"
         className="font-mono-cap text-xs text-[color:var(--muted-foreground)] hover:text-[color:var(--ink)]"
       >
-        ← Meditation
+        ← Calm & Mantra
       </Link>
 
       <header className="mt-6">

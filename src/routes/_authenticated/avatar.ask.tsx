@@ -48,7 +48,7 @@ function AvatarAsk() {
           Open the current consultation →
         </Link>
         <Link
-          to="/meditation"
+          to="/meditation/practice"
           className="rounded-full border border-[color:var(--rule)] px-6 py-2.5 text-[13px]"
         >
           Meditation →
