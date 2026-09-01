@@ -222,8 +222,50 @@ function DimensionFlow() {
   }
 
 
+  const Encouragement = (
+    <aside className="space-y-6 lg:sticky lg:top-24 lg:self-start">
+      <div className="rounded-xl border border-[color:var(--rule)] bg-white/60 p-6">
+        <p className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)]">
+          Where you are
+        </p>
+        <p className="mt-3 text-base leading-relaxed text-[color:var(--ink)]">
+          {stage.orientation}
+        </p>
+        <p className="mt-3 text-sm leading-relaxed text-[color:var(--muted-foreground)]">
+          {stage.encouragement}
+        </p>
+      </div>
+
+      <div className="rounded-xl border border-[color:var(--rule)] p-6">
+        <p className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)]">
+          A few gentle reminders
+        </p>
+        <ul className="mt-3 space-y-2.5">
+          {stage.tips.map((tip) => (
+            <li
+              key={tip}
+              className="flex gap-2.5 text-sm leading-relaxed text-[color:var(--muted-foreground)]"
+            >
+              <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-[color:var(--royal)]" />
+              {tip}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div className="rounded-xl border border-[color:var(--rule)] p-6">
+        <p className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)]">
+          Why are we asking this?
+        </p>
+        <p className="mt-3 text-sm leading-relaxed text-[color:var(--muted-foreground)]">
+          {stage.why}
+        </p>
+      </div>
+    </aside>
+  );
+
   return (
-    <div className="mx-auto w-[min(820px,calc(100%-2rem))] py-14 sm:py-20">
+    <div className="mx-auto w-[min(1180px,calc(100%-2rem))] py-14 sm:py-20">
       <Link
         to="/avatar"
         className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)] transition hover:text-[color:var(--ink)]"
@@ -231,135 +273,140 @@ function DimensionFlow() {
         ← Your <ProductName id="self" /> Journey
       </Link>
 
-      <div className="mt-8">
+      <div className="mt-8 max-w-3xl">
         <SelfJourneyProgress current={dim.n} compact={step === -1} />
       </div>
 
-      {step === -1 ? (
-        <section className="mt-8">
-          <div className="font-mono-cap flex items-center gap-2 text-[10px] text-[color:var(--muted-foreground)]">
-            Stage {stageNo} of {TOTAL_JOURNEY_STAGES}
-            {dim.locked && <Lock className="h-3 w-3" />}
-          </div>
-          <h1 className="mt-3 font-display text-[clamp(2.2rem,5vw,3.4rem)] leading-[1.05] tracking-tight">
-            {stage.label}
-          </h1>
+      <div className="mt-8 grid gap-10 lg:grid-cols-[minmax(0,1.55fr)_minmax(280px,1fr)]">
+        {step === -1 ? (
+          <section>
+            <div className="font-mono-cap flex items-center gap-2 text-[10px] text-[color:var(--muted-foreground)]">
+              Stage {stageNo} of {TOTAL_JOURNEY_STAGES}
+              {dim.locked && <Lock className="h-3 w-3" />}
+            </div>
+            <h1 className="mt-3 font-display text-[clamp(2.2rem,5vw,3.4rem)] leading-[1.05] tracking-tight">
+              {stage.label}
+            </h1>
 
-          {dim.n === 1 && (
             <div className="mt-4 inline-flex items-center rounded-full border border-[color:var(--royal)]/30 bg-[color:var(--royal)]/5 px-4 py-1.5 text-[13px] font-medium text-[color:var(--royal)]">
-              This section is about childhood — ages 5 to 15
+              {stage.focus}
             </div>
-          )}
 
-          <p className="mt-6 max-w-2xl text-base leading-relaxed text-[color:var(--muted-foreground)]">
-            {stage.blurb} This is a conversation, not a test. There are no right or wrong answers,
-            and you can share only what you are comfortable sharing.
-          </p>
-
-          <div className="mt-8 max-w-2xl rounded-xl border border-[color:var(--rule)] bg-white/60 p-6">
-            <p className="text-base leading-relaxed text-[color:var(--ink)]">
-              {dim.n === 1
-                ? "Going through this for the first time can feel like a lot, but answering these questions will only make things clearer. You may even connect parts of your story that you have never put together before."
-                : "You're almost there. Each answer adds another piece, and the picture of you becomes clearer as you go."}
+            <p className="mt-6 max-w-2xl text-base leading-relaxed text-[color:var(--muted-foreground)]">
+              {stage.blurb} This is a conversation, not a test. There are no right or wrong answers,
+              and you can share only what you are comfortable sharing.
             </p>
-            <p className="mt-3 text-sm leading-relaxed text-[color:var(--muted-foreground)]">
-              Take your time. There is no rush, and you can pause whenever you need to.
-            </p>
-          </div>
 
-          {dim.locked && (
-            <div className="mt-8 max-w-2xl">
-              <Caution>
-                This part of the conversation is private and encrypted with your PIN. It is stored
-                as written, unread, unmoderated, and invisible to administrators.
-              </Caution>
+            <div className="mt-8 max-w-2xl rounded-xl border border-[color:var(--rule)] bg-white/60 p-6">
+              <p className="text-base leading-relaxed text-[color:var(--ink)]">
+                {stage.encouragement}
+              </p>
+              <p className="mt-3 text-sm leading-relaxed text-[color:var(--muted-foreground)]">
+                Take your time. There is no rush, and you can pause whenever you need to.
+              </p>
             </div>
-          )}
-          <button
-            onClick={() => setStep(resumeStep)}
-            disabled={!loaded}
-            className="mt-10 min-h-11 rounded-full bg-[color:var(--ink)] px-6 py-2.5 text-[13px] text-[color:var(--paper)] disabled:opacity-50"
-          >
-            {stageNo === 1 ? "Start My Self Journey" : "Continue"}
-          </button>
-        </section>
-      ) : (
-        <section className="mt-8">
-          {dim.locked && (
-            <div className="font-mono-cap mt-4 inline-flex items-center gap-2 rounded-full border border-[color:var(--rule)] px-3 py-1 text-[10px]">
-              <Lock className="h-3 w-3" /> Encrypted · only visible to you
-            </div>
-          )}
 
-          <div className="mt-6 flex flex-wrap items-center gap-3">
+            {dim.locked && (
+              <div className="mt-8 max-w-2xl">
+                <Caution>
+                  This part of the conversation is private and encrypted with your PIN. It is stored
+                  as written, unread, unmoderated, and invisible to administrators.
+                </Caution>
+              </div>
+            )}
             <button
-              type="button"
-              onClick={() => setShowWhy((v) => !v)}
-              aria-expanded={showWhy}
-              className="font-mono-cap min-h-11 text-[10px] text-[color:var(--muted-foreground)] underline-offset-4 hover:underline"
+              onClick={() => setStep(resumeStep)}
+              disabled={!loaded}
+              className="mt-10 min-h-11 rounded-full bg-[color:var(--ink)] px-6 py-2.5 text-[13px] text-[color:var(--paper)] disabled:opacity-50"
             >
-              Why are we asking this?
+              {stageNo === 1 ? "Start My Self Journey" : "Continue"}
             </button>
-          </div>
-          {showWhy && (
-            <p className="mt-2 max-w-2xl text-sm text-[color:var(--muted-foreground)]">
-              {stage.why}
-            </p>
-          )}
+          </section>
+        ) : (
+          <section>
+            <div className="font-mono-cap flex flex-wrap items-center gap-2 text-[10px] text-[color:var(--muted-foreground)]">
+              Stage {stageNo} of {TOTAL_JOURNEY_STAGES} · Question {step + 1} of {total}
+            </div>
+            <h1 className="mt-2 font-display text-[clamp(1.7rem,3.4vw,2.4rem)] leading-tight tracking-tight">
+              {stage.label}
+            </h1>
 
-          {dim.n === 1 && (
+            {dim.locked && (
+              <div className="font-mono-cap mt-4 inline-flex items-center gap-2 rounded-full border border-[color:var(--rule)] px-3 py-1 text-[10px]">
+                <Lock className="h-3 w-3" /> Encrypted · only visible to you
+              </div>
+            )}
+
             <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-[color:var(--rule)] bg-white/60 px-3 py-1 text-[12px] text-[color:var(--muted-foreground)]">
               <Lock className="h-3 w-3" />
-              Remember: this question is about your childhood, ages 5 to 15
+              Remember: {stage.focus.replace(/^This section is about /, "").replace(/^This is the final section — /, "")}
             </div>
-          )}
 
-          <div className="mt-4">
-            <MIInterview
-              key={q!.key}
-              targetQuestion={q!.prompt}
-              openingQuestion={q!.opening}
-              context={`${dim.intro}${q!.helper ? `\n\n${q!.helper}` : ""}`}
-              initialAnswer={answers[q!.key] ?? ""}
-              sessionKey={`${dim.n}:${q!.key}`}
-              onCapture={(text) => setAnswers((a) => ({ ...a, [q!.key]: text }))}
-              onDraft={(text) =>
-                setAnswers((a) => (a[q!.key] === text ? a : { ...a, [q!.key]: text }))
-              }
-              completeLabel={step + 1 < total ? "Next question" : "Complete this stage"}
-              onComplete={async () => {
-                if (step + 1 < total) {
-                  await persist(false);
-                  setStep((s) => s + 1);
-                } else {
-                  const allDone = await persist(true);
-                  setFinished({ allDone });
+            <div className="mt-4 lg:hidden">
+              <button
+                type="button"
+                onClick={() => setShowWhy((v) => !v)}
+                aria-expanded={showWhy}
+                className="font-mono-cap min-h-11 text-[10px] text-[color:var(--muted-foreground)] underline-offset-4 hover:underline"
+              >
+                Why are we asking this?
+              </button>
+              {showWhy && (
+                <p className="mt-2 max-w-2xl text-sm text-[color:var(--muted-foreground)]">
+                  {stage.why}
+                </p>
+              )}
+            </div>
+
+            <div className="mt-6">
+              <MIInterview
+                key={q!.key}
+                targetQuestion={q!.prompt}
+                openingQuestion={q!.opening}
+                context={`${dim.intro}${q!.helper ? `\n\n${q!.helper}` : ""}`}
+                initialAnswer={answers[q!.key] ?? ""}
+                sessionKey={`${dim.n}:${q!.key}`}
+                onCapture={(text) => setAnswers((a) => ({ ...a, [q!.key]: text }))}
+                onDraft={(text) =>
+                  setAnswers((a) => (a[q!.key] === text ? a : { ...a, [q!.key]: text }))
                 }
-              }}
-            />
-          </div>
+                completeLabel={step + 1 < total ? "Next question" : "Complete this stage"}
+                onComplete={async () => {
+                  if (step + 1 < total) {
+                    await persist(false);
+                    setStep((s) => s + 1);
+                  } else {
+                    const allDone = await persist(true);
+                    setFinished({ allDone });
+                  }
+                }}
+              />
+            </div>
 
-          <div className="mt-8 flex flex-wrap items-center gap-3 border-t border-[color:var(--rule)] pt-6">
-            <button
-              onClick={async () => {
-                await persist(false);
-                setStep((s) => Math.max(0, s - 1));
-              }}
-              className="min-h-11 rounded-full border border-[color:var(--rule)] px-5 py-2 text-[13px]"
-            >
-              Back
-            </button>
-            <span className="text-sm text-[color:var(--muted-foreground)]">
-              {saving ? "Saving…" : "Everything you write is saved automatically."}
-            </span>
-            {savedNote && (
-              <span className="text-sm text-[color:var(--royal)]" role="status">
-                {savedNote}
+            <div className="mt-8 flex flex-wrap items-center gap-3 border-t border-[color:var(--rule)] pt-6">
+              <button
+                onClick={async () => {
+                  await persist(false);
+                  setStep((s) => Math.max(0, s - 1));
+                }}
+                className="min-h-11 rounded-full border border-[color:var(--rule)] px-5 py-2 text-[13px]"
+              >
+                Back
+              </button>
+              <span className="text-sm text-[color:var(--muted-foreground)]">
+                {saving ? "Saving…" : "Everything you write is saved automatically."}
               </span>
-            )}
-          </div>
-        </section>
-      )}
+              {savedNote && (
+                <span className="text-sm text-[color:var(--royal)]" role="status">
+                  {savedNote}
+                </span>
+              )}
+            </div>
+          </section>
+        )}
+
+        {Encouragement}
+      </div>
     </div>
   );
 }
