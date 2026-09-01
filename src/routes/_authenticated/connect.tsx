@@ -285,7 +285,7 @@ function ConnectPage() {
                 to="/avatar"
                 className="mt-5 inline-flex items-center gap-2 rounded-full border border-[color:var(--rule)] px-5 py-2.5 text-[13px] transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)]"
               >
-                Build your <ProductName id="self" /> <ArrowRight className="h-3.5 w-3.5" />
+                Build your Self <ArrowRight className="h-3.5 w-3.5" />
               </Link>
             )}
           </Card>
@@ -320,7 +320,7 @@ function ConnectPage() {
                   to="/avatar/ask"
                   className="inline-flex items-center gap-2 rounded-full border border-[color:var(--rule)] px-5 py-2.5 text-[13px] transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)]"
                 >
-                  Ask <ProductName id="self" />
+                  Ask Self
                 </Link>
               )}
             </div>

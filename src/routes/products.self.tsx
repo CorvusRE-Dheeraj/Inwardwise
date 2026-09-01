@@ -101,8 +101,8 @@ function SelfProduct() {
 
           <CtaRow
             actions={[
-              { label: <><ProductName id="self" /> Build</>, to: "/avatar", primary: true },
-              { label: <><ProductName id="self" /> Aware</>, to: "/avatar/ask" },
+              { label: "Self Build", to: "/avatar", primary: true },
+              { label: "Self Aware", to: "/avatar/ask" },
             ]}
           />
         </Volume>
@@ -114,7 +114,7 @@ function SelfProduct() {
           <p className="mt-4 max-w-2xl text-lg leading-relaxed text-[color:var(--muted-foreground)]">
             Quiet the mental noise. Create space to reconnect with yourself.
           </p>
-          <CtaRow actions={[{ label: <><ProductName id="calm" /></>, to: "/products/calm-mantra" }]} />
+          <CtaRow actions={[{ label: "Calm", to: "/products/calm-mantra" }]} />
         </Volume>
 
         <Volume n={<>V03 · <ProductName id="mantra" /></>}>
@@ -125,7 +125,7 @@ function SelfProduct() {
             The messages you repeatedly tell yourself can influence how you approach your day. Make
             them worth repeating.
           </p>
-          <CtaRow actions={[{ label: <><ProductName id="mantra" /></>, to: "/products/calm-mantra" }]} />
+          <CtaRow actions={[{ label: "Mantra", to: "/products/calm-mantra" }]} />
         </Volume>
       </div>
     </AppShell>

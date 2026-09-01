@@ -78,7 +78,7 @@ function CalmMantra() {
           <p className="mt-8 max-w-3xl text-base leading-relaxed text-[color:var(--ink)]">
             Pause → Quiet the noise → Reflect → Reconnect → Return with greater clarity.
           </p>
-          <CtaRow actions={[{ label: <>Start <ProductName id="calm" /></>, to: "/meditation", primary: true }]} />
+          <CtaRow actions={[{ label: "Start Calm", to: "/meditation", primary: true }]} />
         </section>
 
         <section className="mt-20">
@@ -132,7 +132,7 @@ function CalmMantra() {
             Understand the pattern → Question the belief → Create the message → Reinforce the
             intention → Act with greater awareness.
           </p>
-          <CtaRow actions={[{ label: <>Start <ProductName id="mantra" /></>, to: "/meditation", primary: true }]} />
+          <CtaRow actions={[{ label: "Start Mantra", to: "/meditation", primary: true }]} />
         </section>
 
         <Disclaimer>{SELF_DISCLAIMER}</Disclaimer>
