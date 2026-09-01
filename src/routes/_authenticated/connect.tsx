@@ -506,7 +506,7 @@ function ConnectChoices({
       key: "private",
       icon: Lock,
       title: "Continue with InwardWise",
-      desc: "Explore this privately with your InwardWise Self and decision tools.",
+      desc: <>Explore this privately with your <ProductName id="self" /> and decision tools.</>,
       cta: "Continue Privately",
       to: "/avatar/ask" as const,
     },

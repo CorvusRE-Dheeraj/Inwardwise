@@ -102,10 +102,10 @@ function SelfAvatarPage() {
                 y="52"
                 textAnchor="middle"
                 dominantBaseline="middle"
-                fill="#000000"
                 style={{ fontSize: 6.5, fontWeight: 700 }}
               >
-                InwardWise Self
+                <tspan x="50" dy="-2" fill="#000000">InwardWise</tspan>
+                <tspan x="50" dy="7" fill="#2563EB">Self</tspan>
               </text>
               {dims.map((d) => (
                 <text
@@ -165,7 +165,7 @@ function SelfAvatarPage() {
             onChange={(e) => update("note", e.target.value)}
             rows={4}
             className="input"
-            placeholder="Anything else your InwardWise Self should know about you..."
+            placeholder="Anything else your inner self should know about you..."
           />
         </label>
 
