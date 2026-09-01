@@ -1,7 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { ArrowLeft, ArrowRight, Sparkles } from "lucide-react";
-import { findArea } from "@/lib/areas";
-import { ProductName } from "@/components/products/ProductChrome";
+import { ArrowLeft, ArrowRight, Sparkles, Waves } from "lucide-react";
+import { findArea, type Area } from "@/lib/areas";
 
 export const Route = createFileRoute("/areas/$slug")({
   loader: ({ params }) => {
@@ -11,17 +10,19 @@ export const Route = createFileRoute("/areas/$slug")({
   },
   head: ({ loaderData }) => ({
     meta: [
-      { title: `${loaderData?.name ?? "Area"} — InwardWise` },
+      { title: `${loaderData?.name ?? "Service"} — InwardWise` },
       { name: "description", content: loaderData?.blurb ?? "" },
-      { property: "og:title", content: `${loaderData?.name ?? "Area"} — InwardWise` },
+      { property: "og:title", content: `${loaderData?.name ?? "Service"} — InwardWise` },
       { property: "og:description", content: loaderData?.blurb ?? "" },
+      { property: "og:type", content: "article" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   notFoundComponent: () => (
     <div>
-      <h1 className="text-3xl">Area not found</h1>
+      <h1 className="text-3xl">Service not found</h1>
       <Link to="/areas" className="mt-4 inline-flex items-center gap-2 text-sm text-accent">
-        <ArrowLeft className="h-4 w-4" /> Back to areas
+        <ArrowLeft className="h-4 w-4" /> Back to services
       </Link>
     </div>
   ),
@@ -38,72 +39,72 @@ function AreaPage() {
   const area = Route.useLoaderData();
   return (
     <article className="mx-auto max-w-3xl">
-      <Link to="/areas" className="inline-flex items-center gap-2 text-xs text-muted-foreground hover:text-foreground">
-        <ArrowLeft className="h-3.5 w-3.5" /> All areas
+      <Link
+        to="/areas"
+        className="inline-flex items-center gap-2 text-xs text-muted-foreground hover:text-foreground"
+      >
+        <ArrowLeft className="h-3.5 w-3.5" /> All services
       </Link>
-      <p className="mt-6 text-xs uppercase tracking-[0.18em] text-muted-foreground">Area</p>
+      <p className="mt-6 text-xs uppercase tracking-[0.18em] text-muted-foreground">Service</p>
       <h1 className="mt-2 text-4xl sm:text-5xl">{area.name}</h1>
-      {area.slug === "political-decisions" && (
-        <>
-          <h2 className="font-sans mt-2 text-2xl sm:text-3xl">From taking sides to solving the real problem</h2>
-          <p className="mt-3 text-justify text-lg text-muted-foreground">
-            Our method systematically opens that possibility of moving from having to take a side,
-            even if it is political ideology, to actual problem solving which does not have a side.
-            The goal is not to win an argument. It is to make the original problem visible enough
-            that the argument becomes unnecessary.
-          </p>
-        </>
-      )}
-      {area.slug === "individual-development" ? (
-        <IndividualDevelopmentContent />
-      ) : area.slug === "individual-wellbeing" ? (
-        <IndividualWellbeingContent />
-      ) : area.slug === "security" ? (
-        <SecurityContent />
-      ) : area.slug === "organizational-change" ? (
-        <OrganizationalChangeContent />
-      ) : area.slug === "political-decisions" ? (
-        <PoliticalDecisionsContent />
-      ) : area.slug === "courts-counseling" ? (
-        <CourtsCounselingContent />
-      ) : area.slug === "marriage-counseling" ? (
-        <MarriageCounselingContent />
-      ) : area.slug === "family-decisions" ? (
-        <FamilyDecisionsContent />
-      ) : area.slug === "business-decisions" ? (
-        <BusinessDecisionsContent />
-      ) : area.slug === "ethics-counseling" ? (
-        <EthicsCounselingContent />
-      ) : (
-        <div className="mt-10 glass rounded-3xl p-6 text-sm text-muted-foreground">
-          <p className="mb-4 text-justify text-lg text-muted-foreground">{area.blurb}</p>
-          Content for this area is being developed. In the meantime, you can start a facilitated
-          decision session and select <span className="text-foreground">{area.name}</span> as your context.
-        </div>
-      )}
+      <p className="mt-4 text-justify text-lg leading-relaxed text-foreground">{area.tagline}</p>
+
+      <div className="mt-10 space-y-8 text-justify text-[15px] leading-relaxed">
+        {area.sections.map((s, i) => (
+          <section key={i} className="space-y-4">
+            {s.heading && <h2 className="text-2xl sm:text-3xl">{s.heading}</h2>}
+            {s.body.map((p, j) => (
+              <p key={j}>{p}</p>
+            ))}
+            {area.slug === "individual-development" && i === 1 && <SelfStar />}
+          </section>
+        ))}
+
+        {area.cycle && (
+          <div className="glass rounded-3xl p-6">
+            <p className="text-center text-sm font-medium leading-relaxed">{area.cycle}</p>
+          </div>
+        )}
+
+        {area.closing && (
+          <p className="text-lg font-medium leading-relaxed text-foreground">{area.closing}</p>
+        )}
+
+        {area.disclaimer && (
+          <p className="text-sm italic leading-relaxed text-muted-foreground">{area.disclaimer}</p>
+        )}
+      </div>
 
       <div className="mt-10">
-        {area.slug === "individual-development" || area.slug === "individual-wellbeing" ? (
-          <Link
-            to="/account/self-avatar"
-            className="inline-flex items-center gap-2 rounded-full bg-foreground px-4 py-2 text-sm text-background transition hover:opacity-90"
-          >
-            <Sparkles className="h-4 w-4" /> Design Your Self
-          </Link>
-        ) : (
-          <Link
-            to="/decision"
-            className="inline-flex items-center gap-2 rounded-full bg-foreground px-4 py-2 text-sm text-background transition hover:opacity-90"
-          >
-            Start a Decision <ArrowRight className="h-4 w-4" />
-          </Link>
-        )}
+        <PrimaryAction cta={area.cta} />
       </div>
     </article>
   );
 }
 
-function IndividualDevelopmentContent() {
+function PrimaryAction({ cta }: { cta: Area["cta"] }) {
+  const base =
+    "inline-flex items-center gap-2 rounded-full bg-foreground px-4 py-2 text-sm text-background transition hover:opacity-90";
+  if (cta === "self")
+    return (
+      <Link to="/account/self-avatar" className={base}>
+        <Sparkles className="h-4 w-4" /> Design Your Self
+      </Link>
+    );
+  if (cta === "calm")
+    return (
+      <Link to="/meditation/schedule" className={base}>
+        <Waves className="h-4 w-4" /> Start Calm
+      </Link>
+    );
+  return (
+    <Link to="/decision" className={base}>
+      Start a Decision <ArrowRight className="h-4 w-4" />
+    </Link>
+  );
+}
+
+function SelfStar() {
   const dims = [
     { label: "Factor 1", x: 50, y: 2 },
     { label: "Factor 2", x: 95, y: 35 },
@@ -111,7 +112,6 @@ function IndividualDevelopmentContent() {
     { label: "Factor 4", x: 22, y: 96 },
     { label: "Factor 5", x: 5, y: 35 },
   ];
-  // Five-point star path centered in 100x100 viewBox
   const starPoints = Array.from({ length: 10 }, (_, i) => {
     const angle = (Math.PI / 5) * i - Math.PI / 2;
     const r = i % 2 === 0 ? 46 : 18;
@@ -119,309 +119,38 @@ function IndividualDevelopmentContent() {
   }).join(" ");
 
   return (
-    <div className="mt-10 space-y-6 text-justify text-[15px] leading-relaxed">
-      <h2 className="text-2xl sm:text-3xl">
-        Build 5-Factor <ProductName id="self" /> that Defines You and Evolves with You
-      </h2>
-      <p>
-        We most of the time feel no one knows us well. In the fast and noisy world, even friends are
-        not spending time asking questions about you and getting to know you. Instead they are
-        worried about their own projection, constantly worried about themselves even when you are
-        talking to them.
-      </p>
-      <p>
-        You need someone who really knows you, which is only you. But you cannot separate yourself
-        from you and watch yourself. We want to provide you that ability with AI.
-      </p>
-      <p>
-        The way the media portrays it, we make humans more important and AI an enemy, but sometimes
-        it&rsquo;s the other way around. AI can be you, if you train it to be you. You cannot expect
-        any friend of yours to become a true friend; they are so few and far between. But
-        psychological wellbeing needs both, self-love and good social connection.
-      </p>
-      <p>
-        Life is defined by two characteristic traits: <em>Reproduction</em> and <em>Evolution</em>,
-        the drive toward a better species, better adapted to survival and thriving. The first is
-        possible only for a physical being, which the human can do. Evolution, not at the population
-        level but in your own lifespan, as your needs and your body is evolving. That change is being
-        taken up by epigenetics to pass on to your offspring. The <ProductName id="self" />&rsquo;s goal is
-        solely to make you better adapted to the surroundings so you can evolve for the better.
-      </p>
-      <p>
-        We help you build that <ProductName id="self" /> by presenting five factors that are critical in
-        defining you. We present them as motivational interviews and questions to answer and
-        crucial information is extracted. After defining the five factors completely then your Self
-        can be defined and advise you on how you are evolving or adjusting to the surroundings and
-        situations you face so you are happy and evolve in a way that is constructive.
-      </p>
-
-
-      <figure className="glass rounded-3xl p-6">
-        <div className="mx-auto max-w-md">
-          <svg viewBox="-15 -10 130 120" className="h-auto w-full">
-            <polygon
-              points={starPoints}
-              fill="#D9D9D9"
-              stroke="#BFBFBF"
-              strokeWidth="0.6"
-            />
+    <figure className="glass rounded-3xl p-6">
+      <div className="mx-auto max-w-md">
+        <svg viewBox="-15 -10 130 120" className="h-auto w-full">
+          <polygon points={starPoints} fill="#D9D9D9" stroke="#BFBFBF" strokeWidth="0.6" />
+          <text
+            x="50"
+            y="50"
+            textAnchor="middle"
+            dominantBaseline="middle"
+            fill="#000000"
+            style={{ fontSize: 6, fontWeight: 700 }}
+          >
+            <tspan x="50" dy="-2">InwardWise</tspan>
+            <tspan x="50" dy="7">Self</tspan>
+          </text>
+          {dims.map((d) => (
             <text
-              x="50"
-              y="50"
+              key={d.label}
+              x={d.x}
+              y={d.y}
               textAnchor="middle"
-              dominantBaseline="middle"
-              fill="#000000"
-              style={{ fontSize: 6, fontWeight: 700 }}
+              className="fill-current text-muted-foreground"
+              style={{ fontSize: 4.2 }}
             >
-              <tspan x="50" dy="-2">InwardWise</tspan>
-              <tspan x="50" dy="7">Self</tspan>
-
+              {d.label}
             </text>
-            {dims.map((d) => (
-              <text
-                key={d.label}
-                x={d.x}
-                y={d.y}
-                textAnchor="middle"
-                className="fill-current text-muted-foreground"
-                style={{ fontSize: 4.2 }}
-              >
-                {d.label}
-              </text>
-            ))}
-          </svg>
-        </div>
-        <figcaption className="mt-4 text-center text-xs uppercase tracking-[0.18em] text-muted-foreground">
-          The <ProductName id="self" /> and its five factors
-        </figcaption>
-      </figure>
-
-      <p>
-        Based on your prompt, the <ProductName id="self" /> will scan across all factors for a better
-        understanding of you and advise you. These factors are based on reviewing many scientific
-        papers and a combination of intuitive approaches studying many philosophies, psychological
-        approaches and observational methods. There was no single approach; it came together as a
-        book project by the founder to assemble all of the material for the book he is working on.
-        You won&rsquo;t find this methodology in any single research.
-      </p>
-
-      <div className="glass rounded-3xl p-6">
-        <p className="text-justify text-sm text-muted-foreground">
-          We can think of the <ProductName id="self" /> as a <span className="text-foreground">Facebook for the inner self</span>,
-          as Facebook is for the outer world to see what you are thinking and experiencing. Unlike
-          Facebook, the information is confidential and will not be available to anyone except you.
-          By representing a truthful you as the <ProductName id="self" />, you can manage your inner self and have a
-          personal conversation with yourself. This builds self-love and a healthy acceptance of
-          who you are, not a victim of having to depend on others for acceptance and encouragement.
-        </p>
-      </div>
-    </div>
-  );
-}
-
-
-function SecurityContent() {
-  return (
-    <div className="mt-10 space-y-6 text-justify text-[15px] leading-relaxed">
-      <p>
-        Security is not only a hardware problem, it is a pattern-recognition problem. The signals
-        that precede a threat often show up first in language, behavior, and digital traces. We apply
-        the Objective Solution Framework to make those signals visible earlier and with less bias.
-      </p>
-
-      <div className="glass rounded-3xl p-6">
-        <h2 className="text-2xl">Where this framework applies</h2>
-        <ul className="mt-4 space-y-3 text-sm">
-          {[
-            ["Airport Security", "Spot behavioral and psychological indicators before they escalate into physical risk."],
-            ["National Security", "Separate real threats from noise, tribe, and political pressure across intelligence workflows."],
-            ["Interrogations", "Use psychological clues as soft triggers, a software lie detector that reads patterns, not just polygraphs."],
-            ["Database & Social Searches", "Structure searches across criminal databases and platforms like Facebook to surface anomalies without violating proportionality."],
-          ].map(([title, desc]) => (
-            <li key={title} className="flex gap-3">
-              <span className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-foreground text-[11px] text-background">
-                •
-              </span>
-              <div>
-                <div className="font-medium">{title}</div>
-                <div className="text-justify text-muted-foreground">{desc}</div>
-              </div>
-            </li>
           ))}
-        </ul>
+        </svg>
       </div>
-
-      <div className="glass rounded-3xl p-6">
-        <h2 className="text-2xl">The principle</h2>
-        <p className="mt-3 text-justify text-sm text-muted-foreground">
-          A decision-first approach to security asks: what is the real objective? What boundary must not
-          be crossed? And what are the hidden pressures, fear, ego, institutional bias, that distort
-          the search for truth? By slowing the loop down, we reduce false positives and protect civil
-          liberties at the same time.
-        </p>
-      </div>
-    </div>
-  );
-}
-
-function OrganizationalChangeContent() {
-  return (
-    <div className="mt-10 space-y-6 text-justify text-[15px] leading-relaxed">
-      <p>
-        The world is run by large systems and organizational bodies. When those systems need to
-        change, the task requires enormous clarity and amazing foresight, like the founders of this
-        country exercising. Both money and power are the flow streams that must be examined and
-        rerouted for change to take hold.
-      </p>
-
-      <div className="glass rounded-3xl p-6">
-        <h2 className="text-2xl">The levers of change</h2>
-        <ul className="mt-4 space-y-3 text-sm">
-          {[
-            ["Clarity of objective", "Define what the organization is actually for, not just what it currently does."],
-            ["Foresight", "Map second- and third-order effects before the system locks in a new path."],
-            ["Money flows", "Follow budgets, incentives, and cost structures, they reveal where power really sits."],
-            ["Power flows", "Map decision rights, gatekeepers, and informal influence to understand resistance."],
-            ["Psychological & social science", "Use human behavior, not just org charts, to design change people can adopt."],
-          ].map(([title, desc]) => (
-            <li key={title} className="flex gap-3">
-              <span className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-foreground text-[11px] text-background">
-                •
-              </span>
-              <div>
-                <div className="font-medium">{title}</div>
-                <div className="text-justify text-muted-foreground">{desc}</div>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      <div className="glass rounded-3xl p-6">
-        <h2 className="text-2xl">Why this matters</h2>
-        <p className="mt-3 text-justify text-sm text-muted-foreground">
-          Organizations that try to change without examining both money and power tend to adopt new
-          language while keeping old behavior. We help leaders surface the real objectives, redraw the
-          boundaries, and turn insight into executable commitment.
-        </p>
-      </div>
-    </div>
-  );
-}
-
-function PoliticalDecisionsContent() {
-  return (
-    <div className="mt-10 space-y-6 text-justify text-[15px] leading-relaxed">
-      <p>
-        This area falls under decision making. Of course politics is riddled with biases far from
-        any neutral arguments. But once you realize the political system is a human invention to
-        take sides, you will abandon that line of thought and look at the original problem itself and
-        seek solutions to that original problem to remove political rifts.
-      </p>
-    </div>
-  );
-}
-
-function CourtsCounselingContent() {
-  return (
-    <div className="mt-10 space-y-6 text-justify text-[15px] leading-relaxed">
-      <p>
-        A lot of the prison systems are a different type of underworld. The regular humanity and laws
-        don&apos;t apply there because they need to be punished therefore what better way than to deny
-        them humanity. But the problem is we are not looking at the original law and its enactment and
-        how judgements were reached and laws were applied. Did they match the crime? Did they apply to
-        others or only the few that were caught? If so, is it being applied selectively? Were there
-        people who committed far worse crimes and got away? Then how do we justify punishing only a
-        few disproportionately? So rather than considering the justice system as accurate, flawless
-        and just, we need to look towards improving the human condition for all so true change is
-        made than punishment as a cure. This requires removing some of these natural biases and
-        looking for a holistic solution. Our platform opens the doors for such a thought process
-        and decision making.
-      </p>
-    </div>
-  );
-}
-
-function MarriageCounselingContent() {
-  return (
-    <div className="mt-10 space-y-6 text-justify text-[15px] leading-relaxed">
-      <p>
-        We are not looking to replace the marriage counselors. Before it reaches that stage, the
-        marriage goes through a period of crisis. We like to help the individuals to navigate this
-        difficult situation and period with judgements and decisions and the consequences by being
-        their own sounding boards and thought provokers.
-      </p>
-    </div>
-  );
-}
-
-function FamilyDecisionsContent() {
-  return (
-    <div className="mt-10 space-y-6 text-justify text-[15px] leading-relaxed">
-      <p>
-        Family structures have dominant personalities to put it mildly and dogmatic to be realistic,
-        and then dormant, meek and troubled. When you have such a mix, trouble and hurt can follow.
-        Making decisions without your emotions affecting you could be difficult. But the decisions
-        you make cannot be reversed as the stakes are high as it&apos;s family. At least you need second
-        opinions on the decisions you make and sometimes you may need beyond friends for this second
-        opinion.
-      </p>
-    </div>
-  );
-}
-
-function BusinessDecisionsContent() {
-  return (
-    <div className="mt-10 space-y-6 text-justify text-[15px] leading-relaxed">
-      <p>
-        Business decisions tend to have two aspects to them. One you have to predict the future ie
-        you have insufficient information to predict presenting a challenge. Secondly, you make
-        decisions based on growth but life is not a business so these decisions become one sided
-        rather than life balanced. Business is more like a sport where winning is more important and
-        society and media stokes this condition. No growth and sustainable co-existence is considered
-        a failure in business. Business decisions need to examine a lot of the assumptions behind
-        the decisions so such analysis can become easy using our platform.
-      </p>
-    </div>
-  );
-}
-
-function EthicsCounselingContent() {
-  return (
-    <div className="mt-10 space-y-6 text-justify text-[15px] leading-relaxed">
-      <p>
-        Boards, high level positions, doctors, engineers, lawyers pretty much everyone is supposed
-        to follow ethics. It turns into a burden rather than a necessity not imposed upon. But this
-        requires questioning the status quo and social norms and social definitions of success and
-        power. Especially the ethics of power and politics are more subtle than the straight forward
-        money ethics. If we can measure political power and influence and status power in the same
-        way we can count money, then ethics can become more clear. Our platform can allow such
-        decision making for ethics.
-      </p>
-    </div>
-  );
-}
-
-function IndividualWellbeingContent() {
-  return (
-    <div className="mt-10 space-y-6 text-justify text-[15px] leading-relaxed">
-      <p>
-        We can define individual wellbeing as more of a mental and physical combined activity. So
-        both meditation and the act of repeating things and reminding yourself will fall into that
-        category. Why are these things important? Meditation is an intermediate state between being
-        fully alert and active and being asleep. A state where you can be aware of your thoughts and
-        remember what occurred. A subconscious state not completely resting so insights and deeper
-        connections come to life in that semi active state. Any auto suggestions in that state can
-        have a profound influence on you. Therefore such suggestions can be repeated so you can
-        induce patterns of habits like feeling thankful and forgiving yourself among other
-        autosuggestions that are healing.
-      </p>
-      <p>
-        Religion can achieve these results with rituals but a scientifically developed approach can
-        be applied to everyone irrespective of their religious beliefs. Both brain images and
-        empirical results support the power of these meditative suggestions prescribed on our
-        platform.
-      </p>
-    </div>
+      <figcaption className="mt-4 text-center text-xs uppercase tracking-[0.18em] text-muted-foreground">
+        InwardWise Self and its five factors
+      </figcaption>
+    </figure>
   );
 }
