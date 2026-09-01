@@ -244,10 +244,29 @@ function DimensionFlow() {
           <h1 className="mt-3 font-display text-[clamp(2.2rem,5vw,3.4rem)] leading-[1.05] tracking-tight">
             {stage.label}
           </h1>
+
+          {dim.n === 1 && (
+            <div className="mt-4 inline-flex items-center rounded-full border border-[color:var(--royal)]/30 bg-[color:var(--royal)]/5 px-4 py-1.5 text-[13px] font-medium text-[color:var(--royal)]">
+              This section is about childhood — ages 5 to 15
+            </div>
+          )}
+
           <p className="mt-6 max-w-2xl text-base leading-relaxed text-[color:var(--muted-foreground)]">
             {stage.blurb} This is a conversation, not a test. There are no right or wrong answers,
             and you can share only what you are comfortable sharing.
           </p>
+
+          <div className="mt-8 max-w-2xl rounded-xl border border-[color:var(--rule)] bg-white/60 p-6">
+            <p className="text-base leading-relaxed text-[color:var(--ink)]">
+              {dim.n === 1
+                ? "Going through this for the first time can feel like a lot, but answering these questions will only make things clearer. You may even connect parts of your story that you have never put together before."
+                : "You're almost there. Each answer adds another piece, and the picture of you becomes clearer as you go."}
+            </p>
+            <p className="mt-3 text-sm leading-relaxed text-[color:var(--muted-foreground)]">
+              Take your time. There is no rush, and you can pause whenever you need to.
+            </p>
+          </div>
+
           {dim.locked && (
             <div className="mt-8 max-w-2xl">
               <Caution>
