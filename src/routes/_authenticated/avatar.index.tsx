@@ -243,9 +243,9 @@ function AvatarDashboard() {
 
             <div className="mt-8 grid gap-6 md:grid-cols-2">
               <Caution>
-                Your Avatar becomes richer the more of the journey you complete — partial answers
+                Your Self becomes richer the more of the journey you complete — partial answers
                 produce partial reflections. If typing is the obstacle, turn on voice and schedule
-                times when you can take a phone call; your InwardWise Self will call you and
+                times when you can take a phone call; your <ProductName id="self" /> will call you and
                 continue the conversation with you.
               </Caution>
 
@@ -260,20 +260,20 @@ function AvatarDashboard() {
                       to="/avatar/consult"
                       className="rounded-full bg-[color:var(--ink)] px-5 py-2 text-[13px] text-[color:var(--paper)]"
                     >
-                      Consult your InwardWise Self →
+                      Consult your <ProductName id="self" /> →
                     </Link>
                   )}
                   <Link
                     to="/avatar/ask"
                     className="rounded-full border border-[color:var(--rule)] px-5 py-2 text-[13px] transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)]"
                   >
-                    Ask your InwardWise Self →
+                    Ask your <ProductName id="self" /> →
                   </Link>
                   <button
                     onClick={vault.lock}
                     className="rounded-full border border-[color:var(--rule)] px-5 py-2 text-[13px]"
                   >
-                    Lock InwardWise Self
+                    Lock <ProductName id="self" />
                   </button>
                   <button
                     onClick={() => setConfirmWipe(true)}
