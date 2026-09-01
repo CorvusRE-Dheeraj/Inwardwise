@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/AppShell";
 import { CtaRow, ProductHeader } from "@/components/products/ProductChrome";
-import { getProduct, OOOI_PROMISE, OOOI_STAGES } from "@/lib/products";
+import { getProduct, OOOI_PROMISE } from "@/lib/products";
 
 const product = getProduct("decision");
 
@@ -26,66 +26,63 @@ function DecisionProduct() {
         <ProductHeader
           eyebrow="Product I · Decision"
           name={product.name}
-          tagline={product.tagline}
+          tagline="Before searching for the right answer, make sure you are solving the right problem."
         />
 
-        <p className="mt-8 max-w-2xl text-base leading-relaxed text-justify text-[color:var(--muted-foreground)]">
-          {product.summary}
+        <div className="mt-10 max-w-2xl space-y-5 text-base leading-relaxed text-justify text-[color:var(--muted-foreground)]">
+          <p>
+            InwardWise Decision is built around the founder's{" "}
+            <strong className="font-medium text-[color:var(--ink)]">
+              seven-stage Objective-Oriented Out-In (OOOI) framework
+            </strong>
+            , originally developed during his Ph.D. years and refined through repeated application
+            to real decisions. The framework starts from a simple observation: we often spend
+            enormous effort searching for solutions without spending enough time defining what we
+            are actually trying to achieve. Instead of rushing from problem to solution, OOOI
+            repeatedly examines the objective — challenging assumptions, bias, fear, ego, social
+            conditioning, and short-term thinking — before defining a broader decision boundary and
+            working inward toward possible solutions.
+          </p>
+          <p>
+            What once required a lengthy paper-and-pencil exercise can now become an interactive
+            AI-guided process. InwardWise Decision takes you through{" "}
+            <strong className="font-medium text-[color:var(--ink)]">
+              Situation → Objective → Solutions → Remove Bias &amp; Fear → Abstract the Objective →
+              Define the Boundary → Work Out-In.
+            </strong>{" "}
+            At every stage, you can question the reasoning, modify the objective, add information,
+            examine alternatives, and consider consequences. AI makes the process faster and easier
+            to explore, while the framework provides the structure and discipline to keep the
+            conversation focused on the objective rather than prematurely settling on an answer.
+          </p>
+          <p>
+            Most importantly,{" "}
+            <strong className="font-medium text-[color:var(--ink)]">
+              InwardWise Decision does not make the decision for you.
+            </strong>{" "}
+            It helps you step above the immediate problem, see your assumptions and alternatives
+            from a wider perspective, and then return to the decision with greater clarity.{" "}
+            <strong className="font-medium text-[color:var(--ink)]">
+              The technology provides speed. The framework provides discipline. You provide the
+              judgment.
+            </strong>
+          </p>
+        </div>
+
+        <p className="mt-10 max-w-3xl text-base leading-relaxed text-[color:var(--ink)]">
+          {OOOI_PROMISE}
         </p>
 
-        <CtaRow actions={[product.cta, { label: "Read past sessions", to: "/examples" }]} />
+        <p className="mt-6 max-w-2xl font-display text-[clamp(1.2rem,2.6vw,1.7rem)] italic leading-snug text-[color:var(--royal)]">
+          Bring us a difficult decision. Be your own judge.
+        </p>
 
-        <section className="mt-16">
-          <h2 className="font-display text-3xl tracking-tight">
-            The seven-stage Objective-Oriented Out-In framework
-          </h2>
-          <ol className="mt-8 border-t border-[color:var(--rule)]">
-            {OOOI_STAGES.map((stage, i) => (
-              <li
-                key={stage}
-                className="grid gap-2 border-b border-[color:var(--rule)] py-5 sm:grid-cols-[90px_1fr] sm:items-baseline"
-              >
-                <span className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)]">
-                  Stage {i + 1}
-                </span>
-                <span className="text-lg">{stage}</span>
-              </li>
-            ))}
-          </ol>
-          <p className="mt-8 max-w-3xl text-base leading-relaxed text-[color:var(--ink)]">
-            {OOOI_PROMISE}
-          </p>
-        </section>
-
-        <section className="mt-16 space-y-6">
-          <h2 className="font-display text-3xl tracking-tight">What a session gives you</h2>
-          <div className="max-w-2xl space-y-4 text-base leading-relaxed text-justify text-[color:var(--muted-foreground)]">
-            <p>
-              InwardWise Decision is for choices that carry real weight: career moves, financial
-              trade-offs, relationship transitions, health decisions, or any situation where the
-              answer feels unclear because the question itself is unclear.
-            </p>
-            <p>
-              You work through the seven stages in conversation with an AI guide. At each stage the
-              guide asks one focused question, reflects back what it hears, and only moves forward
-              once the answer is solid enough to build on. You can type or speak your responses, and
-              you can pause, go back, or revise at any point.
-            </p>
-            <p>
-              By the end you leave with a clarified objective, the assumptions and fears that were
-              distorting it, a set of viable solutions, and a concrete boundary that tells you which
-              option actually fits.
-            </p>
-            <p>
-              Everything you share is private to your account. Sessions are saved so you can return,
-              compare, and build a personal decision history over time.
-            </p>
-          </div>
-        </section>
-
-        <div className="mt-14">
-          <CtaRow actions={[product.cta]} />
-        </div>
+        <CtaRow
+          actions={[
+            { label: "Start My Decision", to: "/decision", primary: true },
+            { label: "Read Example Decisions", to: "/examples" },
+          ]}
+        />
       </div>
     </AppShell>
   );
