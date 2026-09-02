@@ -45,6 +45,7 @@ import { Route as ApiPublicConnectStoryCallWebhookRouteImport } from './routes/a
 import { Route as ApiPublicAvatarConsultDispatchRouteImport } from './routes/api/public/avatar-consult-dispatch'
 import { Route as AuthenticatedMeditationScheduleRouteImport } from './routes/_authenticated/meditation.schedule'
 import { Route as AuthenticatedMeditationPracticeRouteImport } from './routes/_authenticated/meditation.practice'
+import { Route as AuthenticatedAvatarConsultScheduleRouteImport } from './routes/_authenticated/avatar.consult-schedule'
 import { Route as AuthenticatedAvatarConsultRouteImport } from './routes/_authenticated/avatar.consult'
 import { Route as AuthenticatedAvatarAskRouteImport } from './routes/_authenticated/avatar.ask'
 import { Route as AuthenticatedAccountSelfAvatarRouteImport } from './routes/_authenticated/account.self-avatar'
@@ -52,7 +53,6 @@ import { Route as AuthenticatedAccountDashboardRouteImport } from './routes/_aut
 import { Route as AuthenticatedAccountBillingRouteImport } from './routes/_authenticated/account.billing'
 import { Route as LovableEmailQueueProcessRouteImport } from './routes/lovable/email/queue/process'
 import { Route as AuthenticatedAvatarDimensionNRouteImport } from './routes/_authenticated/avatar.dimension.$n'
-import { Route as AuthenticatedAvatarConsultScheduleRouteImport } from './routes/_authenticated/avatar.consult.schedule'
 
 const TestimonialsRoute = TestimonialsRouteImport.update({
   id: '/testimonials',
@@ -241,6 +241,12 @@ const AuthenticatedMeditationPracticeRoute =
     path: '/meditation/practice',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedAvatarConsultScheduleRoute =
+  AuthenticatedAvatarConsultScheduleRouteImport.update({
+    id: '/avatar/consult-schedule',
+    path: '/avatar/consult-schedule',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedAvatarConsultRoute =
   AuthenticatedAvatarConsultRouteImport.update({
     id: '/avatar/consult',
@@ -282,12 +288,6 @@ const AuthenticatedAvatarDimensionNRoute =
     path: '/avatar/dimension/$n',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedAvatarConsultScheduleRoute =
-  AuthenticatedAvatarConsultScheduleRouteImport.update({
-    id: '/schedule',
-    path: '/schedule',
-    getParentRoute: () => AuthenticatedAvatarConsultRoute,
-  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -321,7 +321,8 @@ export interface FileRoutesByFullPath {
   '/account/dashboard': typeof AuthenticatedAccountDashboardRoute
   '/account/self-avatar': typeof AuthenticatedAccountSelfAvatarRoute
   '/avatar/ask': typeof AuthenticatedAvatarAskRoute
-  '/avatar/consult': typeof AuthenticatedAvatarConsultRouteWithChildren
+  '/avatar/consult': typeof AuthenticatedAvatarConsultRoute
+  '/avatar/consult-schedule': typeof AuthenticatedAvatarConsultScheduleRoute
   '/meditation/practice': typeof AuthenticatedMeditationPracticeRoute
   '/meditation/schedule': typeof AuthenticatedMeditationScheduleRoute
   '/api/public/avatar-consult-dispatch': typeof ApiPublicAvatarConsultDispatchRoute
@@ -330,7 +331,6 @@ export interface FileRoutesByFullPath {
   '/api/public/meditation-dispatch': typeof ApiPublicMeditationDispatchRoute
   '/account/': typeof AuthenticatedAccountIndexRoute
   '/avatar/': typeof AuthenticatedAvatarIndexRoute
-  '/avatar/consult/schedule': typeof AuthenticatedAvatarConsultScheduleRoute
   '/avatar/dimension/$n': typeof AuthenticatedAvatarDimensionNRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
 }
@@ -364,7 +364,8 @@ export interface FileRoutesByTo {
   '/account/dashboard': typeof AuthenticatedAccountDashboardRoute
   '/account/self-avatar': typeof AuthenticatedAccountSelfAvatarRoute
   '/avatar/ask': typeof AuthenticatedAvatarAskRoute
-  '/avatar/consult': typeof AuthenticatedAvatarConsultRouteWithChildren
+  '/avatar/consult': typeof AuthenticatedAvatarConsultRoute
+  '/avatar/consult-schedule': typeof AuthenticatedAvatarConsultScheduleRoute
   '/meditation/practice': typeof AuthenticatedMeditationPracticeRoute
   '/meditation/schedule': typeof AuthenticatedMeditationScheduleRoute
   '/api/public/avatar-consult-dispatch': typeof ApiPublicAvatarConsultDispatchRoute
@@ -373,7 +374,6 @@ export interface FileRoutesByTo {
   '/api/public/meditation-dispatch': typeof ApiPublicMeditationDispatchRoute
   '/account': typeof AuthenticatedAccountIndexRoute
   '/avatar': typeof AuthenticatedAvatarIndexRoute
-  '/avatar/consult/schedule': typeof AuthenticatedAvatarConsultScheduleRoute
   '/avatar/dimension/$n': typeof AuthenticatedAvatarDimensionNRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
 }
@@ -411,7 +411,8 @@ export interface FileRoutesById {
   '/_authenticated/account/dashboard': typeof AuthenticatedAccountDashboardRoute
   '/_authenticated/account/self-avatar': typeof AuthenticatedAccountSelfAvatarRoute
   '/_authenticated/avatar/ask': typeof AuthenticatedAvatarAskRoute
-  '/_authenticated/avatar/consult': typeof AuthenticatedAvatarConsultRouteWithChildren
+  '/_authenticated/avatar/consult': typeof AuthenticatedAvatarConsultRoute
+  '/_authenticated/avatar/consult-schedule': typeof AuthenticatedAvatarConsultScheduleRoute
   '/_authenticated/meditation/practice': typeof AuthenticatedMeditationPracticeRoute
   '/_authenticated/meditation/schedule': typeof AuthenticatedMeditationScheduleRoute
   '/api/public/avatar-consult-dispatch': typeof ApiPublicAvatarConsultDispatchRoute
@@ -420,7 +421,6 @@ export interface FileRoutesById {
   '/api/public/meditation-dispatch': typeof ApiPublicMeditationDispatchRoute
   '/_authenticated/account/': typeof AuthenticatedAccountIndexRoute
   '/_authenticated/avatar/': typeof AuthenticatedAvatarIndexRoute
-  '/_authenticated/avatar/consult/schedule': typeof AuthenticatedAvatarConsultScheduleRoute
   '/_authenticated/avatar/dimension/$n': typeof AuthenticatedAvatarDimensionNRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
 }
@@ -459,6 +459,7 @@ export interface FileRouteTypes {
     | '/account/self-avatar'
     | '/avatar/ask'
     | '/avatar/consult'
+    | '/avatar/consult-schedule'
     | '/meditation/practice'
     | '/meditation/schedule'
     | '/api/public/avatar-consult-dispatch'
@@ -467,7 +468,6 @@ export interface FileRouteTypes {
     | '/api/public/meditation-dispatch'
     | '/account/'
     | '/avatar/'
-    | '/avatar/consult/schedule'
     | '/avatar/dimension/$n'
     | '/lovable/email/queue/process'
   fileRoutesByTo: FileRoutesByTo
@@ -502,6 +502,7 @@ export interface FileRouteTypes {
     | '/account/self-avatar'
     | '/avatar/ask'
     | '/avatar/consult'
+    | '/avatar/consult-schedule'
     | '/meditation/practice'
     | '/meditation/schedule'
     | '/api/public/avatar-consult-dispatch'
@@ -510,7 +511,6 @@ export interface FileRouteTypes {
     | '/api/public/meditation-dispatch'
     | '/account'
     | '/avatar'
-    | '/avatar/consult/schedule'
     | '/avatar/dimension/$n'
     | '/lovable/email/queue/process'
   id:
@@ -548,6 +548,7 @@ export interface FileRouteTypes {
     | '/_authenticated/account/self-avatar'
     | '/_authenticated/avatar/ask'
     | '/_authenticated/avatar/consult'
+    | '/_authenticated/avatar/consult-schedule'
     | '/_authenticated/meditation/practice'
     | '/_authenticated/meditation/schedule'
     | '/api/public/avatar-consult-dispatch'
@@ -556,7 +557,6 @@ export interface FileRouteTypes {
     | '/api/public/meditation-dispatch'
     | '/_authenticated/account/'
     | '/_authenticated/avatar/'
-    | '/_authenticated/avatar/consult/schedule'
     | '/_authenticated/avatar/dimension/$n'
     | '/lovable/email/queue/process'
   fileRoutesById: FileRoutesById
@@ -844,6 +844,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedMeditationPracticeRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/avatar/consult-schedule': {
+      id: '/_authenticated/avatar/consult-schedule'
+      path: '/avatar/consult-schedule'
+      fullPath: '/avatar/consult-schedule'
+      preLoaderRoute: typeof AuthenticatedAvatarConsultScheduleRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/avatar/consult': {
       id: '/_authenticated/avatar/consult'
       path: '/avatar/consult'
@@ -893,13 +900,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAvatarDimensionNRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/avatar/consult/schedule': {
-      id: '/_authenticated/avatar/consult/schedule'
-      path: '/schedule'
-      fullPath: '/avatar/consult/schedule'
-      preLoaderRoute: typeof AuthenticatedAvatarConsultScheduleRouteImport
-      parentRoute: typeof AuthenticatedAvatarConsultRoute
-    }
   }
 }
 
@@ -920,21 +920,6 @@ const AuthenticatedAccountRouteChildren: AuthenticatedAccountRouteChildren = {
 const AuthenticatedAccountRouteWithChildren =
   AuthenticatedAccountRoute._addFileChildren(AuthenticatedAccountRouteChildren)
 
-interface AuthenticatedAvatarConsultRouteChildren {
-  AuthenticatedAvatarConsultScheduleRoute: typeof AuthenticatedAvatarConsultScheduleRoute
-}
-
-const AuthenticatedAvatarConsultRouteChildren: AuthenticatedAvatarConsultRouteChildren =
-  {
-    AuthenticatedAvatarConsultScheduleRoute:
-      AuthenticatedAvatarConsultScheduleRoute,
-  }
-
-const AuthenticatedAvatarConsultRouteWithChildren =
-  AuthenticatedAvatarConsultRoute._addFileChildren(
-    AuthenticatedAvatarConsultRouteChildren,
-  )
-
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAccountRoute: typeof AuthenticatedAccountRouteWithChildren
   AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
@@ -942,7 +927,8 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedDecisionRoute: typeof AuthenticatedDecisionRoute
   AuthenticatedAvatarAskRoute: typeof AuthenticatedAvatarAskRoute
-  AuthenticatedAvatarConsultRoute: typeof AuthenticatedAvatarConsultRouteWithChildren
+  AuthenticatedAvatarConsultRoute: typeof AuthenticatedAvatarConsultRoute
+  AuthenticatedAvatarConsultScheduleRoute: typeof AuthenticatedAvatarConsultScheduleRoute
   AuthenticatedMeditationPracticeRoute: typeof AuthenticatedMeditationPracticeRoute
   AuthenticatedMeditationScheduleRoute: typeof AuthenticatedMeditationScheduleRoute
   AuthenticatedAvatarIndexRoute: typeof AuthenticatedAvatarIndexRoute
@@ -956,7 +942,9 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedDecisionRoute: AuthenticatedDecisionRoute,
   AuthenticatedAvatarAskRoute: AuthenticatedAvatarAskRoute,
-  AuthenticatedAvatarConsultRoute: AuthenticatedAvatarConsultRouteWithChildren,
+  AuthenticatedAvatarConsultRoute: AuthenticatedAvatarConsultRoute,
+  AuthenticatedAvatarConsultScheduleRoute:
+    AuthenticatedAvatarConsultScheduleRoute,
   AuthenticatedMeditationPracticeRoute: AuthenticatedMeditationPracticeRoute,
   AuthenticatedMeditationScheduleRoute: AuthenticatedMeditationScheduleRoute,
   AuthenticatedAvatarIndexRoute: AuthenticatedAvatarIndexRoute,
