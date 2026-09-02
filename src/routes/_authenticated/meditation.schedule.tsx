@@ -407,8 +407,7 @@ function MeditationSchedule() {
             </span>
             {voiceEnabled && (
               <span className="text-xs text-[color:var(--muted-foreground)]">
-                The call will come from{" "}
-                <span className="font-medium text-[color:var(--ink)]">{VAPI_FROM_NUMBER}</span>.
+                The call may arrive from a number you don't recognise — please pick up.
               </span>
             )}
           </div>
