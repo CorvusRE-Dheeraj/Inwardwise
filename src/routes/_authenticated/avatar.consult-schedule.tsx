@@ -10,7 +10,7 @@ import {
   type ConsultCall,
 } from "@/lib/avatar-call.functions";
 
-export const Route = createFileRoute("/_authenticated/avatar/consult/schedule")({
+export const Route = createFileRoute("/_authenticated/avatar/consult-schedule")({
   head: () => ({
     meta: [
       { title: "Schedule a Self Consultation Call — InwardWise" },

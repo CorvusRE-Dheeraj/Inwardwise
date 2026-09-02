@@ -52,6 +52,7 @@ import { Route as AuthenticatedAccountDashboardRouteImport } from './routes/_aut
 import { Route as AuthenticatedAccountBillingRouteImport } from './routes/_authenticated/account.billing'
 import { Route as LovableEmailQueueProcessRouteImport } from './routes/lovable/email/queue/process'
 import { Route as AuthenticatedAvatarDimensionNRouteImport } from './routes/_authenticated/avatar.dimension.$n'
+import { Route as AuthenticatedAvatarConsultScheduleRouteImport } from './routes/_authenticated/avatar.consult.schedule'
 
 const TestimonialsRoute = TestimonialsRouteImport.update({
   id: '/testimonials',
@@ -281,6 +282,12 @@ const AuthenticatedAvatarDimensionNRoute =
     path: '/avatar/dimension/$n',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedAvatarConsultScheduleRoute =
+  AuthenticatedAvatarConsultScheduleRouteImport.update({
+    id: '/schedule',
+    path: '/schedule',
+    getParentRoute: () => AuthenticatedAvatarConsultRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -314,7 +321,7 @@ export interface FileRoutesByFullPath {
   '/account/dashboard': typeof AuthenticatedAccountDashboardRoute
   '/account/self-avatar': typeof AuthenticatedAccountSelfAvatarRoute
   '/avatar/ask': typeof AuthenticatedAvatarAskRoute
-  '/avatar/consult': typeof AuthenticatedAvatarConsultRoute
+  '/avatar/consult': typeof AuthenticatedAvatarConsultRouteWithChildren
   '/meditation/practice': typeof AuthenticatedMeditationPracticeRoute
   '/meditation/schedule': typeof AuthenticatedMeditationScheduleRoute
   '/api/public/avatar-consult-dispatch': typeof ApiPublicAvatarConsultDispatchRoute
@@ -323,6 +330,7 @@ export interface FileRoutesByFullPath {
   '/api/public/meditation-dispatch': typeof ApiPublicMeditationDispatchRoute
   '/account/': typeof AuthenticatedAccountIndexRoute
   '/avatar/': typeof AuthenticatedAvatarIndexRoute
+  '/avatar/consult/schedule': typeof AuthenticatedAvatarConsultScheduleRoute
   '/avatar/dimension/$n': typeof AuthenticatedAvatarDimensionNRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
 }
@@ -356,7 +364,7 @@ export interface FileRoutesByTo {
   '/account/dashboard': typeof AuthenticatedAccountDashboardRoute
   '/account/self-avatar': typeof AuthenticatedAccountSelfAvatarRoute
   '/avatar/ask': typeof AuthenticatedAvatarAskRoute
-  '/avatar/consult': typeof AuthenticatedAvatarConsultRoute
+  '/avatar/consult': typeof AuthenticatedAvatarConsultRouteWithChildren
   '/meditation/practice': typeof AuthenticatedMeditationPracticeRoute
   '/meditation/schedule': typeof AuthenticatedMeditationScheduleRoute
   '/api/public/avatar-consult-dispatch': typeof ApiPublicAvatarConsultDispatchRoute
@@ -365,6 +373,7 @@ export interface FileRoutesByTo {
   '/api/public/meditation-dispatch': typeof ApiPublicMeditationDispatchRoute
   '/account': typeof AuthenticatedAccountIndexRoute
   '/avatar': typeof AuthenticatedAvatarIndexRoute
+  '/avatar/consult/schedule': typeof AuthenticatedAvatarConsultScheduleRoute
   '/avatar/dimension/$n': typeof AuthenticatedAvatarDimensionNRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
 }
@@ -402,7 +411,7 @@ export interface FileRoutesById {
   '/_authenticated/account/dashboard': typeof AuthenticatedAccountDashboardRoute
   '/_authenticated/account/self-avatar': typeof AuthenticatedAccountSelfAvatarRoute
   '/_authenticated/avatar/ask': typeof AuthenticatedAvatarAskRoute
-  '/_authenticated/avatar/consult': typeof AuthenticatedAvatarConsultRoute
+  '/_authenticated/avatar/consult': typeof AuthenticatedAvatarConsultRouteWithChildren
   '/_authenticated/meditation/practice': typeof AuthenticatedMeditationPracticeRoute
   '/_authenticated/meditation/schedule': typeof AuthenticatedMeditationScheduleRoute
   '/api/public/avatar-consult-dispatch': typeof ApiPublicAvatarConsultDispatchRoute
@@ -411,6 +420,7 @@ export interface FileRoutesById {
   '/api/public/meditation-dispatch': typeof ApiPublicMeditationDispatchRoute
   '/_authenticated/account/': typeof AuthenticatedAccountIndexRoute
   '/_authenticated/avatar/': typeof AuthenticatedAvatarIndexRoute
+  '/_authenticated/avatar/consult/schedule': typeof AuthenticatedAvatarConsultScheduleRoute
   '/_authenticated/avatar/dimension/$n': typeof AuthenticatedAvatarDimensionNRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
 }
@@ -457,6 +467,7 @@ export interface FileRouteTypes {
     | '/api/public/meditation-dispatch'
     | '/account/'
     | '/avatar/'
+    | '/avatar/consult/schedule'
     | '/avatar/dimension/$n'
     | '/lovable/email/queue/process'
   fileRoutesByTo: FileRoutesByTo
@@ -499,6 +510,7 @@ export interface FileRouteTypes {
     | '/api/public/meditation-dispatch'
     | '/account'
     | '/avatar'
+    | '/avatar/consult/schedule'
     | '/avatar/dimension/$n'
     | '/lovable/email/queue/process'
   id:
@@ -544,6 +556,7 @@ export interface FileRouteTypes {
     | '/api/public/meditation-dispatch'
     | '/_authenticated/account/'
     | '/_authenticated/avatar/'
+    | '/_authenticated/avatar/consult/schedule'
     | '/_authenticated/avatar/dimension/$n'
     | '/lovable/email/queue/process'
   fileRoutesById: FileRoutesById
@@ -880,6 +893,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAvatarDimensionNRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/avatar/consult/schedule': {
+      id: '/_authenticated/avatar/consult/schedule'
+      path: '/schedule'
+      fullPath: '/avatar/consult/schedule'
+      preLoaderRoute: typeof AuthenticatedAvatarConsultScheduleRouteImport
+      parentRoute: typeof AuthenticatedAvatarConsultRoute
+    }
   }
 }
 
@@ -900,6 +920,21 @@ const AuthenticatedAccountRouteChildren: AuthenticatedAccountRouteChildren = {
 const AuthenticatedAccountRouteWithChildren =
   AuthenticatedAccountRoute._addFileChildren(AuthenticatedAccountRouteChildren)
 
+interface AuthenticatedAvatarConsultRouteChildren {
+  AuthenticatedAvatarConsultScheduleRoute: typeof AuthenticatedAvatarConsultScheduleRoute
+}
+
+const AuthenticatedAvatarConsultRouteChildren: AuthenticatedAvatarConsultRouteChildren =
+  {
+    AuthenticatedAvatarConsultScheduleRoute:
+      AuthenticatedAvatarConsultScheduleRoute,
+  }
+
+const AuthenticatedAvatarConsultRouteWithChildren =
+  AuthenticatedAvatarConsultRoute._addFileChildren(
+    AuthenticatedAvatarConsultRouteChildren,
+  )
+
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAccountRoute: typeof AuthenticatedAccountRouteWithChildren
   AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
@@ -907,7 +942,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedDecisionRoute: typeof AuthenticatedDecisionRoute
   AuthenticatedAvatarAskRoute: typeof AuthenticatedAvatarAskRoute
-  AuthenticatedAvatarConsultRoute: typeof AuthenticatedAvatarConsultRoute
+  AuthenticatedAvatarConsultRoute: typeof AuthenticatedAvatarConsultRouteWithChildren
   AuthenticatedMeditationPracticeRoute: typeof AuthenticatedMeditationPracticeRoute
   AuthenticatedMeditationScheduleRoute: typeof AuthenticatedMeditationScheduleRoute
   AuthenticatedAvatarIndexRoute: typeof AuthenticatedAvatarIndexRoute
@@ -921,7 +956,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedDecisionRoute: AuthenticatedDecisionRoute,
   AuthenticatedAvatarAskRoute: AuthenticatedAvatarAskRoute,
-  AuthenticatedAvatarConsultRoute: AuthenticatedAvatarConsultRoute,
+  AuthenticatedAvatarConsultRoute: AuthenticatedAvatarConsultRouteWithChildren,
   AuthenticatedMeditationPracticeRoute: AuthenticatedMeditationPracticeRoute,
   AuthenticatedMeditationScheduleRoute: AuthenticatedMeditationScheduleRoute,
   AuthenticatedAvatarIndexRoute: AuthenticatedAvatarIndexRoute,
