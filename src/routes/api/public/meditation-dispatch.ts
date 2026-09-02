@@ -2,11 +2,6 @@ import { createFileRoute } from "@tanstack/react-router";
 
 type Line = { set: string; text: string };
 
-/** How many times a meditation call is retried after landing in voicemail. */
-const MAX_CALL_ATTEMPTS = 3;
-/** Minutes to wait before ringing again after an unanswered call. */
-const RETRY_DELAY_MINUTES = 5;
-
 const SET_TITLES: Record<string, string> = {
   sorry: "I am sorry.",
   forgive: "Please forgive me.",
@@ -51,8 +46,8 @@ async function dispatch(request: Request) {
 
   const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
-  // First, settle calls already placed: a call that reached voicemail or was
-  // never answered is retried a few minutes later instead of counting as done.
+  // First, settle calls already placed. Each scheduled session is called once;
+  // unanswered calls are never automatically retried.
   if (vapiKey) {
     const { data: pending } = await supabaseAdmin
       .from("meditation_settings")
@@ -78,22 +73,12 @@ async function dispatch(request: Request) {
           reason.includes("busy") ||
           reason.includes("customer-did-not-answer");
 
-        if (unreached && (row.call_attempts ?? 0) < MAX_CALL_ATTEMPTS) {
-          await supabaseAdmin
-            .from("meditation_settings")
-            .update({
-              status: "scheduled",
-              scheduled_at: new Date(Date.now() + RETRY_DELAY_MINUTES * 60_000).toISOString(),
-              last_error: "No answer — the call went to voicemail, so we will try again shortly.",
-            })
-            .eq("id", row.id);
-        } else if (unreached) {
+        if (unreached) {
           await supabaseAdmin
             .from("meditation_settings")
             .update({
               status: "failed",
-              last_error:
-                "We tried several times but the call kept going to voicemail. Reschedule when you can pick up.",
+              last_error: "The call was not answered. Reschedule when you can pick up.",
             })
             .eq("id", row.id);
         } else {
@@ -122,6 +107,18 @@ async function dispatch(request: Request) {
   const results: Array<{ id: string; status: string }> = [];
 
   for (const row of due ?? []) {
+    // Claim this schedule before contacting the provider. Concurrent scheduler
+    // runs cannot place a second call for the same scheduled session.
+    const { data: claimed } = await supabaseAdmin
+      .from("meditation_settings")
+      .update({ status: "calling", last_error: null })
+      .eq("id", row.id)
+      .eq("status", "scheduled")
+      .select("id")
+      .maybeSingle();
+
+    if (!claimed) continue;
+
     // Voice off, or no number: nothing to call — just close the schedule out.
     if (!row.voice_enabled || !row.phone_number) {
       await supabaseAdmin
