@@ -91,8 +91,3 @@ export function dwellSecondsFor(minutes: number): number {
   return Math.max(8, Math.round(perQuarter / linesPerSetFor(minutes)));
 }
 
-/**
- * Caller ID shown to the user when the voice-guided meditation call arrives.
- * Update this to the phone number attached to your Vapi phoneNumberId.
- */
-export const VAPI_FROM_NUMBER = "+1 (555) 000-0000";
