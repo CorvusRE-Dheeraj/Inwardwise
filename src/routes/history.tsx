@@ -1,7 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, ExternalLink, Linkedin } from "lucide-react";
+import { ArrowRight, ChevronDown, ExternalLink, Linkedin } from "lucide-react";
 import { motion } from "framer-motion";
 import { AppShell } from "@/components/AppShell";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 import alexPortrait from "@/assets/alex-freeman.jpg.asset.json";
 
 export const Route = createFileRoute("/history")({
@@ -27,32 +32,52 @@ const MESSAGES: { eyebrow: string; title: string; body: string[] }[] = [
     eyebrow: "§ 01",
     title: "Message to Users",
     body: [
-      "You already know how to think. What the modern day removes is the time and the quiet to do it properly, so decisions get made on instinct, fear or whoever spoke last.",
-      "InwardWise gives you back the discipline without the labour. Bring one real decision, answer honestly, and let the process strip out the bias you cannot see from the inside. That is the whole promise, and it is enough.",
+      "Dear User,",
+      "We are excited that you have found us and are exploring our products and services. We don't claim to be therapists or doctors. We are focusing on self-help with our products. Decisions that you take and the final solution is dictated by you. Your inner factors that define you dictate how well you will follow your own decisions you take. What you put into the InwardWise Self factors is what you will get out. Some of the personal information is deep, private, and very personal. Therefore we are implementing password based access to this information. We will also put a self-destruct feature so all of this information can be wiped out if you choose. Also as a company we will not be selling any of the client information any time now or in the future.",
+      "Some of the information you have to dig deep might be painful and therefore, we will use mostly verbal motivational interviewing techniques to make you feel comfortable. Some of the suggestions may clash with your emotions and there is a high tendency not to continue to use the platform due to this discomfort. We want to make things more on the positive side, and our InwardWise Connect product safely tries to connect you to other users information without directly connecting you to them, so you can see many people feel the same way as you do, you are not alone struggling with no support. Give us your feedback as often as possible so we can continue to serve you better as the human mind is a very complex system and we have created even more complicated lives by following societal rules and expectations.",
+      "Yours Sincerely,",
+      "Alex Freeman, Ph.D.",
+      "Founder & CEO",
+      "InwardWise.com",
     ],
   },
   {
     eyebrow: "§ 02",
     title: "Message to Colleagues",
     body: [
-      "This work sits between social psychology, philosophy and applied AI, and it does not belong entirely to any of them. That is exactly why I need people who will argue with it.",
-      "If you research decision quality, self-image, stress biology or human-AI interaction, I would rather have your criticism early than your endorsement late. Write to us.",
+      "Dear Colleagues,",
+      "Thank you for your support and incessant energy to contribute to our collective effort to create a better world. Many of you are managing multiple situations like getting a degree, managing family and relationships, multiple jobs. I am very thankful for your contributions.",
+      "As we consider ourselves knowledgeable, degreed and educated in the fields of psychology, philosophy and social sciences, we also need to understand that living a life and our experiences of different cultures, geographies and people we encounter should shape our knowledge and understanding. Though institutions like universities are the repositories of theories and extracted knowledge that we have access to, we cannot consider them as the only truth and become myopic in our quest for knowledge. It originates from a scientific curiosity to understand and make sense of things around us, not from knowledge of a theory or a degree. I see this myopia everywhere. Curiosity is the engine of new knowledge. Not reading, learning and reciting or writing scientific papers. Yes these help dig deeper and also develop our brain muscle to tackle complex analysis but they are not the truth. Truth is what you see with your eyes, and listen with your ears, which is the world around you. If you treat the world around you as a laboratory, and all information in it as data to extract from then you will reach independent thinking which is the foundation of a new body of knowledge. Highly accepted theories can be myopic, and simple Youtube videos may contain a lot of empirical data. So you not only need deductive reasoning i.e. break things down but inductive reasoning which is to stitch vastly different areas of observation and make sense out of them rather than limited view information. This search light bias is what will differentiate us from others.",
+      "Our institutions will never tell you this, so we walk around thinking we are the experts because we use words like Gestalt and such. But that may make us therapists, and doctors but that's not what we are looking for. We are looking to solve everyday problems of humans who are fairly healthy and going about their business. We are not trying to replace therapists and doctors and instead we are trying to figure out how to improve human conditions for the better in everyday life. We are looking at self help gurus like Tony Robbins, Jay Shetty, Deepak Chopra and Dr. Phil and saying wait a minute, let me understand the basics and the fundamentals first before I accept anyone's opinions. So we are trying to be the scientific reasoning behind much of the advice that gets circulated around the world. Some of this advice is from trying to be popular, get many more views and in the process can become less scientific which we want to avoid.",
+      "I somehow believe that nature has given me an immense gift of inductive reasoning (not so much deductive reasoning) and therefore, this integrative methodology is what this company's mission is. Connect vastly diverse pieces of information that traditional research does not allow some times (for example use of psychedelics in neuroscience which only now is gaining popularity) so our view points are broader and inclusive of current non theoretical empirical observations.",
+      "Yours Sincerely,",
+      "Alex Freeman, Ph.D.",
+      "Founder & CEO",
+      "InwardWise.com",
     ],
   },
   {
     eyebrow: "§ 03",
     title: "Message to Investors",
     body: [
-      "The defensible asset here is not a wrapper around a language model. It is a seven-stage philosophical filter, empirically derived over decades and validated against real decisions, plus a five-factor model of self that improves as people use it.",
-      "We are building deliberately: measurable improvement in decision quality first, scale second. If that order appeals to you, we should talk.",
+      "Dear Investors,",
+      "This company is found to serve both society and investors if we borrow money as we have an obligation to return it. We also understand that in order to continue to serve the society, we need a sustainable financial system so the benefit can serve larger populations which means we need to reach out to more people and become a larger company. We are not targeting any specific therapy or trying to compete with medical facilities or therapists. Our focus is to improve human condition and performance at a large scale where societies and cultures can change and adapt to the changing world. We need to be able to attract the best people who believe in the same goal. That also needs investments from the community. We understand this dichotomy and can balance both in a sustainable way. Our goal is to optimize this balance, not tip in any one direction too far, even if the opportunity arises. Given this please contact us for any further information on the company financials, culture and team.",
+      "Yours Sincerely,",
+      "Alex Freeman, Ph.D.",
+      "Founder & CEO",
+      "InwardWise.com",
     ],
   },
   {
     eyebrow: "§ 04",
     title: "Message to Donors",
     body: [
-      "Part of this work has no business model attached to it, helping people in crisis reason their way to a next step, and making that help free at the point of need.",
-      "Donations go toward keeping those paths open for people who could never pay for them. Thank you for considering it.",
+      "Dear Volunteer and Donor,",
+      "Thank you for your kindness and generosity in our cause. Your help is invaluable for us despite being a for profit organization. Certain causes we want to fight for require us not only to focus on broad financial markets for survival and continue to build innovative systems but additional support to sustain causes that don't seem to be financially viable at first glance. Especially in the space of suicide prevention, mental health as we are not trying to be a medical facility or establishment, our efforts have to be subsidized through the generous donations of philanthropic individuals and organizations. We can maintain strict financial controls and records to track the donations being used in an area of interest to the donor. Please call us if this arrangement works for you or your organization.",
+      "Yours Sincerely,",
+      "Alex Freeman, Ph.D.",
+      "Founder & CEO",
+      "InwardWise.com",
     ],
   },
 ];
@@ -169,15 +194,28 @@ function History() {
         <div className="rule-top mt-14" />
         <div className="mt-2">
           {MESSAGES.map((m) => (
-            <article key={m.title} className="border-b border-[color:var(--rule)] py-10">
-              <span className="font-mono-cap text-[color:var(--muted-foreground)]">{m.eyebrow}</span>
-              <h2 className="font-display mt-3 text-2xl tracking-tight md:text-3xl">{m.title}</h2>
-              <div className="mt-4 max-w-3xl space-y-4 text-justify text-[16px] leading-[1.7] text-[color:var(--ink-2)]">
-                {m.body.map((p, i) => (
-                  <p key={i}>{p}</p>
-                ))}
-              </div>
-            </article>
+            <Collapsible
+              key={m.title}
+              defaultOpen={false}
+              className="border-b border-[color:var(--rule)]"
+            >
+              <CollapsibleTrigger asChild>
+                <button className="group flex w-full items-center justify-between py-6 text-left transition-colors hover:text-[color:var(--royal)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--paper)]">
+                  <div>
+                    <span className="font-mono-cap text-[color:var(--muted-foreground)]">{m.eyebrow}</span>
+                    <h2 className="font-display mt-1 text-2xl tracking-tight md:text-3xl">{m.title}</h2>
+                  </div>
+                  <ChevronDown className="h-5 w-5 shrink-0 text-[color:var(--muted-foreground)] transition-transform duration-300 group-data-[state=open]:rotate-180" />
+                </button>
+              </CollapsibleTrigger>
+              <CollapsibleContent>
+                <div className="pb-10 max-w-3xl space-y-4 text-justify text-[16px] leading-[1.7] text-[color:var(--ink-2)]">
+                  {m.body.map((p, i) => (
+                    <p key={i}>{p}</p>
+                  ))}
+                </div>
+              </CollapsibleContent>
+            </Collapsible>
           ))}
         </div>
 
