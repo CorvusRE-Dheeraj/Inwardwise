@@ -7,7 +7,7 @@ import { useAvatarVault } from "@/lib/avatar-vault";
 import { decryptText } from "@/lib/avatar-crypto";
 import type { AvatarAnswers } from "@/lib/avatar-prompt";
 import { Caution, PinKeypad } from "@/components/avatar/PinKeypad";
-import { SESSION_MINUTE_OPTIONS, VAPI_FROM_NUMBER, linesPerSetFor, type PrayerLine } from "@/lib/meditation";
+import { SESSION_MINUTE_OPTIONS, linesPerSetFor, type PrayerLine } from "@/lib/meditation";
 import { AVATAR_DIMENSIONS } from "@/lib/avatar-factors";
 import { buildMeditationPrompt, parseMeditationLines } from "@/lib/meditation-prompt";
 import { toast } from "sonner";
@@ -407,8 +407,7 @@ function MeditationSchedule() {
             </span>
             {voiceEnabled && (
               <span className="text-xs text-[color:var(--muted-foreground)]">
-                The call will come from{" "}
-                <span className="font-medium text-[color:var(--ink)]">{VAPI_FROM_NUMBER}</span>.
+                The call may arrive from a number you don't recognise — please pick up.
               </span>
             )}
           </div>
