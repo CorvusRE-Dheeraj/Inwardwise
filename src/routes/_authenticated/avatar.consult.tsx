@@ -149,6 +149,18 @@ function ConsultAvatar() {
         <h1 className="mt-2 font-serif text-3xl sm:text-4xl font-medium tracking-tight">
           Hello{name ? `, ${name}` : ""}.
         </h1>
+        <div className="mt-4 flex flex-wrap items-center gap-3 rounded-md border border-[var(--rule)] bg-secondary/40 px-4 py-3 text-sm">
+          <span className="text-muted-foreground">
+            Prefer to speak instead of type? Book a spoken consultation and your{" "}
+            <ProductName id="self" /> will call you.
+          </span>
+          <Link
+            to="/avatar/consult-schedule"
+            className="ink-btn rounded-full px-4 py-2 text-xs font-medium hover:ink-btn-hover"
+          >
+            Schedule a call
+          </Link>
+        </div>
       </header>
 
       {answers && answeredCount === 0 && (

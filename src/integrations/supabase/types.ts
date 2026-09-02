@@ -65,6 +65,57 @@ export type Database = {
         }
         Relationships: []
       }
+      avatar_consult_calls: {
+        Row: {
+          call_attempts: number
+          created_at: string
+          duration_minutes: number
+          focus: string
+          id: string
+          last_call_at: string | null
+          last_error: string | null
+          phone_number: string | null
+          provider_call_id: string | null
+          scheduled_at: string | null
+          status: string
+          timezone: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          call_attempts?: number
+          created_at?: string
+          duration_minutes?: number
+          focus?: string
+          id?: string
+          last_call_at?: string | null
+          last_error?: string | null
+          phone_number?: string | null
+          provider_call_id?: string | null
+          scheduled_at?: string | null
+          status?: string
+          timezone?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          call_attempts?: number
+          created_at?: string
+          duration_minutes?: number
+          focus?: string
+          id?: string
+          last_call_at?: string | null
+          last_error?: string | null
+          phone_number?: string | null
+          provider_call_id?: string | null
+          scheduled_at?: string | null
+          status?: string
+          timezone?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       avatar_dimensions: {
         Row: {
           dimension_number: number
