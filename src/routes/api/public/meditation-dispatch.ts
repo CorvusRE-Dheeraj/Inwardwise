@@ -188,6 +188,22 @@ async function dispatch(request: Request) {
       if (!res.ok) {
         const body = await res.text();
         console.error(`[meditation] Vapi call failed [${res.status}]: ${body}`);
+
+        // Provider capacity/daily limits are temporary: requeue instead of
+        // burning the member's scheduled session.
+        if (isCapacityError(res.status, body)) {
+          await supabaseAdmin
+            .from("meditation_settings")
+            .update({
+              status: "scheduled",
+              scheduled_at: capacityRetryAt(),
+              last_error: CAPACITY_RETRY_MESSAGE,
+            })
+            .eq("id", row.id);
+          results.push({ id: row.id, status: "requeued" });
+          continue;
+        }
+
         let detail = `Call failed (${res.status}).`;
         try {
           const parsed = JSON.parse(body) as { message?: string | string[] };
