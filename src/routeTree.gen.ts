@@ -32,6 +32,7 @@ import { Route as AreasSlugRouteImport } from './routes/areas.$slug'
 import { Route as ApiTtsRouteImport } from './routes/api/tts'
 import { Route as ApiTranscribeRouteImport } from './routes/api/transcribe'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
+import { Route as AdminLoginRouteImport } from './routes/admin.login'
 import { Route as AuthenticatedDecisionRouteImport } from './routes/_authenticated/decision'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedConnectRouteImport } from './routes/_authenticated/connect'
@@ -166,6 +167,11 @@ const ApiTranscribeRoute = ApiTranscribeRouteImport.update({
 const ApiChatRoute = ApiChatRouteImport.update({
   id: '/api/chat',
   path: '/api/chat',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminLoginRoute = AdminLoginRouteImport.update({
+  id: '/admin/login',
+  path: '/admin/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedDecisionRoute = AuthenticatedDecisionRouteImport.update({
@@ -307,6 +313,7 @@ export interface FileRoutesByFullPath {
   '/connect': typeof AuthenticatedConnectRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/decision': typeof AuthenticatedDecisionRoute
+  '/admin/login': typeof AdminLoginRoute
   '/api/chat': typeof ApiChatRoute
   '/api/transcribe': typeof ApiTranscribeRoute
   '/api/tts': typeof ApiTtsRoute
@@ -350,6 +357,7 @@ export interface FileRoutesByTo {
   '/connect': typeof AuthenticatedConnectRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/decision': typeof AuthenticatedDecisionRoute
+  '/admin/login': typeof AdminLoginRoute
   '/api/chat': typeof ApiChatRoute
   '/api/transcribe': typeof ApiTranscribeRoute
   '/api/tts': typeof ApiTtsRoute
@@ -397,6 +405,7 @@ export interface FileRoutesById {
   '/_authenticated/connect': typeof AuthenticatedConnectRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/decision': typeof AuthenticatedDecisionRoute
+  '/admin/login': typeof AdminLoginRoute
   '/api/chat': typeof ApiChatRoute
   '/api/transcribe': typeof ApiTranscribeRoute
   '/api/tts': typeof ApiTtsRoute
@@ -444,6 +453,7 @@ export interface FileRouteTypes {
     | '/connect'
     | '/dashboard'
     | '/decision'
+    | '/admin/login'
     | '/api/chat'
     | '/api/transcribe'
     | '/api/tts'
@@ -487,6 +497,7 @@ export interface FileRouteTypes {
     | '/connect'
     | '/dashboard'
     | '/decision'
+    | '/admin/login'
     | '/api/chat'
     | '/api/transcribe'
     | '/api/tts'
@@ -533,6 +544,7 @@ export interface FileRouteTypes {
     | '/_authenticated/connect'
     | '/_authenticated/dashboard'
     | '/_authenticated/decision'
+    | '/admin/login'
     | '/api/chat'
     | '/api/transcribe'
     | '/api/tts'
@@ -575,6 +587,7 @@ export interface RootRouteChildren {
   ScienceRoute: typeof ScienceRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TestimonialsRoute: typeof TestimonialsRoute
+  AdminLoginRoute: typeof AdminLoginRoute
   ApiChatRoute: typeof ApiChatRoute
   ApiTranscribeRoute: typeof ApiTranscribeRoute
   ApiTtsRoute: typeof ApiTtsRoute
@@ -751,6 +764,13 @@ declare module '@tanstack/react-router' {
       path: '/api/chat'
       fullPath: '/api/chat'
       preLoaderRoute: typeof ApiChatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/login': {
+      id: '/admin/login'
+      path: '/admin/login'
+      fullPath: '/admin/login'
+      preLoaderRoute: typeof AdminLoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/decision': {
@@ -980,6 +1000,7 @@ const rootRouteChildren: RootRouteChildren = {
   ScienceRoute: ScienceRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   TestimonialsRoute: TestimonialsRoute,
+  AdminLoginRoute: AdminLoginRoute,
   ApiChatRoute: ApiChatRoute,
   ApiTranscribeRoute: ApiTranscribeRoute,
   ApiTtsRoute: ApiTtsRoute,
