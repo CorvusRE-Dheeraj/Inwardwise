@@ -38,6 +38,7 @@ import { Route as AdminMarketingLeadsRouteImport } from './routes/admin.marketin
 import { Route as AdminLoginRouteImport } from './routes/admin.login'
 import { Route as AdminLeadsRouteImport } from './routes/admin.leads'
 import { Route as AdminEmployeesRouteImport } from './routes/admin.employees'
+import { Route as AdminDashboardRouteImport } from './routes/admin.dashboard'
 import { Route as AdminContactsRouteImport } from './routes/admin.contacts'
 import { Route as AdminCompaniesRouteImport } from './routes/admin.companies'
 import { Route as AdminCampaignsRouteImport } from './routes/admin.campaigns'
@@ -208,6 +209,11 @@ const AdminEmployeesRoute = AdminEmployeesRouteImport.update({
   path: '/admin/employees',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminDashboardRoute = AdminDashboardRouteImport.update({
+  id: '/admin/dashboard',
+  path: '/admin/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminContactsRoute = AdminContactsRouteImport.update({
   id: '/admin/contacts',
   path: '/admin/contacts',
@@ -371,6 +377,7 @@ export interface FileRoutesByFullPath {
   '/admin/campaigns': typeof AdminCampaignsRoute
   '/admin/companies': typeof AdminCompaniesRoute
   '/admin/contacts': typeof AdminContactsRoute
+  '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/employees': typeof AdminEmployeesRoute
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/login': typeof AdminLoginRoute
@@ -424,6 +431,7 @@ export interface FileRoutesByTo {
   '/admin/campaigns': typeof AdminCampaignsRoute
   '/admin/companies': typeof AdminCompaniesRoute
   '/admin/contacts': typeof AdminContactsRoute
+  '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/employees': typeof AdminEmployeesRoute
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/login': typeof AdminLoginRoute
@@ -481,6 +489,7 @@ export interface FileRoutesById {
   '/admin/campaigns': typeof AdminCampaignsRoute
   '/admin/companies': typeof AdminCompaniesRoute
   '/admin/contacts': typeof AdminContactsRoute
+  '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/employees': typeof AdminEmployeesRoute
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/login': typeof AdminLoginRoute
@@ -538,6 +547,7 @@ export interface FileRouteTypes {
     | '/admin/campaigns'
     | '/admin/companies'
     | '/admin/contacts'
+    | '/admin/dashboard'
     | '/admin/employees'
     | '/admin/leads'
     | '/admin/login'
@@ -591,6 +601,7 @@ export interface FileRouteTypes {
     | '/admin/campaigns'
     | '/admin/companies'
     | '/admin/contacts'
+    | '/admin/dashboard'
     | '/admin/employees'
     | '/admin/leads'
     | '/admin/login'
@@ -647,6 +658,7 @@ export interface FileRouteTypes {
     | '/admin/campaigns'
     | '/admin/companies'
     | '/admin/contacts'
+    | '/admin/dashboard'
     | '/admin/employees'
     | '/admin/leads'
     | '/admin/login'
@@ -699,6 +711,7 @@ export interface RootRouteChildren {
   AdminCampaignsRoute: typeof AdminCampaignsRoute
   AdminCompaniesRoute: typeof AdminCompaniesRoute
   AdminContactsRoute: typeof AdminContactsRoute
+  AdminDashboardRoute: typeof AdminDashboardRoute
   AdminEmployeesRoute: typeof AdminEmployeesRoute
   AdminLeadsRoute: typeof AdminLeadsRoute
   AdminLoginRoute: typeof AdminLoginRoute
@@ -923,6 +936,13 @@ declare module '@tanstack/react-router' {
       path: '/admin/employees'
       fullPath: '/admin/employees'
       preLoaderRoute: typeof AdminEmployeesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/dashboard': {
+      id: '/admin/dashboard'
+      path: '/admin/dashboard'
+      fullPath: '/admin/dashboard'
+      preLoaderRoute: typeof AdminDashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/contacts': {
@@ -1184,6 +1204,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminCampaignsRoute: AdminCampaignsRoute,
   AdminCompaniesRoute: AdminCompaniesRoute,
   AdminContactsRoute: AdminContactsRoute,
+  AdminDashboardRoute: AdminDashboardRoute,
   AdminEmployeesRoute: AdminEmployeesRoute,
   AdminLeadsRoute: AdminLeadsRoute,
   AdminLoginRoute: AdminLoginRoute,
