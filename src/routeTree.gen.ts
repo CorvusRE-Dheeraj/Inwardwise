@@ -33,6 +33,7 @@ import { Route as ApiTtsRouteImport } from './routes/api/tts'
 import { Route as ApiTranscribeRouteImport } from './routes/api/transcribe'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
 import { Route as AdminTasksRouteImport } from './routes/admin.tasks'
+import { Route as AdminSettingsRouteImport } from './routes/admin.settings'
 import { Route as AdminRolesRouteImport } from './routes/admin.roles'
 import { Route as AdminReportsRouteImport } from './routes/admin.reports'
 import { Route as AdminOpportunitiesRouteImport } from './routes/admin.opportunities'
@@ -185,6 +186,11 @@ const ApiChatRoute = ApiChatRouteImport.update({
 const AdminTasksRoute = AdminTasksRouteImport.update({
   id: '/admin/tasks',
   path: '/admin/tasks',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminSettingsRoute = AdminSettingsRouteImport.update({
+  id: '/admin/settings',
+  path: '/admin/settings',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminRolesRoute = AdminRolesRouteImport.update({
@@ -404,6 +410,7 @@ export interface FileRoutesByFullPath {
   '/admin/opportunities': typeof AdminOpportunitiesRoute
   '/admin/reports': typeof AdminReportsRoute
   '/admin/roles': typeof AdminRolesRoute
+  '/admin/settings': typeof AdminSettingsRoute
   '/admin/tasks': typeof AdminTasksRoute
   '/api/chat': typeof ApiChatRoute
   '/api/transcribe': typeof ApiTranscribeRoute
@@ -461,6 +468,7 @@ export interface FileRoutesByTo {
   '/admin/opportunities': typeof AdminOpportunitiesRoute
   '/admin/reports': typeof AdminReportsRoute
   '/admin/roles': typeof AdminRolesRoute
+  '/admin/settings': typeof AdminSettingsRoute
   '/admin/tasks': typeof AdminTasksRoute
   '/api/chat': typeof ApiChatRoute
   '/api/transcribe': typeof ApiTranscribeRoute
@@ -522,6 +530,7 @@ export interface FileRoutesById {
   '/admin/opportunities': typeof AdminOpportunitiesRoute
   '/admin/reports': typeof AdminReportsRoute
   '/admin/roles': typeof AdminRolesRoute
+  '/admin/settings': typeof AdminSettingsRoute
   '/admin/tasks': typeof AdminTasksRoute
   '/api/chat': typeof ApiChatRoute
   '/api/transcribe': typeof ApiTranscribeRoute
@@ -583,6 +592,7 @@ export interface FileRouteTypes {
     | '/admin/opportunities'
     | '/admin/reports'
     | '/admin/roles'
+    | '/admin/settings'
     | '/admin/tasks'
     | '/api/chat'
     | '/api/transcribe'
@@ -640,6 +650,7 @@ export interface FileRouteTypes {
     | '/admin/opportunities'
     | '/admin/reports'
     | '/admin/roles'
+    | '/admin/settings'
     | '/admin/tasks'
     | '/api/chat'
     | '/api/transcribe'
@@ -700,6 +711,7 @@ export interface FileRouteTypes {
     | '/admin/opportunities'
     | '/admin/reports'
     | '/admin/roles'
+    | '/admin/settings'
     | '/admin/tasks'
     | '/api/chat'
     | '/api/transcribe'
@@ -756,6 +768,7 @@ export interface RootRouteChildren {
   AdminOpportunitiesRoute: typeof AdminOpportunitiesRoute
   AdminReportsRoute: typeof AdminReportsRoute
   AdminRolesRoute: typeof AdminRolesRoute
+  AdminSettingsRoute: typeof AdminSettingsRoute
   AdminTasksRoute: typeof AdminTasksRoute
   ApiChatRoute: typeof ApiChatRoute
   ApiTranscribeRoute: typeof ApiTranscribeRoute
@@ -940,6 +953,13 @@ declare module '@tanstack/react-router' {
       path: '/admin/tasks'
       fullPath: '/admin/tasks'
       preLoaderRoute: typeof AdminTasksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/settings': {
+      id: '/admin/settings'
+      path: '/admin/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AdminSettingsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/roles': {
@@ -1273,6 +1293,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminOpportunitiesRoute: AdminOpportunitiesRoute,
   AdminReportsRoute: AdminReportsRoute,
   AdminRolesRoute: AdminRolesRoute,
+  AdminSettingsRoute: AdminSettingsRoute,
   AdminTasksRoute: AdminTasksRoute,
   ApiChatRoute: ApiChatRoute,
   ApiTranscribeRoute: ApiTranscribeRoute,
