@@ -1,4 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
+import {
+  CAPACITY_RETRY_MESSAGE,
+  capacityRetryAt,
+  isCapacityError,
+} from "@/lib/call-capacity";
 
 const QUESTIONS = [
   "What were you facing?",
@@ -88,6 +93,20 @@ async function dispatch(request: Request) {
       if (!res.ok) {
         const body = await res.text();
         console.error(`[connect-story] Vapi call failed [${res.status}]: ${body}`);
+
+        if (isCapacityError(res.status, body)) {
+          await supabaseAdmin
+            .from("connect_story_calls")
+            .update({
+              status: "scheduled",
+              scheduled_at: capacityRetryAt(),
+              last_error: CAPACITY_RETRY_MESSAGE,
+            })
+            .eq("id", row.id);
+          results.push({ id: row.id, status: "requeued" });
+          continue;
+        }
+
         await supabaseAdmin
           .from("connect_story_calls")
           .update({

@@ -1,4 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
+import {
+  CAPACITY_RETRY_MESSAGE,
+  capacityRetryAt,
+  isCapacityError,
+} from "@/lib/call-capacity";
 
 /**
  * Polled by the database scheduler. Places one Vapi voice call for every
@@ -154,6 +159,20 @@ async function dispatch(request: Request) {
       if (!res.ok) {
         const body = await res.text();
         console.error(`[consult] Vapi call failed [${res.status}]: ${body}`);
+
+        if (isCapacityError(res.status, body)) {
+          await supabaseAdmin
+            .from("avatar_consult_calls")
+            .update({
+              status: "scheduled",
+              scheduled_at: capacityRetryAt(),
+              last_error: CAPACITY_RETRY_MESSAGE,
+            })
+            .eq("id", row.id);
+          results.push({ id: row.id, status: "requeued" });
+          continue;
+        }
+
         let detail = `Call failed (${res.status}).`;
         try {
           const parsed = JSON.parse(body) as { message?: string | string[] };
