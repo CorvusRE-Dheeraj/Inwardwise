@@ -33,6 +33,7 @@ import { Route as ApiTtsRouteImport } from './routes/api/tts'
 import { Route as ApiTranscribeRouteImport } from './routes/api/transcribe'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
 import { Route as AdminTasksRouteImport } from './routes/admin.tasks'
+import { Route as AdminRolesRouteImport } from './routes/admin.roles'
 import { Route as AdminReportsRouteImport } from './routes/admin.reports'
 import { Route as AdminOpportunitiesRouteImport } from './routes/admin.opportunities'
 import { Route as AdminMarketingLeadsRouteImport } from './routes/admin.marketing-leads'
@@ -183,6 +184,11 @@ const ApiChatRoute = ApiChatRouteImport.update({
 const AdminTasksRoute = AdminTasksRouteImport.update({
   id: '/admin/tasks',
   path: '/admin/tasks',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRolesRoute = AdminRolesRouteImport.update({
+  id: '/admin/roles',
+  path: '/admin/roles',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminReportsRoute = AdminReportsRouteImport.update({
@@ -390,6 +396,7 @@ export interface FileRoutesByFullPath {
   '/admin/marketing-leads': typeof AdminMarketingLeadsRoute
   '/admin/opportunities': typeof AdminOpportunitiesRoute
   '/admin/reports': typeof AdminReportsRoute
+  '/admin/roles': typeof AdminRolesRoute
   '/admin/tasks': typeof AdminTasksRoute
   '/api/chat': typeof ApiChatRoute
   '/api/transcribe': typeof ApiTranscribeRoute
@@ -445,6 +452,7 @@ export interface FileRoutesByTo {
   '/admin/marketing-leads': typeof AdminMarketingLeadsRoute
   '/admin/opportunities': typeof AdminOpportunitiesRoute
   '/admin/reports': typeof AdminReportsRoute
+  '/admin/roles': typeof AdminRolesRoute
   '/admin/tasks': typeof AdminTasksRoute
   '/api/chat': typeof ApiChatRoute
   '/api/transcribe': typeof ApiTranscribeRoute
@@ -504,6 +512,7 @@ export interface FileRoutesById {
   '/admin/marketing-leads': typeof AdminMarketingLeadsRoute
   '/admin/opportunities': typeof AdminOpportunitiesRoute
   '/admin/reports': typeof AdminReportsRoute
+  '/admin/roles': typeof AdminRolesRoute
   '/admin/tasks': typeof AdminTasksRoute
   '/api/chat': typeof ApiChatRoute
   '/api/transcribe': typeof ApiTranscribeRoute
@@ -563,6 +572,7 @@ export interface FileRouteTypes {
     | '/admin/marketing-leads'
     | '/admin/opportunities'
     | '/admin/reports'
+    | '/admin/roles'
     | '/admin/tasks'
     | '/api/chat'
     | '/api/transcribe'
@@ -618,6 +628,7 @@ export interface FileRouteTypes {
     | '/admin/marketing-leads'
     | '/admin/opportunities'
     | '/admin/reports'
+    | '/admin/roles'
     | '/admin/tasks'
     | '/api/chat'
     | '/api/transcribe'
@@ -676,6 +687,7 @@ export interface FileRouteTypes {
     | '/admin/marketing-leads'
     | '/admin/opportunities'
     | '/admin/reports'
+    | '/admin/roles'
     | '/admin/tasks'
     | '/api/chat'
     | '/api/transcribe'
@@ -730,6 +742,7 @@ export interface RootRouteChildren {
   AdminMarketingLeadsRoute: typeof AdminMarketingLeadsRoute
   AdminOpportunitiesRoute: typeof AdminOpportunitiesRoute
   AdminReportsRoute: typeof AdminReportsRoute
+  AdminRolesRoute: typeof AdminRolesRoute
   AdminTasksRoute: typeof AdminTasksRoute
   ApiChatRoute: typeof ApiChatRoute
   ApiTranscribeRoute: typeof ApiTranscribeRoute
@@ -914,6 +927,13 @@ declare module '@tanstack/react-router' {
       path: '/admin/tasks'
       fullPath: '/admin/tasks'
       preLoaderRoute: typeof AdminTasksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/roles': {
+      id: '/admin/roles'
+      path: '/admin/roles'
+      fullPath: '/admin/roles'
+      preLoaderRoute: typeof AdminRolesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/reports': {
@@ -1231,6 +1251,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminMarketingLeadsRoute: AdminMarketingLeadsRoute,
   AdminOpportunitiesRoute: AdminOpportunitiesRoute,
   AdminReportsRoute: AdminReportsRoute,
+  AdminRolesRoute: AdminRolesRoute,
   AdminTasksRoute: AdminTasksRoute,
   ApiChatRoute: ApiChatRoute,
   ApiTranscribeRoute: ApiTranscribeRoute,
