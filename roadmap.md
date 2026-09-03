@@ -23,3 +23,8 @@
 - Services rewrite (blocked on copy) + Stress Management.
 - Data Bar behind disabled feature flag.
 - Regression + responsive testing at 375 / 768 / 1024 / large.
+
+## Admin / Employee Portal
+- [x] Admin schema (roles, permissions, employees, CRM, tasks, marketing, notifications, saved views, audit logs) with RLS + grants
+- [x] /admin/login, dashboard, leads, contacts, companies, opportunities, activities, campaigns, marketing leads, tasks, employees, roles, reports, settings, audit logs
+- [ ] Optional: email/calendar/telephony integrations per module

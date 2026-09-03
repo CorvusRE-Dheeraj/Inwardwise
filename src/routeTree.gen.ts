@@ -32,6 +32,21 @@ import { Route as AreasSlugRouteImport } from './routes/areas.$slug'
 import { Route as ApiTtsRouteImport } from './routes/api/tts'
 import { Route as ApiTranscribeRouteImport } from './routes/api/transcribe'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
+import { Route as AdminTasksRouteImport } from './routes/admin.tasks'
+import { Route as AdminSettingsRouteImport } from './routes/admin.settings'
+import { Route as AdminRolesRouteImport } from './routes/admin.roles'
+import { Route as AdminReportsRouteImport } from './routes/admin.reports'
+import { Route as AdminOpportunitiesRouteImport } from './routes/admin.opportunities'
+import { Route as AdminMarketingLeadsRouteImport } from './routes/admin.marketing-leads'
+import { Route as AdminLoginRouteImport } from './routes/admin.login'
+import { Route as AdminLeadsRouteImport } from './routes/admin.leads'
+import { Route as AdminEmployeesRouteImport } from './routes/admin.employees'
+import { Route as AdminDashboardRouteImport } from './routes/admin.dashboard'
+import { Route as AdminContactsRouteImport } from './routes/admin.contacts'
+import { Route as AdminCompaniesRouteImport } from './routes/admin.companies'
+import { Route as AdminCampaignsRouteImport } from './routes/admin.campaigns'
+import { Route as AdminAuditLogsRouteImport } from './routes/admin.audit-logs'
+import { Route as AdminActivitiesRouteImport } from './routes/admin.activities'
 import { Route as AuthenticatedDecisionRouteImport } from './routes/_authenticated/decision'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedConnectRouteImport } from './routes/_authenticated/connect'
@@ -166,6 +181,81 @@ const ApiTranscribeRoute = ApiTranscribeRouteImport.update({
 const ApiChatRoute = ApiChatRouteImport.update({
   id: '/api/chat',
   path: '/api/chat',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminTasksRoute = AdminTasksRouteImport.update({
+  id: '/admin/tasks',
+  path: '/admin/tasks',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminSettingsRoute = AdminSettingsRouteImport.update({
+  id: '/admin/settings',
+  path: '/admin/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRolesRoute = AdminRolesRouteImport.update({
+  id: '/admin/roles',
+  path: '/admin/roles',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminReportsRoute = AdminReportsRouteImport.update({
+  id: '/admin/reports',
+  path: '/admin/reports',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminOpportunitiesRoute = AdminOpportunitiesRouteImport.update({
+  id: '/admin/opportunities',
+  path: '/admin/opportunities',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminMarketingLeadsRoute = AdminMarketingLeadsRouteImport.update({
+  id: '/admin/marketing-leads',
+  path: '/admin/marketing-leads',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminLoginRoute = AdminLoginRouteImport.update({
+  id: '/admin/login',
+  path: '/admin/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminLeadsRoute = AdminLeadsRouteImport.update({
+  id: '/admin/leads',
+  path: '/admin/leads',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminEmployeesRoute = AdminEmployeesRouteImport.update({
+  id: '/admin/employees',
+  path: '/admin/employees',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminDashboardRoute = AdminDashboardRouteImport.update({
+  id: '/admin/dashboard',
+  path: '/admin/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminContactsRoute = AdminContactsRouteImport.update({
+  id: '/admin/contacts',
+  path: '/admin/contacts',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminCompaniesRoute = AdminCompaniesRouteImport.update({
+  id: '/admin/companies',
+  path: '/admin/companies',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminCampaignsRoute = AdminCampaignsRouteImport.update({
+  id: '/admin/campaigns',
+  path: '/admin/campaigns',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminAuditLogsRoute = AdminAuditLogsRouteImport.update({
+  id: '/admin/audit-logs',
+  path: '/admin/audit-logs',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminActivitiesRoute = AdminActivitiesRouteImport.update({
+  id: '/admin/activities',
+  path: '/admin/activities',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedDecisionRoute = AuthenticatedDecisionRouteImport.update({
@@ -307,6 +397,21 @@ export interface FileRoutesByFullPath {
   '/connect': typeof AuthenticatedConnectRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/decision': typeof AuthenticatedDecisionRoute
+  '/admin/activities': typeof AdminActivitiesRoute
+  '/admin/audit-logs': typeof AdminAuditLogsRoute
+  '/admin/campaigns': typeof AdminCampaignsRoute
+  '/admin/companies': typeof AdminCompaniesRoute
+  '/admin/contacts': typeof AdminContactsRoute
+  '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/employees': typeof AdminEmployeesRoute
+  '/admin/leads': typeof AdminLeadsRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/marketing-leads': typeof AdminMarketingLeadsRoute
+  '/admin/opportunities': typeof AdminOpportunitiesRoute
+  '/admin/reports': typeof AdminReportsRoute
+  '/admin/roles': typeof AdminRolesRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/tasks': typeof AdminTasksRoute
   '/api/chat': typeof ApiChatRoute
   '/api/transcribe': typeof ApiTranscribeRoute
   '/api/tts': typeof ApiTtsRoute
@@ -350,6 +455,21 @@ export interface FileRoutesByTo {
   '/connect': typeof AuthenticatedConnectRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/decision': typeof AuthenticatedDecisionRoute
+  '/admin/activities': typeof AdminActivitiesRoute
+  '/admin/audit-logs': typeof AdminAuditLogsRoute
+  '/admin/campaigns': typeof AdminCampaignsRoute
+  '/admin/companies': typeof AdminCompaniesRoute
+  '/admin/contacts': typeof AdminContactsRoute
+  '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/employees': typeof AdminEmployeesRoute
+  '/admin/leads': typeof AdminLeadsRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/marketing-leads': typeof AdminMarketingLeadsRoute
+  '/admin/opportunities': typeof AdminOpportunitiesRoute
+  '/admin/reports': typeof AdminReportsRoute
+  '/admin/roles': typeof AdminRolesRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/tasks': typeof AdminTasksRoute
   '/api/chat': typeof ApiChatRoute
   '/api/transcribe': typeof ApiTranscribeRoute
   '/api/tts': typeof ApiTtsRoute
@@ -397,6 +517,21 @@ export interface FileRoutesById {
   '/_authenticated/connect': typeof AuthenticatedConnectRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/decision': typeof AuthenticatedDecisionRoute
+  '/admin/activities': typeof AdminActivitiesRoute
+  '/admin/audit-logs': typeof AdminAuditLogsRoute
+  '/admin/campaigns': typeof AdminCampaignsRoute
+  '/admin/companies': typeof AdminCompaniesRoute
+  '/admin/contacts': typeof AdminContactsRoute
+  '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/employees': typeof AdminEmployeesRoute
+  '/admin/leads': typeof AdminLeadsRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/marketing-leads': typeof AdminMarketingLeadsRoute
+  '/admin/opportunities': typeof AdminOpportunitiesRoute
+  '/admin/reports': typeof AdminReportsRoute
+  '/admin/roles': typeof AdminRolesRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/tasks': typeof AdminTasksRoute
   '/api/chat': typeof ApiChatRoute
   '/api/transcribe': typeof ApiTranscribeRoute
   '/api/tts': typeof ApiTtsRoute
@@ -444,6 +579,21 @@ export interface FileRouteTypes {
     | '/connect'
     | '/dashboard'
     | '/decision'
+    | '/admin/activities'
+    | '/admin/audit-logs'
+    | '/admin/campaigns'
+    | '/admin/companies'
+    | '/admin/contacts'
+    | '/admin/dashboard'
+    | '/admin/employees'
+    | '/admin/leads'
+    | '/admin/login'
+    | '/admin/marketing-leads'
+    | '/admin/opportunities'
+    | '/admin/reports'
+    | '/admin/roles'
+    | '/admin/settings'
+    | '/admin/tasks'
     | '/api/chat'
     | '/api/transcribe'
     | '/api/tts'
@@ -487,6 +637,21 @@ export interface FileRouteTypes {
     | '/connect'
     | '/dashboard'
     | '/decision'
+    | '/admin/activities'
+    | '/admin/audit-logs'
+    | '/admin/campaigns'
+    | '/admin/companies'
+    | '/admin/contacts'
+    | '/admin/dashboard'
+    | '/admin/employees'
+    | '/admin/leads'
+    | '/admin/login'
+    | '/admin/marketing-leads'
+    | '/admin/opportunities'
+    | '/admin/reports'
+    | '/admin/roles'
+    | '/admin/settings'
+    | '/admin/tasks'
     | '/api/chat'
     | '/api/transcribe'
     | '/api/tts'
@@ -533,6 +698,21 @@ export interface FileRouteTypes {
     | '/_authenticated/connect'
     | '/_authenticated/dashboard'
     | '/_authenticated/decision'
+    | '/admin/activities'
+    | '/admin/audit-logs'
+    | '/admin/campaigns'
+    | '/admin/companies'
+    | '/admin/contacts'
+    | '/admin/dashboard'
+    | '/admin/employees'
+    | '/admin/leads'
+    | '/admin/login'
+    | '/admin/marketing-leads'
+    | '/admin/opportunities'
+    | '/admin/reports'
+    | '/admin/roles'
+    | '/admin/settings'
+    | '/admin/tasks'
     | '/api/chat'
     | '/api/transcribe'
     | '/api/tts'
@@ -575,6 +755,21 @@ export interface RootRouteChildren {
   ScienceRoute: typeof ScienceRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TestimonialsRoute: typeof TestimonialsRoute
+  AdminActivitiesRoute: typeof AdminActivitiesRoute
+  AdminAuditLogsRoute: typeof AdminAuditLogsRoute
+  AdminCampaignsRoute: typeof AdminCampaignsRoute
+  AdminCompaniesRoute: typeof AdminCompaniesRoute
+  AdminContactsRoute: typeof AdminContactsRoute
+  AdminDashboardRoute: typeof AdminDashboardRoute
+  AdminEmployeesRoute: typeof AdminEmployeesRoute
+  AdminLeadsRoute: typeof AdminLeadsRoute
+  AdminLoginRoute: typeof AdminLoginRoute
+  AdminMarketingLeadsRoute: typeof AdminMarketingLeadsRoute
+  AdminOpportunitiesRoute: typeof AdminOpportunitiesRoute
+  AdminReportsRoute: typeof AdminReportsRoute
+  AdminRolesRoute: typeof AdminRolesRoute
+  AdminSettingsRoute: typeof AdminSettingsRoute
+  AdminTasksRoute: typeof AdminTasksRoute
   ApiChatRoute: typeof ApiChatRoute
   ApiTranscribeRoute: typeof ApiTranscribeRoute
   ApiTtsRoute: typeof ApiTtsRoute
@@ -751,6 +946,111 @@ declare module '@tanstack/react-router' {
       path: '/api/chat'
       fullPath: '/api/chat'
       preLoaderRoute: typeof ApiChatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/tasks': {
+      id: '/admin/tasks'
+      path: '/admin/tasks'
+      fullPath: '/admin/tasks'
+      preLoaderRoute: typeof AdminTasksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/settings': {
+      id: '/admin/settings'
+      path: '/admin/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AdminSettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/roles': {
+      id: '/admin/roles'
+      path: '/admin/roles'
+      fullPath: '/admin/roles'
+      preLoaderRoute: typeof AdminRolesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/reports': {
+      id: '/admin/reports'
+      path: '/admin/reports'
+      fullPath: '/admin/reports'
+      preLoaderRoute: typeof AdminReportsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/opportunities': {
+      id: '/admin/opportunities'
+      path: '/admin/opportunities'
+      fullPath: '/admin/opportunities'
+      preLoaderRoute: typeof AdminOpportunitiesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/marketing-leads': {
+      id: '/admin/marketing-leads'
+      path: '/admin/marketing-leads'
+      fullPath: '/admin/marketing-leads'
+      preLoaderRoute: typeof AdminMarketingLeadsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/login': {
+      id: '/admin/login'
+      path: '/admin/login'
+      fullPath: '/admin/login'
+      preLoaderRoute: typeof AdminLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/leads': {
+      id: '/admin/leads'
+      path: '/admin/leads'
+      fullPath: '/admin/leads'
+      preLoaderRoute: typeof AdminLeadsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/employees': {
+      id: '/admin/employees'
+      path: '/admin/employees'
+      fullPath: '/admin/employees'
+      preLoaderRoute: typeof AdminEmployeesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/dashboard': {
+      id: '/admin/dashboard'
+      path: '/admin/dashboard'
+      fullPath: '/admin/dashboard'
+      preLoaderRoute: typeof AdminDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/contacts': {
+      id: '/admin/contacts'
+      path: '/admin/contacts'
+      fullPath: '/admin/contacts'
+      preLoaderRoute: typeof AdminContactsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/companies': {
+      id: '/admin/companies'
+      path: '/admin/companies'
+      fullPath: '/admin/companies'
+      preLoaderRoute: typeof AdminCompaniesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/campaigns': {
+      id: '/admin/campaigns'
+      path: '/admin/campaigns'
+      fullPath: '/admin/campaigns'
+      preLoaderRoute: typeof AdminCampaignsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/audit-logs': {
+      id: '/admin/audit-logs'
+      path: '/admin/audit-logs'
+      fullPath: '/admin/audit-logs'
+      preLoaderRoute: typeof AdminAuditLogsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/activities': {
+      id: '/admin/activities'
+      path: '/admin/activities'
+      fullPath: '/admin/activities'
+      preLoaderRoute: typeof AdminActivitiesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/decision': {
@@ -980,6 +1280,21 @@ const rootRouteChildren: RootRouteChildren = {
   ScienceRoute: ScienceRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   TestimonialsRoute: TestimonialsRoute,
+  AdminActivitiesRoute: AdminActivitiesRoute,
+  AdminAuditLogsRoute: AdminAuditLogsRoute,
+  AdminCampaignsRoute: AdminCampaignsRoute,
+  AdminCompaniesRoute: AdminCompaniesRoute,
+  AdminContactsRoute: AdminContactsRoute,
+  AdminDashboardRoute: AdminDashboardRoute,
+  AdminEmployeesRoute: AdminEmployeesRoute,
+  AdminLeadsRoute: AdminLeadsRoute,
+  AdminLoginRoute: AdminLoginRoute,
+  AdminMarketingLeadsRoute: AdminMarketingLeadsRoute,
+  AdminOpportunitiesRoute: AdminOpportunitiesRoute,
+  AdminReportsRoute: AdminReportsRoute,
+  AdminRolesRoute: AdminRolesRoute,
+  AdminSettingsRoute: AdminSettingsRoute,
+  AdminTasksRoute: AdminTasksRoute,
   ApiChatRoute: ApiChatRoute,
   ApiTranscribeRoute: ApiTranscribeRoute,
   ApiTtsRoute: ApiTtsRoute,
