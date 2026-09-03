@@ -44,6 +44,7 @@ import { Route as AdminDashboardRouteImport } from './routes/admin.dashboard'
 import { Route as AdminContactsRouteImport } from './routes/admin.contacts'
 import { Route as AdminCompaniesRouteImport } from './routes/admin.companies'
 import { Route as AdminCampaignsRouteImport } from './routes/admin.campaigns'
+import { Route as AdminAuditLogsRouteImport } from './routes/admin.audit-logs'
 import { Route as AdminActivitiesRouteImport } from './routes/admin.activities'
 import { Route as AuthenticatedDecisionRouteImport } from './routes/_authenticated/decision'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
@@ -241,6 +242,11 @@ const AdminCampaignsRoute = AdminCampaignsRouteImport.update({
   path: '/admin/campaigns',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminAuditLogsRoute = AdminAuditLogsRouteImport.update({
+  id: '/admin/audit-logs',
+  path: '/admin/audit-logs',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminActivitiesRoute = AdminActivitiesRouteImport.update({
   id: '/admin/activities',
   path: '/admin/activities',
@@ -386,6 +392,7 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/decision': typeof AuthenticatedDecisionRoute
   '/admin/activities': typeof AdminActivitiesRoute
+  '/admin/audit-logs': typeof AdminAuditLogsRoute
   '/admin/campaigns': typeof AdminCampaignsRoute
   '/admin/companies': typeof AdminCompaniesRoute
   '/admin/contacts': typeof AdminContactsRoute
@@ -442,6 +449,7 @@ export interface FileRoutesByTo {
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/decision': typeof AuthenticatedDecisionRoute
   '/admin/activities': typeof AdminActivitiesRoute
+  '/admin/audit-logs': typeof AdminAuditLogsRoute
   '/admin/campaigns': typeof AdminCampaignsRoute
   '/admin/companies': typeof AdminCompaniesRoute
   '/admin/contacts': typeof AdminContactsRoute
@@ -502,6 +510,7 @@ export interface FileRoutesById {
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/decision': typeof AuthenticatedDecisionRoute
   '/admin/activities': typeof AdminActivitiesRoute
+  '/admin/audit-logs': typeof AdminAuditLogsRoute
   '/admin/campaigns': typeof AdminCampaignsRoute
   '/admin/companies': typeof AdminCompaniesRoute
   '/admin/contacts': typeof AdminContactsRoute
@@ -562,6 +571,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/decision'
     | '/admin/activities'
+    | '/admin/audit-logs'
     | '/admin/campaigns'
     | '/admin/companies'
     | '/admin/contacts'
@@ -618,6 +628,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/decision'
     | '/admin/activities'
+    | '/admin/audit-logs'
     | '/admin/campaigns'
     | '/admin/companies'
     | '/admin/contacts'
@@ -677,6 +688,7 @@ export interface FileRouteTypes {
     | '/_authenticated/dashboard'
     | '/_authenticated/decision'
     | '/admin/activities'
+    | '/admin/audit-logs'
     | '/admin/campaigns'
     | '/admin/companies'
     | '/admin/contacts'
@@ -732,6 +744,7 @@ export interface RootRouteChildren {
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TestimonialsRoute: typeof TestimonialsRoute
   AdminActivitiesRoute: typeof AdminActivitiesRoute
+  AdminAuditLogsRoute: typeof AdminAuditLogsRoute
   AdminCampaignsRoute: typeof AdminCampaignsRoute
   AdminCompaniesRoute: typeof AdminCompaniesRoute
   AdminContactsRoute: typeof AdminContactsRoute
@@ -1006,6 +1019,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminCampaignsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/audit-logs': {
+      id: '/admin/audit-logs'
+      path: '/admin/audit-logs'
+      fullPath: '/admin/audit-logs'
+      preLoaderRoute: typeof AdminAuditLogsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/activities': {
       id: '/admin/activities'
       path: '/admin/activities'
@@ -1241,6 +1261,7 @@ const rootRouteChildren: RootRouteChildren = {
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   TestimonialsRoute: TestimonialsRoute,
   AdminActivitiesRoute: AdminActivitiesRoute,
+  AdminAuditLogsRoute: AdminAuditLogsRoute,
   AdminCampaignsRoute: AdminCampaignsRoute,
   AdminCompaniesRoute: AdminCompaniesRoute,
   AdminContactsRoute: AdminContactsRoute,
