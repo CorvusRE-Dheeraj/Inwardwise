@@ -1,0 +1,11 @@
+revoke execute on function public.update_updated_at_column() from public, anon, authenticated;
+revoke execute on function public.is_active_staff(uuid) from public, anon;
+revoke execute on function public.is_super_admin(uuid) from public, anon;
+revoke execute on function public.admin_has_perm(uuid, text) from public, anon;
+revoke execute on function public.my_admin_context() from public, anon;
+revoke execute on function public.claim_super_admin_if_none() from public, anon;
+grant execute on function public.is_active_staff(uuid) to authenticated, service_role;
+grant execute on function public.is_super_admin(uuid) to authenticated, service_role;
+grant execute on function public.admin_has_perm(uuid, text) to authenticated, service_role;
+grant execute on function public.my_admin_context() to authenticated, service_role;
+grant execute on function public.claim_super_admin_if_none() to authenticated, service_role;
