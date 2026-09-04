@@ -210,9 +210,14 @@ function History() {
               </CollapsibleTrigger>
               <CollapsibleContent>
                 <div className="pb-10 max-w-3xl space-y-4 text-justify text-[16px] leading-[1.7] text-[color:var(--ink-2)]">
-                  {m.body.map((p, i) => (
+                  {m.body.slice(0, -4).map((p, i) => (
                     <p key={i}>{p}</p>
                   ))}
+                  <div className="mt-6 space-y-0 leading-snug">
+                    {m.body.slice(-4).map((line, i) => (
+                      <p key={i} className="m-0 p-0">{line}</p>
+                    ))}
+                  </div>
                 </div>
               </CollapsibleContent>
             </Collapsible>
