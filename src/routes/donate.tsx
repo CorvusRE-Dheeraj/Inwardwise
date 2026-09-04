@@ -5,9 +5,9 @@ import { AppShell } from "@/components/AppShell";
 export const Route = createFileRoute("/donate")({
   head: () => ({
     meta: [
-      { title: "Donate — InwardWise" },
-      { name: "description", content: "Support InwardWise's non-profit projects — suicide, depression and anxiety prevention." },
-      { property: "og:title", content: "Donate — InwardWise" },
+      { title: "Donate, InwardWise" },
+      { name: "description", content: "Support InwardWise's non-profit projects, suicide, depression and anxiety prevention." },
+      { property: "og:title", content: "Donate, InwardWise" },
       { property: "og:description", content: "Donated funds are earmarked 100% for non-profit projects." },
     ],
   }),
@@ -24,7 +24,7 @@ function DonatePage() {
         <div className="mt-8 space-y-5 text-[15px] leading-relaxed text-muted-foreground">
           <p>
             We are not a non-profit organization. But given the world&rsquo;s race to profits, we believe
-            a socially conscious organization can do both — use commercial development and innovation
+            a socially conscious organization can do both, use commercial development and innovation
             for social good, while accepting that, as a for-profit, success is not guaranteed given
             the intense competition for investment dollars.
           </p>

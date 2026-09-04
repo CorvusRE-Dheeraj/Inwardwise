@@ -104,7 +104,7 @@ export function AvatarPortrait({ userId, complete, total }: Props) {
       <p className="mt-2 text-center text-sm text-[color:var(--muted-foreground)]">
         {sketch
           ? "Your sketch sharpens as each factor is answered."
-          : "Attach a photograph — it is drawn as a private ink sketch."}
+          : "Attach a photograph, it is drawn as a private ink sketch."}
       </p>
 
       <input

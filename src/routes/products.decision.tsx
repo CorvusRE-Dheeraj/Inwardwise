@@ -8,7 +8,7 @@ const product = getProduct("decision");
 export const Route = createFileRoute("/products/decision")({
   head: () => ({
     meta: [
-      { title: "InwardWise Decision — Ask the right question | InwardWise" },
+      { title: "InwardWise Decision, Ask the right question | InwardWise" },
       { name: "description", content: product.tagline },
       { property: "og:title", content: "InwardWise Decision | InwardWise" },
       { property: "og:description", content: product.tagline },
@@ -39,8 +39,8 @@ function DecisionProduct() {
             to real decisions. The framework starts from a simple observation: we often spend
             enormous effort searching for solutions without spending enough time defining what we
             are actually trying to achieve. Instead of rushing from problem to solution, OOOI
-            repeatedly examines the objective — challenging assumptions, bias, fear, ego, social
-            conditioning, and short-term thinking — before defining a broader decision boundary and
+            repeatedly examines the objective, challenging assumptions, bias, fear, ego, social
+            conditioning, and short-term thinking, before defining a broader decision boundary and
             working inward toward possible solutions.
           </p>
           <p>

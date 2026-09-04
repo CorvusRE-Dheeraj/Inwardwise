@@ -100,7 +100,7 @@ function fromInputValue(field: Field, raw: string | undefined): unknown {
 }
 
 function formatCell(field: Field, value: unknown, refOptions: Record<string, Option[]>) {
-  if (value === null || value === undefined || value === "") return "—";
+  if (value === null || value === undefined || value === "") return " ";
   if (field.type === "select") return labelOf(field.options ?? [], String(value));
   if (field.type === "ref") return labelOf(refOptions[field.key] ?? [], String(value));
   if (field.type === "date") return new Date(String(value)).toLocaleDateString();

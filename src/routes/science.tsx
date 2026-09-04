@@ -4,13 +4,13 @@ import { AppShell } from "@/components/AppShell";
 export const Route = createFileRoute("/science")({
   head: () => ({
     meta: [
-      { title: "Science — The Thinking Behind InwardWise" },
+      { title: "Science, The Thinking Behind InwardWise" },
       {
         name: "description",
         content:
-          "The science behind InwardWise: decision quality, the five factors of self, self-awareness and connection — with references from stress biology to modern psychology.",
+          "The science behind InwardWise: decision quality, the five factors of self, self-awareness and connection, with references from stress biology to modern psychology.",
       },
-      { property: "og:title", content: "Science — The Thinking Behind InwardWise" },
+      { property: "og:title", content: "Science, The Thinking Behind InwardWise" },
       {
         property: "og:description",
         content: "Understand your biases and weaknesses, become fully self aware, improve your chances of follow through.",
@@ -99,17 +99,17 @@ function Science() {
           <ul className="mt-5 max-w-3xl list-none space-y-4 text-justify text-[16px] leading-[1.7] text-[color:var(--ink-2)]">
             <li>
               Neff, K. D. (2004). Self-compassion and psychological well-being.{" "}
-              <em>Constructivism in the Human Sciences, 9</em>(2), 27–37.
+              <em>Constructivism in the Human Sciences, 9</em>(2), 27, 37.
             </li>
             <li>
               Perlman, D., &amp; Peplau, L. A. (1981). Toward a social psychology of loneliness. In S.
               Duck &amp; R. Gilmour (Eds.), <em>Personal relationships 3: Personal relationships in
-              disorder</em> (pp. 31–56). London, England: Academic Press.
+              disorder</em> (pp. 31, 56). London, England: Academic Press.
             </li>
             <li>
               Zessin, U., Dickhauser, O., &amp; Garbade, S. (2015). The relationship between
               self-compassion and well-being: A meta-analysis.{" "}
-              <em>Applied Psychology: Health and Well-Being, 7</em>(3), 340–364.
+              <em>Applied Psychology: Health and Well-Being, 7</em>(3), 340, 364.
             </li>
           </ul>
         </article>

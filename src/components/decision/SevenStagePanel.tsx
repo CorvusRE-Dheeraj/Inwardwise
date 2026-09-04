@@ -12,7 +12,7 @@ export const SEVEN_STAGES: { label: string; text: string }[] = [
   },
   {
     label: "Stage 3",
-    text: "This is what you think the solutions might look like. We usually jump to solutions, and typically this is what our normal process looks like. You can define some solutions, but don't expect to reach solutions here. In fact, if you don't know the solutions, that is better — you will be guided to them.",
+    text: "This is what you think the solutions might look like. We usually jump to solutions, and typically this is what our normal process looks like. You can define some solutions, but don't expect to reach solutions here. In fact, if you don't know the solutions, that is better, you will be guided to them.",
   },
   {
     label: "Stage 4",

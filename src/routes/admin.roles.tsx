@@ -9,10 +9,10 @@ import { Checkbox } from "@/components/ui/checkbox";
 export const Route = createFileRoute("/admin/roles")({
   head: () => ({
     meta: [
-      { title: "Roles & permissions — InwardWise Admin" },
+      { title: "Roles & permissions, InwardWise Admin" },
       { name: "description", content: "Configure what each staff role can see and change." },
       { name: "robots", content: "noindex, nofollow" },
-      { property: "og:title", content: "Roles & permissions — InwardWise Admin" },
+      { property: "og:title", content: "Roles & permissions, InwardWise Admin" },
       { property: "og:description", content: "Configure what each staff role can see and change." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

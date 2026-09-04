@@ -8,7 +8,7 @@ import { Loader2, Shield, Users, LogIn, Sparkles } from "lucide-react";
 export const Route = createFileRoute("/_authenticated/admin")({
   head: () => ({
     meta: [
-      { title: "Admin — Objective Solution Framework" },
+      { title: "Admin, Objective Solution Framework" },
       { name: "description", content: "Superadmin view of users and decision activity." },
     ],
   }),
@@ -110,7 +110,7 @@ function AdminPage() {
                   <tbody>
                     {statsQ.data.users.map((u) => (
                       <tr key={u.id} className="border-t border-glass-border">
-                        <td className="px-2 py-2">{u.email ?? "—"}</td>
+                        <td className="px-2 py-2">{u.email ?? " "}</td>
                         <td className="px-2 py-2 text-muted-foreground">{fmt(u.created_at)}</td>
                         <td className="px-2 py-2 text-muted-foreground">{fmt(u.last_sign_in_at)}</td>
                         <td className="px-2 py-2 text-right">{u.signIns}</td>
@@ -171,7 +171,7 @@ function StatCard({ icon, label, value }: { icon: React.ReactNode; label: string
 }
 
 function fmt(v: string | null | undefined): string {
-  if (!v) return "—";
+  if (!v) return " ";
   try {
     return new Date(v).toLocaleString();
   } catch {

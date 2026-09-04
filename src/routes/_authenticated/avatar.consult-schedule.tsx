@@ -13,13 +13,13 @@ import {
 export const Route = createFileRoute("/_authenticated/avatar/consult-schedule")({
   head: () => ({
     meta: [
-      { title: "Schedule a Self Consultation Call — InwardWise" },
+      { title: "Schedule a Self Consultation Call, InwardWise" },
       {
         name: "description",
         content:
           "Book a spoken consultation with your InwardWise Self. Choose the time, the length and the focus, and the call comes to you.",
       },
-      { property: "og:title", content: "Schedule a Self Consultation Call — InwardWise" },
+      { property: "og:title", content: "Schedule a Self Consultation Call, InwardWise" },
       {
         property: "og:description",
         content: "A private reflective conversation, by phone, at a time you choose.",
@@ -215,7 +215,7 @@ function ConsultSchedule() {
             value={focus}
             onChange={(e) => setFocus(e.target.value.slice(0, 600))}
             rows={4}
-            placeholder="In your own words — the situation, the choice, or the feeling you want to think through."
+            placeholder="In your own words, the situation, the choice, or the feeling you want to think through."
             className="mt-2 w-full resize-none rounded-md border border-[var(--rule)] px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-royal/40"
           />
           <p className="mt-1 text-xs text-muted-foreground">
@@ -249,7 +249,7 @@ function ConsultSchedule() {
               <p>
                 Scheduled for{" "}
                 <strong>{new Date(existing.scheduled_at).toLocaleString()}</strong>. The call may
-                arrive from a number you don&apos;t recognise — please pick up. Each scheduled
+                arrive from a number you don&apos;t recognise, please pick up. Each scheduled
                 session rings once.
               </p>
             )}

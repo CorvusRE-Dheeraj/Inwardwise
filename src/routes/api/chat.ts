@@ -53,7 +53,7 @@ export const Route = createFileRoute("/api/chat")({
           onError: (error) => {
             const err = error as { status?: number; statusCode?: number };
             const status = err?.status ?? err?.statusCode;
-            if (status === 429) return "Rate limit exceeded — please try again shortly.";
+            if (status === 429) return "Rate limit exceeded, please try again shortly.";
             if (status === 402) return "AI credits exhausted for this workspace.";
             return "The facilitator ran into an issue. Please try again.";
           },

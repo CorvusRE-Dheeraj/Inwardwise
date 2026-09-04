@@ -80,8 +80,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "InwardWise — Remove Bias, Fear, and Ego From Your Decisions" },
-      { name: "description", content: "InwardWise is a quiet, deliberate practice for the few decisions that shape a life — a seven-stage method to remove bias, fear, and ego." },
+      { title: "InwardWise, Remove Bias, Fear, and Ego From Your Decisions" },
+      { name: "description", content: "InwardWise is a quiet, deliberate practice for the few decisions that shape a life, a seven-stage method to remove bias, fear, and ego." },
       { property: "og:site_name", content: "InwardWise" },
       { property: "og:title", content: "InwardWise" },
       { property: "og:description", content: "A seven-stage method to remove bias, fear, and ego from the choices that shape a life." },
@@ -132,7 +132,7 @@ function RootComponent() {
         router.invalidate();
         if (event !== "SIGNED_OUT") queryClient.invalidateQueries();
       });
-      // no cleanup on unmount — root persists
+      // no cleanup on unmount, root persists
       return data;
     });
   }, [queryClient, router]);

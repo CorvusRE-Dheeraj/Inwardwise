@@ -10,7 +10,7 @@ const searchSchema = z.object({ redirect: z.string().optional() });
 export const Route = createFileRoute("/auth")({
   head: () => ({
     meta: [
-      { title: "Sign in — InwardWise" },
+      { title: "Sign in, InwardWise" },
       { name: "description", content: "Sign in or create an account to keep your decisions private and confidential." },
     ],
   }),

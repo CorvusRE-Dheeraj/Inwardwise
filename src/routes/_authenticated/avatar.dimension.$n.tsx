@@ -19,13 +19,13 @@ import { ProductName } from "@/components/products/ProductChrome";
 export const Route = createFileRoute("/_authenticated/avatar/dimension/$n")({
   head: () => ({
     meta: [
-      { title: "Your Self Journey — InwardWise" },
+      { title: "Your Self Journey, InwardWise" },
       {
         name: "description",
         content:
           "A guided conversation that builds your Self Avatar, one stage at a time. Private and encrypted.",
       },
-      { property: "og:title", content: "Your Self Journey — InwardWise" },
+      { property: "og:title", content: "Your Self Journey, InwardWise" },
       { property: "og:description", content: "One question at a time, in your own words." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -117,7 +117,7 @@ function DimensionFlow() {
           />
         </div>
         <Caution>
-          Your answers are encrypted with this PIN. There is no recovery flow — losing the PIN
+          Your answers are encrypted with this PIN. There is no recovery flow, losing the PIN
           means permanently losing access to what you wrote here.
         </Caution>
       </div>
@@ -339,7 +339,7 @@ function DimensionFlow() {
 
             <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-[color:var(--rule)] bg-white/60 px-3 py-1 text-[12px] text-[color:var(--muted-foreground)]">
               <Lock className="h-3 w-3" />
-              Remember: {stage.focus.replace(/^This section is about /, "").replace(/^This is the final section — /, "")}
+              Remember: {stage.focus.replace(/^This section is about /, "").replace(/^This is the final section /, "")}
             </div>
 
             <div className="mt-4 lg:hidden">
@@ -396,7 +396,7 @@ function DimensionFlow() {
               <button
                 onClick={async () => {
                   await persist(false);
-                  setSavedNote("Saved — you can continue later");
+                  setSavedNote("Saved, you can continue later");
                   navigate({ to: "/avatar" });
                 }}
                 className="min-h-11 rounded-full border border-[color:var(--rule)] px-5 py-2 text-[13px]"

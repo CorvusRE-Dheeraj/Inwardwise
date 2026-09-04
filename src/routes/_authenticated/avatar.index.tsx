@@ -14,13 +14,13 @@ import { ProductName } from "@/components/products/ProductChrome";
 export const Route = createFileRoute("/_authenticated/avatar/")({
   head: () => ({
     meta: [
-      { title: "InwardWise Self Design — InwardWise" },
+      { title: "InwardWise Self Design, InwardWise" },
       {
         name: "description",
         content:
-          "Build your Self Avatar through a guided five-stage conversation — private, encrypted, and yours alone.",
+          "Build your Self Avatar through a guided five-stage conversation, private, encrypted, and yours alone.",
       },
-      { property: "og:title", content: "InwardWise Self Design — InwardWise" },
+      { property: "og:title", content: "InwardWise Self Design, InwardWise" },
       { property: "og:description", content: "Five stages. One inner mirror." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -112,7 +112,7 @@ function AvatarDashboard() {
           </div>
           <Caution>
             This 4-digit PIN is separate from your sign-in and encrypts your Self Journey answers.
-            There is no recovery: if you lose it, the answers cannot be retrieved — not by us,
+            There is no recovery: if you lose it, the answers cannot be retrieved, not by us,
             not by an administrator. You may permanently self-destruct your <ProductName id="self" /> data at any
             time, and data auto-purges after twelve months of account inactivity.
           </Caution>
@@ -134,7 +134,7 @@ function AvatarDashboard() {
                 <Phone className="h-3 w-3" /> Calendar Scheduling for Voice Build
               </div>
               <p className="mt-3 text-sm text-[color:var(--muted-foreground)]">
-                Rather than typing, schedule a call — your <ProductName id="self" /> phones you and takes the
+                Rather than typing, schedule a call, your <ProductName id="self" /> phones you and takes the
                 journey questions conversationally.
               </p>
               <div className="mt-6 space-y-4">
@@ -243,7 +243,7 @@ function AvatarDashboard() {
 
             <div className="mt-8 grid gap-6 md:grid-cols-2">
               <Caution>
-                Your Self becomes richer the more of the journey you complete — partial answers
+                Your Self becomes richer the more of the journey you complete, partial answers
                 produce partial reflections. If typing is the obstacle, turn on voice and schedule
                 times when you can take a phone call; your <ProductName id="self" /> will call you and
                 continue the conversation with you.

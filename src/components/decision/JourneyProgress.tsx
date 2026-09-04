@@ -4,7 +4,7 @@ import { JOURNEY, TOTAL_STAGES, journeyPercent, journeyStage } from "@/lib/decis
 
 /**
  * Persistent, calm progress indicator for the Decision window.
- * Presentation only — the current stage is passed in from the existing logic.
+ * Presentation only, the current stage is passed in from the existing logic.
  * `vertical` renders a sidebar-friendly stacked layout.
  */
 export function JourneyProgress({

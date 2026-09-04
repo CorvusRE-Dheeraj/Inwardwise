@@ -21,7 +21,7 @@ import { sendMeditationText } from "@/lib/meditation-sms.functions";
 export const Route = createFileRoute("/_authenticated/meditation/schedule")({
   head: () => ({
     meta: [
-      { title: "Schedule Your Calm Session — InwardWise" },
+      { title: "Schedule Your Calm Session, InwardWise" },
       {
         name: "description",
         content:
@@ -182,7 +182,7 @@ function MeditationSchedule() {
         : normalizedPhone.length === 0 || phoneError
           ? "Add a valid phone number to receive the draft by text."
           : callAtSameTime
-            ? "A call is already scheduled for that exact time — the text cannot be scheduled for the same moment. Turn the call off or pick another time."
+            ? "A call is already scheduled for that exact time, the text cannot be scheduled for the same moment. Turn the call off or pick another time."
             : null;
 
   const canText = !textBlockedReason && !texting && !saving;
@@ -240,10 +240,10 @@ function MeditationSchedule() {
         : null;
       const note =
         when && voiceEnabled && normalizedPhone
-          ? `Saved — we will call ${normalizedPhone} on ${when} (${tz}) for ${minutes} minutes.`
+          ? `Saved, we will call ${normalizedPhone} on ${when} (${tz}) for ${minutes} minutes.`
           : when
-            ? `Saved — ${minutes} minutes on ${when} (${tz}). No call: turn voice on to be called.`
-            : `Saved — a ${minutes}-minute session, in ${tz} time.`;
+            ? `Saved ${minutes} minutes on ${when} (${tz}). No call: turn voice on to be called.`
+            : `Saved, a ${minutes}-minute session, in ${tz} time.`;
       setSavedNote(note);
       toast.success(note);
       const { settings } = await statusFn({});
@@ -365,7 +365,7 @@ function MeditationSchedule() {
               ))}
             </select>
             <span className="text-xs text-[color:var(--muted-foreground)]">
-              Divided into four equal parts — {linesPerSetFor(minutes)} lines per prayer.
+              Divided into four equal parts {linesPerSetFor(minutes)} lines per prayer.
             </span>
           </label>
           <label className="flex flex-col gap-2 text-sm">
@@ -403,11 +403,11 @@ function MeditationSchedule() {
               />
             </button>
             <span className="text-xs text-[color:var(--muted-foreground)]">
-              {voiceEnabled ? "On — each line is spoken to you." : "Off — read the lines yourself."}
+              {voiceEnabled ? "On, each line is spoken to you." : "Off, read the lines yourself."}
             </span>
             {voiceEnabled && (
               <span className="text-xs text-[color:var(--muted-foreground)]">
-                The call may arrive from a number you don't recognise — please pick up.
+                The call may arrive from a number you don't recognise, please pick up.
               </span>
             )}
           </div>

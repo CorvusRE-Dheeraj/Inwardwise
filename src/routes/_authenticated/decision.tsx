@@ -41,7 +41,7 @@ const searchSchema = z.object({ id: z.string().optional() });
 export const Route = createFileRoute("/_authenticated/decision")({
   head: () => ({
     meta: [
-      { title: "New Decision — Objective Solution Framework" },
+      { title: "New Decision, Objective Solution Framework" },
       {
         name: "description",
         content:
@@ -266,7 +266,7 @@ function DecisionChat() {
     }
   };
 
-  // Save & continue later — uses the same persistence as the autosave.
+  // Save & continue later, uses the same persistence as the autosave.
   const saveAndContinueLater = () => {
     const next = snapshotRef.current();
     saveSession(next);
@@ -358,7 +358,7 @@ function DecisionChat() {
       doc.setFontSize(9);
       doc.setTextColor(150);
       doc.text(`${p} / ${total}`, pageW - margin, pageH - 24, { align: "right" });
-      doc.text("InwardWise — Objective Solution Framework", margin, pageH - 24);
+      doc.text("InwardWise, Objective Solution Framework", margin, pageH - 24);
     }
 
     const safe =
@@ -419,12 +419,12 @@ function DecisionChat() {
         )}
         {started && (
           <>
-            {/* Desktop: sticky left sidebar — stays visible while the chat scrolls */}
+            {/* Desktop: sticky left sidebar, stays visible while the chat scrolls */}
             <div className="hidden lg:block">
               <aside className="glass-strong sticky top-24 h-fit rounded-3xl">
                 <JourneyProgress current={currentStage} vertical />
                 <p className="mx-4 mb-4 rounded-xl border border-glass-border bg-foreground/[0.02] p-3 text-[10px] leading-relaxed text-muted-foreground">
-                  The facilitator asks 2–5 questions per stage and waits for your confirmation
+                  The facilitator asks 2, 5 questions per stage and waits for your confirmation
                   before advancing. Recommendations only come after the final step.
                 </p>
               </aside>
@@ -485,7 +485,7 @@ function DecisionChat() {
                 </p>
                 <h3 className="font-display text-xl">Your decision session is ready</h3>
                 <p className="mx-auto mt-1 max-w-md text-xs text-muted-foreground">
-                  Download the full transcript — every stage's questions, your answers, and the
+                  Download the full transcript, every stage's questions, your answers, and the
                   facilitator's recommendation.
                 </p>
                 <button
@@ -706,8 +706,7 @@ function EmptyIntro({ onPick }: { onPick: (t: string) => void }) {
         Describe the situation you are facing
       </h2>
       <p className="mt-2 text-sm text-muted-foreground">
-        Speak or type. The facilitator will not answer directly. It will guide you through 8 stages
-        — starting with facts, never with recommendations.
+        Speak or type. The facilitator will not answer directly. It will guide you through 8 stages, starting with facts, never with recommendations.
       </p>
       <div className="mt-6 grid gap-2 sm:grid-cols-2">
         {STARTERS.map((s) => (
