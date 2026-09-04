@@ -10,10 +10,10 @@ import { Label } from "@/components/ui/label";
 export const Route = createFileRoute("/admin/login")({
   head: () => ({
     meta: [
-      { title: "Staff sign in — InwardWise Admin" },
+      { title: "Staff sign in, InwardWise Admin" },
       { name: "description", content: "Secure sign in for InwardWise employees and administrators." },
       { name: "robots", content: "noindex, nofollow" },
-      { property: "og:title", content: "Staff sign in — InwardWise Admin" },
+      { property: "og:title", content: "Staff sign in, InwardWise Admin" },
       { property: "og:description", content: "Internal portal for InwardWise staff." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

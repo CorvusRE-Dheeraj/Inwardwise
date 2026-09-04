@@ -28,13 +28,13 @@ import { ProductName } from "@/components/products/ProductChrome";
 export const Route = createFileRoute("/_authenticated/connect")({
   head: () => ({
     meta: [
-      { title: "Connect — Be Yourself and Belong | InwardWise" },
+      { title: "Connect, Be Yourself and Belong | InwardWise" },
       {
         name: "description",
         content:
-          "Share what is on your mind and find relevant perspectives, anonymous experiences and constructive ways to connect — while your private Self stays private.",
+          "Share what is on your mind and find relevant perspectives, anonymous experiences and constructive ways to connect, while your private Self stays private.",
       },
-      { property: "og:title", content: "Connect — Be Yourself and Belong | InwardWise" },
+      { property: "og:title", content: "Connect, Be Yourself and Belong | InwardWise" },
       {
         property: "og:description",
         content: "A private, AI-mediated way to discover that you are not alone.",
@@ -108,7 +108,7 @@ function ConnectPage() {
 
   async function onSubmit() {
     if (prompt.trim().length < 8) {
-      setError("Tell InwardWise a little more — a sentence or two is enough.");
+      setError("Tell InwardWise a little more, a sentence or two is enough.");
       return;
     }
     setError(null);
@@ -457,7 +457,7 @@ function ReadingCard({ reading }: { reading: Analysis["reading"] }) {
           {expanded ? "Hide Summary" : "Read Summary"}
         </button>
         <button
-          onClick={() => setNote("An audio reading of this piece is being recorded — it will appear here soon.")}
+          onClick={() => setNote("An audio reading of this piece is being recorded, it will appear here soon.")}
           className="inline-flex items-center gap-2 rounded-full border border-[color:var(--rule)] px-4 py-2 text-[13px]"
         >
           <Headphones className="h-3.5 w-3.5" /> Listen
@@ -625,7 +625,7 @@ function ConnectChoices({
             ))}
           </div>
           <p className="mt-4 text-[13px] text-[color:var(--muted-foreground)]">
-            Nearby suggestions can be added later — <ProductName id="connect" /> does not ask for your location.
+            Nearby suggestions can be added later <ProductName id="connect" /> does not ask for your location.
           </p>
         </Card>
       )}
@@ -697,7 +697,7 @@ function ReportModal({ story, onClose }: { story: Story; onClose: () => void }) 
       ) : (
         <>
           <p className="mt-3 text-[14px] text-[color:var(--muted-foreground)]">
-            Tell us what is wrong with “{story.category}” — {story.pseudonym}.
+            Tell us what is wrong with “{story.category}” {story.pseudonym}.
           </p>
           <textarea
             value={reason}

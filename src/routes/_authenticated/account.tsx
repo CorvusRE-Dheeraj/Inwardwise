@@ -6,7 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 export const Route = createFileRoute("/_authenticated/account")({
   head: () => ({
     meta: [
-      { title: "Account — InwardWise" },
+      { title: "Account, InwardWise" },
       { name: "description", content: "Manage your personal details, dashboard, and InwardWise Self." },
     ],
   }),

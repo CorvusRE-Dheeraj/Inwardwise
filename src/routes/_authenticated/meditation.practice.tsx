@@ -8,7 +8,7 @@ import { synthesizeSpeech } from "@/lib/voice";
 export const Route = createFileRoute("/_authenticated/meditation/practice")({
   head: () => ({
     meta: [
-      { title: "Mantra Practice — InwardWise" },
+      { title: "Mantra Practice, InwardWise" },
       {
         name: "description",
         content:
@@ -45,7 +45,7 @@ function MeditationPractice() {
       audioRef.current = audio;
       await audio.play();
     } catch {
-      /* silent — the practice works read-only too */
+      /* silent, the practice works read-only too */
     }
   }
 

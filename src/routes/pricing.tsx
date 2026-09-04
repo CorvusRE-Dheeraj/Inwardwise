@@ -5,9 +5,9 @@ import { AppShell } from "@/components/AppShell";
 export const Route = createFileRoute("/pricing")({
   head: () => ({
     meta: [
-      { title: "Pricing — InwardWise" },
+      { title: "Pricing, InwardWise" },
       { name: "description", content: "Free during beta. Corporate pricing available on request." },
-      { property: "og:title", content: "Pricing — InwardWise" },
+      { property: "og:title", content: "Pricing, InwardWise" },
       { property: "og:description", content: "Free during beta. Corporate plans on request." },
     ],
   }),

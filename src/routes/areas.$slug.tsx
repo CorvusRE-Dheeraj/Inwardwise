@@ -10,9 +10,9 @@ export const Route = createFileRoute("/areas/$slug")({
   },
   head: ({ loaderData }) => ({
     meta: [
-      { title: `${loaderData?.name ?? "Service"} — InwardWise` },
+      { title: `${loaderData?.name ?? "Service"}, InwardWise` },
       { name: "description", content: loaderData?.blurb ?? "" },
-      { property: "og:title", content: `${loaderData?.name ?? "Service"} — InwardWise` },
+      { property: "og:title", content: `${loaderData?.name ?? "Service"}, InwardWise` },
       { property: "og:description", content: loaderData?.blurb ?? "" },
       { property: "og:type", content: "article" },
       { name: "twitter:card", content: "summary" },

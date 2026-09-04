@@ -11,7 +11,7 @@ type VapiPayload = {
 
 /**
  * Vapi posts the end-of-call report here. The spoken story is saved as a
- * pending, anonymous story — a moderator still reviews it before it appears.
+ * pending, anonymous story, a moderator still reviews it before it appears.
  */
 async function handle(request: Request) {
   const cronSecret = process.env["MEDITATION_CRON_SECRET"];

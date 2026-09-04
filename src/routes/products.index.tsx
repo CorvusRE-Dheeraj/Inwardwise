@@ -7,16 +7,16 @@ import { PRODUCTS } from "@/lib/products";
 export const Route = createFileRoute("/products/")({
   head: () => ({
     meta: [
-      { title: "Products — Decision, Self, Connect | InwardWise" },
+      { title: "Products, Decision, Self, Connect | InwardWise" },
       {
         name: "description",
         content:
           "The three InwardWise products: Decision for asking the right question, Self for understanding your inner world, and Connect for finding where you belong.",
       },
-      { property: "og:title", content: "Products — Decision, Self, Connect | InwardWise" },
+      { property: "og:title", content: "Products, Decision, Self, Connect | InwardWise" },
       {
         property: "og:description",
-        content: "Decision, Self and Connect — three products, one inward practice.",
+        content: "Decision, Self and Connect, three products, one inward practice.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

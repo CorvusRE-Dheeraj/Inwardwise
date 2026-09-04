@@ -136,7 +136,7 @@ function SelfAvatarPage() {
                   onClick={() => setOpenDim(isOpen ? null : d.key)}
                   className="flex w-full items-center justify-between px-5 py-4 text-left"
                 >
-                  <span className="text-sm font-medium">{d.label} — Questions</span>
+                  <span className="text-sm font-medium">{d.label}, Questions</span>
                   <span className="text-xs text-muted-foreground">{isOpen ? "Close" : "Open"}</span>
                 </button>
                 {isOpen && (
@@ -149,7 +149,7 @@ function SelfAvatarPage() {
                       onChange={(e) => update(d.key, e.target.value)}
                       rows={5}
                       className="input"
-                      placeholder={`Begin your reflection on ${d.label.toLowerCase()}. Take your time — this is a first-principles exercise.`}
+                      placeholder={`Begin your reflection on ${d.label.toLowerCase()}. Take your time, this is a first-principles exercise.`}
                     />
                   </div>
                 )}

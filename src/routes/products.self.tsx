@@ -9,7 +9,7 @@ const product = getProduct("self");
 export const Route = createFileRoute("/products/self")({
   head: () => ({
     meta: [
-      { title: "InwardWise Self — Understand your inner self | InwardWise" },
+      { title: "InwardWise Self, Understand your inner self | InwardWise" },
       { name: "description", content: product.tagline },
       { property: "og:title", content: "InwardWise Self | InwardWise" },
       { property: "og:description", content: product.tagline },
@@ -46,8 +46,8 @@ function SelfProduct() {
               <ProductName id="self" /> grew from more than five years of the founder&apos;s interdisciplinary
               research into human happiness, stress physiology, psychology, behavior, and the
               underlying factors that shape us as individuals. Through scientific literature,
-              observation, and repeated refinement — asking whether an observed characteristic is
-              fundamental or can be explained by something deeper — this work evolved into{" "}
+              observation, and repeated refinement, asking whether an observed characteristic is
+              fundamental or can be explained by something deeper, this work evolved into{" "}
               <strong className="font-medium text-[color:var(--ink)]">
                 five dimensions of the inner self
               </strong>
@@ -65,7 +65,7 @@ function SelfProduct() {
               experiences with AI that can consider the personal context you have chosen to provide.
               That understanding can also make <ProductName id="decision" />,{" "}
               <ProductName id="calm" />, and <ProductName id="connect" /> more
-              personally relevant — helping you examine how your motivations, experiences, fears,
+              personally relevant, helping you examine how your motivations, experiences, fears,
               strengths, relationships, and patterns may influence your decisions and wellbeing.
             </p>
             <p>
@@ -75,7 +75,7 @@ function SelfProduct() {
               <strong className="font-medium text-[color:var(--ink)]">
                 You tell InwardWise who you are; AI helps you examine what that may mean.
               </strong>{" "}
-              As you change through life, your <ProductName id="self" /> can evolve with you — helping you
+              As you change through life, your <ProductName id="self" /> can evolve with you, helping you
               understand your patterns, adapt deliberately, make clearer decisions, and live more
               intentionally.
             </p>
@@ -88,7 +88,7 @@ function SelfProduct() {
 
           <p className="mt-6 max-w-2xl font-display text-[clamp(1.15rem,2.4vw,1.6rem)] italic leading-snug text-[color:var(--royal)]">
             Explore your five dimensions. Create a private, evolving understanding of yourself. Then
-            see what changes when AI doesn&apos;t just consider your question — it can also consider the
+            see what changes when AI doesn&apos;t just consider your question, it can also consider the
             person asking it.
           </p>
 

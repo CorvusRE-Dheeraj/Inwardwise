@@ -4,13 +4,13 @@ import { ProductName } from "@/components/products/ProductChrome";
 export const Route = createFileRoute("/_authenticated/avatar/ask")({
   head: () => ({
     meta: [
-      { title: "Ask InwardWise Self — InwardWise" },
+      { title: "Ask InwardWise Self, InwardWise" },
       {
         name: "description",
         content:
           "Send a prompt to your InwardWise Self and receive suggestions drawn from your five factors.",
       },
-      { property: "og:title", content: "Ask InwardWise Self — InwardWise" },
+      { property: "og:title", content: "Ask InwardWise Self, InwardWise" },
       { property: "og:description", content: "A private mirror that answers in your interest." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

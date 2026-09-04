@@ -17,10 +17,10 @@ import {
 export const Route = createFileRoute("/admin/leads")({
   head: () => ({
     meta: [
-      { title: "Leads — InwardWise Admin" },
+      { title: "Leads, InwardWise Admin" },
       { name: "description", content: "Capture, qualify and assign every inbound and outbound lead." },
       { name: "robots", content: "noindex, nofollow" },
-      { property: "og:title", content: "Leads — InwardWise Admin" },
+      { property: "og:title", content: "Leads, InwardWise Admin" },
       { property: "og:description", content: "Capture, qualify and assign every inbound and outbound lead." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

@@ -5,13 +5,13 @@ import { Mail, MapPin } from "lucide-react";
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Contact Us — InwardWise" },
+      { title: "Contact Us, InwardWise" },
       {
         name: "description",
         content:
           "Reach the InwardWise team by email at info@inwardwise.com or write to our Warren Parkway office in Frisco, Texas.",
       },
-      { property: "og:title", content: "Contact Us — InwardWise" },
+      { property: "og:title", content: "Contact Us, InwardWise" },
       { property: "og:description", content: "Email info@inwardwise.com or write to our Frisco, Texas office." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

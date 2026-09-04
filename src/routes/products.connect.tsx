@@ -8,7 +8,7 @@ const product = getProduct("connect");
 export const Route = createFileRoute("/products/connect")({
   head: () => ({
     meta: [
-      { title: "InwardWise Connect — Find where you belong | InwardWise" },
+      { title: "InwardWise Connect, Find where you belong | InwardWise" },
       { name: "description", content: product.tagline },
       { property: "og:title", content: "InwardWise Connect | InwardWise" },
       { property: "og:description", content: product.tagline },
@@ -33,7 +33,7 @@ function ConnectProduct() {
           <p>
             We can be surrounded by people, connected across social media, and still feel
             surprisingly alone. Meaningful connection depends on more than simply meeting more
-            people — it can depend on our personality, interests, experiences, communication style,
+            people, it can depend on our personality, interests, experiences, communication style,
             priorities, and willingness to invest in relationships.{" "}
             <strong className="font-medium text-[color:var(--ink)]">
               <ProductName id="connect" /> begins with understanding you.

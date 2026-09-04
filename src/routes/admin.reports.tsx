@@ -7,10 +7,10 @@ import { labelOf, LEAD_STATUSES, OPPORTUNITY_STAGES, TASK_STATUSES, type Option 
 export const Route = createFileRoute("/admin/reports")({
   head: () => ({
     meta: [
-      { title: "Reports — InwardWise Admin" },
+      { title: "Reports, InwardWise Admin" },
       { name: "description", content: "Pipeline conversion, deal value and task throughput." },
       { name: "robots", content: "noindex, nofollow" },
-      { property: "og:title", content: "Reports — InwardWise Admin" },
+      { property: "og:title", content: "Reports, InwardWise Admin" },
       { property: "og:description", content: "Pipeline conversion, deal value and task throughput." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

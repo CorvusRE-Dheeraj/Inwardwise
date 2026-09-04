@@ -312,7 +312,7 @@ export function AppShell({ children }: { children: ReactNode }) {
               Inward<span className="italic text-[color:var(--royal)]">Wise</span>
             </div>
             <p className="mt-3 text-sm text-[color:var(--muted-foreground)]">
-              A laboratory for thinking. Removing bias, fear, and ego — one decision at a time.
+              A laboratory for thinking. Removing bias, fear, and ego, one decision at a time.
             </p>
           </div>
           <div>

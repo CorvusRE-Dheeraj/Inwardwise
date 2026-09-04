@@ -13,13 +13,13 @@ import { ProductName } from "@/components/products/ProductChrome";
 export const Route = createFileRoute("/_authenticated/avatar/consult")({
   head: () => ({
     meta: [
-      { title: "Consult your InwardWise Self — InwardWise" },
+      { title: "Consult your InwardWise Self, InwardWise" },
       {
         name: "description",
         content:
           "Speak with your inner InwardWise Self. It responds through the five factors you answered yourself.",
       },
-      { property: "og:title", content: "Consult your InwardWise Self — InwardWise" },
+      { property: "og:title", content: "Consult your InwardWise Self, InwardWise" },
       {
         property: "og:description",
         content: "A private mirror that speaks in your interest, and no one else's.",
@@ -182,7 +182,7 @@ function ConsultAvatar() {
               onClick={() => setDisclaimerAcknowledged(true)}
               className="mt-3 inline-flex items-center rounded-full bg-foreground px-4 py-2 text-xs font-medium text-background transition hover:opacity-90"
             >
-              I understand — begin consultation
+              I understand, begin consultation
             </button>
           )}
         </div>

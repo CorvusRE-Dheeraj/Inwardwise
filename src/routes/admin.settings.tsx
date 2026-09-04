@@ -7,10 +7,10 @@ import { AdminShell } from "@/components/admin/AdminShell";
 export const Route = createFileRoute("/admin/settings")({
   head: () => ({
     meta: [
-      { title: "Settings — InwardWise Admin" },
+      { title: "Settings, InwardWise Admin" },
       { name: "description", content: "Workspace configuration and integration readiness for the staff portal." },
       { name: "robots", content: "noindex, nofollow" },
-      { property: "og:title", content: "Settings — InwardWise Admin" },
+      { property: "og:title", content: "Settings, InwardWise Admin" },
       { property: "og:description", content: "Workspace configuration for the staff portal." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -63,11 +63,11 @@ function SettingsPage() {
           <dl className="mt-3 space-y-2 text-sm">
             <div className="flex justify-between">
               <dt className="text-muted-foreground">Employees</dt>
-              <dd>{counts?.employees ?? "—"}</dd>
+              <dd>{counts?.employees ?? " "}</dd>
             </div>
             <div className="flex justify-between">
               <dt className="text-muted-foreground">Roles</dt>
-              <dd>{counts?.roles ?? "—"}</dd>
+              <dd>{counts?.roles ?? " "}</dd>
             </div>
           </dl>
           <div className="mt-4 flex flex-wrap gap-3 text-sm">

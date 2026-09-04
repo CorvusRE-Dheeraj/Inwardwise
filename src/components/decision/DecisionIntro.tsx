@@ -57,7 +57,7 @@ export function DecisionIntro({ onStart, resumable, onResume }: DecisionIntroPro
           words.
         </p>
         <p className="mt-2 flex items-center gap-1.5">
-          <Clock className="h-3.5 w-3.5" /> Usually takes about 5–10 minutes.
+          <Clock className="h-3.5 w-3.5" /> Usually takes about 5, 10 minutes.
         </p>
         <p className="mt-1 flex items-center gap-1.5">
           <Save className="h-3.5 w-3.5" /> You can save your progress and continue later.

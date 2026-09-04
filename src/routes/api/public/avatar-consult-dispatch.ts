@@ -12,7 +12,7 @@ import {
  *
  * Privacy: the member's encrypted factor answers are never readable server-side,
  * so the call is a reflective consultation guided by the focus the member typed
- * themselves — nothing from the vault is sent to the provider.
+ * themselves, nothing from the vault is sent to the provider.
  */
 async function dispatch(request: Request) {
   const cronSecret = process.env["MEDITATION_CRON_SECRET"];

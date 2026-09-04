@@ -11,13 +11,13 @@ import canadaPdf from "@/assets/examples/move-canada.pdf.asset.json";
 export const Route = createFileRoute("/examples")({
   head: () => ({
     meta: [
-      { title: "Example Sessions — InwardWise" },
+      { title: "Example Sessions, InwardWise" },
       {
         name: "description",
         content:
-          "Read complete worked examples of the Objective Solution Framework — six real decision sessions, each downloadable as a full PDF transcript.",
+          "Read complete worked examples of the Objective Solution Framework, six real decision sessions, each downloadable as a full PDF transcript.",
       },
-      { property: "og:title", content: "Example Sessions — InwardWise" },
+      { property: "og:title", content: "Example Sessions, InwardWise" },
       {
         property: "og:description",
         content:
@@ -54,7 +54,7 @@ const EXAMPLES: Example[] = [
     category: "Career",
     title: "I earn ₹45 lakh annually but hate my job. I have another offer for ₹25 lakh doing work I love.",
     summary:
-      "A ₹20 lakh pay cut against meaningful work, with existing debt and a two-week deadline. The session tests whether the real objective is income, identity, or stability — and what boundary makes the trade survivable.",
+      "A ₹20 lakh pay cut against meaningful work, with existing debt and a two-week deadline. The session tests whether the real objective is income, identity, or stability, and what boundary makes the trade survivable.",
     url: careerPdf.url,
     file: "career-pay-cut.pdf",
   },
@@ -108,7 +108,7 @@ function Examples() {
             Six decisions, worked end to end
           </h1>
           <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground">
-            Each example below is a real session carried through every stage of the framework — from the
+            Each example below is a real session carried through every stage of the framework, from the
             raw situation to the final report. Read the summary, then download the complete transcript.
           </p>
         </header>

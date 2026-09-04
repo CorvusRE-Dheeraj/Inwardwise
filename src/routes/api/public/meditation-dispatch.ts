@@ -124,7 +124,7 @@ async function dispatch(request: Request) {
 
     if (!claimed) continue;
 
-    // Voice off, or no number: nothing to call — just close the schedule out.
+    // Voice off, or no number: nothing to call, just close the schedule out.
     if (!row.voice_enabled || !row.phone_number) {
       await supabaseAdmin
         .from("meditation_settings")

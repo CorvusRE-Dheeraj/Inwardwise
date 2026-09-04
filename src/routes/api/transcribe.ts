@@ -23,7 +23,7 @@ export const Route = createFileRoute("/api/transcribe")({
         }
         if (file.size < 1024) {
           return new Response(
-            JSON.stringify({ error: "Recording is empty — please try again." }),
+            JSON.stringify({ error: "Recording is empty, please try again." }),
             { status: 400, headers: { "content-type": "application/json" } },
           );
         }

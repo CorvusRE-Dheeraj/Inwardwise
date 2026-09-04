@@ -8,10 +8,10 @@ import { labelOf, TASK_STATUSES, PRIORITIES } from "@/lib/admin-portal";
 export const Route = createFileRoute("/admin/dashboard")({
   head: () => ({
     meta: [
-      { title: "Dashboard — InwardWise Admin" },
+      { title: "Dashboard, InwardWise Admin" },
       { name: "description", content: "Pipeline, tasks and team activity at a glance." },
       { name: "robots", content: "noindex, nofollow" },
-      { property: "og:title", content: "Dashboard — InwardWise Admin" },
+      { property: "og:title", content: "Dashboard, InwardWise Admin" },
       { property: "og:description", content: "Pipeline, tasks and team activity at a glance." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -90,12 +90,12 @@ function Dashboard() {
   return (
     <AdminShell title={`Welcome, ${context?.name?.split(" ")[0] ?? "there"}`} description="Your workspace at a glance.">
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
-        <Stat label="Leads" value={stats?.leads ?? "—"} to="/admin/leads" />
-        <Stat label="New leads" value={stats?.openLeads ?? "—"} to="/admin/leads" />
-        <Stat label="Contacts" value={stats?.contacts ?? "—"} to="/admin/contacts" />
-        <Stat label="Companies" value={stats?.companies ?? "—"} to="/admin/companies" />
-        <Stat label="Opportunities" value={stats?.opportunities ?? "—"} to="/admin/opportunities" />
-        <Stat label="Tasks in progress" value={stats?.openTasks ?? "—"} to="/admin/tasks" />
+        <Stat label="Leads" value={stats?.leads ?? " "} to="/admin/leads" />
+        <Stat label="New leads" value={stats?.openLeads ?? " "} to="/admin/leads" />
+        <Stat label="Contacts" value={stats?.contacts ?? " "} to="/admin/contacts" />
+        <Stat label="Companies" value={stats?.companies ?? " "} to="/admin/companies" />
+        <Stat label="Opportunities" value={stats?.opportunities ?? " "} to="/admin/opportunities" />
+        <Stat label="Tasks in progress" value={stats?.openTasks ?? " "} to="/admin/tasks" />
       </div>
 
       <div className="mt-6 grid gap-4 lg:grid-cols-2">

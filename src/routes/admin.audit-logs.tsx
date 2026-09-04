@@ -8,10 +8,10 @@ import { Input } from "@/components/ui/input";
 export const Route = createFileRoute("/admin/audit-logs")({
   head: () => ({
     meta: [
-      { title: "Audit logs — InwardWise Admin" },
+      { title: "Audit logs, InwardWise Admin" },
       { name: "description", content: "Every create, update and delete performed inside the staff portal." },
       { name: "robots", content: "noindex, nofollow" },
-      { property: "og:title", content: "Audit logs — InwardWise Admin" },
+      { property: "og:title", content: "Audit logs, InwardWise Admin" },
       { property: "og:description", content: "Every action performed inside the staff portal." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -71,10 +71,10 @@ function AuditLogs() {
               data.map((l) => (
                 <tr key={l.id} className="border-b border-border last:border-0">
                   <td className="px-3 py-2 whitespace-nowrap">{new Date(l.created_at).toLocaleString()}</td>
-                  <td className="px-3 py-2">{l.actor_email ?? "—"}</td>
+                  <td className="px-3 py-2">{l.actor_email ?? " "}</td>
                   <td className="px-3 py-2">{l.action}</td>
                   <td className="px-3 py-2">{l.module}</td>
-                  <td className="px-3 py-2 font-mono text-xs text-muted-foreground">{l.record_id ?? "—"}</td>
+                  <td className="px-3 py-2 font-mono text-xs text-muted-foreground">{l.record_id ?? " "}</td>
                 </tr>
               ))
             )}

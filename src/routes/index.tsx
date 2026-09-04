@@ -7,7 +7,7 @@ import { ProductName } from "@/components/products/ProductChrome";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "InwardWise — Remove Bias, Fear, and Ego From Your Decisions" },
+      { title: "InwardWise, Remove Bias, Fear, and Ego From Your Decisions" },
       { name: "description", content: "A quiet, deliberate practice for removing bias, fear, and ego from the choices to shape your life." },
       { property: "og:title", content: "InwardWise" },
       { property: "og:description", content: "Remove bias, fear, and ego from the choices to shape your life." },
@@ -128,7 +128,7 @@ function Landing() {
         </motion.div>
       </section>
 
-      {/* ============ VOLUME II — SELF ============ */}
+      {/* ============ VOLUME II, SELF ============ */}
       <Volume
         eyebrow={<>Volume II · <ProductName id="self" /> · Create and Connect with Your Inner <ProductName id="self" /></>}
         title={
@@ -162,12 +162,12 @@ function Landing() {
         ]}
       />
 
-      {/* ============ VOLUME III — CONNECT ============ */}
+      {/* ============ VOLUME III, CONNECT ============ */}
       <Volume
         eyebrow={<>Volume III · <ProductName id="connect" /></>}
         title={
           <>
-            Connect — Be Yourself and{" "}
+            Connect, Be Yourself and{" "}
             <em className="italic text-[color:var(--royal)]">Belong</em>
           </>
         }

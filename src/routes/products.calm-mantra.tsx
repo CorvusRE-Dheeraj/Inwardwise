@@ -6,7 +6,7 @@ import { SELF_DISCLAIMER } from "@/lib/products";
 export const Route = createFileRoute("/products/calm-mantra")({
   head: () => ({
     meta: [
-      { title: "InwardWise Calm & Mantra — Quiet the mind | InwardWise" },
+      { title: "InwardWise Calm & Mantra, Quiet the mind | InwardWise" },
       {
         name: "description",
         content:
@@ -49,15 +49,15 @@ function CalmMantra() {
                 stress, mental activity, and mind-body interactions, while drawing on scientific
                 research into meditation and its relationship with stress responses, emotional
                 regulation, attention, and patterns of brain activity. You don&apos;t need meditation
-                experience or a particular spiritual belief — only a willingness to pause and reflect.
+                experience or a particular spiritual belief, only a willingness to pause and reflect.
               </p>
               <p>
                 What makes <ProductName id="calm" /> different is its connection to{" "}
                 <ProductName id="self" />. Rather than offering only generic meditation scripts, AI can
                 use the personal context you have chosen to provide through your five dimensions to make
                 reflection more relevant to you. Practices can incorporate gratitude, self-compassion,
-                forgiveness, and constructive reflection — including a modified four-part practice built
-                around “I am sorry,” “Please forgive me,” “Thank you,” and “I love you” — with prompts
+                forgiveness, and constructive reflection, including a modified four-part practice built
+                around “I am sorry,” “Please forgive me,” “Thank you,” and “I love you”, with prompts
                 grounded in your own experiences and reflections.
               </p>
               <p>
@@ -87,7 +87,7 @@ function CalmMantra() {
             </p>
             <div className="mt-8 max-w-2xl space-y-5 text-base leading-relaxed text-justify text-[color:var(--muted-foreground)]">
               <p>
-                We all carry an internal dialogue — about what we can do, what we cannot do, who we
+                We all carry an internal dialogue, about what we can do, what we cannot do, who we
                 are, what others think of us, and what may be possible in our future. Some of these
                 beliefs come from experience; others may come from fear, setbacks, social
                 expectations, or assumptions we have carried for years.{" "}

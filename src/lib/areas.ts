@@ -27,7 +27,7 @@ export const AREAS: Area[] = [
     blurb:
       "Build deeper self-knowledge with InwardWise Self, then bring that understanding into the decisions that shape your life.",
     tagline:
-      "Build deeper self-knowledge with InwardWise Self — then bring that understanding into the decisions that shape your life.",
+      "Build deeper self-knowledge with InwardWise Self, then bring that understanding into the decisions that shape your life.",
     cta: "self",
     sections: [
       {
@@ -50,14 +50,14 @@ export const AREAS: Area[] = [
         heading: "A living representation of your inner self",
         body: [
           "Most digital profiles represent us to other people. They show where we've traveled, what we've accomplished, who we know, what we like, and what we want the outside world to see. InwardWise Self turns that idea inward.",
-          "Think of it as a private profile of your inner world — one designed not for followers, likes, or social projection, but for reflection and personal development.",
+          "Think of it as a private profile of your inner world, one designed not for followers, likes, or social projection, but for reflection and personal development.",
           "As your experiences, priorities, relationships, environment, and stage of life change, your understanding of yourself can evolve with them. InwardWise Self is intended to develop alongside you rather than permanently defining you based on who you were at one moment in time.",
         ],
       },
       {
         heading: "Understand before you change",
         body: [
-          "Human beings continuously adapt to their environments and experiences. Personal development can therefore begin with a deceptively simple question: what exactly about myself am I trying to develop — and why?",
+          "Human beings continuously adapt to their environments and experiences. Personal development can therefore begin with a deceptively simple question: what exactly about myself am I trying to develop, and why?",
           "Before trying to become a \u201cbetter version\u201d of yourself, InwardWise Self can help you explore what better actually means to you. Is the change driven by your own values and objectives, or by comparison, social expectations, fear, status, past experiences, or someone else's definition of success?",
           "The goal isn't endless self-improvement or becoming someone else. It is developing enough self-awareness to recognize what serves you, what may be holding you back, what you want to preserve, and where adaptation may help you live more consistently with your deeper objectives.",
         ],
@@ -96,7 +96,7 @@ export const AREAS: Area[] = [
       {
         heading: "Personal, not generic",
         body: [
-          "InwardWise Self helps develop a deeper understanding of you — your experiences, patterns, concerns, motivations, values, and current circumstances. That understanding can help identify the kinds of reflection and reinforcement that may be most relevant to you at a particular point in your life.",
+          "InwardWise Self helps develop a deeper understanding of you, your experiences, patterns, concerns, motivations, values, and current circumstances. That understanding can help identify the kinds of reflection and reinforcement that may be most relevant to you at a particular point in your life.",
           "InwardWise Calm turns those insights into personalized wellbeing practices. It can help create guided periods of meditation, reflection, breathing, gratitude, self-compassion, forgiveness, or other constructive reminders based on what you are experiencing and what you have learned about yourself.",
           "Rather than encountering a generic message such as \u201cbe grateful\u201d or \u201clet it go\u201d, the objective is to make reflection personally meaningful: What are you grateful for? What are you struggling to release? What are you repeatedly worrying about? What perspective do you want to remember when that situation arises again?",
         ],
@@ -120,15 +120,15 @@ export const AREAS: Area[] = [
     slug: "inner-enemies",
     name: "Inner Enemies",
     blurb:
-      "Structured, private, and non-judgmental support for the patterns you understand — but still find difficult to change.",
+      "Structured, private, and non-judgmental support for the patterns you understand, but still find difficult to change.",
     tagline:
-      "Structured, private, and non-judgmental support for the patterns you understand — but still find difficult to change.",
+      "Structured, private, and non-judgmental support for the patterns you understand, but still find difficult to change.",
     cta: "self",
     sections: [
       {
         body: [
           "Most of us have behaviors, habits, fears, or impulses that repeatedly work against what we genuinely want for ourselves.",
-          "We call them Inner Enemies — not because there is something inherently wrong with us, but because sometimes a part of our own behavior can conflict with our larger objectives.",
+          "We call them Inner Enemies, not because there is something inherently wrong with us, but because sometimes a part of our own behavior can conflict with our larger objectives.",
           "They may appear relatively ordinary: procrastination, avoiding difficult conversations, excessive screen time, unhealthy eating habits, impulsive spending, fear-driven decisions, or repeatedly abandoning something we intended to finish. Other challenges can be far more serious, including problematic alcohol or drug use, compulsive behaviors, or other patterns that may require professional support.",
           "What makes an Inner Enemy particularly difficult is that knowing a behavior is harmful doesn't necessarily make it disappear. It may remain dormant for months and return during periods of stress. We may rationalize it, hide it from others, feel ashamed of it, or repeatedly promise ourselves that this time will be different.",
           "InwardWise approaches these patterns through understanding rather than judgment.",
@@ -137,7 +137,7 @@ export const AREAS: Area[] = [
       {
         heading: "InwardWise Self",
         body: [
-          "InwardWise Self helps you explore what may surround a recurring behavior. When does it happen? What emotions, environments, relationships, fears, rewards, or circumstances tend to precede it? What does the behavior provide in the short term — and what does it cost you over the longer term?",
+          "InwardWise Self helps you explore what may surround a recurring behavior. When does it happen? What emotions, environments, relationships, fears, rewards, or circumstances tend to precede it? What does the behavior provide in the short term, and what does it cost you over the longer term?",
           "The objective is not simply to label the behavior as bad. It is to understand the conflict between what you want in the moment and what you want for your life.",
         ],
       },
@@ -157,7 +157,7 @@ export const AREAS: Area[] = [
     ],
     cycle: "Recognize → Understand → Anticipate → Pause → Choose → Reinforce → Learn",
     closing:
-      "It is to help you understand what repeatedly works against you — so it has less power over the life you are trying to build.",
+      "It is to help you understand what repeatedly works against you, so it has less power over the life you are trying to build.",
     disclaimer:
       "Some recurring behaviors, including substance-use disorders and other addictions, can involve serious medical or mental health risks. InwardWise can complement self-reflection and support, but it is not a substitute for diagnosis, treatment, therapy, or other professional care.",
   },
@@ -178,8 +178,8 @@ export const AREAS: Area[] = [
       {
         heading: "Self-knowledge at the decision points",
         body: [
-          "InwardWise Self helps you develop a deeper and evolving understanding of those dimensions. Over time, it can help you explore your strengths, motivations, interests, fears, recurring patterns, priorities, and aspirations — and recognize how they change as you move through different stages of life.",
-          "InwardWise Decision can bring what you've learned about yourself into questions such as: Should I accept this promotion? Change careers? Start a company? Pursue another degree? Relocate? Take more risk? Choose greater compensation or greater freedom? Stay and develop — or recognize that it is time to move on?",
+          "InwardWise Self helps you develop a deeper and evolving understanding of those dimensions. Over time, it can help you explore your strengths, motivations, interests, fears, recurring patterns, priorities, and aspirations, and recognize how they change as you move through different stages of life.",
+          "InwardWise Decision can bring what you've learned about yourself into questions such as: Should I accept this promotion? Change careers? Start a company? Pursue another degree? Relocate? Take more risk? Choose greater compensation or greater freedom? Stay and develop, or recognize that it is time to move on?",
           "Instead of immediately answering the question in front of you, InwardWise helps you examine the larger objective behind it: what are you actually trying to achieve through your career?",
           "InwardWise Connect can complement that process by helping you build relationships with people who share professional interests, experiences, or career challenges. And InwardWise Calm can help during periods of career uncertainty, rejection, workplace stress, or transition, where emotional pressure can interfere with clear thinking.",
           "A successful career isn't necessarily one that continuously moves upward. Different stages of life may call for growth, learning, leadership, entrepreneurship, financial security, flexibility, contribution, family time, or something entirely different.",
@@ -207,7 +207,7 @@ export const AREAS: Area[] = [
       {
         heading: "Start inward, then decide",
         body: [
-          "InwardWise Self helps you begin by looking inward. What are you actually feeling? Why does this particular situation affect you so strongly? Are you responding to what is happening today — or to years of accumulated experiences? Are love, guilt, obligation, fear, ego, resentment, cultural expectations, or family conditioning influencing what you believe you must do?",
+          "InwardWise Self helps you begin by looking inward. What are you actually feeling? Why does this particular situation affect you so strongly? Are you responding to what is happening today, or to years of accumulated experiences? Are love, guilt, obligation, fear, ego, resentment, cultural expectations, or family conditioning influencing what you believe you must do?",
           "InwardWise Decision then helps you examine the decision itself. Rather than moving directly from emotion to action, it helps separate the situation from the underlying objective, consider the needs of the people involved, question assumptions, examine alternatives, and think about longer-term consequences.",
           "InwardWise Calm can provide personalized reflection and calming practices when emotions are making it particularly difficult to think clearly or communicate constructively. And InwardWise Connect can help reduce the isolation that sometimes accompanies difficult family circumstances by creating opportunities for appropriate connection with others navigating similar life experiences.",
           "The objective isn't for AI to tell you how to manage your family. It is to help you understand yourself, your relationships, your objectives, and the consequences of your choices before making decisions that may affect the people who matter most.",
@@ -227,16 +227,16 @@ export const AREAS: Area[] = [
     sections: [
       {
         body: [
-          "Relationships can be among the most meaningful parts of our lives — and among the most emotionally difficult to navigate when things begin to go wrong.",
+          "Relationships can be among the most meaningful parts of our lives, and among the most emotionally difficult to navigate when things begin to go wrong.",
           "Disagreement can become resentment. Resentment can change communication. A single event can bring years of unresolved experiences back into the present. Fear of losing the relationship can compete with anger, disappointment, loneliness, or the desire to leave it.",
           "During these periods, it can become difficult to separate what happened, how you feel about it, what you want from the other person, and what you actually want for the relationship.",
-          "InwardWise is not designed to replace marriage counselors, couples therapists, or mental health professionals. Instead, it can provide a private space for self-reflection and structured thinking — particularly during periods when you are trying to understand yourself, the relationship, and the decisions in front of you.",
+          "InwardWise is not designed to replace marriage counselors, couples therapists, or mental health professionals. Instead, it can provide a private space for self-reflection and structured thinking, particularly during periods when you are trying to understand yourself, the relationship, and the decisions in front of you.",
         ],
       },
       {
         heading: "Understand, calm, then decide",
         body: [
-          "InwardWise Self helps you look inward before focusing entirely on the other person. Why does a particular behavior affect you so strongly? What expectations are you bringing into the relationship? Are past experiences influencing today's reactions? What do you need from the relationship — and what might the other person need from you?",
+          "InwardWise Self helps you look inward before focusing entirely on the other person. Why does a particular behavior affect you so strongly? What expectations are you bringing into the relationship? Are past experiences influencing today's reactions? What do you need from the relationship, and what might the other person need from you?",
           "InwardWise Calm can help when emotions become overwhelming. Personalized reflection, calming practices, and constructive reminders can create some distance between an emotional reaction and the action that follows it.",
           "Then InwardWise Decision helps you think through consequential choices more deliberately. Rather than immediately asking \u201cShould I stay or leave?\u201d or \u201cWho is right?\u201d, it helps examine the deeper questions: What is my real objective? What outcomes could I accept? What assumptions am I making? What am I afraid of? What depends on the other person changing? What are the consequences of each path?",
           "InwardWise Connect can also help reduce the isolation that often accompanies relationship difficulties by creating opportunities, where appropriate, to connect with others navigating similar life experiences.",
@@ -261,7 +261,7 @@ export const AREAS: Area[] = [
     sections: [
       {
         body: [
-          "Much of modern life operates through large systems — companies, governments, institutions, universities, healthcare organizations, nonprofits, and other complex organizational structures. Creating meaningful change within these systems can be extraordinarily difficult.",
+          "Much of modern life operates through large systems, companies, governments, institutions, universities, healthcare organizations, nonprofits, and other complex organizational structures. Creating meaningful change within these systems can be extraordinarily difficult.",
           "The larger the organization, the more interconnected its decisions become. A change intended to solve one problem can create several others. People adapt to new rules, incentives produce unexpected behavior, established interests resist disruption, and informal influence can sometimes matter more than the organizational chart.",
           "Successful transformation therefore requires more than a new strategy. It requires understanding what the organization is trying to accomplish, what currently prevents it from doing so, and what forces will determine whether change actually takes hold.",
         ],
@@ -269,7 +269,7 @@ export const AREAS: Area[] = [
       {
         heading: "Clarity of objective",
         body: [
-          "Before redesigning the organization, clarify its underlying purpose. What is the organization actually trying to accomplish — not simply what does it currently do? InwardWise Decision helps leaders question existing assumptions, distinguish inherited practices from true objectives, and define the broader boundary within which change needs to occur.",
+          "Before redesigning the organization, clarify its underlying purpose. What is the organization actually trying to accomplish, not simply what does it currently do? InwardWise Decision helps leaders question existing assumptions, distinguish inherited practices from true objectives, and define the broader boundary within which change needs to occur.",
         ],
       },
       {
@@ -281,7 +281,7 @@ export const AREAS: Area[] = [
       {
         heading: "Money flows",
         body: [
-          "Budgets reveal priorities. Compensation creates incentives. Investment decisions determine what grows and what disappears. Understanding where money originates, where it moves, who controls it, and what behaviors it rewards can reveal how an organization actually functions — sometimes more clearly than its stated strategy.",
+          "Budgets reveal priorities. Compensation creates incentives. Investment decisions determine what grows and what disappears. Understanding where money originates, where it moves, who controls it, and what behaviors it rewards can reveal how an organization actually functions, sometimes more clearly than its stated strategy.",
         ],
       },
       {
@@ -323,7 +323,7 @@ export const AREAS: Area[] = [
       {
         body: [
           "Health and wellness research evolves continuously. New studies, treatment approaches, prevention strategies, lifestyle research, and clinical guidance are published across countless medical specialties and scientific sources.",
-          "For an individual trying to manage their health, simply keeping up can be overwhelming. More information doesn't automatically create better understanding — and research that matters greatly to one person may have little relevance to another.",
+          "For an individual trying to manage their health, simply keeping up can be overwhelming. More information doesn't automatically create better understanding, and research that matters greatly to one person may have little relevance to another.",
           "InwardWise is designed to help make that information more personal, organized, and useful. Based on the health interests and information you choose to provide, AI-supported tools can help identify and organize research that may be relevant to you, so you can discover developments worth discussing with your healthcare professionals.",
         ],
       },
@@ -331,7 +331,7 @@ export const AREAS: Area[] = [
         heading: "From information to habits",
         body: [
           "InwardWise Connect can help deliver curated research, educational information, and wellness content around health topics and communities that are relevant to you. It can also create opportunities for connection with others who share similar wellness interests or life experiences.",
-          "But knowing what is healthy and consistently doing it are very different challenges. InwardWise Self can help you explore the personal patterns that influence your wellbeing. What makes it difficult to exercise consistently? What environments affect your eating habits? How does stress influence your routines? What motivates you — and what repeatedly gets in the way?",
+          "But knowing what is healthy and consistently doing it are very different challenges. InwardWise Self can help you explore the personal patterns that influence your wellbeing. What makes it difficult to exercise consistently? What environments affect your eating habits? How does stress influence your routines? What motivates you, and what repeatedly gets in the way?",
           "InwardWise Calm and Mantra can help reinforce the healthy intentions you establish for yourself through personalized reminders, reflection, encouragement, and wellbeing practices. Diet, physical activity, sleep routines, stress management, and other healthy habits often depend not on hearing something once, but on remembering what matters when everyday life gets in the way.",
           "And when health-related choices involve competing priorities, uncertainty, or important consequences, InwardWise Decision can help you organize the questions, objectives, alternatives, assumptions, and trade-offs you may want to consider and discuss with qualified healthcare professionals.",
         ],
@@ -376,9 +376,9 @@ export const AREAS: Area[] = [
     slug: "justice-rehabilitation",
     name: "Justice & Rehabilitation Support",
     blurb:
-      "Accountability addresses what happened. Lasting change requires understanding why — and what happens next.",
+      "Accountability addresses what happened. Lasting change requires understanding why, and what happens next.",
     tagline:
-      "Accountability addresses what happened. Lasting change requires understanding why — and what happens next.",
+      "Accountability addresses what happened. Lasting change requires understanding why, and what happens next.",
     cta: "decision",
     sections: [
       {
@@ -391,11 +391,11 @@ export const AREAS: Area[] = [
       {
         heading: "Support that continues",
         body: [
-          "InwardWise Self can provide a structured, private environment for individuals to develop greater self-awareness over time. What situations repeatedly create problems? What triggers certain behaviors? What personal patterns, relationships, environments, or assumptions contribute to poor choices? What needs to change — and what strengths can help make that change sustainable?",
+          "InwardWise Self can provide a structured, private environment for individuals to develop greater self-awareness over time. What situations repeatedly create problems? What triggers certain behaviors? What personal patterns, relationships, environments, or assumptions contribute to poor choices? What needs to change, and what strengths can help make that change sustainable?",
           "InwardWise Decision can help translate that self-awareness into future choices. Before repeating a consequential behavior, individuals can be guided to slow down, examine their objective, recognize familiar patterns, consider alternatives, and think through consequences for themselves, their families, victims, and the broader community.",
           "InwardWise Calm can complement this process with personalized reflection and emotional-regulation practices when anger, fear, stress, frustration, or impulsive reactions interfere with clearer thinking.",
           "InwardWise Connect can help address the social dimension of successful reintegration. Where appropriate and carefully administered, supportive relationships, mentors, peers, community resources, and constructive social environments can help individuals build connections that reinforce positive change.",
-          "With appropriate consent, privacy protections, professional oversight, and safeguards, support could extend beyond a short intervention or program period — helping individuals continue reflecting on their progress, challenges, decisions, and goals as they return to everyday life.",
+          "With appropriate consent, privacy protections, professional oversight, and safeguards, support could extend beyond a short intervention or program period, helping individuals continue reflecting on their progress, challenges, decisions, and goals as they return to everyday life.",
         ],
       },
     ],
@@ -409,9 +409,9 @@ export const AREAS: Area[] = [
     slug: "special-interest-groups",
     name: "Special Interest Groups",
     blurb:
-      "Belonging isn't simply about meeting more people. It's about finding where — and how — you meaningfully connect.",
+      "Belonging isn't simply about meeting more people. It's about finding where, and how, you meaningfully connect.",
     tagline:
-      "Belonging isn't simply about meeting more people. It's about finding where — and how — you meaningfully connect.",
+      "Belonging isn't simply about meeting more people. It's about finding where, and how, you meaningfully connect.",
     cta: "self",
     sections: [
       {
@@ -426,7 +426,7 @@ export const AREAS: Area[] = [
         body: [
           "InwardWise Self helps you explore your own paths to connection. What interests energize you? What kinds of people and environments make you feel comfortable and engaged? Do you connect through intellectual discussion, shared activities, professional interests, service, creativity, accomplishment, learning, or simply spending time with people who understand something important about your life?",
           "InwardWise Connect helps turn that self-understanding outward by creating opportunities to connect with people and communities around those interests. Through InwardWise Connect Special Interest Groups, members can participate in communities organized around shared interests, experiences, professions, activities, ideas, or life pursuits. Groups can interact digitally and, where appropriate, meet in person.",
-          "Each group is supported by a Group Chair who helps build the community, organize activities, develop agendas, and foster meaningful participation. InwardWise AI can complement the Chair by helping understand members' interests, experiences, participation, and sense of connection — providing insights that can help the community evolve around the people it serves.",
+          "Each group is supported by a Group Chair who helps build the community, organize activities, develop agendas, and foster meaningful participation. InwardWise AI can complement the Chair by helping understand members' interests, experiences, participation, and sense of connection, providing insights that can help the community evolve around the people it serves.",
           "Individual groups may have different membership fees based on the nature of the community, its activities, resources, and leadership. Rather than forcing every community into the same structure or price, each group can be designed around the experience and value it seeks to create for its members.",
         ],
       },
@@ -446,14 +446,14 @@ export const AREAS: Area[] = [
         body: [
           "Business leaders make consequential decisions with an unavoidable disadvantage: they are deciding today about a future they cannot fully predict. Markets change, competitors respond, technologies emerge, customers behave differently than expected, and information is almost always incomplete.",
           "There is another, less obvious challenge. Business culture frequently treats growth, scale, market share, valuation, and winning as unquestioned objectives. Competition can make business resemble a sport in which continuing to win becomes the goal simply because the scoreboard exists.",
-          "But a business is part of a larger system — and the people making its decisions have lives beyond the business. More growth may require more capital, greater risk, additional employees, longer working hours, increased complexity, or sacrifices elsewhere in life. A profitable, sustainable business that provides value to customers, employees, owners, and society may sometimes be a better outcome than pursuing growth indefinitely.",
+          "But a business is part of a larger system, and the people making its decisions have lives beyond the business. More growth may require more capital, greater risk, additional employees, longer working hours, increased complexity, or sacrifices elsewhere in life. A profitable, sustainable business that provides value to customers, employees, owners, and society may sometimes be a better outcome than pursuing growth indefinitely.",
         ],
       },
       {
         heading: "Question the objective, not just the numbers",
         body: [
           "InwardWise Decision helps leaders slow down before consequential decisions and ask deeper questions: What are we actually trying to achieve? Why is growth the objective? What assumptions are we making about the future? What happens if those assumptions are wrong? What alternatives are we overlooking? What would sustainable success look like?",
-          "InwardWise Self examines another variable that conventional business analysis can overlook — the decision-maker. Ambition, ego, fear of failure, competitive pressure, attachment to previous decisions, social definitions of success, and the desire for recognition can quietly influence what appears to be an objective business decision.",
+          "InwardWise Self examines another variable that conventional business analysis can overlook, the decision-maker. Ambition, ego, fear of failure, competitive pressure, attachment to previous decisions, social definitions of success, and the desire for recognition can quietly influence what appears to be an objective business decision.",
           "InwardWise Connect can broaden that perspective by connecting leaders with others facing similar decisions and exposing them to experiences beyond their immediate organizational environment.",
           "Together, InwardWise helps leaders examine the forecast, the assumptions, the objective, and the person making the decision before committing to a path.",
         ],
@@ -471,7 +471,7 @@ export const AREAS: Area[] = [
       {
         body: [
           "Board members, executives, physicians, engineers, lawyers, entrepreneurs, and other professionals operate within ethical and professional boundaries. Yet ethics can sometimes be experienced as a set of rules imposed from the outside rather than as an essential part of good decision-making.",
-          "The most difficult ethical questions are rarely the obvious ones. Financial conflicts can sometimes be identified because money is measurable. But power, influence, status, loyalty, ambition, reputation, organizational pressure, and fear of losing one's position can influence decisions just as strongly — and are much harder to recognize and measure.",
+          "The most difficult ethical questions are rarely the obvious ones. Financial conflicts can sometimes be identified because money is measurable. But power, influence, status, loyalty, ambition, reputation, organizational pressure, and fear of losing one's position can influence decisions just as strongly, and are much harder to recognize and measure.",
           "Ethical decision-making therefore requires more than asking, \u201cAm I following the rules?\u201d It can require asking deeper questions: Why am I making this decision? Who benefits? What is influencing me? What assumptions am I accepting because everyone around me accepts them? Would I make the same decision if money, power, status, or recognition were removed from the equation?",
         ],
       },
@@ -481,7 +481,7 @@ export const AREAS: Area[] = [
           "InwardWise Self helps individuals examine the personal forces behind their decisions. Bias, ambition, fear, ego, loyalty, social conditioning, and the desire for recognition or influence can affect judgment without being consciously recognized. Greater self-awareness can help bring these hidden influences into view.",
           "InwardWise Decision helps take that awareness into the decision itself. Instead of immediately choosing an action, the platform helps clarify the underlying objective, examine competing objectives, question assumptions, consider uncomfortable outcomes, and define a broader decision boundary before evaluating solutions.",
           "InwardWise Connect can provide another important perspective: exposure to people with different experiences and viewpoints. Ethical blind spots can become difficult to recognize when everyone within the same organization, profession, or social environment shares similar assumptions.",
-          "For organizations, these tools can support a culture in which ethical reflection becomes part of important decision-making — not simply something reviewed after a problem occurs.",
+          "For organizations, these tools can support a culture in which ethical reflection becomes part of important decision-making, not simply something reviewed after a problem occurs.",
         ],
       },
     ],
@@ -491,8 +491,8 @@ export const AREAS: Area[] = [
   {
     slug: "sales-negotiations",
     name: "Business Sales & Negotiations",
-    blurb: "Better negotiations begin before the conversation — and continue after it ends.",
-    tagline: "Better negotiations begin before the conversation — and continue after it ends.",
+    blurb: "Better negotiations begin before the conversation, and continue after it ends.",
+    tagline: "Better negotiations begin before the conversation, and continue after it ends.",
     cta: "decision",
     sections: [
       {
@@ -504,16 +504,16 @@ export const AREAS: Area[] = [
       {
         heading: "Prepare, adapt, review",
         body: [
-          "InwardWise Decision helps teams prepare before important negotiations by clarifying the real objective — not simply \u201cclose the deal\u201d, but what a successful outcome actually needs to accomplish. It can help examine priorities, alternatives, trade-offs, risks, boundaries, and possible outcomes before entering the conversation.",
+          "InwardWise Decision helps teams prepare before important negotiations by clarifying the real objective, not simply \u201cclose the deal\u201d, but what a successful outcome actually needs to accomplish. It can help examine priorities, alternatives, trade-offs, risks, boundaries, and possible outcomes before entering the conversation.",
           "During an ongoing business relationship or negotiation, InwardWise can help analyze how new information may affect previously established objectives and strategy. Afterward, teams can examine what happened, what assumptions proved correct or incorrect, what may have been overlooked, and what should change before the next discussion.",
           "But negotiations aren't driven by facts alone. InwardWise Self adds another dimension: understanding the people making the decisions. Personal biases, fear of rejection, overconfidence, ego, past experiences, excessive optimism, or risk aversion can influence even experienced executives without being obvious at the time.",
-          "At an enterprise level, combining InwardWise Decision with InwardWise Self can create a more disciplined decision environment — helping executives and teams examine both the business decision and the human factors influencing the decision.",
+          "At an enterprise level, combining InwardWise Decision with InwardWise Self can create a more disciplined decision environment, helping executives and teams examine both the business decision and the human factors influencing the decision.",
         ],
       },
     ],
     cycle: "Prepare → Understand → Negotiate → Evaluate → Learn → Decide better",
     closing:
-      "The objective isn't simply to negotiate harder. It is to negotiate with greater clarity — knowing what you want, why you want it, where you can compromise, where you cannot, and when the best decision may be to walk away.",
+      "The objective isn't simply to negotiate harder. It is to negotiate with greater clarity, knowing what you want, why you want it, where you can compromise, where you cannot, and when the best decision may be to walk away.",
   },
   {
     slug: "founders-network",
@@ -525,16 +525,16 @@ export const AREAS: Area[] = [
       {
         body: [
           "Building and leading a company can demand extraordinary persistence. Behind the ambition and excitement, however, founders and CEOs may carry fears they rarely discuss openly: What if the company fails? What if my idea isn't as good as I believe? Am I making the right decision? Should I keep going, change direction, or walk away?",
-          "The founder of InwardWise experienced many of these challenges while building companies himself. Fear of failure sometimes encouraged him to pursue multiple ideas rather than narrow his focus. Creating something new was exciting; putting one product repeatedly in front of customers — and risking rejection — was much harder. Attachment to an idea could make criticism feel personal, while avoiding criticism could prevent the very customer feedback needed to improve the business.",
-          "These are not simply business problems. They can become deeply personal ones. When the company becomes intertwined with your identity, rejection of the product can feel like rejection of you. Persistence can be essential to entrepreneurship — but persistence without objective feedback can also become a trap. The challenge is learning to distinguish conviction from attachment, persistence from denial, thoughtful experimentation from distraction, and a business setback from personal failure.",
+          "The founder of InwardWise experienced many of these challenges while building companies himself. Fear of failure sometimes encouraged him to pursue multiple ideas rather than narrow his focus. Creating something new was exciting; putting one product repeatedly in front of customers, and risking rejection, was much harder. Attachment to an idea could make criticism feel personal, while avoiding criticism could prevent the very customer feedback needed to improve the business.",
+          "These are not simply business problems. They can become deeply personal ones. When the company becomes intertwined with your identity, rejection of the product can feel like rejection of you. Persistence can be essential to entrepreneurship, but persistence without objective feedback can also become a trap. The challenge is learning to distinguish conviction from attachment, persistence from denial, thoughtful experimentation from distraction, and a business setback from personal failure.",
         ],
       },
       {
         heading: "Where InwardWise helps",
         body: [
-          "InwardWise Decision helps founders slow down consequential decisions and examine the objectives underneath them. Rather than immediately asking \u201cWhat should I do?\u201d, it helps you explore assumptions, alternatives, biases, risks, fears, and longer-term consequences before deciding. The goal isn't slower business — it is clearer thinking when the stakes are high.",
-          "InwardWise Self helps you explore the person behind the company. What drives you? What are you afraid of? How do you respond to rejection? Are you pursuing another idea because it represents a better opportunity — or because it is easier than confronting the market's response to your current one?",
-          "InwardWise Connect helps address another challenge of leadership: isolation. Connect with other founders, CEOs, and entrepreneurs who understand the emotional realities behind building a company — not only the successes people celebrate publicly, but also uncertainty, rejection, difficult decisions, setbacks, and starting again.",
+          "InwardWise Decision helps founders slow down consequential decisions and examine the objectives underneath them. Rather than immediately asking \u201cWhat should I do?\u201d, it helps you explore assumptions, alternatives, biases, risks, fears, and longer-term consequences before deciding. The goal isn't slower business, it is clearer thinking when the stakes are high.",
+          "InwardWise Self helps you explore the person behind the company. What drives you? What are you afraid of? How do you respond to rejection? Are you pursuing another idea because it represents a better opportunity, or because it is easier than confronting the market's response to your current one?",
+          "InwardWise Connect helps address another challenge of leadership: isolation. Connect with other founders, CEOs, and entrepreneurs who understand the emotional realities behind building a company, not only the successes people celebrate publicly, but also uncertainty, rejection, difficult decisions, setbacks, and starting again.",
           "And when things become overwhelming, InwardWise Calm can provide personalized techniques for managing stress and reinforcing constructive perspectives based on your situation and what you have learned about yourself.",
           "Success and failure are both part of entrepreneurship. Neither has to define who you are.",
         ],
@@ -547,8 +547,8 @@ export const AREAS: Area[] = [
   {
     slug: "business-conflict-management",
     name: "Business Conflict Management",
-    blurb: "Conflict doesn't have to derail your business — or your life.",
-    tagline: "Conflict doesn't have to derail your business — or your life.",
+    blurb: "Conflict doesn't have to derail your business, or your life.",
+    tagline: "Conflict doesn't have to derail your business, or your life.",
     cta: "decision",
     sections: [
       {
@@ -564,7 +564,7 @@ export const AREAS: Area[] = [
           "InwardWise Self helps you understand how your own experiences, emotions, expectations, fears, and behavioral patterns may influence your response to a conflict. Separating the business problem from the personal reaction can help create the clarity needed to move forward.",
           "InwardWise Connect helps reduce the isolation by connecting you with people navigating similar business and life challenges. Shared experience can provide perspective and remind you that difficult business events do not have to define either your company or your life.",
           "InwardWise Calm provides personalized techniques for managing stress and reinforcing constructive perspectives during difficult periods, based on your situation and the understanding of yourself you develop within InwardWise.",
-          "And when important choices have to be made, InwardWise Decision helps you step beyond the immediate conflict to examine your true objectives, assumptions, alternatives, risks, and longer-term consequences — so today's crisis doesn't become tomorrow's regretted decision.",
+          "And when important choices have to be made, InwardWise Decision helps you step beyond the immediate conflict to examine your true objectives, assumptions, alternatives, risks, and longer-term consequences, so today's crisis doesn't become tomorrow's regretted decision.",
         ],
       },
     ],
@@ -575,8 +575,8 @@ export const AREAS: Area[] = [
   {
     slug: "stress-management",
     name: "Stress Management",
-    blurb: "Understand what creates your stress — not just how to cope with it.",
-    tagline: "Understand what creates your stress — not just how to cope with it.",
+    blurb: "Understand what creates your stress, not just how to cope with it.",
+    tagline: "Understand what creates your stress, not just how to cope with it.",
     cta: "calm",
     sections: [
       {
@@ -589,7 +589,7 @@ export const AREAS: Area[] = [
         heading: "Where InwardWise helps",
         body: [
           "InwardWise Connect helps you connect with others navigating similar life challenges. Knowing that others are facing comparable experiences can provide perspective, encouragement, and a greater sense of connection.",
-          "InwardWise Self goes deeper. By taking the time to build a clearer understanding of yourself, you can explore the personal factors, patterns, expectations, and circumstances that may contribute to your stress — and identify strategies for addressing them.",
+          "InwardWise Self goes deeper. By taking the time to build a clearer understanding of yourself, you can explore the personal factors, patterns, expectations, and circumstances that may contribute to your stress, and identify strategies for addressing them.",
           "Finally, InwardWise Decision helps you bring that self-awareness into the decisions you make. Rather than repeatedly solving the immediate problem, it helps you examine your underlying objectives, competing priorities, assumptions, and longer-term consequences so you can make decisions that better support balance and well-being.",
         ],
       },
@@ -609,7 +609,7 @@ export const AREAS: Area[] = [
     sections: [
       {
         body: [
-          "School districts carry a responsibility that extends far beyond academic instruction. Students are developing their identities, relationships, interests, values, aspirations, and ways of responding to success, failure, pressure, and uncertainty — all while preparing for a future they cannot yet fully understand.",
+          "School districts carry a responsibility that extends far beyond academic instruction. Students are developing their identities, relationships, interests, values, aspirations, and ways of responding to success, failure, pressure, and uncertainty, all while preparing for a future they cannot yet fully understand.",
           "Teachers, counselors, administrators, and parents work hard to support that development. But the number of students, limited time and resources, and the complexity of individual needs can make sustained, personalized reflection difficult. InwardWise can provide an additional layer of support.",
         ],
       },
@@ -638,7 +638,7 @@ export const AREAS: Area[] = [
         heading: "Support educators and administrators",
         body: [
           "Schools themselves are complex organizations. Administrators make decisions involving budgets, staffing, programs, technology, curriculum, student services, community expectations, competing priorities, and limited resources.",
-          "InwardWise Decision can provide a structured framework for examining important district and school-level decisions — clarifying objectives, challenging assumptions, considering stakeholder perspectives, examining trade-offs, and anticipating unintended consequences before implementation. InwardWise Self can add another dimension by helping leaders recognize how personal experiences, organizational pressures, established practices, and biases may influence decisions.",
+          "InwardWise Decision can provide a structured framework for examining important district and school-level decisions, clarifying objectives, challenging assumptions, considering stakeholder perspectives, examining trade-offs, and anticipating unintended consequences before implementation. InwardWise Self can add another dimension by helping leaders recognize how personal experiences, organizational pressures, established practices, and biases may influence decisions.",
         ],
       },
     ],

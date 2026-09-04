@@ -256,7 +256,7 @@ export function MIInterview({
       {captured && (
         <div className="rounded-lg border border-[color:var(--rule)] p-4">
           <div className="font-mono-cap mb-2 text-[10px] text-[color:var(--muted-foreground)]">
-            What is being kept — edit freely
+            What is being kept, edit freely
           </div>
           <textarea
             value={captured}
