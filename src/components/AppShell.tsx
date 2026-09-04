@@ -63,7 +63,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   const nav: { to: string; label: string; external?: boolean }[] = [
     { to: "/areas", label: "Services" },
     { to: "/science", label: "Science" },
-    { to: "/history", label: "Message from Founder" },
+    { to: "/history", label: "founder" },
     { to: "/testimonials", label: "Voices" },
     { to: "/pricing", label: "Pricing" },
     { to: "/donate", label: "Donate" },
@@ -356,7 +356,7 @@ export function AppShell({ children }: { children: ReactNode }) {
               </li>
               <li>
                 <Link to="/history" className="hover:text-[color:var(--royal)]">
-                  Message from Founder
+                  founder
                 </Link>
               </li>
             </ul>
