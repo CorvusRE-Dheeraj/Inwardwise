@@ -75,6 +75,30 @@ function useRefOptions(fields: Field[]) {
   });
 }
 
+/** Convert a stored value into the string an <input> control expects. */
+function toInputValue(field: Field, value: unknown): string {
+  if (value === null || value === undefined || value === "") return "";
+  if (field.type === "date") return String(value).slice(0, 10);
+  if (field.type === "datetime") {
+    const d = new Date(String(value));
+    if (Number.isNaN(d.getTime())) return "";
+    const pad = (n: number) => String(n).padStart(2, "0");
+    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+  }
+  return String(value);
+}
+
+/** Convert an input string back into a value the database accepts. */
+function fromInputValue(field: Field, raw: string | undefined): unknown {
+  if (raw === undefined || raw === "") return null;
+  if (field.type === "number") return Number(raw);
+  if (field.type === "datetime") {
+    const d = new Date(raw);
+    return Number.isNaN(d.getTime()) ? null : d.toISOString();
+  }
+  return raw;
+}
+
 function formatCell(field: Field, value: unknown, refOptions: Record<string, Option[]>) {
   if (value === null || value === undefined || value === "") return "—";
   if (field.type === "select") return labelOf(field.options ?? [], String(value));
@@ -123,8 +147,7 @@ export function CrudModule({ config }: { config: CrudConfig }) {
   const openEdit = (row: Row) => {
     const next: Record<string, string> = {};
     for (const f of config.fields) {
-      const v = row[f.key];
-      next[f.key] = v === null || v === undefined ? "" : String(v).slice(0, f.type === "date" ? 10 : undefined);
+      next[f.key] = toInputValue(f, row[f.key]);
     }
     setForm(next);
     setEditing(row);
@@ -138,7 +161,10 @@ export function CrudModule({ config }: { config: CrudConfig }) {
         toast.error(`${f.label} is required.`);
         return;
       }
-      payload[f.key] = raw === "" || raw === undefined ? null : f.type === "number" ? Number(raw) : raw;
+      const value = fromInputValue(f, raw);
+      // On create, omit empty fields so database defaults (e.g. occurred_at) apply.
+      if (value === null && !editing) continue;
+      payload[f.key] = value;
     }
     setSaving(true);
     try {

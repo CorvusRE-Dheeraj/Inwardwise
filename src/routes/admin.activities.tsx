@@ -39,7 +39,7 @@ const CONFIG: CrudConfig = {
   fields: [
     { key: "subject", label: "Subject", type: "text", required: true },
     { key: "activity_type", label: "Type", type: "select", options: ACTIVITY_TYPES, filterable: true },
-    { key: "occurred_at", label: "When", type: "datetime" },
+    { key: "occurred_at", label: "When", type: "datetime", required: true },
     { key: "lead_id", label: "Lead", type: "ref", ref: { table: "leads", labelColumns: ["name"] } },
     { key: "contact_id", label: "Contact", type: "ref", ref: { table: "contacts", labelColumns: ["first_name", "last_name"] }, inList: false },
     { key: "company_id", label: "Company", type: "ref", ref: { table: "companies", labelColumns: ["name"] }, inList: false },
