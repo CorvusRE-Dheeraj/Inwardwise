@@ -242,7 +242,7 @@ function MeditationSchedule() {
         when && voiceEnabled && normalizedPhone
           ? `Saved, we will call ${normalizedPhone} on ${when} (${tz}) for ${minutes} minutes.`
           : when
-            ? `Saved ${minutes} minutes on ${when} (${tz}). No call: turn voice on to be called.`
+            ? `Saved, ${minutes} minutes on ${when} (${tz}). No call: turn voice on to be called.`
             : `Saved, a ${minutes}-minute session, in ${tz} time.`;
       setSavedNote(note);
       toast.success(note);
