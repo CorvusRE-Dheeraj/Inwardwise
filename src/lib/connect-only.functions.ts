@@ -309,7 +309,7 @@ export const resendConnectOnlyUnread = createServerFn({ method: "POST" })
     const { data: section } = await ctx.supabase
       .from("journey_sections")
       .select("title, content")
-      .eq("id", pending.section_id)
+      .eq("id", pending.section_id ?? "")
       .maybeSingle();
     if (!section) return buildState(ctx, ["That piece is no longer available."]);
 
