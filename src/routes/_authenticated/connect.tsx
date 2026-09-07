@@ -169,6 +169,9 @@ function ConnectPage() {
         </div>
       </section>
 
+      {/* Connect only path */}
+      <ConnectOnly />
+
       {/* SAUP */}
       <section className="mx-auto mt-14 w-[min(1100px,calc(100%-2rem))]">
         <Card>
