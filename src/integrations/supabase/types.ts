@@ -1073,6 +1073,312 @@ export type Database = {
         }
         Relationships: []
       }
+      journey_books: {
+        Row: {
+          created_at: string
+          id: string
+          is_approved: boolean
+          license_status: string
+          source: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_approved?: boolean
+          license_status?: string
+          source?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_approved?: boolean
+          license_status?: string
+          source?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      journey_chapters: {
+        Row: {
+          book_id: string
+          created_at: string
+          id: string
+          number: number
+          sequence: number
+          title: string
+        }
+        Insert: {
+          book_id: string
+          created_at?: string
+          id?: string
+          number: number
+          sequence?: number
+          title: string
+        }
+        Update: {
+          book_id?: string
+          created_at?: string
+          id?: string
+          number?: number
+          sequence?: number
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "journey_chapters_book_id_fkey"
+            columns: ["book_id"]
+            isOneToOne: false
+            referencedRelation: "journey_books"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      journey_events: {
+        Row: {
+          created_at: string
+          event_type: string
+          id: string
+          item_id: string | null
+          metadata: Json
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          event_type: string
+          id?: string
+          item_id?: string | null
+          metadata?: Json
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          event_type?: string
+          id?: string
+          item_id?: string | null
+          metadata?: Json
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "journey_events_item_id_fkey"
+            columns: ["item_id"]
+            isOneToOne: false
+            referencedRelation: "journey_items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      journey_items: {
+        Row: {
+          completed_at: string | null
+          confidence: number
+          created_at: string
+          id: string
+          last_reminder_at: string | null
+          reason_codes: string[]
+          relevance_note: string | null
+          reminder_count: number
+          section_id: string
+          sent_at: string | null
+          state: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          completed_at?: string | null
+          confidence?: number
+          created_at?: string
+          id?: string
+          last_reminder_at?: string | null
+          reason_codes?: string[]
+          relevance_note?: string | null
+          reminder_count?: number
+          section_id: string
+          sent_at?: string | null
+          state?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          completed_at?: string | null
+          confidence?: number
+          created_at?: string
+          id?: string
+          last_reminder_at?: string | null
+          reason_codes?: string[]
+          relevance_note?: string | null
+          reminder_count?: number
+          section_id?: string
+          sent_at?: string | null
+          state?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "journey_items_section_id_fkey"
+            columns: ["section_id"]
+            isOneToOne: false
+            referencedRelation: "journey_sections"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      journey_preferences: {
+        Row: {
+          channels: Json
+          created_at: string
+          frequency: string
+          paused: boolean
+          personalization_enabled: boolean
+          topics: string[]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          channels?: Json
+          created_at?: string
+          frequency?: string
+          paused?: boolean
+          personalization_enabled?: boolean
+          topics?: string[]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          channels?: Json
+          created_at?: string
+          frequency?: string
+          paused?: boolean
+          personalization_enabled?: boolean
+          topics?: string[]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      journey_sections: {
+        Row: {
+          book_id: string
+          chapter_id: string
+          content: string
+          created_at: string
+          estimated_minutes: number
+          has_audio: boolean
+          id: string
+          is_approved: boolean
+          number: number
+          sequence: number
+          source_locator: string | null
+          tags: string[]
+          theme: string | null
+          title: string
+          topic: string | null
+          updated_at: string
+        }
+        Insert: {
+          book_id: string
+          chapter_id: string
+          content: string
+          created_at?: string
+          estimated_minutes?: number
+          has_audio?: boolean
+          id?: string
+          is_approved?: boolean
+          number: number
+          sequence?: number
+          source_locator?: string | null
+          tags?: string[]
+          theme?: string | null
+          title: string
+          topic?: string | null
+          updated_at?: string
+        }
+        Update: {
+          book_id?: string
+          chapter_id?: string
+          content?: string
+          created_at?: string
+          estimated_minutes?: number
+          has_audio?: boolean
+          id?: string
+          is_approved?: boolean
+          number?: number
+          sequence?: number
+          source_locator?: string | null
+          tags?: string[]
+          theme?: string | null
+          title?: string
+          topic?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "journey_sections_book_id_fkey"
+            columns: ["book_id"]
+            isOneToOne: false
+            referencedRelation: "journey_books"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "journey_sections_chapter_id_fkey"
+            columns: ["chapter_id"]
+            isOneToOne: false
+            referencedRelation: "journey_chapters"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      journey_signals: {
+        Row: {
+          confidence: number
+          created_at: string
+          evidence: Json
+          frequency: number
+          id: string
+          last_observed_at: string
+          signal_key: string
+          signal_type: string
+          signal_value: string | null
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          confidence?: number
+          created_at?: string
+          evidence?: Json
+          frequency?: number
+          id?: string
+          last_observed_at?: string
+          signal_key: string
+          signal_type: string
+          signal_value?: string | null
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          confidence?: number
+          created_at?: string
+          evidence?: Json
+          frequency?: number
+          id?: string
+          last_observed_at?: string
+          signal_key?: string
+          signal_type?: string
+          signal_value?: string | null
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       leads: {
         Row: {
           assigned_employee_id: string | null
