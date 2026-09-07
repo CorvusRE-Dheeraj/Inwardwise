@@ -40,6 +40,7 @@ import { Route as AdminOpportunitiesRouteImport } from './routes/admin.opportuni
 import { Route as AdminMarketingLeadsRouteImport } from './routes/admin.marketing-leads'
 import { Route as AdminLoginRouteImport } from './routes/admin.login'
 import { Route as AdminLeadsRouteImport } from './routes/admin.leads'
+import { Route as AdminJourneyContentRouteImport } from './routes/admin.journey-content'
 import { Route as AdminEmployeesRouteImport } from './routes/admin.employees'
 import { Route as AdminDashboardRouteImport } from './routes/admin.dashboard'
 import { Route as AdminContactsRouteImport } from './routes/admin.contacts'
@@ -222,6 +223,11 @@ const AdminLoginRoute = AdminLoginRouteImport.update({
 const AdminLeadsRoute = AdminLeadsRouteImport.update({
   id: '/admin/leads',
   path: '/admin/leads',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminJourneyContentRoute = AdminJourneyContentRouteImport.update({
+  id: '/admin/journey-content',
+  path: '/admin/journey-content',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminEmployeesRoute = AdminEmployeesRouteImport.update({
@@ -411,6 +417,7 @@ export interface FileRoutesByFullPath {
   '/admin/contacts': typeof AdminContactsRoute
   '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/employees': typeof AdminEmployeesRoute
+  '/admin/journey-content': typeof AdminJourneyContentRoute
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/marketing-leads': typeof AdminMarketingLeadsRoute
@@ -470,6 +477,7 @@ export interface FileRoutesByTo {
   '/admin/contacts': typeof AdminContactsRoute
   '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/employees': typeof AdminEmployeesRoute
+  '/admin/journey-content': typeof AdminJourneyContentRoute
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/marketing-leads': typeof AdminMarketingLeadsRoute
@@ -533,6 +541,7 @@ export interface FileRoutesById {
   '/admin/contacts': typeof AdminContactsRoute
   '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/employees': typeof AdminEmployeesRoute
+  '/admin/journey-content': typeof AdminJourneyContentRoute
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/marketing-leads': typeof AdminMarketingLeadsRoute
@@ -596,6 +605,7 @@ export interface FileRouteTypes {
     | '/admin/contacts'
     | '/admin/dashboard'
     | '/admin/employees'
+    | '/admin/journey-content'
     | '/admin/leads'
     | '/admin/login'
     | '/admin/marketing-leads'
@@ -655,6 +665,7 @@ export interface FileRouteTypes {
     | '/admin/contacts'
     | '/admin/dashboard'
     | '/admin/employees'
+    | '/admin/journey-content'
     | '/admin/leads'
     | '/admin/login'
     | '/admin/marketing-leads'
@@ -717,6 +728,7 @@ export interface FileRouteTypes {
     | '/admin/contacts'
     | '/admin/dashboard'
     | '/admin/employees'
+    | '/admin/journey-content'
     | '/admin/leads'
     | '/admin/login'
     | '/admin/marketing-leads'
@@ -774,6 +786,7 @@ export interface RootRouteChildren {
   AdminContactsRoute: typeof AdminContactsRoute
   AdminDashboardRoute: typeof AdminDashboardRoute
   AdminEmployeesRoute: typeof AdminEmployeesRoute
+  AdminJourneyContentRoute: typeof AdminJourneyContentRoute
   AdminLeadsRoute: typeof AdminLeadsRoute
   AdminLoginRoute: typeof AdminLoginRoute
   AdminMarketingLeadsRoute: typeof AdminMarketingLeadsRoute
@@ -1014,6 +1027,13 @@ declare module '@tanstack/react-router' {
       path: '/admin/leads'
       fullPath: '/admin/leads'
       preLoaderRoute: typeof AdminLeadsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/journey-content': {
+      id: '/admin/journey-content'
+      path: '/admin/journey-content'
+      fullPath: '/admin/journey-content'
+      preLoaderRoute: typeof AdminJourneyContentRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/employees': {
@@ -1308,6 +1328,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminContactsRoute: AdminContactsRoute,
   AdminDashboardRoute: AdminDashboardRoute,
   AdminEmployeesRoute: AdminEmployeesRoute,
+  AdminJourneyContentRoute: AdminJourneyContentRoute,
   AdminLeadsRoute: AdminLeadsRoute,
   AdminLoginRoute: AdminLoginRoute,
   AdminMarketingLeadsRoute: AdminMarketingLeadsRoute,
