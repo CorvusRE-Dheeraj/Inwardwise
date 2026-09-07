@@ -424,7 +424,7 @@ function DecisionChat() {
               <aside className="glass-strong sticky top-24 h-fit rounded-3xl">
                 <JourneyProgress current={currentStage} vertical />
                 <p className="mx-4 mb-4 rounded-xl border border-glass-border bg-foreground/[0.02] p-3 text-[10px] leading-relaxed text-muted-foreground">
-                  The facilitator asks 2, 5 questions per stage and waits for your confirmation
+                  The facilitator asks 2 to 5 questions per stage and waits for your confirmation
                   before advancing. Recommendations only come after the final step.
                 </p>
               </aside>

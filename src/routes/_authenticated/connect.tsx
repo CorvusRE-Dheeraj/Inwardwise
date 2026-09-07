@@ -625,7 +625,7 @@ function ConnectChoices({
             ))}
           </div>
           <p className="mt-4 text-[13px] text-[color:var(--muted-foreground)]">
-            Nearby suggestions can be added later <ProductName id="connect" /> does not ask for your location.
+            Nearby suggestions can be added later. <ProductName id="connect" /> does not ask for your location.
           </p>
         </Card>
       )}
@@ -697,7 +697,7 @@ function ReportModal({ story, onClose }: { story: Story; onClose: () => void }) 
       ) : (
         <>
           <p className="mt-3 text-[14px] text-[color:var(--muted-foreground)]">
-            Tell us what is wrong with “{story.category}” {story.pseudonym}.
+            Tell us what is wrong with “{story.category}”, {story.pseudonym}.
           </p>
           <textarea
             value={reason}

@@ -365,7 +365,7 @@ function MeditationSchedule() {
               ))}
             </select>
             <span className="text-xs text-[color:var(--muted-foreground)]">
-              Divided into four equal parts {linesPerSetFor(minutes)} lines per prayer.
+              Divided into four equal parts, {linesPerSetFor(minutes)} lines per prayer.
             </span>
           </label>
           <label className="flex flex-col gap-2 text-sm">
