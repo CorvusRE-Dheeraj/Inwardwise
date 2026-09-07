@@ -123,8 +123,17 @@ export function ConnectOnly() {
             </div>
             {error && <p className="text-sm text-destructive">{error}</p>}
             <button
-              disabled={busy}
-              onClick={() =>
+              disabled={busy || prompt.trim().length < 8}
+              onClick={() => {
+                if (prompt.trim().length < 8) {
+                  setError("Please write a little more about what is going on, at least a few words.");
+                  return;
+                }
+                if (!email.trim() && !phone.trim()) {
+                  setError("Please add an email address or a phone number so we can send it to you.");
+                  return;
+                }
+                setError(null);
                 run(
                   () =>
                     start({
@@ -136,8 +145,9 @@ export function ConnectOnly() {
                       },
                     }),
                   (s) => setState(s),
-                )
-              }
+                );
+              }}
+
               className="inline-flex items-center gap-2 rounded-full bg-[color:var(--ink)] px-6 py-3 text-sm text-[color:var(--paper)] disabled:opacity-60"
             >
               {busy ? "Preparing…" : "Send me something to read"} <ArrowRight className="h-4 w-4" />
