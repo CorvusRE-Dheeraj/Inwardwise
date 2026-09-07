@@ -47,6 +47,7 @@ import { Route as AdminCompaniesRouteImport } from './routes/admin.companies'
 import { Route as AdminCampaignsRouteImport } from './routes/admin.campaigns'
 import { Route as AdminAuditLogsRouteImport } from './routes/admin.audit-logs'
 import { Route as AdminActivitiesRouteImport } from './routes/admin.activities'
+import { Route as AuthenticatedJourneyRouteImport } from './routes/_authenticated/journey'
 import { Route as AuthenticatedDecisionRouteImport } from './routes/_authenticated/decision'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedConnectRouteImport } from './routes/_authenticated/connect'
@@ -258,6 +259,11 @@ const AdminActivitiesRoute = AdminActivitiesRouteImport.update({
   path: '/admin/activities',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedJourneyRoute = AuthenticatedJourneyRouteImport.update({
+  id: '/journey',
+  path: '/journey',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedDecisionRoute = AuthenticatedDecisionRouteImport.update({
   id: '/decision',
   path: '/decision',
@@ -397,6 +403,7 @@ export interface FileRoutesByFullPath {
   '/connect': typeof AuthenticatedConnectRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/decision': typeof AuthenticatedDecisionRoute
+  '/journey': typeof AuthenticatedJourneyRoute
   '/admin/activities': typeof AdminActivitiesRoute
   '/admin/audit-logs': typeof AdminAuditLogsRoute
   '/admin/campaigns': typeof AdminCampaignsRoute
@@ -455,6 +462,7 @@ export interface FileRoutesByTo {
   '/connect': typeof AuthenticatedConnectRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/decision': typeof AuthenticatedDecisionRoute
+  '/journey': typeof AuthenticatedJourneyRoute
   '/admin/activities': typeof AdminActivitiesRoute
   '/admin/audit-logs': typeof AdminAuditLogsRoute
   '/admin/campaigns': typeof AdminCampaignsRoute
@@ -517,6 +525,7 @@ export interface FileRoutesById {
   '/_authenticated/connect': typeof AuthenticatedConnectRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/decision': typeof AuthenticatedDecisionRoute
+  '/_authenticated/journey': typeof AuthenticatedJourneyRoute
   '/admin/activities': typeof AdminActivitiesRoute
   '/admin/audit-logs': typeof AdminAuditLogsRoute
   '/admin/campaigns': typeof AdminCampaignsRoute
@@ -579,6 +588,7 @@ export interface FileRouteTypes {
     | '/connect'
     | '/dashboard'
     | '/decision'
+    | '/journey'
     | '/admin/activities'
     | '/admin/audit-logs'
     | '/admin/campaigns'
@@ -637,6 +647,7 @@ export interface FileRouteTypes {
     | '/connect'
     | '/dashboard'
     | '/decision'
+    | '/journey'
     | '/admin/activities'
     | '/admin/audit-logs'
     | '/admin/campaigns'
@@ -698,6 +709,7 @@ export interface FileRouteTypes {
     | '/_authenticated/connect'
     | '/_authenticated/dashboard'
     | '/_authenticated/decision'
+    | '/_authenticated/journey'
     | '/admin/activities'
     | '/admin/audit-logs'
     | '/admin/campaigns'
@@ -1053,6 +1065,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminActivitiesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/journey': {
+      id: '/_authenticated/journey'
+      path: '/journey'
+      fullPath: '/journey'
+      preLoaderRoute: typeof AuthenticatedJourneyRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/decision': {
       id: '/_authenticated/decision'
       path: '/decision'
@@ -1226,6 +1245,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedConnectRoute: typeof AuthenticatedConnectRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedDecisionRoute: typeof AuthenticatedDecisionRoute
+  AuthenticatedJourneyRoute: typeof AuthenticatedJourneyRoute
   AuthenticatedAvatarAskRoute: typeof AuthenticatedAvatarAskRoute
   AuthenticatedAvatarConsultRoute: typeof AuthenticatedAvatarConsultRoute
   AuthenticatedAvatarConsultScheduleRoute: typeof AuthenticatedAvatarConsultScheduleRoute
@@ -1241,6 +1261,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedConnectRoute: AuthenticatedConnectRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedDecisionRoute: AuthenticatedDecisionRoute,
+  AuthenticatedJourneyRoute: AuthenticatedJourneyRoute,
   AuthenticatedAvatarAskRoute: AuthenticatedAvatarAskRoute,
   AuthenticatedAvatarConsultRoute: AuthenticatedAvatarConsultRoute,
   AuthenticatedAvatarConsultScheduleRoute:
