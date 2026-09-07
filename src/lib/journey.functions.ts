@@ -292,7 +292,12 @@ export const respondToSection = createServerFn({ method: "POST" })
       .single();
     if (readErr) throw new Error(readErr.message);
 
-    const patch: Record<string, unknown> = {};
+    const patch: {
+      state?: string;
+      completed_at?: string;
+      reminder_count?: number;
+      last_reminder_at?: string;
+    } = {};
     switch (data.action) {
       case "complete":
         patch.state = "COMPLETED";
