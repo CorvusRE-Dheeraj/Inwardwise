@@ -24,6 +24,7 @@ import {
 } from "@/lib/connect.functions";
 import { scheduleStoryCall } from "@/lib/connect-story-call.functions";
 import { ProductName } from "@/components/products/ProductChrome";
+import { ConnectOnly } from "@/components/connect/ConnectOnly";
 
 export const Route = createFileRoute("/_authenticated/connect")({
   head: () => ({
