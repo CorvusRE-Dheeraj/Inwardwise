@@ -28,3 +28,12 @@
 - [x] Admin schema (roles, permissions, employees, CRM, tasks, marketing, notifications, saved views, audit logs) with RLS + grants
 - [x] /admin/login, dashboard, leads, contacts, companies, opportunities, activities, campaigns, marketing leads, tasks, employees, roles, reports, settings, audit logs
 - [ ] Optional: email/calendar/telephony integrations per module
+
+## My Journey (Phase 1: READ)
+- [x] Schema: journey_books/chapters/sections, preferences, items (state machine), signals, events (RLS + grants)
+- [x] Recommendation engine picks ONE specific approved section, neutral fallback when confidence is low
+- [x] Sequential reading: one active item, questions keep section open, mark read / pause / skip, finite reminders
+- [x] Learning loop signals (completed/skipped topic) + user controls (personalisation off, frequency, topics, pause)
+- [x] /journey member page, admin content library at /admin/journey-content
+- [ ] Ingest "Health, Part 1 and 2 for Class (Refined)" PDF (file not supplied yet)
+- [ ] Phase 2+: LISTEN, REFLECT, EXPLORE

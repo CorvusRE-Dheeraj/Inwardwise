@@ -122,6 +122,10 @@ export const ADMIN_NAV: NavGroup[] = [
     ],
   },
   { label: "Tasks", items: [{ label: "Tasks", to: "/admin/tasks", permission: "tasks.view" }] },
+  {
+    label: "My Journey",
+    items: [{ label: "Content library", to: "/admin/journey-content", permission: "settings.manage" }],
+  },
   { label: "Reports", items: [{ label: "Reports", to: "/admin/reports", permission: "reports.view" }] },
   {
     label: "Team",
