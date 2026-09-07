@@ -677,6 +677,120 @@ export type Database = {
           },
         ]
       }
+      connect_only_deliveries: {
+        Row: {
+          channels: string[]
+          confirmed_at: string | null
+          created_at: string
+          id: string
+          kind: string
+          last_sent_at: string
+          payload: Json
+          section_id: string | null
+          send_count: number
+          sequence: number
+          session_id: string
+          state: string
+          story_id: string | null
+          user_id: string
+        }
+        Insert: {
+          channels?: string[]
+          confirmed_at?: string | null
+          created_at?: string
+          id?: string
+          kind: string
+          last_sent_at?: string
+          payload?: Json
+          section_id?: string | null
+          send_count?: number
+          sequence?: number
+          session_id: string
+          state?: string
+          story_id?: string | null
+          user_id: string
+        }
+        Update: {
+          channels?: string[]
+          confirmed_at?: string | null
+          created_at?: string
+          id?: string
+          kind?: string
+          last_sent_at?: string
+          payload?: Json
+          section_id?: string | null
+          send_count?: number
+          sequence?: number
+          session_id?: string
+          state?: string
+          story_id?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "connect_only_deliveries_section_id_fkey"
+            columns: ["section_id"]
+            isOneToOne: false
+            referencedRelation: "journey_sections"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "connect_only_deliveries_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "connect_only_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      connect_only_sessions: {
+        Row: {
+          availability: string | null
+          category: string
+          contact_email: string | null
+          created_at: string
+          health_notes: string | null
+          id: string
+          interests: string | null
+          location: string | null
+          phone_number: string | null
+          prompt_text: string
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          availability?: string | null
+          category: string
+          contact_email?: string | null
+          created_at?: string
+          health_notes?: string | null
+          id?: string
+          interests?: string | null
+          location?: string | null
+          phone_number?: string | null
+          prompt_text: string
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          availability?: string | null
+          category?: string
+          contact_email?: string | null
+          created_at?: string
+          health_notes?: string | null
+          id?: string
+          interests?: string | null
+          location?: string | null
+          phone_number?: string | null
+          prompt_text?: string
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       connect_prompts: {
         Row: {
           category: string | null

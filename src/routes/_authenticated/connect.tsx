@@ -24,6 +24,7 @@ import {
 } from "@/lib/connect.functions";
 import { scheduleStoryCall } from "@/lib/connect-story-call.functions";
 import { ProductName } from "@/components/products/ProductChrome";
+import { ConnectOnly } from "@/components/connect/ConnectOnly";
 
 export const Route = createFileRoute("/_authenticated/connect")({
   head: () => ({
@@ -168,6 +169,9 @@ function ConnectPage() {
 
         </div>
       </section>
+
+      {/* Connect only path */}
+      <ConnectOnly />
 
       {/* SAUP */}
       <section className="mx-auto mt-14 w-[min(1100px,calc(100%-2rem))]">
