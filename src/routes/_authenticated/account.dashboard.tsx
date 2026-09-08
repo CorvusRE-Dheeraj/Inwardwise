@@ -90,6 +90,25 @@ function DashboardPage() {
                     <Trash2 className="h-4 w-4" />
                   </button>
                 </div>
+                <div className="mt-3 flex flex-wrap items-center gap-2 border-t border-foreground/5 pt-3">
+                  <span className="text-[11px] text-muted-foreground">How did it turn out?</span>
+                  {([
+                    ["successful", "Worked out"],
+                    ["failed", "Did not work"],
+                    ["not_attempted", "Never acted on"],
+                  ] as [DecisionOutcome, string][]).map(([id, label]) => {
+                    const active = (s.outcome ?? "unmarked") === id;
+                    return (
+                      <button
+                        key={id}
+                        onClick={() => mark(s.id, active ? "unmarked" : id)}
+                        className={`rounded-full border px-3 py-1 text-[11px] transition ${active ? "border-transparent bg-foreground text-background" : "border-foreground/10 text-muted-foreground hover:text-foreground"}`}
+                      >
+                        {label}
+                      </button>
+                    );
+                  })}
+                </div>
               </li>
             );
           })}
