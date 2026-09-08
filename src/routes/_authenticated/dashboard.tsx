@@ -1,31 +1,57 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
-import { Clock, BarChart3, Plus, Sparkles, Trash2, CheckCircle2 } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { BarChart3, Plus, Search, Trash2, CheckCircle2, XCircle, CircleSlash, HelpCircle } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
 import { STAGES } from "@/lib/ooi-stages";
-import { deleteSession, loadSessions, type DecisionSession } from "@/lib/ooi-storage";
+import {
+  deleteSession,
+  loadSessions,
+  searchSessions,
+  setOutcome,
+  type DecisionOutcome,
+  type DecisionSession,
+} from "@/lib/ooi-storage";
 
 export const Route = createFileRoute("/_authenticated/dashboard")({
   head: () => ({ meta: [{ title: "Dashboard, Objective Solution Framework" }] }),
   component: Dashboard,
 });
 
+const OUTCOMES: { id: DecisionOutcome; label: string; icon: React.ComponentType<{ className?: string }> }[] = [
+  { id: "successful", label: "Worked out", icon: CheckCircle2 },
+  { id: "failed", label: "Did not work", icon: XCircle },
+  { id: "not_attempted", label: "Never acted on", icon: CircleSlash },
+];
+
+function outcomeOf(s: DecisionSession): DecisionOutcome {
+  return s.outcome ?? "unmarked";
+}
+
 function Dashboard() {
   const [sessions, setSessions] = useState<DecisionSession[]>([]);
+  const [query, setQuery] = useState("");
   useEffect(() => { setSessions(loadSessions()); }, []);
 
-  const completed = sessions.filter((s) => s.stage >= 7);
-  const inProgress = sessions.filter((s) => s.stage < 7);
-  const avgStage = sessions.length
-    ? (sessions.reduce((a, s) => a + s.stage, 0) / sessions.length).toFixed(1)
-    : "0";
+  const counts = {
+    successful: sessions.filter((s) => outcomeOf(s) === "successful").length,
+    failed: sessions.filter((s) => outcomeOf(s) === "failed").length,
+    not_attempted: sessions.filter((s) => outcomeOf(s) === "not_attempted").length,
+    unmarked: sessions.filter((s) => outcomeOf(s) === "unmarked").length,
+  };
 
   const categoryCounts: Record<string, number> = {};
   sessions.forEach((s) => { categoryCounts[s.category] = (categoryCounts[s.category] ?? 0) + 1; });
   const categories = Object.entries(categoryCounts).sort((a, b) => b[1] - a[1]).slice(0, 8);
 
+  const results = useMemo(() => searchSessions(query, sessions), [query, sessions]);
+
   const remove = (id: string) => {
     deleteSession(id);
+    setSessions(loadSessions());
+  };
+
+  const mark = (id: string, outcome: DecisionOutcome) => {
+    setOutcome(id, outcome);
     setSessions(loadSessions());
   };
 
@@ -41,22 +67,39 @@ function Dashboard() {
         </Link>
       </div>
 
-      <div className="mt-8 grid gap-3 md:grid-cols-4">
+      <div className="mt-8 grid gap-3 sm:grid-cols-2 md:grid-cols-5">
         <Stat icon={BarChart3} label="Total" value={sessions.length} />
-        <Stat icon={CheckCircle2} label="Completed" value={completed.length} />
-        <Stat icon={Clock} label="In progress" value={inProgress.length} />
-        <Stat icon={Sparkles} label="Avg. stage reached" value={avgStage} />
+        <Stat icon={CheckCircle2} label="Worked out" value={counts.successful} />
+        <Stat icon={XCircle} label="Did not work" value={counts.failed} />
+        <Stat icon={CircleSlash} label="Never acted on" value={counts.not_attempted} />
+        <Stat icon={HelpCircle} label="Not marked yet" value={counts.unmarked} />
       </div>
 
-      <div className="mt-10 grid gap-6 lg:grid-cols-[1.5fr_1fr]">
+      <div className="mt-8 flex items-center gap-2 rounded-full border border-foreground/10 px-4 py-2">
+        <Search className="h-4 w-4 text-muted-foreground" />
+        <input
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Search every session you have ever run"
+          className="w-full bg-transparent text-sm outline-none"
+        />
+      </div>
+
+      <div className="mt-8 grid gap-6 lg:grid-cols-[1.5fr_1fr]">
         <section>
-          <h2 className="mb-3 text-sm font-medium text-muted-foreground">Recent sessions</h2>
-          {sessions.length === 0 ? (
-            <EmptyState />
+          <h2 className="mb-3 text-sm font-medium text-muted-foreground">
+            {query ? `${results.length} matching sessions` : "All sessions"}
+          </h2>
+          {results.length === 0 ? (
+            query ? (
+              <div className="glass rounded-2xl p-8 text-sm text-muted-foreground">Nothing matches that search.</div>
+            ) : (
+              <EmptyState />
+            )
           ) : (
             <ul className="space-y-3">
-              {sessions.slice(0, 15).map((s) => (
-                <SessionRow key={s.id} s={s} onDelete={() => remove(s.id)} />
+              {results.map((s) => (
+                <SessionRow key={s.id} s={s} onDelete={() => remove(s.id)} onMark={(o) => mark(s.id, o)} />
               ))}
             </ul>
           )}
@@ -110,9 +153,18 @@ function Stat({ icon: Icon, label, value }: { icon: React.ComponentType<{ classN
   );
 }
 
-function SessionRow({ s, onDelete }: { s: DecisionSession; onDelete: () => void }) {
+function SessionRow({
+  s,
+  onDelete,
+  onMark,
+}: {
+  s: DecisionSession;
+  onDelete: () => void;
+  onMark: (o: DecisionOutcome) => void;
+}) {
   const stage = STAGES.find((x) => x.n === s.stage) ?? STAGES[0];
   const pct = Math.round((stage.n / STAGES.length) * 100);
+  const current = outcomeOf(s);
   return (
     <li className="glass rounded-2xl p-4">
       <div className="flex items-center justify-between gap-4">
@@ -141,6 +193,27 @@ function SessionRow({ s, onDelete }: { s: DecisionSession; onDelete: () => void 
         >
           <Trash2 className="h-4 w-4" />
         </button>
+      </div>
+
+      <div className="mt-3 flex flex-wrap items-center gap-2 border-t border-foreground/5 pt-3">
+        <span className="text-[11px] text-muted-foreground">How did it turn out?</span>
+        {OUTCOMES.map((o) => {
+          const Icon = o.icon;
+          const active = current === o.id;
+          return (
+            <button
+              key={o.id}
+              onClick={() => onMark(active ? "unmarked" : o.id)}
+              className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-[11px] transition ${
+                active
+                  ? "border-transparent bg-foreground text-background"
+                  : "border-foreground/10 text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              <Icon className="h-3.5 w-3.5" /> {o.label}
+            </button>
+          );
+        })}
       </div>
     </li>
   );
