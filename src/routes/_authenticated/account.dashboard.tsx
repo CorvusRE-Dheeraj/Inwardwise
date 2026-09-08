@@ -1,8 +1,15 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
-import { Clock, BarChart3, Plus, Sparkles, Trash2, CheckCircle2 } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { BarChart3, Plus, Search, Trash2, CheckCircle2, XCircle, CircleSlash } from "lucide-react";
 import { STAGES } from "@/lib/ooi-stages";
-import { deleteSession, loadSessions, type DecisionSession } from "@/lib/ooi-storage";
+import {
+  deleteSession,
+  loadSessions,
+  searchSessions,
+  setOutcome,
+  type DecisionOutcome,
+  type DecisionSession,
+} from "@/lib/ooi-storage";
 
 export const Route = createFileRoute("/_authenticated/account/dashboard")({
   component: DashboardPage,
