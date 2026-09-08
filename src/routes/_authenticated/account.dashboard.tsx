@@ -19,11 +19,14 @@ function DashboardPage() {
   const [sessions, setSessions] = useState<DecisionSession[]>([]);
   useEffect(() => { setSessions(loadSessions()); }, []);
 
-  const completed = sessions.filter((s) => s.stage >= 7);
-  const inProgress = sessions.filter((s) => s.stage < 7);
-  const avgStage = sessions.length ? (sessions.reduce((a, s) => a + s.stage, 0) / sessions.length).toFixed(1) : "0";
+  const [query, setQuery] = useState("");
+  const results = useMemo(() => searchSessions(query, sessions), [query, sessions]);
+
+  const count = (o: DecisionOutcome) => sessions.filter((s) => (s.outcome ?? "unmarked") === o).length;
 
   const remove = (id: string) => { deleteSession(id); setSessions(loadSessions()); };
+  const mark = (id: string, o: DecisionOutcome) => { setOutcome(id, o); setSessions(loadSessions()); };
+
 
   return (
     <div>
