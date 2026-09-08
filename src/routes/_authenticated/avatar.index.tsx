@@ -264,6 +264,12 @@ function AvatarDashboard() {
                     </Link>
                   )}
                   <Link
+                    to="/avatar/library"
+                    className="rounded-full border border-[color:var(--rule)] px-5 py-2 text-[13px] transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)]"
+                  >
+                    Review, edit or download →
+                  </Link>
+                  <Link
                     to="/avatar/ask"
                     className="rounded-full border border-[color:var(--rule)] px-5 py-2 text-[13px] transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)]"
                   >
