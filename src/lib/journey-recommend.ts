@@ -118,9 +118,22 @@ export function rankSections(input: RankInput): Recommendation | null {
     }
   }
 
-  if (!best || best.score < MIN_CONFIDENCE) return null;
-  return best.rec;
+  if (best && best.score >= MIN_CONFIDENCE) return best.rec;
+
+  // Nothing scored strongly: fall back to the next section in book order, so
+  // the journey never dead-ends after the first reading.
+  const next = [...eligible].sort((a, b) => a.sequence - b.sequence)[0];
+  return {
+    section: next,
+    bookTitle: next.book_title,
+    chapterNumber: next.chapter_number,
+    chapterTitle: next.chapter_title,
+    confidence: Math.max(0.35, best?.score ?? 0.35),
+    reasonCodes: ["SEQUENCE_NEXT"],
+    relevanceNote: "This is the next section in the reading order, and a natural place to continue.",
+  };
 }
+
 
 function relevanceNote(codes: string[], section: SectionRow): string {
   const topic = section.topic ?? section.theme ?? "this area";
