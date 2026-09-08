@@ -42,13 +42,25 @@ function DashboardPage() {
 
       <div className="mt-6 grid gap-3 md:grid-cols-4">
         <Stat icon={BarChart3} label="Total" value={sessions.length} />
-        <Stat icon={CheckCircle2} label="Completed" value={completed.length} />
-        <Stat icon={Clock} label="In progress" value={inProgress.length} />
-        <Stat icon={Sparkles} label="Avg. stage" value={avgStage} />
+        <Stat icon={CheckCircle2} label="Worked out" value={count("successful")} />
+        <Stat icon={XCircle} label="Did not work" value={count("failed")} />
+        <Stat icon={CircleSlash} label="Never acted on" value={count("not_attempted")} />
       </div>
 
-      <h2 className="mt-8 text-sm font-medium text-muted-foreground">Recent sessions</h2>
-      {sessions.length === 0 ? (
+      <div className="mt-6 flex items-center gap-2 rounded-full border border-foreground/10 px-4 py-2">
+        <Search className="h-4 w-4 text-muted-foreground" />
+        <input
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Search all your sessions"
+          className="w-full bg-transparent text-sm outline-none"
+        />
+      </div>
+
+      <h2 className="mt-8 text-sm font-medium text-muted-foreground">
+        {query ? `${results.length} matching sessions` : "Recent sessions"}
+      </h2>
+      {results.length === 0 ? (
         <div className="glass-strong mt-3 rounded-3xl p-10 text-center">
           <div className="font-display text-2xl">Nothing here yet</div>
           <p className="mt-2 text-sm text-muted-foreground">Start your first facilitated decision session.</p>
