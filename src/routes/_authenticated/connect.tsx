@@ -173,6 +173,12 @@ function ConnectPage() {
       {/* Connect only path */}
       <ConnectOnly />
 
+      {/* Voice experiences shared with consent */}
+      <div className="mx-auto mt-14 w-[min(1100px,calc(100%-2rem))]">
+        <VoiceExperience />
+      </div>
+
+
       {/* SAUP */}
       <section className="mx-auto mt-14 w-[min(1100px,calc(100%-2rem))]">
         <Card>
