@@ -1,11 +1,19 @@
 // Local storage for OOOI decision conversations. Autosaved as user chats.
 import type { UIMessage } from "ai";
 
+/** How the decision turned out, as marked by the person themselves. */
+export type DecisionOutcome = "successful" | "failed" | "not_attempted" | "unmarked";
+
 export interface DecisionSession {
   id: string;
   title: string;
   category: string;
   stage: number;                 // 1..7 current stage detected from AI output
+  /** Outcome the person marked after living with the decision. */
+  outcome?: DecisionOutcome;
+  /** Free note about what happened, kept with the session. */
+  outcomeNote?: string;
+  outcomeAt?: number;
   messages: UIMessage[];
   /** Unsent text the person had typed, so a resumed session looks untouched. */
   draft?: string;
@@ -78,4 +86,33 @@ export function extractText(m: UIMessage): string {
     .filter((p) => p.type === "text" && p.text)
     .map((p) => p.text!)
     .join("");
+}
+
+export function setOutcome(id: string, outcome: DecisionOutcome, note?: string) {
+  const all = loadSessions();
+  const s = all.find((x) => x.id === id);
+  if (!s) return;
+  s.outcome = outcome;
+  s.outcomeNote = note ?? s.outcomeNote;
+  s.outcomeAt = Date.now();
+  s.updatedAt = Date.now();
+  localStorage.setItem(KEY, JSON.stringify(all));
+}
+
+/** Free-text search across titles, categories and everything said in a session. */
+export function searchSessions(query: string, sessions?: DecisionSession[]): DecisionSession[] {
+  const all = sessions ?? loadSessions();
+  const q = query.trim().toLowerCase();
+  if (!q) return all;
+  return all.filter((s) => {
+    const hay = [
+      s.title,
+      s.category,
+      s.outcomeNote ?? "",
+      ...s.messages.map((m) => extractText(m)),
+    ]
+      .join(" ")
+      .toLowerCase();
+    return q.split(/\s+/).every((w) => hay.includes(w));
+  });
 }

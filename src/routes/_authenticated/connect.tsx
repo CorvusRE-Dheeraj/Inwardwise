@@ -25,6 +25,7 @@ import {
 import { scheduleStoryCall } from "@/lib/connect-story-call.functions";
 import { ProductName } from "@/components/products/ProductChrome";
 import { ConnectOnly } from "@/components/connect/ConnectOnly";
+import { VoiceExperience } from "@/components/connect/VoiceExperience";
 
 export const Route = createFileRoute("/_authenticated/connect")({
   head: () => ({
@@ -172,6 +173,12 @@ function ConnectPage() {
 
       {/* Connect only path */}
       <ConnectOnly />
+
+      {/* Voice experiences shared with consent */}
+      <div className="mx-auto mt-14 w-[min(1100px,calc(100%-2rem))]">
+        <VoiceExperience />
+      </div>
+
 
       {/* SAUP */}
       <section className="mx-auto mt-14 w-[min(1100px,calc(100%-2rem))]">

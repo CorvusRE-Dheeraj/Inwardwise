@@ -1,8 +1,15 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
-import { Clock, BarChart3, Plus, Sparkles, Trash2, CheckCircle2 } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { BarChart3, Plus, Search, Trash2, CheckCircle2, XCircle, CircleSlash } from "lucide-react";
 import { STAGES } from "@/lib/ooi-stages";
-import { deleteSession, loadSessions, type DecisionSession } from "@/lib/ooi-storage";
+import {
+  deleteSession,
+  loadSessions,
+  searchSessions,
+  setOutcome,
+  type DecisionOutcome,
+  type DecisionSession,
+} from "@/lib/ooi-storage";
 
 export const Route = createFileRoute("/_authenticated/account/dashboard")({
   component: DashboardPage,
@@ -12,11 +19,14 @@ function DashboardPage() {
   const [sessions, setSessions] = useState<DecisionSession[]>([]);
   useEffect(() => { setSessions(loadSessions()); }, []);
 
-  const completed = sessions.filter((s) => s.stage >= 7);
-  const inProgress = sessions.filter((s) => s.stage < 7);
-  const avgStage = sessions.length ? (sessions.reduce((a, s) => a + s.stage, 0) / sessions.length).toFixed(1) : "0";
+  const [query, setQuery] = useState("");
+  const results = useMemo(() => searchSessions(query, sessions), [query, sessions]);
+
+  const count = (o: DecisionOutcome) => sessions.filter((s) => (s.outcome ?? "unmarked") === o).length;
 
   const remove = (id: string) => { deleteSession(id); setSessions(loadSessions()); };
+  const mark = (id: string, o: DecisionOutcome) => { setOutcome(id, o); setSessions(loadSessions()); };
+
 
   return (
     <div>
@@ -32,13 +42,25 @@ function DashboardPage() {
 
       <div className="mt-6 grid gap-3 md:grid-cols-4">
         <Stat icon={BarChart3} label="Total" value={sessions.length} />
-        <Stat icon={CheckCircle2} label="Completed" value={completed.length} />
-        <Stat icon={Clock} label="In progress" value={inProgress.length} />
-        <Stat icon={Sparkles} label="Avg. stage" value={avgStage} />
+        <Stat icon={CheckCircle2} label="Worked out" value={count("successful")} />
+        <Stat icon={XCircle} label="Did not work" value={count("failed")} />
+        <Stat icon={CircleSlash} label="Never acted on" value={count("not_attempted")} />
       </div>
 
-      <h2 className="mt-8 text-sm font-medium text-muted-foreground">Recent sessions</h2>
-      {sessions.length === 0 ? (
+      <div className="mt-6 flex items-center gap-2 rounded-full border border-foreground/10 px-4 py-2">
+        <Search className="h-4 w-4 text-muted-foreground" />
+        <input
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Search all your sessions"
+          className="w-full bg-transparent text-sm outline-none"
+        />
+      </div>
+
+      <h2 className="mt-8 text-sm font-medium text-muted-foreground">
+        {query ? `${results.length} matching sessions` : "Recent sessions"}
+      </h2>
+      {results.length === 0 ? (
         <div className="glass-strong mt-3 rounded-3xl p-10 text-center">
           <div className="font-display text-2xl">Nothing here yet</div>
           <p className="mt-2 text-sm text-muted-foreground">Start your first facilitated decision session.</p>
@@ -46,7 +68,7 @@ function DashboardPage() {
         </div>
       ) : (
         <ul className="mt-3 space-y-3">
-          {sessions.slice(0, 20).map((s) => {
+          {results.slice(0, 20).map((s) => {
             const stage = STAGES.find((x) => x.n === s.stage) ?? STAGES[0];
             const pct = Math.round((stage.n / STAGES.length) * 100);
             return (
@@ -67,6 +89,25 @@ function DashboardPage() {
                   <button onClick={() => remove(s.id)} className="text-muted-foreground transition hover:text-destructive" aria-label="Delete">
                     <Trash2 className="h-4 w-4" />
                   </button>
+                </div>
+                <div className="mt-3 flex flex-wrap items-center gap-2 border-t border-foreground/5 pt-3">
+                  <span className="text-[11px] text-muted-foreground">How did it turn out?</span>
+                  {([
+                    ["successful", "Worked out"],
+                    ["failed", "Did not work"],
+                    ["not_attempted", "Never acted on"],
+                  ] as [DecisionOutcome, string][]).map(([id, label]) => {
+                    const active = (s.outcome ?? "unmarked") === id;
+                    return (
+                      <button
+                        key={id}
+                        onClick={() => mark(s.id, active ? "unmarked" : id)}
+                        className={`rounded-full border px-3 py-1 text-[11px] transition ${active ? "border-transparent bg-foreground text-background" : "border-foreground/10 text-muted-foreground hover:text-foreground"}`}
+                      >
+                        {label}
+                      </button>
+                    );
+                  })}
                 </div>
               </li>
             );
