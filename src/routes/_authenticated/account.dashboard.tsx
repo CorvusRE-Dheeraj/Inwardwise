@@ -68,7 +68,7 @@ function DashboardPage() {
         </div>
       ) : (
         <ul className="mt-3 space-y-3">
-          {sessions.slice(0, 20).map((s) => {
+          {results.slice(0, 20).map((s) => {
             const stage = STAGES.find((x) => x.n === s.stage) ?? STAGES[0];
             const pct = Math.round((stage.n / STAGES.length) * 100);
             return (
