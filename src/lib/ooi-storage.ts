@@ -1,11 +1,19 @@
 // Local storage for OOOI decision conversations. Autosaved as user chats.
 import type { UIMessage } from "ai";
 
+/** How the decision turned out, as marked by the person themselves. */
+export type DecisionOutcome = "successful" | "failed" | "not_attempted" | "unmarked";
+
 export interface DecisionSession {
   id: string;
   title: string;
   category: string;
   stage: number;                 // 1..7 current stage detected from AI output
+  /** Outcome the person marked after living with the decision. */
+  outcome?: DecisionOutcome;
+  /** Free note about what happened, kept with the session. */
+  outcomeNote?: string;
+  outcomeAt?: number;
   messages: UIMessage[];
   /** Unsent text the person had typed, so a resumed session looks untouched. */
   draft?: string;
