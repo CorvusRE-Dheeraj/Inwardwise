@@ -87,3 +87,32 @@ export function extractText(m: UIMessage): string {
     .map((p) => p.text!)
     .join("");
 }
+
+export function setOutcome(id: string, outcome: DecisionOutcome, note?: string) {
+  const all = loadSessions();
+  const s = all.find((x) => x.id === id);
+  if (!s) return;
+  s.outcome = outcome;
+  s.outcomeNote = note ?? s.outcomeNote;
+  s.outcomeAt = Date.now();
+  s.updatedAt = Date.now();
+  localStorage.setItem(KEY, JSON.stringify(all));
+}
+
+/** Free-text search across titles, categories and everything said in a session. */
+export function searchSessions(query: string, sessions?: DecisionSession[]): DecisionSession[] {
+  const all = sessions ?? loadSessions();
+  const q = query.trim().toLowerCase();
+  if (!q) return all;
+  return all.filter((s) => {
+    const hay = [
+      s.title,
+      s.category,
+      s.outcomeNote ?? "",
+      ...s.messages.map((m) => extractText(m)),
+    ]
+      .join(" ")
+      .toLowerCase();
+    return q.split(/\s+/).every((w) => hay.includes(w));
+  });
+}
