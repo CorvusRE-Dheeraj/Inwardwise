@@ -28,7 +28,7 @@ function ClientDate() {
 }
 
 /* ---------- Word-by-word rise ---------- */
-function RiseWords({ text, className, delay = 0, italic = false }: { text: string; className?: string; delay?: number; italic?: boolean }) {
+function RiseWords({ text, className = "", delay = 0, italic = false }: { text: string; className?: string; delay?: number; italic?: boolean }) {
   return (
     <span className={className}>
       {text.split(" ").map((w, i) => (
