@@ -115,8 +115,8 @@ function SelfProduct() {
           />
         </Volume>
 
-        <div className="mt-20 grid gap-8 md:grid-cols-2">
-          <Volume n={<>V02 · <ProductName id="calm" /></>}>
+        <div className="grid gap-8 md:grid-cols-2">
+          <Volume className="!mt-20" n={<>V02 · <ProductName id="calm" /></>}>
             <h2 className="font-display text-[clamp(1.9rem,4vw,2.8rem)] tracking-tight">
               <ProductName id="calm" />
             </h2>
@@ -126,7 +126,7 @@ function SelfProduct() {
             <CtaRow actions={[{ label: "Calm", to: "/products/calm-mantra" }]} />
           </Volume>
 
-          <Volume n={<>V03 · <ProductName id="mantra" /></>}>
+          <Volume className="!mt-20" n={<>V03 · <ProductName id="mantra" /></>}>
             <h2 className="font-display text-[clamp(1.9rem,4vw,2.8rem)] tracking-tight">
               <ProductName id="mantra" />
             </h2>
