@@ -20,9 +20,17 @@ export const Route = createFileRoute("/products/self")({
   component: SelfProduct,
 });
 
-function Volume({ n, children }: { n: ReactNode; children: React.ReactNode }) {
+function Volume({
+  n,
+  children,
+  className = "",
+}: {
+  n: ReactNode;
+  children: React.ReactNode;
+  className?: string;
+}) {
   return (
-    <section className="mt-20 first:mt-0">
+    <section className={`mt-20 first:mt-0 ${className}`}>
       <div className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)]">{n}</div>
       <div className="hairline mt-4" />
       <div className="mt-8">{children}</div>
