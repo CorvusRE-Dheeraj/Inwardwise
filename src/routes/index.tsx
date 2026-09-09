@@ -71,7 +71,7 @@ function Landing() {
             <div className="col-span-12 md:col-span-1">
               <span className="font-mono-cap text-[color:var(--muted-foreground)]">§ 01</span>
             </div>
-            <h1 className="col-span-12 font-display text-[13vw] leading-[0.92] tracking-[-0.035em] text-[color:var(--ink)] md:col-span-11 md:text-[9.5rem]">
+            <h1 className="col-span-12 font-display max-w-4xl text-[clamp(2.4rem,7vw,5.5rem)] leading-[1.02] tracking-tight text-[color:var(--ink)] md:col-span-11">
               <RiseWords text="Life is About" />
               <br />
               <RiseWords text="Only Few Decisions" italic delay={0.35} />
