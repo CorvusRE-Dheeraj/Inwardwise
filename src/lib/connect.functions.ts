@@ -85,7 +85,23 @@ export const analyzeConnectPrompt = createServerFn({ method: "POST" })
     });
 
     const typedStoryRows = (storyRows ?? []) as PublishedStory[];
-    const stories = rankStories(typedStoryRows, category).slice(0, 8);
+    const ranked = rankStories(typedStoryRows, category).slice(0, 8);
+
+    // connect-audio is a private bucket, so the stored value is an object path,
+    // not a playable link. Mint short-lived signed URLs for the stories shown.
+    let stories = ranked;
+    if (ranked.some((s) => s.audio_url)) {
+      const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+      stories = await Promise.all(
+        ranked.map(async (s) => {
+          if (!s.audio_url) return s;
+          const { data: signed } = await supabaseAdmin.storage
+            .from("connect-audio")
+            .createSignedUrl(s.audio_url, 60 * 60);
+          return signed?.signedUrl ? { ...s, audio_url: signed.signedUrl } : { ...s, audio_url: null };
+        }),
+      );
+    }
     const groups = (groupRows ?? []).filter((g) => g.category === category);
 
     return {
