@@ -107,26 +107,28 @@ function SelfProduct() {
           />
         </Volume>
 
-        <Volume n={<>V02 · <ProductName id="calm" /></>}>
-          <h2 className="font-display text-[clamp(1.9rem,4vw,2.8rem)] tracking-tight">
-            <ProductName id="calm" />
-          </h2>
-          <p className="mt-4 max-w-2xl text-lg leading-relaxed text-[color:var(--muted-foreground)]">
-            Quiet the mental noise. Create space to reconnect with yourself.
-          </p>
-          <CtaRow actions={[{ label: "Calm", to: "/products/calm-mantra" }]} />
-        </Volume>
+        <div className="mt-20 grid gap-8 md:grid-cols-2">
+          <Volume n={<>V02 · <ProductName id="calm" /></>}>
+            <h2 className="font-display text-[clamp(1.9rem,4vw,2.8rem)] tracking-tight">
+              <ProductName id="calm" />
+            </h2>
+            <p className="mt-4 max-w-2xl text-lg leading-relaxed text-[color:var(--muted-foreground)]">
+              Quiet the mental noise. Create space to reconnect with yourself.
+            </p>
+            <CtaRow actions={[{ label: "Calm", to: "/products/calm-mantra" }]} />
+          </Volume>
 
-        <Volume n={<>V03 · <ProductName id="mantra" /></>}>
-          <h2 className="font-display text-[clamp(1.9rem,4vw,2.8rem)] tracking-tight">
-            <ProductName id="mantra" />
-          </h2>
-          <p className="mt-4 max-w-2xl text-lg leading-relaxed text-[color:var(--muted-foreground)]">
-            The messages you repeatedly tell yourself can influence how you approach your day. Make
-            them worth repeating.
-          </p>
-          <CtaRow actions={[{ label: "Mantra", to: "/products/calm-mantra" }]} />
-        </Volume>
+          <Volume n={<>V03 · <ProductName id="mantra" /></>}>
+            <h2 className="font-display text-[clamp(1.9rem,4vw,2.8rem)] tracking-tight">
+              <ProductName id="mantra" />
+            </h2>
+            <p className="mt-4 max-w-2xl text-lg leading-relaxed text-[color:var(--muted-foreground)]">
+              The messages you repeatedly tell yourself can influence how you approach your day. Make
+              them worth repeating.
+            </p>
+            <CtaRow actions={[{ label: "Mantra", to: "/products/calm-mantra" }]} />
+          </Volume>
+        </div>
       </div>
     </AppShell>
   );
