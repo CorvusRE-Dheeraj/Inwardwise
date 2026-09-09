@@ -28,7 +28,7 @@ function ClientDate() {
 }
 
 /* ---------- Word-by-word rise ---------- */
-function RiseWords({ text, className, delay = 0, italic = false }: { text: string; className?: string; delay?: number; italic?: boolean }) {
+function RiseWords({ text, className = "", delay = 0, italic = false }: { text: string; className?: string; delay?: number; italic?: boolean }) {
   return (
     <span className={className}>
       {text.split(" ").map((w, i) => (
@@ -74,7 +74,8 @@ function Landing() {
             <h1 className="col-span-12 font-display max-w-4xl text-[clamp(2.4rem,7vw,5.5rem)] leading-[1.02] tracking-tight text-[color:var(--ink)] md:col-span-11">
               <RiseWords text="Life is About" />
               <br />
-              <RiseWords text="Only Few Decisions" italic delay={0.35} />
+              <RiseWords text="Only Few" italic delay={0.35} />{" "}
+              <RiseWords text="Decisions" italic className="text-[color:var(--royal)]" delay={0.55} />
             </h1>
           </div>
 
