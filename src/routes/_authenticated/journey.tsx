@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { AppShell } from "@/components/AppShell";
 import { FREQUENCY_OPTIONS, NEUTRAL_FALLBACK, isCompletionPhrase } from "@/lib/journey";
@@ -120,6 +120,12 @@ function JourneyPage() {
           <p className="mt-4 text-lg leading-relaxed text-[color:var(--muted-foreground)]">
             Small experiences, thoughtfully chosen for you.
           </p>
+          <Link
+            to="/people-like-me"
+            className="mt-6 inline-flex min-h-11 items-center gap-2 rounded-full border border-[color:var(--ink)] px-5 text-sm transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)]"
+          >
+            People Like Me <span aria-hidden>→</span>
+          </Link>
         </header>
 
         {error && (
