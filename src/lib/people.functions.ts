@@ -149,7 +149,9 @@ export const getScenario = createServerFn({ method: "GET" })
           .order("sort_order", { ascending: true }),
         context.supabase
           .from("scenario_scenes")
-          .select("id, scene_number, body")
+          .select(
+            "id, scene_number, body, character_state, environment, animation, narration, duration_seconds",
+          )
           .eq("scenario_id", scenario.id)
           .eq("is_active", true)
           .order("scene_number", { ascending: true }),
