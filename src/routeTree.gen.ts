@@ -53,6 +53,7 @@ import { Route as AuthenticatedDecisionRouteImport } from './routes/_authenticat
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as AuthenticatedAccountRouteImport } from './routes/_authenticated/account'
+import { Route as AuthenticatedPeopleLikeMeIndexRouteImport } from './routes/_authenticated/people-like-me.index'
 import { Route as AuthenticatedConnectIndexRouteImport } from './routes/_authenticated/connect.index'
 import { Route as AuthenticatedAvatarIndexRouteImport } from './routes/_authenticated/avatar.index'
 import { Route as AuthenticatedAccountIndexRouteImport } from './routes/_authenticated/account.index'
@@ -297,6 +298,12 @@ const AuthenticatedAccountRoute = AuthenticatedAccountRouteImport.update({
   path: '/account',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedPeopleLikeMeIndexRoute =
+  AuthenticatedPeopleLikeMeIndexRouteImport.update({
+    id: '/people-like-me/',
+    path: '/people-like-me/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedConnectIndexRoute =
   AuthenticatedConnectIndexRouteImport.update({
     id: '/connect/',
@@ -507,6 +514,7 @@ export interface FileRoutesByFullPath {
   '/account/': typeof AuthenticatedAccountIndexRoute
   '/avatar/': typeof AuthenticatedAvatarIndexRoute
   '/connect/': typeof AuthenticatedConnectIndexRoute
+  '/people-like-me/': typeof AuthenticatedPeopleLikeMeIndexRoute
   '/avatar/dimension/$n': typeof AuthenticatedAvatarDimensionNRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
 }
@@ -574,6 +582,7 @@ export interface FileRoutesByTo {
   '/account': typeof AuthenticatedAccountIndexRoute
   '/avatar': typeof AuthenticatedAvatarIndexRoute
   '/connect': typeof AuthenticatedConnectIndexRoute
+  '/people-like-me': typeof AuthenticatedPeopleLikeMeIndexRoute
   '/avatar/dimension/$n': typeof AuthenticatedAvatarDimensionNRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
 }
@@ -645,6 +654,7 @@ export interface FileRoutesById {
   '/_authenticated/account/': typeof AuthenticatedAccountIndexRoute
   '/_authenticated/avatar/': typeof AuthenticatedAvatarIndexRoute
   '/_authenticated/connect/': typeof AuthenticatedConnectIndexRoute
+  '/_authenticated/people-like-me/': typeof AuthenticatedPeopleLikeMeIndexRoute
   '/_authenticated/avatar/dimension/$n': typeof AuthenticatedAvatarDimensionNRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
 }
@@ -716,6 +726,7 @@ export interface FileRouteTypes {
     | '/account/'
     | '/avatar/'
     | '/connect/'
+    | '/people-like-me/'
     | '/avatar/dimension/$n'
     | '/lovable/email/queue/process'
   fileRoutesByTo: FileRoutesByTo
@@ -783,6 +794,7 @@ export interface FileRouteTypes {
     | '/account'
     | '/avatar'
     | '/connect'
+    | '/people-like-me'
     | '/avatar/dimension/$n'
     | '/lovable/email/queue/process'
   id:
@@ -853,6 +865,7 @@ export interface FileRouteTypes {
     | '/_authenticated/account/'
     | '/_authenticated/avatar/'
     | '/_authenticated/connect/'
+    | '/_authenticated/people-like-me/'
     | '/_authenticated/avatar/dimension/$n'
     | '/lovable/email/queue/process'
   fileRoutesById: FileRoutesById
@@ -1212,6 +1225,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAccountRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/people-like-me/': {
+      id: '/_authenticated/people-like-me/'
+      path: '/people-like-me'
+      fullPath: '/people-like-me/'
+      preLoaderRoute: typeof AuthenticatedPeopleLikeMeIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/connect/': {
       id: '/_authenticated/connect/'
       path: '/connect'
@@ -1420,6 +1440,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedMeditationScheduleRoute: typeof AuthenticatedMeditationScheduleRoute
   AuthenticatedAvatarIndexRoute: typeof AuthenticatedAvatarIndexRoute
   AuthenticatedConnectIndexRoute: typeof AuthenticatedConnectIndexRoute
+  AuthenticatedPeopleLikeMeIndexRoute: typeof AuthenticatedPeopleLikeMeIndexRoute
   AuthenticatedAvatarDimensionNRoute: typeof AuthenticatedAvatarDimensionNRoute
 }
 
@@ -1444,6 +1465,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedMeditationScheduleRoute: AuthenticatedMeditationScheduleRoute,
   AuthenticatedAvatarIndexRoute: AuthenticatedAvatarIndexRoute,
   AuthenticatedConnectIndexRoute: AuthenticatedConnectIndexRoute,
+  AuthenticatedPeopleLikeMeIndexRoute: AuthenticatedPeopleLikeMeIndexRoute,
   AuthenticatedAvatarDimensionNRoute: AuthenticatedAvatarDimensionNRoute,
 }
 
