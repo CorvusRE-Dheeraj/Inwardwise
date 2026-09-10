@@ -51,9 +51,9 @@ import { Route as AdminActivitiesRouteImport } from './routes/admin.activities'
 import { Route as AuthenticatedJourneyRouteImport } from './routes/_authenticated/journey'
 import { Route as AuthenticatedDecisionRouteImport } from './routes/_authenticated/decision'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
-import { Route as AuthenticatedConnectRouteImport } from './routes/_authenticated/connect'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as AuthenticatedAccountRouteImport } from './routes/_authenticated/account'
+import { Route as AuthenticatedConnectIndexRouteImport } from './routes/_authenticated/connect.index'
 import { Route as AuthenticatedAvatarIndexRouteImport } from './routes/_authenticated/avatar.index'
 import { Route as AuthenticatedAccountIndexRouteImport } from './routes/_authenticated/account.index'
 import { Route as ApiPublicMeditationDispatchRouteImport } from './routes/api/public/meditation-dispatch'
@@ -281,11 +281,6 @@ const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const AuthenticatedConnectRoute = AuthenticatedConnectRouteImport.update({
-  id: '/connect',
-  path: '/connect',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
 const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
   id: '/admin',
   path: '/admin',
@@ -296,6 +291,12 @@ const AuthenticatedAccountRoute = AuthenticatedAccountRouteImport.update({
   path: '/account',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedConnectIndexRoute =
+  AuthenticatedConnectIndexRouteImport.update({
+    id: '/connect/',
+    path: '/connect/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedAvatarIndexRoute =
   AuthenticatedAvatarIndexRouteImport.update({
     id: '/avatar/',
@@ -413,7 +414,6 @@ export interface FileRoutesByFullPath {
   '/testimonials': typeof TestimonialsRoute
   '/account': typeof AuthenticatedAccountRouteWithChildren
   '/admin': typeof AuthenticatedAdminRoute
-  '/connect': typeof AuthenticatedConnectRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/decision': typeof AuthenticatedDecisionRoute
   '/journey': typeof AuthenticatedJourneyRoute
@@ -458,6 +458,7 @@ export interface FileRoutesByFullPath {
   '/api/public/meditation-dispatch': typeof ApiPublicMeditationDispatchRoute
   '/account/': typeof AuthenticatedAccountIndexRoute
   '/avatar/': typeof AuthenticatedAvatarIndexRoute
+  '/connect/': typeof AuthenticatedConnectIndexRoute
   '/avatar/dimension/$n': typeof AuthenticatedAvatarDimensionNRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
 }
@@ -474,7 +475,6 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/testimonials': typeof TestimonialsRoute
   '/admin': typeof AuthenticatedAdminRoute
-  '/connect': typeof AuthenticatedConnectRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/decision': typeof AuthenticatedDecisionRoute
   '/journey': typeof AuthenticatedJourneyRoute
@@ -519,6 +519,7 @@ export interface FileRoutesByTo {
   '/api/public/meditation-dispatch': typeof ApiPublicMeditationDispatchRoute
   '/account': typeof AuthenticatedAccountIndexRoute
   '/avatar': typeof AuthenticatedAvatarIndexRoute
+  '/connect': typeof AuthenticatedConnectIndexRoute
   '/avatar/dimension/$n': typeof AuthenticatedAvatarDimensionNRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
 }
@@ -539,7 +540,6 @@ export interface FileRoutesById {
   '/testimonials': typeof TestimonialsRoute
   '/_authenticated/account': typeof AuthenticatedAccountRouteWithChildren
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
-  '/_authenticated/connect': typeof AuthenticatedConnectRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/decision': typeof AuthenticatedDecisionRoute
   '/_authenticated/journey': typeof AuthenticatedJourneyRoute
@@ -584,6 +584,7 @@ export interface FileRoutesById {
   '/api/public/meditation-dispatch': typeof ApiPublicMeditationDispatchRoute
   '/_authenticated/account/': typeof AuthenticatedAccountIndexRoute
   '/_authenticated/avatar/': typeof AuthenticatedAvatarIndexRoute
+  '/_authenticated/connect/': typeof AuthenticatedConnectIndexRoute
   '/_authenticated/avatar/dimension/$n': typeof AuthenticatedAvatarDimensionNRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
 }
@@ -604,7 +605,6 @@ export interface FileRouteTypes {
     | '/testimonials'
     | '/account'
     | '/admin'
-    | '/connect'
     | '/dashboard'
     | '/decision'
     | '/journey'
@@ -649,6 +649,7 @@ export interface FileRouteTypes {
     | '/api/public/meditation-dispatch'
     | '/account/'
     | '/avatar/'
+    | '/connect/'
     | '/avatar/dimension/$n'
     | '/lovable/email/queue/process'
   fileRoutesByTo: FileRoutesByTo
@@ -665,7 +666,6 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/testimonials'
     | '/admin'
-    | '/connect'
     | '/dashboard'
     | '/decision'
     | '/journey'
@@ -710,6 +710,7 @@ export interface FileRouteTypes {
     | '/api/public/meditation-dispatch'
     | '/account'
     | '/avatar'
+    | '/connect'
     | '/avatar/dimension/$n'
     | '/lovable/email/queue/process'
   id:
@@ -729,7 +730,6 @@ export interface FileRouteTypes {
     | '/testimonials'
     | '/_authenticated/account'
     | '/_authenticated/admin'
-    | '/_authenticated/connect'
     | '/_authenticated/dashboard'
     | '/_authenticated/decision'
     | '/_authenticated/journey'
@@ -774,6 +774,7 @@ export interface FileRouteTypes {
     | '/api/public/meditation-dispatch'
     | '/_authenticated/account/'
     | '/_authenticated/avatar/'
+    | '/_authenticated/connect/'
     | '/_authenticated/avatar/dimension/$n'
     | '/lovable/email/queue/process'
   fileRoutesById: FileRoutesById
@@ -1119,13 +1120,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/connect': {
-      id: '/_authenticated/connect'
-      path: '/connect'
-      fullPath: '/connect'
-      preLoaderRoute: typeof AuthenticatedConnectRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
     '/_authenticated/admin': {
       id: '/_authenticated/admin'
       path: '/admin'
@@ -1138,6 +1132,13 @@ declare module '@tanstack/react-router' {
       path: '/account'
       fullPath: '/account'
       preLoaderRoute: typeof AuthenticatedAccountRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/connect/': {
+      id: '/_authenticated/connect/'
+      path: '/connect'
+      fullPath: '/connect/'
+      preLoaderRoute: typeof AuthenticatedConnectIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/avatar/': {
@@ -1282,7 +1283,6 @@ const AuthenticatedAccountRouteWithChildren =
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAccountRoute: typeof AuthenticatedAccountRouteWithChildren
   AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
-  AuthenticatedConnectRoute: typeof AuthenticatedConnectRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedDecisionRoute: typeof AuthenticatedDecisionRoute
   AuthenticatedJourneyRoute: typeof AuthenticatedJourneyRoute
@@ -1293,13 +1293,13 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedMeditationPracticeRoute: typeof AuthenticatedMeditationPracticeRoute
   AuthenticatedMeditationScheduleRoute: typeof AuthenticatedMeditationScheduleRoute
   AuthenticatedAvatarIndexRoute: typeof AuthenticatedAvatarIndexRoute
+  AuthenticatedConnectIndexRoute: typeof AuthenticatedConnectIndexRoute
   AuthenticatedAvatarDimensionNRoute: typeof AuthenticatedAvatarDimensionNRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAccountRoute: AuthenticatedAccountRouteWithChildren,
   AuthenticatedAdminRoute: AuthenticatedAdminRoute,
-  AuthenticatedConnectRoute: AuthenticatedConnectRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedDecisionRoute: AuthenticatedDecisionRoute,
   AuthenticatedJourneyRoute: AuthenticatedJourneyRoute,
@@ -1311,6 +1311,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedMeditationPracticeRoute: AuthenticatedMeditationPracticeRoute,
   AuthenticatedMeditationScheduleRoute: AuthenticatedMeditationScheduleRoute,
   AuthenticatedAvatarIndexRoute: AuthenticatedAvatarIndexRoute,
+  AuthenticatedConnectIndexRoute: AuthenticatedConnectIndexRoute,
   AuthenticatedAvatarDimensionNRoute: AuthenticatedAvatarDimensionNRoute,
 }
 
