@@ -68,6 +68,7 @@ export function AppShell({ children }: { children: ReactNode }) {
     { to: "/pricing", label: "Pricing" },
     { to: "/donate", label: "Donate" },
     { to: "/feedback", label: "Feedback" },
+    ...(user ? [{ to: "/people-like-me", label: "People Like Me" }] : []),
     ...(user ? [{ to: "/account", label: "Account" }] : []),
     ...(isAdmin ? [{ to: "/admin", label: "Admin" }] : []),
   ];
