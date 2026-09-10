@@ -165,21 +165,21 @@ function Landing() {
 
       {/* ============ VOLUME III, CONNECT ============ */}
       <Volume
-        eyebrow={<>Volume III · <ProductName id="connect" /></>}
+        eyebrow={<>Volume III · <ProductName id="connect" /> · Connect AI</>}
         title={
           <>
-            Connect, Be Yourself and{" "}
-            <em className="italic text-[color:var(--royal)]">Belong</em>
+            Connect AI, One Prompt and{" "}
+            <em className="italic text-[color:var(--royal)]">One Next Step</em>
           </>
         }
-        blurb={<>Speak with the <ProductName id="self" /> that knows you, and find your place among people without performing a version of yourself.</>}
+        blurb={<>Write what is going on for you. Connect AI reads it, chooses what is most relevant, a reading, an event, a group, a wider perspective, a recorded experience, a decision or your own <ProductName id="self" />, tells you why, and gives you the first useful thing.</>}
         actions={
           <>
             <Link
               to="/connect"
               className="inline-flex items-center gap-3 rounded-full bg-[color:var(--ink)] px-6 py-3.5 text-sm text-[color:var(--paper)] transition-transform duration-500 hover:-translate-y-0.5"
             >
-              Connect <span>→</span>
+              Connect AI <span>→</span>
             </Link>
             <Link
               to="/products"
