@@ -1966,28 +1966,43 @@ export type Database = {
       }
       scenario_scenes: {
         Row: {
+          animation: string | null
           body: string
+          character_state: string
           created_at: string
+          duration_seconds: number | null
+          environment: string | null
           id: string
           is_active: boolean
+          narration: string | null
           scenario_id: string
           scene_number: number
           updated_at: string
         }
         Insert: {
+          animation?: string | null
           body: string
+          character_state?: string
           created_at?: string
+          duration_seconds?: number | null
+          environment?: string | null
           id?: string
           is_active?: boolean
+          narration?: string | null
           scenario_id: string
           scene_number: number
           updated_at?: string
         }
         Update: {
+          animation?: string | null
           body?: string
+          character_state?: string
           created_at?: string
+          duration_seconds?: number | null
+          environment?: string | null
           id?: string
           is_active?: boolean
+          narration?: string | null
           scenario_id?: string
           scene_number?: number
           updated_at?: string

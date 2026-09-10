@@ -107,6 +107,16 @@ const SCENES: CrudConfig = {
     },
     { key: "scene_number", label: "Scene number", type: "number", required: true, inList: true },
     { key: "body", label: "Story text", type: "textarea", required: true, inList: true },
+    {
+      key: "character_state",
+      label: "Character state (neutral, thoughtful, concerned, uncertain, hopeful, relieved, reflective)",
+      type: "text",
+      inList: true,
+    },
+    { key: "environment", label: "Environment", type: "text", inList: true },
+    { key: "animation", label: "Animation override", type: "text" },
+    { key: "narration", label: "Narration", type: "textarea" },
+    { key: "duration_seconds", label: "Duration (seconds)", type: "number" },
   ],
 };
 

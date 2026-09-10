@@ -88,6 +88,11 @@ export type ScenarioScene = {
   id: string;
   number: number;
   body: string;
+  characterState: string;
+  environment: string | null;
+  animation: string | null;
+  narration: string | null;
+  durationSeconds: number | null;
   questions: {
     id: string;
     prompt: string;
@@ -144,7 +149,9 @@ export const getScenario = createServerFn({ method: "GET" })
           .order("sort_order", { ascending: true }),
         context.supabase
           .from("scenario_scenes")
-          .select("id, scene_number, body")
+          .select(
+            "id, scene_number, body, character_state, environment, animation, narration, duration_seconds",
+          )
           .eq("scenario_id", scenario.id)
           .eq("is_active", true)
           .order("scene_number", { ascending: true }),
@@ -192,6 +199,11 @@ export const getScenario = createServerFn({ method: "GET" })
         id: s.id,
         number: s.scene_number,
         body: s.body,
+        characterState: s.character_state ?? "neutral",
+        environment: s.environment ?? null,
+        animation: s.animation ?? null,
+        narration: s.narration ?? null,
+        durationSeconds: s.duration_seconds ?? null,
         questions: (questions ?? [])
           .filter((q) => q.scene_id === s.id)
           .map((q) => ({

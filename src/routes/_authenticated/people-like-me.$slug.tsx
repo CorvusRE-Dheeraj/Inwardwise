@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { createFileRoute, Link, useParams } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { AppShell } from "@/components/AppShell";
-import { CharacterAvatar } from "@/components/people/CharacterAvatar";
+import { AnimatedCharacter } from "@/components/people/AnimatedCharacter";
 import {
   getScenario,
   saveScenarioProgress,
@@ -141,7 +141,14 @@ function StoryPage() {
     <AppShell>
       <div className="mx-auto w-[min(900px,calc(100%-2rem))] py-12 md:py-16">
         <div className="flex items-center gap-4">
-          <CharacterAvatar avatarKey={detail.character.avatarKey} name={detail.character.name} size={64} />
+          <AnimatedCharacter
+            avatarKey={detail.character.avatarKey}
+            name={detail.character.name}
+            state={scene?.characterState}
+            environment={scene?.environment}
+            animation={scene?.animation}
+            size={84}
+          />
           <div>
             <div className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)]">
               Fictional scenario
@@ -188,9 +195,39 @@ function StoryPage() {
                 The story is paused here. It will be waiting when you come back.
               </p>
             ) : (
-              <article className="mt-6 text-[16px] leading-relaxed text-justify">
-                {scene.body}
-              </article>
+              <>
+                <div className="mt-6 flex flex-col items-center gap-4 rounded-xl border border-[color:var(--rule)] p-5 sm:flex-row sm:items-center sm:gap-6">
+                  <AnimatedCharacter
+                    key={scene.id}
+                    avatarKey={detail.character.avatarKey}
+                    name={detail.character.name}
+                    state={scene.characterState}
+                    environment={scene.environment}
+                    animation={scene.animation}
+                    size={132}
+                  />
+                  <div className="text-center sm:text-left">
+                    {!scene.environment && !scene.narration && (
+                      <p className="text-sm text-[color:var(--muted-foreground)]">
+                        {detail.character.name} is with you in this scene.
+                      </p>
+                    )}
+                    {scene.environment && (
+                      <div className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)]">
+                        {scene.environment}
+                      </div>
+                    )}
+                    {scene.narration && (
+                      <p className="mt-2 text-[15px] italic leading-relaxed text-[color:var(--muted-foreground)]">
+                        {scene.narration}
+                      </p>
+                    )}
+                  </div>
+                </div>
+                <article className="mt-6 text-[16px] leading-relaxed text-justify">
+                  {scene.body}
+                </article>
+              </>
             )}
 
             {!paused &&
