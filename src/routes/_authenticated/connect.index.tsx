@@ -28,7 +28,7 @@ import { ConnectOnly } from "@/components/connect/ConnectOnly";
 import { ConnectPathways } from "@/components/connect/ConnectPathways";
 import { VoiceExperience } from "@/components/connect/VoiceExperience";
 
-export const Route = createFileRoute("/_authenticated/connect")({
+export const Route = createFileRoute("/_authenticated/connect/")({
   head: () => ({
     meta: [
       { title: "Connect, Be Yourself and Belong | InwardWise" },
