@@ -36,6 +36,7 @@ import { Route as AdminTasksRouteImport } from './routes/admin.tasks'
 import { Route as AdminSettingsRouteImport } from './routes/admin.settings'
 import { Route as AdminRolesRouteImport } from './routes/admin.roles'
 import { Route as AdminReportsRouteImport } from './routes/admin.reports'
+import { Route as AdminPeopleLikeMeRouteImport } from './routes/admin.people-like-me'
 import { Route as AdminOpportunitiesRouteImport } from './routes/admin.opportunities'
 import { Route as AdminMarketingLeadsRouteImport } from './routes/admin.marketing-leads'
 import { Route as AdminLoginRouteImport } from './routes/admin.login'
@@ -61,6 +62,7 @@ import { Route as ApiPublicMeditationDispatchRouteImport } from './routes/api/pu
 import { Route as ApiPublicConnectStoryDispatchRouteImport } from './routes/api/public/connect-story-dispatch'
 import { Route as ApiPublicConnectStoryCallWebhookRouteImport } from './routes/api/public/connect-story-call-webhook'
 import { Route as ApiPublicAvatarConsultDispatchRouteImport } from './routes/api/public/avatar-consult-dispatch'
+import { Route as AuthenticatedPeopleLikeMeSlugRouteImport } from './routes/_authenticated/people-like-me.$slug'
 import { Route as AuthenticatedMeditationScheduleRouteImport } from './routes/_authenticated/meditation.schedule'
 import { Route as AuthenticatedMeditationPracticeRouteImport } from './routes/_authenticated/meditation.practice'
 import { Route as AuthenticatedConnectShareRouteImport } from './routes/_authenticated/connect.share'
@@ -213,6 +215,11 @@ const AdminReportsRoute = AdminReportsRouteImport.update({
   path: '/admin/reports',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminPeopleLikeMeRoute = AdminPeopleLikeMeRouteImport.update({
+  id: '/admin/people-like-me',
+  path: '/admin/people-like-me',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminOpportunitiesRoute = AdminOpportunitiesRouteImport.update({
   id: '/admin/opportunities',
   path: '/admin/opportunities',
@@ -346,6 +353,12 @@ const ApiPublicAvatarConsultDispatchRoute =
     path: '/api/public/avatar-consult-dispatch',
     getParentRoute: () => rootRouteImport,
   } as any)
+const AuthenticatedPeopleLikeMeSlugRoute =
+  AuthenticatedPeopleLikeMeSlugRouteImport.update({
+    id: '/people-like-me/$slug',
+    path: '/people-like-me/$slug',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedMeditationScheduleRoute =
   AuthenticatedMeditationScheduleRouteImport.update({
     id: '/meditation/schedule',
@@ -478,6 +491,7 @@ export interface FileRoutesByFullPath {
   '/admin/login': typeof AdminLoginRoute
   '/admin/marketing-leads': typeof AdminMarketingLeadsRoute
   '/admin/opportunities': typeof AdminOpportunitiesRoute
+  '/admin/people-like-me': typeof AdminPeopleLikeMeRoute
   '/admin/reports': typeof AdminReportsRoute
   '/admin/roles': typeof AdminRolesRoute
   '/admin/settings': typeof AdminSettingsRoute
@@ -507,6 +521,7 @@ export interface FileRoutesByFullPath {
   '/connect/share': typeof AuthenticatedConnectShareRoute
   '/meditation/practice': typeof AuthenticatedMeditationPracticeRoute
   '/meditation/schedule': typeof AuthenticatedMeditationScheduleRoute
+  '/people-like-me/$slug': typeof AuthenticatedPeopleLikeMeSlugRoute
   '/api/public/avatar-consult-dispatch': typeof ApiPublicAvatarConsultDispatchRoute
   '/api/public/connect-story-call-webhook': typeof ApiPublicConnectStoryCallWebhookRoute
   '/api/public/connect-story-dispatch': typeof ApiPublicConnectStoryDispatchRoute
@@ -546,6 +561,7 @@ export interface FileRoutesByTo {
   '/admin/login': typeof AdminLoginRoute
   '/admin/marketing-leads': typeof AdminMarketingLeadsRoute
   '/admin/opportunities': typeof AdminOpportunitiesRoute
+  '/admin/people-like-me': typeof AdminPeopleLikeMeRoute
   '/admin/reports': typeof AdminReportsRoute
   '/admin/roles': typeof AdminRolesRoute
   '/admin/settings': typeof AdminSettingsRoute
@@ -575,6 +591,7 @@ export interface FileRoutesByTo {
   '/connect/share': typeof AuthenticatedConnectShareRoute
   '/meditation/practice': typeof AuthenticatedMeditationPracticeRoute
   '/meditation/schedule': typeof AuthenticatedMeditationScheduleRoute
+  '/people-like-me/$slug': typeof AuthenticatedPeopleLikeMeSlugRoute
   '/api/public/avatar-consult-dispatch': typeof ApiPublicAvatarConsultDispatchRoute
   '/api/public/connect-story-call-webhook': typeof ApiPublicConnectStoryCallWebhookRoute
   '/api/public/connect-story-dispatch': typeof ApiPublicConnectStoryDispatchRoute
@@ -618,6 +635,7 @@ export interface FileRoutesById {
   '/admin/login': typeof AdminLoginRoute
   '/admin/marketing-leads': typeof AdminMarketingLeadsRoute
   '/admin/opportunities': typeof AdminOpportunitiesRoute
+  '/admin/people-like-me': typeof AdminPeopleLikeMeRoute
   '/admin/reports': typeof AdminReportsRoute
   '/admin/roles': typeof AdminRolesRoute
   '/admin/settings': typeof AdminSettingsRoute
@@ -647,6 +665,7 @@ export interface FileRoutesById {
   '/_authenticated/connect/share': typeof AuthenticatedConnectShareRoute
   '/_authenticated/meditation/practice': typeof AuthenticatedMeditationPracticeRoute
   '/_authenticated/meditation/schedule': typeof AuthenticatedMeditationScheduleRoute
+  '/_authenticated/people-like-me/$slug': typeof AuthenticatedPeopleLikeMeSlugRoute
   '/api/public/avatar-consult-dispatch': typeof ApiPublicAvatarConsultDispatchRoute
   '/api/public/connect-story-call-webhook': typeof ApiPublicConnectStoryCallWebhookRoute
   '/api/public/connect-story-dispatch': typeof ApiPublicConnectStoryDispatchRoute
@@ -690,6 +709,7 @@ export interface FileRouteTypes {
     | '/admin/login'
     | '/admin/marketing-leads'
     | '/admin/opportunities'
+    | '/admin/people-like-me'
     | '/admin/reports'
     | '/admin/roles'
     | '/admin/settings'
@@ -719,6 +739,7 @@ export interface FileRouteTypes {
     | '/connect/share'
     | '/meditation/practice'
     | '/meditation/schedule'
+    | '/people-like-me/$slug'
     | '/api/public/avatar-consult-dispatch'
     | '/api/public/connect-story-call-webhook'
     | '/api/public/connect-story-dispatch'
@@ -758,6 +779,7 @@ export interface FileRouteTypes {
     | '/admin/login'
     | '/admin/marketing-leads'
     | '/admin/opportunities'
+    | '/admin/people-like-me'
     | '/admin/reports'
     | '/admin/roles'
     | '/admin/settings'
@@ -787,6 +809,7 @@ export interface FileRouteTypes {
     | '/connect/share'
     | '/meditation/practice'
     | '/meditation/schedule'
+    | '/people-like-me/$slug'
     | '/api/public/avatar-consult-dispatch'
     | '/api/public/connect-story-call-webhook'
     | '/api/public/connect-story-dispatch'
@@ -829,6 +852,7 @@ export interface FileRouteTypes {
     | '/admin/login'
     | '/admin/marketing-leads'
     | '/admin/opportunities'
+    | '/admin/people-like-me'
     | '/admin/reports'
     | '/admin/roles'
     | '/admin/settings'
@@ -858,6 +882,7 @@ export interface FileRouteTypes {
     | '/_authenticated/connect/share'
     | '/_authenticated/meditation/practice'
     | '/_authenticated/meditation/schedule'
+    | '/_authenticated/people-like-me/$slug'
     | '/api/public/avatar-consult-dispatch'
     | '/api/public/connect-story-call-webhook'
     | '/api/public/connect-story-dispatch'
@@ -896,6 +921,7 @@ export interface RootRouteChildren {
   AdminLoginRoute: typeof AdminLoginRoute
   AdminMarketingLeadsRoute: typeof AdminMarketingLeadsRoute
   AdminOpportunitiesRoute: typeof AdminOpportunitiesRoute
+  AdminPeopleLikeMeRoute: typeof AdminPeopleLikeMeRoute
   AdminReportsRoute: typeof AdminReportsRoute
   AdminRolesRoute: typeof AdminRolesRoute
   AdminSettingsRoute: typeof AdminSettingsRoute
@@ -1106,6 +1132,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminReportsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/people-like-me': {
+      id: '/admin/people-like-me'
+      path: '/admin/people-like-me'
+      fullPath: '/admin/people-like-me'
+      preLoaderRoute: typeof AdminPeopleLikeMeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/opportunities': {
       id: '/admin/opportunities'
       path: '/admin/opportunities'
@@ -1281,6 +1314,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicAvatarConsultDispatchRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/people-like-me/$slug': {
+      id: '/_authenticated/people-like-me/$slug'
+      path: '/people-like-me/$slug'
+      fullPath: '/people-like-me/$slug'
+      preLoaderRoute: typeof AuthenticatedPeopleLikeMeSlugRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/meditation/schedule': {
       id: '/_authenticated/meditation/schedule'
       path: '/meditation/schedule'
@@ -1438,6 +1478,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedConnectShareRoute: typeof AuthenticatedConnectShareRoute
   AuthenticatedMeditationPracticeRoute: typeof AuthenticatedMeditationPracticeRoute
   AuthenticatedMeditationScheduleRoute: typeof AuthenticatedMeditationScheduleRoute
+  AuthenticatedPeopleLikeMeSlugRoute: typeof AuthenticatedPeopleLikeMeSlugRoute
   AuthenticatedAvatarIndexRoute: typeof AuthenticatedAvatarIndexRoute
   AuthenticatedConnectIndexRoute: typeof AuthenticatedConnectIndexRoute
   AuthenticatedPeopleLikeMeIndexRoute: typeof AuthenticatedPeopleLikeMeIndexRoute
@@ -1463,6 +1504,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedConnectShareRoute: AuthenticatedConnectShareRoute,
   AuthenticatedMeditationPracticeRoute: AuthenticatedMeditationPracticeRoute,
   AuthenticatedMeditationScheduleRoute: AuthenticatedMeditationScheduleRoute,
+  AuthenticatedPeopleLikeMeSlugRoute: AuthenticatedPeopleLikeMeSlugRoute,
   AuthenticatedAvatarIndexRoute: AuthenticatedAvatarIndexRoute,
   AuthenticatedConnectIndexRoute: AuthenticatedConnectIndexRoute,
   AuthenticatedPeopleLikeMeIndexRoute: AuthenticatedPeopleLikeMeIndexRoute,
@@ -1510,6 +1552,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminLoginRoute: AdminLoginRoute,
   AdminMarketingLeadsRoute: AdminMarketingLeadsRoute,
   AdminOpportunitiesRoute: AdminOpportunitiesRoute,
+  AdminPeopleLikeMeRoute: AdminPeopleLikeMeRoute,
   AdminReportsRoute: AdminReportsRoute,
   AdminRolesRoute: AdminRolesRoute,
   AdminSettingsRoute: AdminSettingsRoute,
