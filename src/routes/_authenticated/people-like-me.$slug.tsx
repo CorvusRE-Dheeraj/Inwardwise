@@ -207,6 +207,11 @@ function StoryPage() {
                     size={132}
                   />
                   <div className="text-center sm:text-left">
+                    {!scene.environment && !scene.narration && (
+                      <p className="text-sm text-[color:var(--muted-foreground)]">
+                        {detail.character.name} is with you in this scene.
+                      </p>
+                    )}
                     {scene.environment && (
                       <div className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)]">
                         {scene.environment}
