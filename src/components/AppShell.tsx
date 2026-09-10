@@ -119,7 +119,7 @@ export function AppShell({ children }: { children: ReactNode }) {
             </span>
           </Link>
 
-          <nav className="hidden items-center gap-7 md:flex">
+          <nav className="hidden items-center gap-7 md:flex md:ml-8 lg:ml-12">
             <div className="relative" onMouseEnter={() => setStartOpen(true)} onMouseLeave={() => setStartOpen(false)}>
               <button
                 onClick={() => setStartOpen((v) => !v)}
