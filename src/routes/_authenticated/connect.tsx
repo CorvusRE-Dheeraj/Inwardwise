@@ -25,6 +25,7 @@ import {
 import { scheduleStoryCall } from "@/lib/connect-story-call.functions";
 import { ProductName } from "@/components/products/ProductChrome";
 import { ConnectOnly } from "@/components/connect/ConnectOnly";
+import { ConnectPathways } from "@/components/connect/ConnectPathways";
 import { VoiceExperience } from "@/components/connect/VoiceExperience";
 
 export const Route = createFileRoute("/_authenticated/connect")({
@@ -141,7 +142,7 @@ function ConnectPage() {
           <div className="hairline mt-4" />
 
           <h1 className="font-display mt-12 max-w-3xl text-[clamp(2.6rem,8vw,5.2rem)] leading-[0.98] tracking-tight">
-            Connect
+            Connect <em className="italic text-[color:var(--royal)]">AI</em>
           </h1>
           <p className="mt-6 max-w-2xl font-display text-[clamp(1.3rem,3vw,2rem)] italic leading-snug text-[color:var(--royal)]">
             Be yourself. Discover that you are not alone.
@@ -170,6 +171,9 @@ function ConnectPage() {
 
         </div>
       </section>
+
+      {/* Connect AI pathway map */}
+      <ConnectPathways />
 
       {/* Connect only path */}
       <ConnectOnly />
