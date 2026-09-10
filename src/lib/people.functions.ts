@@ -199,6 +199,11 @@ export const getScenario = createServerFn({ method: "GET" })
         id: s.id,
         number: s.scene_number,
         body: s.body,
+        characterState: s.character_state ?? "neutral",
+        environment: s.environment ?? null,
+        animation: s.animation ?? null,
+        narration: s.narration ?? null,
+        durationSeconds: s.duration_seconds ?? null,
         questions: (questions ?? [])
           .filter((q) => q.scene_id === s.id)
           .map((q) => ({
