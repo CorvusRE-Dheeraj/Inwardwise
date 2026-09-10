@@ -17,36 +17,48 @@ const PATHWAYS: Pathway[] = [
     icon: BookOpen,
     purpose: "Reading that is relevant to what you described, sent in small pieces.",
     output: "A matched excerpt, why it fits, and one follow-up action.",
+    to: "/connect/book",
+    action: "Open Book",
   },
   {
     name: "Connect Events",
     icon: CalendarDays,
     purpose: "Local or online gatherings where you can take part rather than read alone.",
     output: "An event that fits your prompt, with details or alternatives.",
+    to: "/connect/events",
+    action: "Find Events",
   },
   {
     name: "Connect Membership",
     icon: Users,
     purpose: "Groups and networks you can be part of over time.",
     output: "A relevant group, what is expected of members, and how to join.",
+    to: "/connect/membership",
+    action: "See Groups",
   },
   {
     name: "Connect Belonging",
     icon: Heart,
     purpose: "Gentle ways to feel less isolated and more socially at home.",
     output: "A safe belonging experience or community, and a small next step.",
+    to: "/connect/belonging",
+    action: "Find Belonging",
   },
   {
     name: "Connect Oneness",
     icon: Globe2,
     purpose: "A wider view that places your situation inside a larger picture.",
     output: "A researched perspective piece and one reflection prompt.",
+    to: "/connect/oneness",
+    action: "Widen the View",
   },
   {
     name: "Connect Share",
     icon: Mic,
     purpose: "Record your own experience for someone else, anonymously.",
     output: "A consent-led contribution that is reviewed before anyone hears it.",
+    to: "/connect/share",
+    action: "Share Experience",
   },
   {
     name: "Connect Decision",
@@ -65,6 +77,7 @@ const PATHWAYS: Pathway[] = [
     action: "Self Aware",
   },
 ];
+
 
 /**
  * The Connect AI pathway map. Connect AI reads a prompt and chooses one of these

@@ -62,8 +62,10 @@ import { Route as ApiPublicConnectStoryCallWebhookRouteImport } from './routes/a
 import { Route as ApiPublicAvatarConsultDispatchRouteImport } from './routes/api/public/avatar-consult-dispatch'
 import { Route as AuthenticatedMeditationScheduleRouteImport } from './routes/_authenticated/meditation.schedule'
 import { Route as AuthenticatedMeditationPracticeRouteImport } from './routes/_authenticated/meditation.practice'
+import { Route as AuthenticatedConnectShareRouteImport } from './routes/_authenticated/connect.share'
 import { Route as AuthenticatedConnectOnenessRouteImport } from './routes/_authenticated/connect.oneness'
 import { Route as AuthenticatedConnectMembershipRouteImport } from './routes/_authenticated/connect.membership'
+import { Route as AuthenticatedConnectEventsRouteImport } from './routes/_authenticated/connect.events'
 import { Route as AuthenticatedConnectBookRouteImport } from './routes/_authenticated/connect.book'
 import { Route as AuthenticatedConnectBelongingRouteImport } from './routes/_authenticated/connect.belonging'
 import { Route as AuthenticatedAvatarLibraryRouteImport } from './routes/_authenticated/avatar.library'
@@ -349,6 +351,12 @@ const AuthenticatedMeditationPracticeRoute =
     path: '/meditation/practice',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedConnectShareRoute =
+  AuthenticatedConnectShareRouteImport.update({
+    id: '/connect/share',
+    path: '/connect/share',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedConnectOnenessRoute =
   AuthenticatedConnectOnenessRouteImport.update({
     id: '/connect/oneness',
@@ -359,6 +367,12 @@ const AuthenticatedConnectMembershipRoute =
   AuthenticatedConnectMembershipRouteImport.update({
     id: '/connect/membership',
     path: '/connect/membership',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedConnectEventsRoute =
+  AuthenticatedConnectEventsRouteImport.update({
+    id: '/connect/events',
+    path: '/connect/events',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedConnectBookRoute =
@@ -480,8 +494,10 @@ export interface FileRoutesByFullPath {
   '/avatar/library': typeof AuthenticatedAvatarLibraryRoute
   '/connect/belonging': typeof AuthenticatedConnectBelongingRoute
   '/connect/book': typeof AuthenticatedConnectBookRoute
+  '/connect/events': typeof AuthenticatedConnectEventsRoute
   '/connect/membership': typeof AuthenticatedConnectMembershipRoute
   '/connect/oneness': typeof AuthenticatedConnectOnenessRoute
+  '/connect/share': typeof AuthenticatedConnectShareRoute
   '/meditation/practice': typeof AuthenticatedMeditationPracticeRoute
   '/meditation/schedule': typeof AuthenticatedMeditationScheduleRoute
   '/api/public/avatar-consult-dispatch': typeof ApiPublicAvatarConsultDispatchRoute
@@ -545,8 +561,10 @@ export interface FileRoutesByTo {
   '/avatar/library': typeof AuthenticatedAvatarLibraryRoute
   '/connect/belonging': typeof AuthenticatedConnectBelongingRoute
   '/connect/book': typeof AuthenticatedConnectBookRoute
+  '/connect/events': typeof AuthenticatedConnectEventsRoute
   '/connect/membership': typeof AuthenticatedConnectMembershipRoute
   '/connect/oneness': typeof AuthenticatedConnectOnenessRoute
+  '/connect/share': typeof AuthenticatedConnectShareRoute
   '/meditation/practice': typeof AuthenticatedMeditationPracticeRoute
   '/meditation/schedule': typeof AuthenticatedMeditationScheduleRoute
   '/api/public/avatar-consult-dispatch': typeof ApiPublicAvatarConsultDispatchRoute
@@ -614,8 +632,10 @@ export interface FileRoutesById {
   '/_authenticated/avatar/library': typeof AuthenticatedAvatarLibraryRoute
   '/_authenticated/connect/belonging': typeof AuthenticatedConnectBelongingRoute
   '/_authenticated/connect/book': typeof AuthenticatedConnectBookRoute
+  '/_authenticated/connect/events': typeof AuthenticatedConnectEventsRoute
   '/_authenticated/connect/membership': typeof AuthenticatedConnectMembershipRoute
   '/_authenticated/connect/oneness': typeof AuthenticatedConnectOnenessRoute
+  '/_authenticated/connect/share': typeof AuthenticatedConnectShareRoute
   '/_authenticated/meditation/practice': typeof AuthenticatedMeditationPracticeRoute
   '/_authenticated/meditation/schedule': typeof AuthenticatedMeditationScheduleRoute
   '/api/public/avatar-consult-dispatch': typeof ApiPublicAvatarConsultDispatchRoute
@@ -683,8 +703,10 @@ export interface FileRouteTypes {
     | '/avatar/library'
     | '/connect/belonging'
     | '/connect/book'
+    | '/connect/events'
     | '/connect/membership'
     | '/connect/oneness'
+    | '/connect/share'
     | '/meditation/practice'
     | '/meditation/schedule'
     | '/api/public/avatar-consult-dispatch'
@@ -748,8 +770,10 @@ export interface FileRouteTypes {
     | '/avatar/library'
     | '/connect/belonging'
     | '/connect/book'
+    | '/connect/events'
     | '/connect/membership'
     | '/connect/oneness'
+    | '/connect/share'
     | '/meditation/practice'
     | '/meditation/schedule'
     | '/api/public/avatar-consult-dispatch'
@@ -816,8 +840,10 @@ export interface FileRouteTypes {
     | '/_authenticated/avatar/library'
     | '/_authenticated/connect/belonging'
     | '/_authenticated/connect/book'
+    | '/_authenticated/connect/events'
     | '/_authenticated/connect/membership'
     | '/_authenticated/connect/oneness'
+    | '/_authenticated/connect/share'
     | '/_authenticated/meditation/practice'
     | '/_authenticated/meditation/schedule'
     | '/api/public/avatar-consult-dispatch'
@@ -1249,6 +1275,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedMeditationPracticeRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/connect/share': {
+      id: '/_authenticated/connect/share'
+      path: '/connect/share'
+      fullPath: '/connect/share'
+      preLoaderRoute: typeof AuthenticatedConnectShareRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/connect/oneness': {
       id: '/_authenticated/connect/oneness'
       path: '/connect/oneness'
@@ -1261,6 +1294,13 @@ declare module '@tanstack/react-router' {
       path: '/connect/membership'
       fullPath: '/connect/membership'
       preLoaderRoute: typeof AuthenticatedConnectMembershipRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/connect/events': {
+      id: '/_authenticated/connect/events'
+      path: '/connect/events'
+      fullPath: '/connect/events'
+      preLoaderRoute: typeof AuthenticatedConnectEventsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/connect/book': {
@@ -1372,8 +1412,10 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAvatarLibraryRoute: typeof AuthenticatedAvatarLibraryRoute
   AuthenticatedConnectBelongingRoute: typeof AuthenticatedConnectBelongingRoute
   AuthenticatedConnectBookRoute: typeof AuthenticatedConnectBookRoute
+  AuthenticatedConnectEventsRoute: typeof AuthenticatedConnectEventsRoute
   AuthenticatedConnectMembershipRoute: typeof AuthenticatedConnectMembershipRoute
   AuthenticatedConnectOnenessRoute: typeof AuthenticatedConnectOnenessRoute
+  AuthenticatedConnectShareRoute: typeof AuthenticatedConnectShareRoute
   AuthenticatedMeditationPracticeRoute: typeof AuthenticatedMeditationPracticeRoute
   AuthenticatedMeditationScheduleRoute: typeof AuthenticatedMeditationScheduleRoute
   AuthenticatedAvatarIndexRoute: typeof AuthenticatedAvatarIndexRoute
@@ -1394,8 +1436,10 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAvatarLibraryRoute: AuthenticatedAvatarLibraryRoute,
   AuthenticatedConnectBelongingRoute: AuthenticatedConnectBelongingRoute,
   AuthenticatedConnectBookRoute: AuthenticatedConnectBookRoute,
+  AuthenticatedConnectEventsRoute: AuthenticatedConnectEventsRoute,
   AuthenticatedConnectMembershipRoute: AuthenticatedConnectMembershipRoute,
   AuthenticatedConnectOnenessRoute: AuthenticatedConnectOnenessRoute,
+  AuthenticatedConnectShareRoute: AuthenticatedConnectShareRoute,
   AuthenticatedMeditationPracticeRoute: AuthenticatedMeditationPracticeRoute,
   AuthenticatedMeditationScheduleRoute: AuthenticatedMeditationScheduleRoute,
   AuthenticatedAvatarIndexRoute: AuthenticatedAvatarIndexRoute,
