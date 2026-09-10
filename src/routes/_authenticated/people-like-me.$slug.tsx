@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { createFileRoute, Link, useParams } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { AppShell } from "@/components/AppShell";
-import { CharacterAvatar } from "@/components/people/CharacterAvatar";
+import { AnimatedCharacter } from "@/components/people/AnimatedCharacter";
 import {
   getScenario,
   saveScenarioProgress,
