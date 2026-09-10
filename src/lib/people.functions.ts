@@ -88,6 +88,11 @@ export type ScenarioScene = {
   id: string;
   number: number;
   body: string;
+  characterState: string;
+  environment: string | null;
+  animation: string | null;
+  narration: string | null;
+  durationSeconds: number | null;
   questions: {
     id: string;
     prompt: string;
