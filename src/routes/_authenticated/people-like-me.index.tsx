@@ -69,12 +69,58 @@ function PeopleLikeMePage() {
             No stories have been published yet.
           </p>
         ) : (
-          <div className="mt-10 grid gap-6 md:grid-cols-2">
-            {cards.map((c) => (
-              <article
-                key={c.slug}
-                className="flex flex-col rounded-2xl border border-[color:var(--rule)] p-6 md:p-7"
-              >
+          <StoryGroups cards={cards} />
+        )}
+      </div>
+    </AppShell>
+  );
+}
+
+function StoryGroups({ cards }: { cards: CharacterCard[] }) {
+  const personalised = cards.filter((c) => c.match && c.scenario);
+  const others = cards.filter((c) => !personalised.includes(c));
+
+  return (
+    <>
+      {personalised.length > 0 && (
+        <section className="mt-12">
+          <h2 className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)]">
+            Personalised for you
+          </h2>
+          <div className="mt-5 grid gap-6 md:grid-cols-2">
+            {personalised.map((c) => (
+              <StoryCard key={c.slug} card={c} highlight />
+            ))}
+          </div>
+        </section>
+      )}
+
+      <section className="mt-12">
+        {personalised.length > 0 && (
+          <h2 className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)]">
+            Other stories
+          </h2>
+        )}
+        <div className="mt-5 grid gap-6 md:grid-cols-2">
+          {others.map((c) => (
+            <StoryCard key={c.slug} card={c} />
+          ))}
+        </div>
+      </section>
+    </>
+  );
+}
+
+function StoryCard({ card: c, highlight = false }: { card: CharacterCard; highlight?: boolean }) {
+  return (
+    <>
+      <article
+        className={`flex flex-col rounded-2xl border p-6 md:p-7 ${
+          highlight
+            ? "border-[color:var(--royal)]/40 bg-[color:var(--royal)]/[0.03]"
+            : "border-[color:var(--rule)]"
+        }`}
+      >
                 <div className="flex items-center gap-4">
                   <CharacterAvatar avatarKey={c.avatarKey} name={c.name} />
                   <div>
