@@ -190,7 +190,7 @@ function Landing() {
           </>
         }
         meta={[
-          ["Method", "Grounded in your own factors"],
+          ["Method", "AI routed, one best next step"],
           ["Discipline", "Belonging and social wellbeing"],
           ["Author", "Alex Freeman, Ph.D"],
           ["Format", "Conversational"],
