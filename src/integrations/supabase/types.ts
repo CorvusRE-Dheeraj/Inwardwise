@@ -496,6 +496,92 @@ export type Database = {
           },
         ]
       }
+      character_scenarios: {
+        Row: {
+          character_id: string
+          created_at: string
+          id: string
+          is_active: boolean
+          slug: string
+          sort_order: number
+          summary: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          character_id: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          slug: string
+          sort_order?: number
+          summary: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          character_id?: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          slug?: string
+          sort_order?: number
+          summary?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "character_scenarios_character_id_fkey"
+            columns: ["character_id"]
+            isOneToOne: false
+            referencedRelation: "characters"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      characters: {
+        Row: {
+          accent: string
+          avatar_key: string
+          created_at: string
+          id: string
+          is_active: boolean
+          name: string
+          personality: string | null
+          short_label: string
+          slug: string
+          sort_order: number
+          updated_at: string
+        }
+        Insert: {
+          accent?: string
+          avatar_key?: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          name: string
+          personality?: string | null
+          short_label?: string
+          slug: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Update: {
+          accent?: string
+          avatar_key?: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          name?: string
+          personality?: string | null
+          short_label?: string
+          slug?: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       companies: {
         Row: {
           address: string | null
@@ -1805,6 +1891,149 @@ export type Database = {
         }
         Relationships: []
       }
+      scenario_options: {
+        Row: {
+          created_at: string
+          id: string
+          label: string
+          question_id: string
+          sort_order: number
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          label: string
+          question_id: string
+          sort_order?: number
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          label?: string
+          question_id?: string
+          sort_order?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "scenario_options_question_id_fkey"
+            columns: ["question_id"]
+            isOneToOne: false
+            referencedRelation: "scenario_questions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      scenario_questions: {
+        Row: {
+          allow_free_text: boolean
+          created_at: string
+          free_text_label: string
+          id: string
+          prompt: string
+          scene_id: string
+          sort_order: number
+          updated_at: string
+        }
+        Insert: {
+          allow_free_text?: boolean
+          created_at?: string
+          free_text_label?: string
+          id?: string
+          prompt: string
+          scene_id: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Update: {
+          allow_free_text?: boolean
+          created_at?: string
+          free_text_label?: string
+          id?: string
+          prompt?: string
+          scene_id?: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "scenario_questions_scene_id_fkey"
+            columns: ["scene_id"]
+            isOneToOne: false
+            referencedRelation: "scenario_scenes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      scenario_scenes: {
+        Row: {
+          body: string
+          created_at: string
+          id: string
+          is_active: boolean
+          scenario_id: string
+          scene_number: number
+          updated_at: string
+        }
+        Insert: {
+          body: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          scenario_id: string
+          scene_number: number
+          updated_at?: string
+        }
+        Update: {
+          body?: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          scenario_id?: string
+          scene_number?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "scenario_scenes_scenario_id_fkey"
+            columns: ["scenario_id"]
+            isOneToOne: false
+            referencedRelation: "character_scenarios"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      scenario_themes: {
+        Row: {
+          created_at: string
+          id: string
+          label: string
+          scenario_id: string
+          sort_order: number
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          label: string
+          scenario_id: string
+          sort_order?: number
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          label?: string
+          scenario_id?: string
+          sort_order?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "scenario_themes_scenario_id_fkey"
+            columns: ["scenario_id"]
+            isOneToOne: false
+            referencedRelation: "character_scenarios"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       suppressed_emails: {
         Row: {
           created_at: string
@@ -1943,6 +2172,108 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      user_scenario_interactions: {
+        Row: {
+          completed_at: string | null
+          current_scene: number
+          familiarity: string | null
+          familiarity_note: string | null
+          id: string
+          scenario_id: string
+          started_at: string
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          completed_at?: string | null
+          current_scene?: number
+          familiarity?: string | null
+          familiarity_note?: string | null
+          id?: string
+          scenario_id: string
+          started_at?: string
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          completed_at?: string | null
+          current_scene?: number
+          familiarity?: string | null
+          familiarity_note?: string | null
+          id?: string
+          scenario_id?: string
+          started_at?: string
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_scenario_interactions_scenario_id_fkey"
+            columns: ["scenario_id"]
+            isOneToOne: false
+            referencedRelation: "character_scenarios"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_scenario_responses: {
+        Row: {
+          created_at: string
+          free_text: string | null
+          id: string
+          option_id: string | null
+          question_id: string
+          scenario_id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          free_text?: string | null
+          id?: string
+          option_id?: string | null
+          question_id: string
+          scenario_id: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          free_text?: string | null
+          id?: string
+          option_id?: string | null
+          question_id?: string
+          scenario_id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_scenario_responses_option_id_fkey"
+            columns: ["option_id"]
+            isOneToOne: false
+            referencedRelation: "scenario_options"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_scenario_responses_question_id_fkey"
+            columns: ["question_id"]
+            isOneToOne: false
+            referencedRelation: "scenario_questions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_scenario_responses_scenario_id_fkey"
+            columns: ["scenario_id"]
+            isOneToOne: false
+            referencedRelation: "character_scenarios"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
