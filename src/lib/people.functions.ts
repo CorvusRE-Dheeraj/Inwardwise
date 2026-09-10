@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import { matchScenarioThemes, type PermittedSignal } from "@/lib/people-matching";
 
 /**
  * "People Like Me" scenario engine.
@@ -18,7 +19,47 @@ export type CharacterCard = {
   scenario: { slug: string; title: string; summary: string; sceneCount: number } | null;
   themes: string[];
   progress: { currentScene: number; status: string } | null;
+  /** Neutral personalization; null when nothing permitted overlaps. */
+  match: { sharedThemes: string[]; recommendationReason: string } | null;
 };
+
+/**
+ * Collects only information the member has permitted for personalization:
+ * topics they chose themselves and neutral topics/themes of readings they
+ * already completed. Nothing sensitive is read, stored, or surfaced.
+ */
+async function loadPermittedSignals(
+  supabase: any,
+  userId: string,
+): Promise<PermittedSignal[]> {
+  const { data: prefs } = await supabase
+    .from("journey_preferences")
+    .select("personalization_enabled, topics")
+    .eq("user_id", userId)
+    .maybeSingle();
+
+  if (prefs && prefs.personalization_enabled === false) return [];
+
+  const signals: PermittedSignal[] = ((prefs?.topics as string[] | null) ?? []).map(
+    (t: string) => ({ label: t, kind: "confirmed" as const }),
+  );
+
+  const { data: rows } = await supabase
+    .from("journey_signals")
+    .select("signal_type, signal_value, status")
+    .eq("user_id", userId)
+    .eq("status", "active");
+
+  for (const r of rows ?? []) {
+    if (typeof r.signal_value !== "string" || !r.signal_value.trim()) continue;
+    signals.push({
+      label: r.signal_value,
+      kind: r.signal_type === "BEHAVIORAL_OBSERVATION" ? "observed" : "confirmed",
+    });
+  }
+
+  return signals;
+}
 
 export const listPeopleLikeMe = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
@@ -58,12 +99,27 @@ export const listPeopleLikeMe = createServerFn({ method: "GET" })
         .eq("user_id", context.userId),
     ]);
 
+    const permitted = await loadPermittedSignals(context.supabase, context.userId);
+
     return (characters ?? []).map((c) => {
       const scenario = (scenarios ?? []).find((s) => s.character_id === c.id) ?? null;
       const mine = scenario
         ? (progress ?? []).find((p) => p.scenario_id === scenario.id) ?? null
         : null;
+      const scenarioThemes = scenario
+        ? (themes ?? []).filter((t) => t.scenario_id === scenario.id).map((t) => t.label)
+        : [];
+      const match =
+        scenario && permitted.length > 0
+          ? matchScenarioThemes(scenarioThemes, permitted)
+          : null;
       return {
+        match: match
+          ? {
+              sharedThemes: match.sharedThemes,
+              recommendationReason: match.recommendationReason,
+            }
+          : null,
         slug: c.slug,
         name: c.name,
         shortLabel: c.short_label,

@@ -69,12 +69,82 @@ function PeopleLikeMePage() {
             No stories have been published yet.
           </p>
         ) : (
-          <div className="mt-10 grid gap-6 md:grid-cols-2">
-            {cards.map((c) => (
-              <article
-                key={c.slug}
-                className="flex flex-col rounded-2xl border border-[color:var(--rule)] p-6 md:p-7"
-              >
+          <StoryGroups cards={cards} />
+        )}
+      </div>
+    </AppShell>
+  );
+}
+
+function StoryGroups({ cards }: { cards: CharacterCard[] }) {
+  const personalised = cards.filter((c) => c.match && c.scenario);
+  const others = cards.filter((c) => !personalised.includes(c));
+
+  return (
+    <>
+      {personalised.length > 0 && (
+        <section className="mt-12">
+          <h2 className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)]">
+            Personalised for you
+          </h2>
+          <div className="mt-5 grid gap-6 md:grid-cols-2">
+            {personalised.map((c) => (
+              <StoryCard key={c.slug} card={c} highlight />
+            ))}
+          </div>
+        </section>
+      )}
+
+      <section className="mt-12">
+        {personalised.length > 0 && (
+          <h2 className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)]">
+            Other stories
+          </h2>
+        )}
+        <div className="mt-5 grid gap-6 md:grid-cols-2">
+          {others.map((c) => (
+            <StoryCard key={c.slug} card={c} />
+          ))}
+        </div>
+      </section>
+    </>
+  );
+}
+
+function StoryCard({ card: c, highlight = false }: { card: CharacterCard; highlight?: boolean }) {
+  return (
+    <>
+      <article
+        className={`flex flex-col rounded-2xl border p-6 md:p-7 ${
+          highlight
+            ? "border-[color:var(--royal)]/40 bg-[color:var(--royal)]/[0.03]"
+            : "border-[color:var(--rule)]"
+        }`}
+      >
+                {c.match && (
+                  <div className="mb-5 rounded-lg border border-[color:var(--royal)]/30 p-4">
+                    <p className="text-sm leading-relaxed">
+                      Some themes in this fictional scenario may feel familiar.
+                    </p>
+                    <div className="font-mono-cap mt-3 text-[10px] text-[color:var(--muted-foreground)]">
+                      Shared themes
+                    </div>
+                    <ul className="mt-2 flex flex-wrap gap-2">
+                      {c.match.sharedThemes.map((t) => (
+                        <li
+                          key={t}
+                          className="rounded-full bg-[color:var(--royal)]/10 px-3 py-1 text-xs text-[color:var(--royal)]"
+                        >
+                          {t}
+                        </li>
+                      ))}
+                    </ul>
+                    <p className="mt-3 text-xs text-[color:var(--muted-foreground)]">
+                      {c.match.recommendationReason}
+                    </p>
+                  </div>
+                )}
+
                 <div className="flex items-center gap-4">
                   <CharacterAvatar avatarKey={c.avatarKey} name={c.name} />
                   <div>
@@ -125,11 +195,7 @@ function PeopleLikeMePage() {
                     )}
                   </div>
                 )}
-              </article>
-            ))}
-          </div>
-        )}
-      </div>
-    </AppShell>
+      </article>
+    </>
   );
 }
