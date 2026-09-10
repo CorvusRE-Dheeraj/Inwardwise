@@ -62,6 +62,10 @@ import { Route as ApiPublicConnectStoryCallWebhookRouteImport } from './routes/a
 import { Route as ApiPublicAvatarConsultDispatchRouteImport } from './routes/api/public/avatar-consult-dispatch'
 import { Route as AuthenticatedMeditationScheduleRouteImport } from './routes/_authenticated/meditation.schedule'
 import { Route as AuthenticatedMeditationPracticeRouteImport } from './routes/_authenticated/meditation.practice'
+import { Route as AuthenticatedConnectOnenessRouteImport } from './routes/_authenticated/connect.oneness'
+import { Route as AuthenticatedConnectMembershipRouteImport } from './routes/_authenticated/connect.membership'
+import { Route as AuthenticatedConnectBookRouteImport } from './routes/_authenticated/connect.book'
+import { Route as AuthenticatedConnectBelongingRouteImport } from './routes/_authenticated/connect.belonging'
 import { Route as AuthenticatedAvatarLibraryRouteImport } from './routes/_authenticated/avatar.library'
 import { Route as AuthenticatedAvatarConsultScheduleRouteImport } from './routes/_authenticated/avatar.consult-schedule'
 import { Route as AuthenticatedAvatarConsultRouteImport } from './routes/_authenticated/avatar.consult'
@@ -345,6 +349,30 @@ const AuthenticatedMeditationPracticeRoute =
     path: '/meditation/practice',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedConnectOnenessRoute =
+  AuthenticatedConnectOnenessRouteImport.update({
+    id: '/connect/oneness',
+    path: '/connect/oneness',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedConnectMembershipRoute =
+  AuthenticatedConnectMembershipRouteImport.update({
+    id: '/connect/membership',
+    path: '/connect/membership',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedConnectBookRoute =
+  AuthenticatedConnectBookRouteImport.update({
+    id: '/connect/book',
+    path: '/connect/book',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedConnectBelongingRoute =
+  AuthenticatedConnectBelongingRouteImport.update({
+    id: '/connect/belonging',
+    path: '/connect/belonging',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedAvatarLibraryRoute =
   AuthenticatedAvatarLibraryRouteImport.update({
     id: '/avatar/library',
@@ -450,6 +478,10 @@ export interface FileRoutesByFullPath {
   '/avatar/consult': typeof AuthenticatedAvatarConsultRoute
   '/avatar/consult-schedule': typeof AuthenticatedAvatarConsultScheduleRoute
   '/avatar/library': typeof AuthenticatedAvatarLibraryRoute
+  '/connect/belonging': typeof AuthenticatedConnectBelongingRoute
+  '/connect/book': typeof AuthenticatedConnectBookRoute
+  '/connect/membership': typeof AuthenticatedConnectMembershipRoute
+  '/connect/oneness': typeof AuthenticatedConnectOnenessRoute
   '/meditation/practice': typeof AuthenticatedMeditationPracticeRoute
   '/meditation/schedule': typeof AuthenticatedMeditationScheduleRoute
   '/api/public/avatar-consult-dispatch': typeof ApiPublicAvatarConsultDispatchRoute
@@ -511,6 +543,10 @@ export interface FileRoutesByTo {
   '/avatar/consult': typeof AuthenticatedAvatarConsultRoute
   '/avatar/consult-schedule': typeof AuthenticatedAvatarConsultScheduleRoute
   '/avatar/library': typeof AuthenticatedAvatarLibraryRoute
+  '/connect/belonging': typeof AuthenticatedConnectBelongingRoute
+  '/connect/book': typeof AuthenticatedConnectBookRoute
+  '/connect/membership': typeof AuthenticatedConnectMembershipRoute
+  '/connect/oneness': typeof AuthenticatedConnectOnenessRoute
   '/meditation/practice': typeof AuthenticatedMeditationPracticeRoute
   '/meditation/schedule': typeof AuthenticatedMeditationScheduleRoute
   '/api/public/avatar-consult-dispatch': typeof ApiPublicAvatarConsultDispatchRoute
@@ -576,6 +612,10 @@ export interface FileRoutesById {
   '/_authenticated/avatar/consult': typeof AuthenticatedAvatarConsultRoute
   '/_authenticated/avatar/consult-schedule': typeof AuthenticatedAvatarConsultScheduleRoute
   '/_authenticated/avatar/library': typeof AuthenticatedAvatarLibraryRoute
+  '/_authenticated/connect/belonging': typeof AuthenticatedConnectBelongingRoute
+  '/_authenticated/connect/book': typeof AuthenticatedConnectBookRoute
+  '/_authenticated/connect/membership': typeof AuthenticatedConnectMembershipRoute
+  '/_authenticated/connect/oneness': typeof AuthenticatedConnectOnenessRoute
   '/_authenticated/meditation/practice': typeof AuthenticatedMeditationPracticeRoute
   '/_authenticated/meditation/schedule': typeof AuthenticatedMeditationScheduleRoute
   '/api/public/avatar-consult-dispatch': typeof ApiPublicAvatarConsultDispatchRoute
@@ -641,6 +681,10 @@ export interface FileRouteTypes {
     | '/avatar/consult'
     | '/avatar/consult-schedule'
     | '/avatar/library'
+    | '/connect/belonging'
+    | '/connect/book'
+    | '/connect/membership'
+    | '/connect/oneness'
     | '/meditation/practice'
     | '/meditation/schedule'
     | '/api/public/avatar-consult-dispatch'
@@ -702,6 +746,10 @@ export interface FileRouteTypes {
     | '/avatar/consult'
     | '/avatar/consult-schedule'
     | '/avatar/library'
+    | '/connect/belonging'
+    | '/connect/book'
+    | '/connect/membership'
+    | '/connect/oneness'
     | '/meditation/practice'
     | '/meditation/schedule'
     | '/api/public/avatar-consult-dispatch'
@@ -766,6 +814,10 @@ export interface FileRouteTypes {
     | '/_authenticated/avatar/consult'
     | '/_authenticated/avatar/consult-schedule'
     | '/_authenticated/avatar/library'
+    | '/_authenticated/connect/belonging'
+    | '/_authenticated/connect/book'
+    | '/_authenticated/connect/membership'
+    | '/_authenticated/connect/oneness'
     | '/_authenticated/meditation/practice'
     | '/_authenticated/meditation/schedule'
     | '/api/public/avatar-consult-dispatch'
@@ -1197,6 +1249,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedMeditationPracticeRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/connect/oneness': {
+      id: '/_authenticated/connect/oneness'
+      path: '/connect/oneness'
+      fullPath: '/connect/oneness'
+      preLoaderRoute: typeof AuthenticatedConnectOnenessRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/connect/membership': {
+      id: '/_authenticated/connect/membership'
+      path: '/connect/membership'
+      fullPath: '/connect/membership'
+      preLoaderRoute: typeof AuthenticatedConnectMembershipRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/connect/book': {
+      id: '/_authenticated/connect/book'
+      path: '/connect/book'
+      fullPath: '/connect/book'
+      preLoaderRoute: typeof AuthenticatedConnectBookRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/connect/belonging': {
+      id: '/_authenticated/connect/belonging'
+      path: '/connect/belonging'
+      fullPath: '/connect/belonging'
+      preLoaderRoute: typeof AuthenticatedConnectBelongingRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/avatar/library': {
       id: '/_authenticated/avatar/library'
       path: '/avatar/library'
@@ -1290,6 +1370,10 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAvatarConsultRoute: typeof AuthenticatedAvatarConsultRoute
   AuthenticatedAvatarConsultScheduleRoute: typeof AuthenticatedAvatarConsultScheduleRoute
   AuthenticatedAvatarLibraryRoute: typeof AuthenticatedAvatarLibraryRoute
+  AuthenticatedConnectBelongingRoute: typeof AuthenticatedConnectBelongingRoute
+  AuthenticatedConnectBookRoute: typeof AuthenticatedConnectBookRoute
+  AuthenticatedConnectMembershipRoute: typeof AuthenticatedConnectMembershipRoute
+  AuthenticatedConnectOnenessRoute: typeof AuthenticatedConnectOnenessRoute
   AuthenticatedMeditationPracticeRoute: typeof AuthenticatedMeditationPracticeRoute
   AuthenticatedMeditationScheduleRoute: typeof AuthenticatedMeditationScheduleRoute
   AuthenticatedAvatarIndexRoute: typeof AuthenticatedAvatarIndexRoute
@@ -1308,6 +1392,10 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAvatarConsultScheduleRoute:
     AuthenticatedAvatarConsultScheduleRoute,
   AuthenticatedAvatarLibraryRoute: AuthenticatedAvatarLibraryRoute,
+  AuthenticatedConnectBelongingRoute: AuthenticatedConnectBelongingRoute,
+  AuthenticatedConnectBookRoute: AuthenticatedConnectBookRoute,
+  AuthenticatedConnectMembershipRoute: AuthenticatedConnectMembershipRoute,
+  AuthenticatedConnectOnenessRoute: AuthenticatedConnectOnenessRoute,
   AuthenticatedMeditationPracticeRoute: AuthenticatedMeditationPracticeRoute,
   AuthenticatedMeditationScheduleRoute: AuthenticatedMeditationScheduleRoute,
   AuthenticatedAvatarIndexRoute: AuthenticatedAvatarIndexRoute,
