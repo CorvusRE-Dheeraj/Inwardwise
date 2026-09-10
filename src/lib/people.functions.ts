@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import { matchScenarioThemes, type PermittedSignal } from "@/lib/people-matching";
 
 /**
  * "People Like Me" scenario engine.
