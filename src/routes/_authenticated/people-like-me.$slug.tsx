@@ -141,7 +141,14 @@ function StoryPage() {
     <AppShell>
       <div className="mx-auto w-[min(900px,calc(100%-2rem))] py-12 md:py-16">
         <div className="flex items-center gap-4">
-          <CharacterAvatar avatarKey={detail.character.avatarKey} name={detail.character.name} size={64} />
+          <AnimatedCharacter
+            avatarKey={detail.character.avatarKey}
+            name={detail.character.name}
+            state={scene?.characterState}
+            environment={scene?.environment}
+            animation={scene?.animation}
+            size={84}
+          />
           <div>
             <div className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)]">
               Fictional scenario
