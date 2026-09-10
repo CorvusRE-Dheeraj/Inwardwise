@@ -195,11 +195,7 @@ function StoryCard({ card: c, highlight = false }: { card: CharacterCard; highli
                     )}
                   </div>
                 )}
-              </article>
-            ))}
-          </div>
-        )}
-      </div>
-    </AppShell>
+      </article>
+    </>
   );
 }
