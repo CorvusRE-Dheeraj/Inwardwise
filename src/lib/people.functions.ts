@@ -99,12 +99,27 @@ export const listPeopleLikeMe = createServerFn({ method: "GET" })
         .eq("user_id", context.userId),
     ]);
 
+    const permitted = await loadPermittedSignals(context.supabase, context.userId);
+
     return (characters ?? []).map((c) => {
       const scenario = (scenarios ?? []).find((s) => s.character_id === c.id) ?? null;
       const mine = scenario
         ? (progress ?? []).find((p) => p.scenario_id === scenario.id) ?? null
         : null;
+      const scenarioThemes = scenario
+        ? (themes ?? []).filter((t) => t.scenario_id === scenario.id).map((t) => t.label)
+        : [];
+      const match =
+        scenario && permitted.length > 0
+          ? matchScenarioThemes(scenarioThemes, permitted)
+          : null;
       return {
+        match: match
+          ? {
+              sharedThemes: match.sharedThemes,
+              recommendationReason: match.recommendationReason,
+            }
+          : null,
         slug: c.slug,
         name: c.name,
         shortLabel: c.short_label,
