@@ -195,9 +195,34 @@ function StoryPage() {
                 The story is paused here. It will be waiting when you come back.
               </p>
             ) : (
-              <article className="mt-6 text-[16px] leading-relaxed text-justify">
-                {scene.body}
-              </article>
+              <>
+                <div className="mt-6 flex flex-col items-center gap-4 rounded-xl border border-[color:var(--rule)] p-5 sm:flex-row sm:items-center sm:gap-6">
+                  <AnimatedCharacter
+                    key={scene.id}
+                    avatarKey={detail.character.avatarKey}
+                    name={detail.character.name}
+                    state={scene.characterState}
+                    environment={scene.environment}
+                    animation={scene.animation}
+                    size={132}
+                  />
+                  <div className="text-center sm:text-left">
+                    {scene.environment && (
+                      <div className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)]">
+                        {scene.environment}
+                      </div>
+                    )}
+                    {scene.narration && (
+                      <p className="mt-2 text-[15px] italic leading-relaxed text-[color:var(--muted-foreground)]">
+                        {scene.narration}
+                      </p>
+                    )}
+                  </div>
+                </div>
+                <article className="mt-6 text-[16px] leading-relaxed text-justify">
+                  {scene.body}
+                </article>
+              </>
             )}
 
             {!paused &&
