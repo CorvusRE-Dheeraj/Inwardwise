@@ -2,6 +2,10 @@ import { useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { ArrowRight } from "lucide-react";
 import { analyzeConnectPrompt } from "@/lib/connect.functions";
+import { CrisisNotice } from "@/components/CrisisNotice";
+import { detectCrisis } from "@/lib/crisis-detect";
+import type { MiCrisisCategory } from "@/lib/mi-filter";
+import { MemberStories } from "./MemberStories";
 
 export type PathwayAnalysis = Awaited<ReturnType<typeof analyzeConnectPrompt>>;
 
