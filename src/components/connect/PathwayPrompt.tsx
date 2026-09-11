@@ -73,7 +73,14 @@ export function PathwayPrompt({
         </button>
       </div>
 
-      {result && children(result)}
+      <CrisisNotice categories={crisis} />
+
+      {result && (
+        <>
+          {children(result)}
+          <MemberStories stories={result.stories} />
+        </>
+      )}
     </div>
   );
 }
