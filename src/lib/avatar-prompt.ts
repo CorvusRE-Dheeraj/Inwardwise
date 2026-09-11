@@ -6,7 +6,8 @@ export function buildAvatarSystemPrompt(answers: AvatarAnswers, name?: string): 
   const factorBlocks = AVATAR_DIMENSIONS.map((d) => {
     const qa = d.questions
       .map((q) => {
-        const a = (answers[q.key] ?? "").trim();
+        const raw = (answers[q.key] ?? "").trim();
+        const a = raw.length > 3000 ? `${raw.slice(0, 3000)}…` : raw;
         return `Q: ${q.prompt}\nA: ${a || "(not answered)"}`;
       })
       .join("\n\n");
