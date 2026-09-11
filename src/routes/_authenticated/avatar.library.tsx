@@ -51,6 +51,7 @@ function SelfLibrary() {
   const [loaded, setLoaded] = useState(false);
   const [sharing, setSharing] = useState<Record<number, FactorSharingPreference>>({});
   const [sharingSaving, setSharingSaving] = useState<number | null>(null);
+  const [confirmDownload, setConfirmDownload] = useState(false);
 
   useEffect(() => {
     if (vault.status !== "unlocked" || !vault.profile || !vault.key) return;
@@ -270,13 +271,55 @@ function SelfLibrary() {
               />
             </div>
             <button
-              onClick={download}
+              onClick={() => setConfirmDownload(true)}
               disabled={answered === 0}
               className="inline-flex items-center gap-2 rounded-full bg-[color:var(--ink)] px-4 py-2 text-sm text-[color:var(--paper)] disabled:opacity-40"
             >
               <Download className="h-4 w-4" /> Download PDF
             </button>
           </div>
+
+          {confirmDownload ? (
+            <div
+              className="fixed inset-0 z-50 grid place-items-center bg-black/45 p-4"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="download-confirm-title"
+            >
+              <div className="w-full max-w-lg rounded-xl border border-[color:var(--rule)] bg-white p-6 shadow-2xl">
+                <p className="font-mono-cap text-[10px] text-destructive">Sensitive information</p>
+                <h2 id="download-confirm-title" className="mt-2 font-display text-2xl">
+                  Download a private copy?
+                </h2>
+                <p className="mt-4 text-sm leading-relaxed text-[color:var(--muted-foreground)]">
+                  This PDF is intended for your own use. Factors 1 and 2 will only be included when
+                  you have explicitly approved external sharing for them.
+                </p>
+                <p className="mt-3 text-sm font-semibold text-destructive">
+                  {DO_NOT_SHARE_WARNING}
+                </p>
+                <div className="mt-6 flex flex-wrap gap-3">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setConfirmDownload(false);
+                      void download();
+                    }}
+                    className="rounded-full bg-[color:var(--ink)] px-5 py-2.5 text-sm text-[color:var(--paper)]"
+                  >
+                    I understand, download my private copy
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setConfirmDownload(false)}
+                    className="rounded-full border border-[color:var(--rule)] px-5 py-2.5 text-sm"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          ) : null}
 
           <p className="mt-3 text-xs text-[color:var(--muted-foreground)]">
             {loaded ? `${answered} of ${rows.length} questions answered.` : "Opening your record…"}

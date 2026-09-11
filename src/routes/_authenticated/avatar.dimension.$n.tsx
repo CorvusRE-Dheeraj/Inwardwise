@@ -370,7 +370,7 @@ function DimensionFlow() {
               <FactorSharingControl
                 factor={dim.n}
                 preference={sharing}
-                saving={sharingSaving}
+                saving={sharingSaving || !loaded}
                 onChange={saveSharing}
               />
             </div>
@@ -401,7 +401,7 @@ function DimensionFlow() {
               <FactorSharingControl
                 factor={dim.n}
                 preference={sharing}
-                saving={sharingSaving}
+                saving={sharingSaving || !loaded}
                 onChange={saveSharing}
               />
             </div>
