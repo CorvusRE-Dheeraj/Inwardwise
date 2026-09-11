@@ -1,83 +1,71 @@
 import { Link } from "@tanstack/react-router";
-import { BookOpen, CalendarDays, Compass, Globe2, Heart, Mic, Sparkles, Users } from "lucide-react";
-import type { LucideIcon } from "lucide-react";
 
 type Pathway = {
   name: string;
-  icon: LucideIcon;
+  accent: string;
   purpose: string;
-  output: string;
-  to?: string;
-  action?: string;
+  to: string;
+  action: string;
 };
 
 const PATHWAYS: Pathway[] = [
   {
-    name: "Connect Book",
-    icon: BookOpen,
-    purpose: "Reading that is relevant to what you described, sent in small pieces.",
-    output: "A matched excerpt, why it fits, and one follow-up action.",
+    name: "Connect",
+    accent: "Book",
+    purpose: "Reading that is relevant to what you described, sent in small pieces, with one follow-up action.",
     to: "/connect/book",
     action: "Open Book",
   },
   {
-    name: "Connect Events",
-    icon: CalendarDays,
+    name: "Connect",
+    accent: "Events",
     purpose: "Local or online gatherings where you can take part rather than read alone.",
-    output: "An event that fits your prompt, with details or alternatives.",
     to: "/connect/events",
     action: "Find Events",
   },
   {
-    name: "Connect Membership",
-    icon: Users,
-    purpose: "Groups and networks you can be part of over time.",
-    output: "A relevant group, what is expected of members, and how to join.",
+    name: "Connect",
+    accent: "Membership",
+    purpose: "Groups and networks you can be part of over time, and how to join them.",
     to: "/connect/membership",
     action: "See Groups",
   },
   {
-    name: "Connect Belonging",
-    icon: Heart,
-    purpose: "Gentle ways to feel less isolated and more socially at home.",
-    output: "A safe belonging experience or community, and a small next step.",
+    name: "Connect",
+    accent: "Belonging",
+    purpose: "Gentle ways to feel less isolated and more socially at home, one small step at a time.",
     to: "/connect/belonging",
     action: "Find Belonging",
   },
   {
-    name: "Connect Oneness",
-    icon: Globe2,
-    purpose: "A wider view that places your situation inside a larger picture.",
-    output: "A researched perspective piece and one reflection prompt.",
+    name: "Connect",
+    accent: "Oneness",
+    purpose: "A wider view that places your situation inside a larger picture, with one reflection prompt.",
     to: "/connect/oneness",
     action: "Widen the View",
   },
   {
-    name: "Connect Share",
-    icon: Mic,
-    purpose: "Record your own experience for someone else, anonymously.",
-    output: "A consent-led contribution that is reviewed before anyone hears it.",
+    name: "Connect",
+    accent: "Share",
+    purpose: "Record your own experience for someone else, anonymously and consent-led.",
     to: "/connect/share",
     action: "Share Experience",
   },
   {
-    name: "Connect Decision",
-    icon: Compass,
-    purpose: "For when what you wrote is really a choice you need to make.",
-    output: "The Decision flow, carrying your prompt forward.",
+    name: "Connect",
+    accent: "Decision",
+    purpose: "For when what you wrote is really a choice you need to make, carried into the Decision flow.",
     to: "/decision",
     action: "Make Decision",
   },
   {
-    name: "Connect Self Aware",
-    icon: Sparkles,
-    purpose: "Personal reflection using only your own completed Self, never shared.",
-    output: "A response written for your Self, kept private to you.",
+    name: "Connect",
+    accent: "Self Aware",
+    purpose: "Personal reflection using only your own completed Self, kept private to you.",
     to: "/avatar/ask",
     action: "Self Aware",
   },
 ];
-
 
 /**
  * The Connect AI pathway map. Connect AI reads a prompt and chooses one of these
@@ -85,7 +73,7 @@ const PATHWAYS: Pathway[] = [
  */
 export function ConnectPathways() {
   return (
-    <section className="mx-auto mt-14 w-[min(1100px,calc(100%-2rem))]">
+    <section className="mx-auto mt-14 w-[min(1100px,calc(100%-2rem))] pb-16">
       <div className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)]">
         Connect AI · pathways
       </div>
@@ -98,33 +86,29 @@ export function ConnectPathways() {
         follow-up. The options stay listed here so you can also go straight to one yourself.
       </p>
 
-      <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {PATHWAYS.map((p) => (
-          <div
-            key={p.name}
-            className="flex flex-col rounded-lg border border-[color:var(--rule)] p-5"
-          >
-            <p.icon className="h-4 w-4 text-[color:var(--royal)]" aria-hidden />
-            <h3 className="mt-4 text-[15px] text-[color:var(--ink)]">{p.name}</h3>
-            <p className="mt-2 flex-1 text-[13px] leading-relaxed text-[color:var(--muted-foreground)]">
+      <div className="mt-12 grid gap-x-12 gap-y-14 sm:grid-cols-2">
+        {PATHWAYS.map((p, i) => (
+          <div key={p.accent} className="border-t border-[color:var(--rule)] pt-6">
+            <div className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)]">
+              {String(i + 1).padStart(2, "0")} · InwardWise {p.accent}
+            </div>
+            <h3 className="font-display mt-5 text-[clamp(1.8rem,4vw,2.6rem)] leading-[1.05] tracking-tight">
+              {p.name} <span className="text-[color:var(--royal)]">{p.accent}</span>
+            </h3>
+            <p className="mt-4 max-w-md text-[14px] leading-relaxed text-[color:var(--muted-foreground)]">
               {p.purpose}
             </p>
-            <p className="mt-3 text-[12px] leading-relaxed text-[color:var(--muted-foreground)]">
-              {p.output}
-            </p>
-            {p.to && p.action && (
-              <Link
-                to={p.to}
-                className="mt-4 inline-flex min-h-9 items-center gap-2 self-start rounded-full border border-[color:var(--rule)] px-4 py-2 text-[12px] transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)]"
-              >
-                {p.action} <span aria-hidden>→</span>
-              </Link>
-            )}
+            <Link
+              to={p.to}
+              className="mt-6 inline-flex min-h-10 items-center gap-2 rounded-full border border-[color:var(--ink)] px-5 py-2 text-[13px] transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)]"
+            >
+              {p.action} <span aria-hidden>→</span>
+            </Link>
           </div>
         ))}
       </div>
 
-      <p className="mt-5 text-[12px] leading-relaxed text-[color:var(--muted-foreground)]">
+      <p className="mt-12 text-[12px] leading-relaxed text-[color:var(--muted-foreground)]">
         Nothing is invented: books, events, stories and perspectives come from reviewed sources, and
         your private Self is never shown to other members.
       </p>
