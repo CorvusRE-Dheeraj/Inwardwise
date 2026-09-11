@@ -7,6 +7,12 @@ import { useAvatarVault } from "@/lib/avatar-vault";
 import { Caution, PinKeypad } from "@/components/avatar/PinKeypad";
 import { decryptText, encryptText } from "@/lib/avatar-crypto";
 import { ProductName } from "@/components/products/ProductChrome";
+import {
+  DO_NOT_SHARE_WARNING,
+  FactorSharingControl,
+  defaultFactorSharingPreference,
+  type FactorSharingPreference,
+} from "@/components/avatar/FactorSharingControl";
 
 export const Route = createFileRoute("/_authenticated/avatar/library")({
   head: () => ({
@@ -43,6 +49,9 @@ function SelfLibrary() {
   const [saving, setSaving] = useState<string | null>(null);
   const [note, setNote] = useState<string | null>(null);
   const [loaded, setLoaded] = useState(false);
+  const [sharing, setSharing] = useState<Record<number, FactorSharingPreference>>({});
+  const [sharingSaving, setSharingSaving] = useState<number | null>(null);
+  const [confirmDownload, setConfirmDownload] = useState(false);
 
   useEffect(() => {
     if (vault.status !== "unlocked" || !vault.profile || !vault.key) return;
@@ -51,6 +60,10 @@ function SelfLibrary() {
       const { data } = await supabase
         .from("avatar_answers")
         .select("dimension_number, question_key, answer_text")
+        .eq("user_id", vault.profile!.user_id);
+      const { data: dimensionRows } = await supabase
+        .from("avatar_dimensions")
+        .select("dimension_number, sharing_classification, external_share_acknowledged, external_share_acknowledged_at")
         .eq("user_id", vault.profile!.user_id);
 
       const stored: Record<string, string> = {};
@@ -75,6 +88,19 @@ function SelfLibrary() {
       }
       if (!cancelled) {
         setRows(out);
+        const preferences: Record<number, FactorSharingPreference> = {};
+        for (const d of AVATAR_DIMENSIONS) preferences[d.n] = defaultFactorSharingPreference();
+        for (const dimension of dimensionRows ?? []) {
+          preferences[dimension.dimension_number] = {
+            classification:
+              dimension.sharing_classification === "external_approved"
+                ? "external_approved"
+                : "internal_only",
+            acknowledged: dimension.external_share_acknowledged,
+            acknowledgedAt: dimension.external_share_acknowledged_at,
+          };
+        }
+        setSharing(preferences);
         setLoaded(true);
       }
     })();
@@ -118,6 +144,31 @@ function SelfLibrary() {
     setTimeout(() => setNote(null), 2500);
   }
 
+  async function saveSharing(factor: number, next: FactorSharingPreference) {
+    if (!vault.profile) return;
+    setSharingSaving(factor);
+    try {
+      const existing = rows.filter((row) => row.factor === factor);
+      const answeredInFactor = existing.filter((row) => (edited[row.key] ?? row.answer).trim()).length;
+      const { error } = await supabase.from("avatar_dimensions").upsert(
+        {
+          user_id: vault.profile.user_id,
+          dimension_number: factor,
+          progress_pct: existing.length ? Math.round((answeredInFactor / existing.length) * 100) : 0,
+          sharing_classification: next.classification,
+          external_share_acknowledged: next.acknowledged,
+          external_share_acknowledged_at: next.acknowledgedAt,
+          updated_at: new Date().toISOString(),
+        },
+        { onConflict: "user_id,dimension_number" },
+      );
+      if (error) throw new Error(error.message);
+      setSharing((current) => ({ ...current, [factor]: next }));
+    } finally {
+      setSharingSaving(null);
+    }
+  }
+
   async function download() {
     const { jsPDF } = await import("jspdf");
     const doc = new jsPDF({ unit: "pt", format: "a4" });
@@ -142,14 +193,27 @@ function SelfLibrary() {
 
     line("Your Self Record", 22, "bold", 4);
     line(`InwardWise · ${new Date().toLocaleDateString()}`, 10, "normal", 18);
+    line("Private copy. Do not share externally unless you have deliberately approved each factor below.", 10, "italic", 16);
 
     let current = 0;
     for (const r of rows) {
       const text = (edited[r.key] ?? r.answer).trim();
       if (!text) continue;
+      const preference = sharing[r.factor] ?? defaultFactorSharingPreference();
+      if ((r.factor === 1 || r.factor === 2) && preference.classification !== "external_approved") {
+        continue;
+      }
       if (r.factor !== current) {
         current = r.factor;
         line(`Factor ${r.factor}`, 15, "bold", 6);
+        line(
+          preference.classification === "external_approved"
+            ? `External sharing approved by you. ${DO_NOT_SHARE_WARNING}`
+            : "Internal use only. This information should not be shared externally with anyone.",
+          9,
+          "italic",
+          6,
+        );
       }
       line(r.question, 11, "italic", 3);
       line(text, 11, "normal", 12);
@@ -207,7 +271,7 @@ function SelfLibrary() {
               />
             </div>
             <button
-              onClick={download}
+              onClick={() => setConfirmDownload(true)}
               disabled={answered === 0}
               className="inline-flex items-center gap-2 rounded-full bg-[color:var(--ink)] px-4 py-2 text-sm text-[color:var(--paper)] disabled:opacity-40"
             >
@@ -215,13 +279,72 @@ function SelfLibrary() {
             </button>
           </div>
 
+          {confirmDownload ? (
+            <div
+              className="fixed inset-0 z-50 grid place-items-center bg-black/45 p-4"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="download-confirm-title"
+            >
+              <div className="w-full max-w-lg rounded-xl border border-[color:var(--rule)] bg-white p-6 shadow-2xl">
+                <p className="font-mono-cap text-[10px] text-destructive">Sensitive information</p>
+                <h2 id="download-confirm-title" className="mt-2 font-display text-2xl">
+                  Download a private copy?
+                </h2>
+                <p className="mt-4 text-sm leading-relaxed text-[color:var(--muted-foreground)]">
+                  This PDF is intended for your own use. Factors 1 and 2 will only be included when
+                  you have explicitly approved external sharing for them.
+                </p>
+                <p className="mt-3 text-sm font-semibold text-destructive">
+                  {DO_NOT_SHARE_WARNING}
+                </p>
+                <div className="mt-6 flex flex-wrap gap-3">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setConfirmDownload(false);
+                      void download();
+                    }}
+                    className="rounded-full bg-[color:var(--ink)] px-5 py-2.5 text-sm text-[color:var(--paper)]"
+                  >
+                    I understand, download my private copy
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setConfirmDownload(false)}
+                    className="rounded-full border border-[color:var(--rule)] px-5 py-2.5 text-sm"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          ) : null}
+
           <p className="mt-3 text-xs text-[color:var(--muted-foreground)]">
             {loaded ? `${answered} of ${rows.length} questions answered.` : "Opening your record…"}
             {note ? ` ${note}` : ""}
           </p>
 
-          <ul className="mt-8 space-y-4">
-            {results.map((r) => (
+          <p className="mt-2 text-xs leading-relaxed text-destructive">
+            Factors 1 and 2 are omitted from the PDF unless you explicitly approve external sharing.
+            The warning remains in the PDF even after approval.
+          </p>
+
+          <div className="mt-8 space-y-10">
+            {AVATAR_DIMENSIONS.map((factor) => {
+              const factorRows = results.filter((row) => row.factor === factor.n);
+              if (query.trim() && factorRows.length === 0) return null;
+              return (
+                <section key={factor.n} className="space-y-4">
+                  <FactorSharingControl
+                    factor={factor.n}
+                    preference={sharing[factor.n] ?? defaultFactorSharingPreference()}
+                    saving={sharingSaving === factor.n}
+                    onChange={(next) => saveSharing(factor.n, next)}
+                  />
+                  <ul className="space-y-4">
+                    {factorRows.map((r) => (
               <li key={r.key} className="rounded-lg border border-[color:var(--rule)] p-5">
                 <div className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)]">
                   Factor {r.factor}
@@ -245,13 +368,17 @@ function SelfLibrary() {
                   </button>
                 </div>
               </li>
-            ))}
+                    ))}
+                  </ul>
+                </section>
+              );
+            })}
             {loaded && results.length === 0 ? (
-              <li className="rounded-lg border border-[color:var(--rule)] p-8 text-sm text-[color:var(--muted-foreground)]">
+              <div className="rounded-lg border border-[color:var(--rule)] p-8 text-sm text-[color:var(--muted-foreground)]">
                 Nothing matches that search.
-              </li>
+              </div>
             ) : null}
-          </ul>
+          </div>
         </>
       ) : null}
     </div>

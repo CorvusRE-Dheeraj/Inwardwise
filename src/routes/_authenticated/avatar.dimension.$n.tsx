@@ -15,6 +15,11 @@ import { Caution, PinKeypad } from "@/components/avatar/PinKeypad";
 import { MIInterview } from "@/components/mi/MIInterview";
 import { decryptText, encryptText } from "@/lib/avatar-crypto";
 import { ProductName } from "@/components/products/ProductChrome";
+import {
+  FactorSharingControl,
+  defaultFactorSharingPreference,
+  type FactorSharingPreference,
+} from "@/components/avatar/FactorSharingControl";
 
 export const Route = createFileRoute("/_authenticated/avatar/dimension/$n")({
   head: () => ({
@@ -49,6 +54,10 @@ function DimensionFlow() {
   const [savedNote, setSavedNote] = useState<string | null>(null);
   const [finished, setFinished] = useState<{ allDone: boolean } | null>(null);
   const [resumeStep, setResumeStep] = useState(0);
+  const [sharing, setSharing] = useState<FactorSharingPreference>(
+    defaultFactorSharingPreference(),
+  );
+  const [sharingSaving, setSharingSaving] = useState(false);
 
   useEffect(() => {
     if (vault.status !== "unlocked" || !vault.key || !vault.profile || !dim) return;
@@ -59,12 +68,28 @@ function DimensionFlow() {
         .select("question_key, answer_text")
         .eq("user_id", vault.profile!.user_id)
         .eq("dimension_number", dim.n);
+      const { data: dimensionRow } = await supabase
+        .from("avatar_dimensions")
+        .select("sharing_classification, external_share_acknowledged, external_share_acknowledged_at")
+        .eq("user_id", vault.profile!.user_id)
+        .eq("dimension_number", dim.n)
+        .maybeSingle();
       const out: Record<string, string> = {};
       for (const row of data ?? []) {
         out[row.question_key] = await decryptText(vault.key!, row.answer_text);
       }
       if (!cancelled) {
         setAnswers(out);
+        if (dimensionRow) {
+          setSharing({
+            classification:
+              dimensionRow.sharing_classification === "external_approved"
+                ? "external_approved"
+                : "internal_only",
+            acknowledged: dimensionRow.external_share_acknowledged,
+            acknowledgedAt: dimensionRow.external_share_acknowledged_at,
+          });
+        }
         // Resume on the first question that has nothing written yet.
         const firstEmpty = dim.questions.findIndex((q) => !(out[q.key] ?? "").trim());
         setResumeStep(firstEmpty === -1 ? dim.questions.length - 1 : firstEmpty);
@@ -167,6 +192,33 @@ function DimensionFlow() {
       return AVATAR_DIMENSIONS.every((d) => done.has(d.n));
     } finally {
       setSaving(false);
+    }
+  }
+
+  async function saveSharing(next: FactorSharingPreference) {
+    if (!vault.profile || !dim) return;
+    setSharingSaving(true);
+    try {
+      const { error } = await supabase.from("avatar_dimensions").upsert(
+        {
+          user_id: vault.profile.user_id,
+          dimension_number: dim.n,
+          progress_pct: Math.round(
+            (dim.questions.filter((question) => (answers[question.key] ?? "").trim()).length /
+              dim.questions.length) *
+              100,
+          ),
+          sharing_classification: next.classification,
+          external_share_acknowledged: next.acknowledged,
+          external_share_acknowledged_at: next.acknowledgedAt,
+          updated_at: new Date().toISOString(),
+        },
+        { onConflict: "user_id,dimension_number" },
+      );
+      if (error) throw new Error(error.message);
+      setSharing(next);
+    } finally {
+      setSharingSaving(false);
     }
   }
 
@@ -314,6 +366,14 @@ function DimensionFlow() {
                 </Caution>
               </div>
             )}
+            <div className="mt-8 max-w-2xl">
+              <FactorSharingControl
+                factor={dim.n}
+                preference={sharing}
+                saving={sharingSaving || !loaded}
+                onChange={saveSharing}
+              />
+            </div>
             <button
               onClick={() => setStep(resumeStep)}
               disabled={!loaded}
@@ -336,6 +396,15 @@ function DimensionFlow() {
                 <Lock className="h-3 w-3" /> Encrypted · only visible to you
               </div>
             )}
+
+            <div className="mt-5">
+              <FactorSharingControl
+                factor={dim.n}
+                preference={sharing}
+                saving={sharingSaving || !loaded}
+                onChange={saveSharing}
+              />
+            </div>
 
             <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-[color:var(--rule)] bg-white/60 px-3 py-1 text-[12px] text-[color:var(--muted-foreground)]">
               <Lock className="h-3 w-3" />

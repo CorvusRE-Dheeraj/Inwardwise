@@ -161,6 +161,11 @@ function ConsultAvatar() {
             Schedule a call
           </Link>
         </div>
+        <div className="mt-3 rounded-md border border-[var(--rule)] bg-white px-4 py-3 text-xs leading-relaxed text-muted-foreground">
+          Your factor answers are classified for internal use. When you begin this consultation,
+          they are decrypted in your browser and securely processed by the AI service only to
+          generate your response. They are not approved for external sharing.
+        </div>
       </header>
 
       {answers && answeredCount === 0 && (
@@ -189,7 +194,7 @@ function ConsultAvatar() {
 
         {disclaimerAcknowledged && messages.length === 0 && (
           <div className="text-sm text-muted-foreground">
-            <p className="mb-3">Ask your avatar anything about you. Try:</p>
+            <p className="mb-3">Ask your InwardWise Self anything about you. Try:</p>
             <ul className="space-y-2">
               {[
                 "What am I avoiding right now that I shouldn't be?",
@@ -238,7 +243,7 @@ function ConsultAvatar() {
 
       <div className="mt-4 flex gap-2">
         <textarea
-          aria-label="Message to your avatar"
+          aria-label="Message to your InwardWise Self"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => {

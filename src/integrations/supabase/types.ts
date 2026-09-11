@@ -386,22 +386,31 @@ export type Database = {
       avatar_dimensions: {
         Row: {
           dimension_number: number
+          external_share_acknowledged: boolean
+          external_share_acknowledged_at: string | null
           id: string
           progress_pct: number
+          sharing_classification: string
           updated_at: string
           user_id: string
         }
         Insert: {
           dimension_number: number
+          external_share_acknowledged?: boolean
+          external_share_acknowledged_at?: string | null
           id?: string
           progress_pct?: number
+          sharing_classification?: string
           updated_at?: string
           user_id: string
         }
         Update: {
           dimension_number?: number
+          external_share_acknowledged?: boolean
+          external_share_acknowledged_at?: string | null
           id?: string
           progress_pct?: number
+          sharing_classification?: string
           updated_at?: string
           user_id?: string
         }
