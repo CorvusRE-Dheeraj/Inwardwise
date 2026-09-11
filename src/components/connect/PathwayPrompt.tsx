@@ -2,6 +2,10 @@ import { useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { ArrowRight } from "lucide-react";
 import { analyzeConnectPrompt } from "@/lib/connect.functions";
+import { CrisisNotice } from "@/components/CrisisNotice";
+import { detectCrisis } from "@/lib/crisis-detect";
+import type { MiCrisisCategory } from "@/lib/mi-filter";
+import { MemberStories } from "./MemberStories";
 
 export type PathwayAnalysis = Awaited<ReturnType<typeof analyzeConnectPrompt>>;
 
@@ -24,16 +28,21 @@ export function PathwayPrompt({
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<PathwayAnalysis | null>(null);
+  const [crisis, setCrisis] = useState<MiCrisisCategory[]>([]);
 
   async function submit() {
-    if (prompt.trim().length < 8) {
+    const text = prompt.trim();
+    if (text.length < 8) {
       setError("Please write a little more, a sentence or two is enough.");
       return;
     }
     setBusy(true);
     setError(null);
     try {
-      setResult(await analyze({ data: { prompt: prompt.trim() } }));
+      const res = await analyze({ data: { prompt: text } });
+      const detected = detectCrisis(text);
+      setCrisis(detected.length > 0 ? detected : res.riskFlag ? ["suicide"] : []);
+      setResult(res);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Something went wrong. Please try again.");
     } finally {
@@ -64,7 +73,14 @@ export function PathwayPrompt({
         </button>
       </div>
 
-      {result && children(result)}
+      <CrisisNotice categories={crisis} />
+
+      {result && (
+        <>
+          {children(result)}
+          <MemberStories stories={result.stories} />
+        </>
+      )}
     </div>
   );
 }
