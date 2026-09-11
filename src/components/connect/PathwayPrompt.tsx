@@ -28,16 +28,21 @@ export function PathwayPrompt({
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<PathwayAnalysis | null>(null);
+  const [crisis, setCrisis] = useState<MiCrisisCategory[]>([]);
 
   async function submit() {
-    if (prompt.trim().length < 8) {
+    const text = prompt.trim();
+    if (text.length < 8) {
       setError("Please write a little more, a sentence or two is enough.");
       return;
     }
     setBusy(true);
     setError(null);
     try {
-      setResult(await analyze({ data: { prompt: prompt.trim() } }));
+      const res = await analyze({ data: { prompt: text } });
+      const detected = detectCrisis(text);
+      setCrisis(detected.length > 0 ? detected : res.riskFlag ? ["suicide"] : []);
+      setResult(res);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Something went wrong. Please try again.");
     } finally {
