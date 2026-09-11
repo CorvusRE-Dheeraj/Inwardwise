@@ -7,7 +7,7 @@ const MessageSchema = z.object({
 });
 
 const InputSchema = z.object({
-  systemPrompt: z.string().min(10).max(8000),
+  systemPrompt: z.string().min(10).max(60000),
   messages: z.array(MessageSchema).min(1).max(30),
 });
 
