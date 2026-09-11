@@ -64,8 +64,8 @@ export const JOURNEY: JourneyStage[] = [
 
   {
     n: 8,
-    label: "Make Your Decision",
-    blurb: "Bring everything together and make a decision you can own.",
+    label: "Action Stage",
+    blurb: "This is not a stage. Using the sub-objectives above, come up with answers to ALL sub-objectives, so your solution is comprehensive and Out-In — bound inside the broad objective definition. By working through all of the sub-objectives, you will find better solutions, or your objective itself might have changed and you are now reaching a solution that is different than before.",
   },
 ];
 
