@@ -36,14 +36,6 @@ export const Route = createFileRoute("/compare")({
 });
 
 function CompareModels() {
-  const [decision, setDecision] = useState("");
-  const run = useServerFn(compareDecisionModels);
-  const compare = useMutation({
-    mutationFn: (text: string) => run({ data: { decision: text } }),
-  });
-
-  const canRun = decision.trim().length >= 15 && !compare.isPending;
-
   return (
     <AppShell>
       <div className="mx-auto w-[min(1100px,calc(100%-2rem))] py-12 md:py-16">
@@ -57,7 +49,7 @@ function CompareModels() {
           <p className="mt-5 text-base leading-relaxed text-[color:var(--muted-foreground)]">
             A public-knowledge advisor tells you what most people would do. <ProductName id="decision" />{" "}
             asks whether you are solving the right problem in the first place. Below, five identical
-            prompts run through both, then a box where you can try your own.
+            prompts run through both, with the conclusions set side by side.
           </p>
         </header>
 
