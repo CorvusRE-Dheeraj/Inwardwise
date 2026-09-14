@@ -166,6 +166,8 @@ function StoryPage() {
           life situations and perspectives.
         </p>
 
+        <PersonalityProfile slug={detail.character.slug} name={detail.character.name} />
+
         {error && (
           <p className="mt-5 rounded-lg border border-[color:var(--rule)] p-4 text-sm">{error}</p>
         )}
