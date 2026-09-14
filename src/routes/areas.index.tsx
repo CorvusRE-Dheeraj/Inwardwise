@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { AREAS } from "@/lib/areas";
+import { ProductText } from "@/components/products/ProductChrome";
 
 export const Route = createFileRoute("/areas/")({
   component: AreasIndex,
@@ -26,7 +27,7 @@ function AreasIndex() {
             <div className="flex items-start justify-between gap-3">
               <div>
                 <div className="text-lg">{a.name}</div>
-                <p className="mt-1 text-sm text-muted-foreground">{a.blurb}</p>
+                <p className="mt-1 text-sm text-muted-foreground"><ProductText>{a.blurb}</ProductText></p>
               </div>
               <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
             </div>

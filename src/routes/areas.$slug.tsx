@@ -133,7 +133,7 @@ function SelfStar() {
             style={{ fontSize: 6, fontWeight: 700 }}
           >
             <tspan x="50" dy="-2">InwardWise</tspan>
-            <tspan x="50" dy="7">Self</tspan>
+            <tspan x="50" dy="7" className="fill-[color:var(--royal)] italic">Self</tspan>
           </text>
           {dims.map((d) => (
             <text
