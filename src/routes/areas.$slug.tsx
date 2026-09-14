@@ -48,12 +48,12 @@ function AreaPage() {
       </Link>
       <p className="mt-6 text-xs uppercase tracking-[0.18em] text-muted-foreground">Service</p>
       <h1 className="mt-2 text-4xl sm:text-5xl">{area.name}</h1>
-      <p className="mt-4 text-lg leading-relaxed text-royal">{area.tagline}</p>
+      <p className="mt-4 text-lg leading-relaxed text-royal"><ProductText>{area.tagline}</ProductText></p>
 
       <div className="mt-10 space-y-8 text-[15px] leading-relaxed">
         {area.sections.map((s, i) => (
           <section key={i} className="space-y-4">
-            {s.heading && <h2 className="text-2xl sm:text-3xl">{s.heading}</h2>}
+            {s.heading && <h2 className="text-2xl sm:text-3xl"><ProductText>{s.heading}</ProductText></h2>}
             {s.body.map((p, j) => (
                <p key={j}><ProductText>{p}</ProductText></p>
             ))}
@@ -63,16 +63,16 @@ function AreaPage() {
 
         {area.cycle && (
           <div className="glass rounded-3xl p-6">
-            <p className="text-center text-sm font-medium leading-relaxed">{area.cycle}</p>
+            <p className="text-center text-sm font-medium leading-relaxed"><ProductText>{area.cycle}</ProductText></p>
           </div>
         )}
 
         {area.closing && (
-          <p className="text-lg font-medium leading-relaxed text-foreground">{area.closing}</p>
+          <p className="text-lg font-medium leading-relaxed text-foreground"><ProductText>{area.closing}</ProductText></p>
         )}
 
         {area.disclaimer && (
-          <p className="text-sm italic leading-relaxed text-muted-foreground">{area.disclaimer}</p>
+          <p className="text-sm italic leading-relaxed text-muted-foreground"><ProductText>{area.disclaimer}</ProductText></p>
         )}
       </div>
 

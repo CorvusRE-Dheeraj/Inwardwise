@@ -22,7 +22,7 @@ export function ProductName({
 }) {
   return (
     <span className={className}>
-      <span className="text-[color:var(--ink)]">InwardWise</span>{" "}
+      <span className="not-italic text-[color:var(--ink)]">InwardWise</span>{" "}
       <span className="italic text-[color:var(--royal)]">{PRODUCT_SECOND_WORD[id]}</span>
     </span>
   );
@@ -122,7 +122,7 @@ export function CtaRow({
               : "inline-flex min-h-11 items-center gap-2 rounded-full border border-[color:var(--ink)] px-6 py-3 text-sm text-[color:var(--ink)] transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--royal)]"
           }
         >
-          <span className="[&_*]:[color:inherit!important]">{a.label}</span>{" "}
+          <span>{a.label}</span>{" "}
           <span aria-hidden>→</span>
         </Link>
       ))}
