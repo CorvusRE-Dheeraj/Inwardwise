@@ -18,6 +18,7 @@ import { Route as FeedbackRouteImport } from './routes/feedback'
 import { Route as ExamplesRouteImport } from './routes/examples'
 import { Route as DonateRouteImport } from './routes/donate'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as CompareRouteImport } from './routes/compare'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AreasRouteImport } from './routes/areas'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
@@ -125,6 +126,11 @@ const DonateRoute = DonateRouteImport.update({
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CompareRoute = CompareRouteImport.update({
+  id: '/compare',
+  path: '/compare',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRoute = AuthRouteImport.update({
@@ -471,6 +477,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/areas': typeof AreasRouteWithChildren
   '/auth': typeof AuthRoute
+  '/compare': typeof CompareRoute
   '/contact': typeof ContactRoute
   '/donate': typeof DonateRoute
   '/examples': typeof ExamplesRoute
@@ -543,6 +550,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/compare': typeof CompareRoute
   '/contact': typeof ContactRoute
   '/donate': typeof DonateRoute
   '/examples': typeof ExamplesRoute
@@ -617,6 +625,7 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/areas': typeof AreasRouteWithChildren
   '/auth': typeof AuthRoute
+  '/compare': typeof CompareRoute
   '/contact': typeof ContactRoute
   '/donate': typeof DonateRoute
   '/examples': typeof ExamplesRoute
@@ -692,6 +701,7 @@ export interface FileRouteTypes {
     | '/'
     | '/areas'
     | '/auth'
+    | '/compare'
     | '/contact'
     | '/donate'
     | '/examples'
@@ -764,6 +774,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
+    | '/compare'
     | '/contact'
     | '/donate'
     | '/examples'
@@ -837,6 +848,7 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/areas'
     | '/auth'
+    | '/compare'
     | '/contact'
     | '/donate'
     | '/examples'
@@ -912,6 +924,7 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AreasRoute: typeof AreasRouteWithChildren
   AuthRoute: typeof AuthRoute
+  CompareRoute: typeof CompareRoute
   ContactRoute: typeof ContactRoute
   DonateRoute: typeof DonateRoute
   ExamplesRoute: typeof ExamplesRoute
@@ -1017,6 +1030,13 @@ declare module '@tanstack/react-router' {
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compare': {
+      id: '/compare'
+      path: '/compare'
+      fullPath: '/compare'
+      preLoaderRoute: typeof CompareRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth': {
@@ -1551,6 +1571,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AreasRoute: AreasRouteWithChildren,
   AuthRoute: AuthRoute,
+  CompareRoute: CompareRoute,
   ContactRoute: ContactRoute,
   DonateRoute: DonateRoute,
   ExamplesRoute: ExamplesRoute,
