@@ -80,6 +80,36 @@ export const COMPARISONS: ModelComparison[] = [
   },
 ];
 
+export const WISE_OWL_FOUNDATIONS: Array<{ title: string; body: string }> = [
+  {
+    title: "Accumulated public knowledge",
+    body: "Proverbs, elders' counsel, self-help literature, advice columns and the aggregated opinion of forums and search results. Its authority comes from repetition: if many people say it, it is treated as true.",
+  },
+  {
+    title: "Best practice and professional norms",
+    body: "Institutional guidance — clinical protocols, financial planning rules of thumb, career-progression convention. Reliable for the average case, silent about which case you are.",
+  },
+  {
+    title: "Expected-value reasoning",
+    body: "Weigh the odds, compare costs and benefits, pick the higher expected outcome. Classical decision theory, applied to the options already on the table.",
+  },
+  {
+    title: "Risk aversion and social safety",
+    body: "Prefer the reversible, the insured, the respectable. Protects against catastrophe and against disapproval, and cannot tell the two apart.",
+  },
+  {
+    title: "Precedent and majority behaviour",
+    body: "What comparable people did in comparable situations. Strong pattern matching, weak at noticing that your objective differs from theirs.",
+  },
+];
+
+export const WISE_OWL_LIMITS = [
+  "It answers the question as asked, and never audits whether that is the right question.",
+  "It optimises inside the options presented, so a false binary stays a false binary.",
+  "It cannot separate fear, ego and social conditioning from a stated objective.",
+  "It issues a verdict, which quietly transfers ownership of your life away from you.",
+];
+
 export const COMPARISON_SUMMARY = [
   "Wise Owl answers the question you asked. InwardWise checks whether it is the right question.",
   "Wise Owl draws on what most people do. InwardWise draws on what your objective requires.",
