@@ -18,11 +18,14 @@ export type Area = {
   disclaimer?: string;
   /** Which primary action the page offers. */
   cta: "self" | "decision" | "calm";
+  /** Which column the service belongs to on the services index. */
+  audience: "individual" | "corporate";
 };
 
 export const AREAS: Area[] = [
   {
     slug: "individual-development",
+    audience: "individual",
     name: "Individual Development",
     blurb:
       "Build deeper self-knowledge with InwardWise Self, then bring that understanding into the decisions that shape your life.",
@@ -79,6 +82,7 @@ export const AREAS: Area[] = [
   },
   {
     slug: "individual-wellbeing",
+    audience: "individual",
     name: "Individual Wellbeing",
     blurb:
       "Create moments of calm, reflection, and reinforcement that are personal to you.",
@@ -117,8 +121,9 @@ export const AREAS: Area[] = [
       "InwardWise supports reflection, wellbeing, and decision-making. It is not intended to diagnose, treat, cure, or prevent medical or mental health conditions and is not a substitute for professional medical or mental health care.",
   },
   {
-    slug: "inner-enemies",
-    name: "Inner Enemies",
+    slug: "habits",
+    audience: "individual",
+    name: "Habits",
     blurb:
       "Structured, private, and non-judgmental support for the patterns you understand, but still find difficult to change.",
     tagline:
@@ -128,9 +133,9 @@ export const AREAS: Area[] = [
       {
         body: [
           "Most of us have behaviors, habits, fears, or impulses that repeatedly work against what we genuinely want for ourselves.",
-          "We call them Inner Enemies, not because there is something inherently wrong with us, but because sometimes a part of our own behavior can conflict with our larger objectives.",
+          "We call them Habits, not because there is something inherently wrong with us, but because sometimes a part of our own behavior can conflict with our larger objectives.",
           "They may appear relatively ordinary: procrastination, avoiding difficult conversations, excessive screen time, unhealthy eating habits, impulsive spending, fear-driven decisions, or repeatedly abandoning something we intended to finish. Other challenges can be far more serious, including problematic alcohol or drug use, compulsive behaviors, or other patterns that may require professional support.",
-          "What makes an Inner Enemy particularly difficult is that knowing a behavior is harmful doesn't necessarily make it disappear. It may remain dormant for months and return during periods of stress. We may rationalize it, hide it from others, feel ashamed of it, or repeatedly promise ourselves that this time will be different.",
+          "What makes a habit like this particularly difficult is that knowing a behavior is harmful doesn't necessarily make it disappear. It may remain dormant for months and return during periods of stress. We may rationalize it, hide it from others, feel ashamed of it, or repeatedly promise ourselves that this time will be different.",
           "InwardWise approaches these patterns through understanding rather than judgment.",
         ],
       },
@@ -163,6 +168,7 @@ export const AREAS: Area[] = [
   },
   {
     slug: "career",
+    audience: "individual",
     name: "Career",
     blurb: "Don't just build a résumé. Build a working life that fits who you are.",
     tagline: "Don't just build a résumé. Build a working life that fits who you are.",
@@ -192,6 +198,7 @@ export const AREAS: Area[] = [
   },
   {
     slug: "family",
+    audience: "individual",
     name: "Family",
     blurb: "When the relationship matters deeply, the decision deserves deeper thought.",
     tagline: "When the relationship matters deeply, the decision deserves deeper thought.",
@@ -220,6 +227,7 @@ export const AREAS: Area[] = [
   },
   {
     slug: "relationships",
+    audience: "individual",
     name: "Relationships",
     blurb: "When emotions are strongest, the decisions you make can matter the most.",
     tagline: "When emotions are strongest, the decisions you make can matter the most.",
@@ -252,6 +260,7 @@ export const AREAS: Area[] = [
   },
   {
     slug: "organizational-change",
+    audience: "corporate",
     name: "Organizational & Systems Change",
     blurb:
       "Changing an organization requires more than changing its structure. Understand the forces that keep the existing system in place.",
@@ -313,6 +322,7 @@ export const AREAS: Area[] = [
   },
   {
     slug: "health-wellness-research",
+    audience: "corporate",
     name: "Health & Wellness Research",
     blurb:
       "Medical knowledge keeps advancing. Staying informed about what may matter to you shouldn't have to become a full-time job.",
@@ -346,6 +356,7 @@ export const AREAS: Area[] = [
   },
   {
     slug: "political-decisions",
+    audience: "corporate",
     name: "Political Decisions",
     blurb: "Before choosing a side, understand the problem you are actually trying to solve.",
     tagline: "Before choosing a side, understand the problem you are actually trying to solve.",
@@ -374,6 +385,7 @@ export const AREAS: Area[] = [
   },
   {
     slug: "justice-rehabilitation",
+    audience: "corporate",
     name: "Justice & Rehabilitation Support",
     blurb:
       "Accountability addresses what happened. Lasting change requires understanding why, and what happens next.",
@@ -407,6 +419,7 @@ export const AREAS: Area[] = [
   },
   {
     slug: "special-interest-groups",
+    audience: "individual",
     name: "Special Interest Groups",
     blurb:
       "Belonging isn't simply about meeting more people. It's about finding where, and how, you meaningfully connect.",
@@ -437,6 +450,7 @@ export const AREAS: Area[] = [
   },
   {
     slug: "business-decisions",
+    audience: "corporate",
     name: "Business Decisions",
     blurb: "The best business decision isn't always the one that produces the most growth.",
     tagline: "The best business decision isn't always the one that produces the most growth.",
@@ -463,6 +477,7 @@ export const AREAS: Area[] = [
   },
   {
     slug: "ethics-management",
+    audience: "corporate",
     name: "Ethics Management",
     blurb: "Ethical decisions become harder when the forces influencing the decision are difficult to see.",
     tagline: "Ethical decisions become harder when the forces influencing the decision are difficult to see.",
@@ -490,6 +505,7 @@ export const AREAS: Area[] = [
   },
   {
     slug: "sales-negotiations",
+    audience: "corporate",
     name: "Business Sales & Negotiations",
     blurb: "Better negotiations begin before the conversation, and continue after it ends.",
     tagline: "Better negotiations begin before the conversation, and continue after it ends.",
@@ -517,6 +533,7 @@ export const AREAS: Area[] = [
   },
   {
     slug: "founders-network",
+    audience: "corporate",
     name: "CEOs, Entrepreneurs & Founders Network",
     blurb: "Leadership can surround you with people while leaving you alone with your hardest decisions.",
     tagline: "Leadership can surround you with people while leaving you alone with your hardest decisions.",
@@ -546,6 +563,7 @@ export const AREAS: Area[] = [
   },
   {
     slug: "business-conflict-management",
+    audience: "corporate",
     name: "Business Conflict Management",
     blurb: "Conflict doesn't have to derail your business, or your life.",
     tagline: "Conflict doesn't have to derail your business, or your life.",
@@ -574,6 +592,7 @@ export const AREAS: Area[] = [
   },
   {
     slug: "stress-management",
+    audience: "individual",
     name: "Stress Management",
     blurb: "Understand what creates your stress, not just how to cope with it.",
     tagline: "Understand what creates your stress, not just how to cope with it.",
@@ -600,6 +619,7 @@ export const AREAS: Area[] = [
   },
   {
     slug: "school-districts",
+    audience: "corporate",
     name: "School Districts",
     blurb:
       "Education prepares students for what to learn. We can also help them learn how to understand themselves, make decisions, and navigate life.",
@@ -652,7 +672,8 @@ export const AREAS: Area[] = [
 
 /** Old slugs that were renamed, so existing links keep working. */
 export const AREA_ALIASES: Record<string, string> = {
-  "addiction-counseling": "inner-enemies",
+  "addiction-counseling": "habits",
+  "inner-enemies": "habits",
   "courts-counseling": "justice-rehabilitation",
   "marriage-counseling": "relationships",
   "family-decisions": "family",
