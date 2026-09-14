@@ -156,67 +156,36 @@ function CompareModels() {
         </ul>
 
         <section className="mt-16 rounded-2xl border border-[color:var(--rule)] p-6 md:p-8">
-          <h2 className="font-display text-2xl md:text-3xl">Try your own decision</h2>
+          <h2 className="font-display text-2xl md:text-3xl">
+            What Wise Owl wisdom rests on
+          </h2>
           <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[color:var(--muted-foreground)]">
-            Describe a decision in a few sentences and see both answers side by side. This is a
-            preview, not a full session, and nothing here is saved.
+            Traditional wisdom is not arbitrary. It draws on five well-defined bodies of thought,
+            each sound within its own limits.
           </p>
-          <textarea
-            value={decision}
-            onChange={(e) => setDecision(e.target.value)}
-            rows={4}
-            maxLength={1200}
-            placeholder="e.g. I have been offered a role in another city, but my parents depend on me being close by."
-            className="mt-5 w-full rounded-xl border border-[color:var(--rule)] bg-transparent p-4 text-sm leading-relaxed outline-none focus-visible:border-[color:var(--royal)]"
-          />
-          <div className="mt-4 flex flex-wrap items-center gap-4">
-            <button
-              type="button"
-              disabled={!canRun}
-              onClick={() => compare.mutate(decision.trim())}
-              className="inline-flex min-h-11 items-center gap-2 rounded-full bg-[color:var(--ink)] px-6 py-3 text-sm text-[color:var(--paper)] transition hover:opacity-90 disabled:opacity-40"
-            >
-              {compare.isPending ? "Comparing…" : "Compare both models"}
-            </button>
-            <span className="text-xs text-[color:var(--muted-foreground)]">
-              A few sentences works best.
-            </span>
-          </div>
-
-          {compare.isError && (
-            <p className="mt-4 text-sm text-[color:var(--royal)]">
-              {(compare.error as Error).message}
-            </p>
-          )}
-
-          {compare.data && (
-            <div className="mt-8 grid gap-6 md:grid-cols-2">
-              <div className="rounded-xl border border-[color:var(--rule)] p-5">
-                <p className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)]">
-                  Wise Owl concludes
-                </p>
+          <div className="mt-6 grid gap-5 md:grid-cols-2">
+            {WISE_OWL_FOUNDATIONS.map((f) => (
+              <div key={f.title} className="rounded-xl border border-[color:var(--rule)] p-5">
+                <h3 className="text-[0.95rem] text-[color:var(--ink)]">{f.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-[color:var(--muted-foreground)]">
-                  {compare.data.wiseOwl}
+                  {f.body}
                 </p>
               </div>
-              <div className="rounded-xl border border-[color:var(--royal)]/40 bg-[color:var(--royal)]/[0.04] p-5">
-                <p className="font-mono-cap text-[10px] text-[color:var(--royal)]">
-                  InwardWise concludes
-                </p>
-                <p className="mt-2 text-sm leading-relaxed text-[color:var(--ink)]">
-                  {compare.data.inwardWise}
-                </p>
-              </div>
-              <div className="md:col-span-2">
-                <p className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)]">
-                  Why they differ
-                </p>
-                <p className="mt-2 text-sm leading-relaxed text-[color:var(--ink)]">
-                  {compare.data.divergence}
-                </p>
-              </div>
-            </div>
-          )}
+            ))}
+          </div>
+          <p className="font-mono-cap mt-8 text-[10px] text-[color:var(--royal)]">
+            Where it stops short
+          </p>
+          <ul className="mt-3 space-y-2">
+            {WISE_OWL_LIMITS.map((line) => (
+              <li
+                key={line}
+                className="text-sm leading-relaxed text-[color:var(--muted-foreground)]"
+              >
+                — {line}
+              </li>
+            ))}
+          </ul>
         </section>
       </div>
     </AppShell>
