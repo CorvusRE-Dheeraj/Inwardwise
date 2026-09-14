@@ -17,6 +17,7 @@ import {
   type MeditationSettings,
 } from "@/lib/meditation-settings.functions";
 import { sendMeditationText } from "@/lib/meditation-sms.functions";
+import { ProductName } from "@/components/products/ProductChrome";
 
 export const Route = createFileRoute("/_authenticated/meditation/schedule")({
   head: () => ({
@@ -174,11 +175,11 @@ function MeditationSchedule() {
     !!callStatus.voice_enabled &&
     !!callStatus.scheduled_at &&
     new Date(callStatus.scheduled_at).getTime() === new Date(scheduledAt).getTime();
-  const textBlockedReason =
+  const textBlockedReason: React.ReactNode =
     answers === null
       ? "Unlocking your answers…"
       : !avatarComplete
-        ? `Finish your InwardWise Self to receive the written draft (${answeredCount} of ${totalQuestions} answered).`
+        ? <>Finish your <ProductName id="self" /> to receive the written draft ({answeredCount} of {totalQuestions} answered).</>
         : normalizedPhone.length === 0 || phoneError
           ? "Add a valid phone number to receive the draft by text."
           : callAtSameTime
@@ -423,7 +424,7 @@ function MeditationSchedule() {
           <button
             onClick={textDraft}
             disabled={!canText}
-            title={textBlockedReason ?? undefined}
+             title={typeof textBlockedReason === "string" ? textBlockedReason : undefined}
             className="rounded-full border border-[color:var(--rule)] px-5 py-2 text-sm transition hover:border-[color:var(--ink)] disabled:opacity-40"
           >
             {texting ? "Sending the draft…" : "Text me the meditation draft"}

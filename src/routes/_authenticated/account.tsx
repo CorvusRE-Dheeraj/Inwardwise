@@ -2,6 +2,8 @@ import { createFileRoute, Link, Outlet, useNavigate, useRouterState } from "@tan
 import { AppShell } from "@/components/AppShell";
 import { User, CreditCard, BarChart3, Sparkles, LogOut } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { ProductName } from "@/components/products/ProductChrome";
+import type { ReactNode } from "react";
 
 export const Route = createFileRoute("/_authenticated/account")({
   head: () => ({
@@ -13,11 +15,11 @@ export const Route = createFileRoute("/_authenticated/account")({
   component: AccountLayout,
 });
 
-const tabs: Array<{ to: "/account" | "/account/billing" | "/account/dashboard" | "/account/self-avatar"; label: string; icon: typeof User; exact?: boolean }> = [
+const tabs: Array<{ to: "/account" | "/account/billing" | "/account/dashboard" | "/account/self-avatar"; label: ReactNode; icon: typeof User; exact?: boolean }> = [
   { to: "/account", label: "Personal Settings", icon: User, exact: true },
   { to: "/account/billing", label: "Billing", icon: CreditCard },
   { to: "/account/dashboard", label: "Dashboard", icon: BarChart3 },
-  { to: "/account/self-avatar", label: "InwardWise Self Design", icon: Sparkles },
+  { to: "/account/self-avatar", label: <><ProductName id="self" /> Design</>, icon: Sparkles },
 ];
 
 function AccountLayout() {
