@@ -82,6 +82,7 @@ import { Route as AuthenticatedAccountSelfAvatarRouteImport } from './routes/_au
 import { Route as AuthenticatedAccountDashboardRouteImport } from './routes/_authenticated/account.dashboard'
 import { Route as AuthenticatedAccountBillingRouteImport } from './routes/_authenticated/account.billing'
 import { Route as LovableEmailQueueProcessRouteImport } from './routes/lovable/email/queue/process'
+import { Route as AuthenticatedConnectReadingReadIdRouteImport } from './routes/_authenticated/connect.reading.$readId'
 import { Route as AuthenticatedAvatarDimensionNRouteImport } from './routes/_authenticated/avatar.dimension.$n'
 
 const TestimonialsRoute = TestimonialsRouteImport.update({
@@ -473,6 +474,12 @@ const LovableEmailQueueProcessRoute =
     path: '/lovable/email/queue/process',
     getParentRoute: () => rootRouteImport,
   } as any)
+const AuthenticatedConnectReadingReadIdRoute =
+  AuthenticatedConnectReadingReadIdRouteImport.update({
+    id: '/connect/reading/$readId',
+    path: '/connect/reading/$readId',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedAvatarDimensionNRoute =
   AuthenticatedAvatarDimensionNRouteImport.update({
     id: '/avatar/dimension/$n',
@@ -553,6 +560,7 @@ export interface FileRoutesByFullPath {
   '/connect/': typeof AuthenticatedConnectIndexRoute
   '/people-like-me/': typeof AuthenticatedPeopleLikeMeIndexRoute
   '/avatar/dimension/$n': typeof AuthenticatedAvatarDimensionNRoute
+  '/connect/reading/$readId': typeof AuthenticatedConnectReadingReadIdRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
 }
 export interface FileRoutesByTo {
@@ -626,6 +634,7 @@ export interface FileRoutesByTo {
   '/connect': typeof AuthenticatedConnectIndexRoute
   '/people-like-me': typeof AuthenticatedPeopleLikeMeIndexRoute
   '/avatar/dimension/$n': typeof AuthenticatedAvatarDimensionNRoute
+  '/connect/reading/$readId': typeof AuthenticatedConnectReadingReadIdRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
 }
 export interface FileRoutesById {
@@ -703,6 +712,7 @@ export interface FileRoutesById {
   '/_authenticated/connect/': typeof AuthenticatedConnectIndexRoute
   '/_authenticated/people-like-me/': typeof AuthenticatedPeopleLikeMeIndexRoute
   '/_authenticated/avatar/dimension/$n': typeof AuthenticatedAvatarDimensionNRoute
+  '/_authenticated/connect/reading/$readId': typeof AuthenticatedConnectReadingReadIdRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
 }
 export interface FileRouteTypes {
@@ -780,6 +790,7 @@ export interface FileRouteTypes {
     | '/connect/'
     | '/people-like-me/'
     | '/avatar/dimension/$n'
+    | '/connect/reading/$readId'
     | '/lovable/email/queue/process'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -853,6 +864,7 @@ export interface FileRouteTypes {
     | '/connect'
     | '/people-like-me'
     | '/avatar/dimension/$n'
+    | '/connect/reading/$readId'
     | '/lovable/email/queue/process'
   id:
     | '__root__'
@@ -929,6 +941,7 @@ export interface FileRouteTypes {
     | '/_authenticated/connect/'
     | '/_authenticated/people-like-me/'
     | '/_authenticated/avatar/dimension/$n'
+    | '/_authenticated/connect/reading/$readId'
     | '/lovable/email/queue/process'
   fileRoutesById: FileRoutesById
 }
@@ -1493,6 +1506,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LovableEmailQueueProcessRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/connect/reading/$readId': {
+      id: '/_authenticated/connect/reading/$readId'
+      path: '/connect/reading/$readId'
+      fullPath: '/connect/reading/$readId'
+      preLoaderRoute: typeof AuthenticatedConnectReadingReadIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/avatar/dimension/$n': {
       id: '/_authenticated/avatar/dimension/$n'
       path: '/avatar/dimension/$n'
@@ -1544,6 +1564,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedConnectIndexRoute: typeof AuthenticatedConnectIndexRoute
   AuthenticatedPeopleLikeMeIndexRoute: typeof AuthenticatedPeopleLikeMeIndexRoute
   AuthenticatedAvatarDimensionNRoute: typeof AuthenticatedAvatarDimensionNRoute
+  AuthenticatedConnectReadingReadIdRoute: typeof AuthenticatedConnectReadingReadIdRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
@@ -1571,6 +1592,8 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedConnectIndexRoute: AuthenticatedConnectIndexRoute,
   AuthenticatedPeopleLikeMeIndexRoute: AuthenticatedPeopleLikeMeIndexRoute,
   AuthenticatedAvatarDimensionNRoute: AuthenticatedAvatarDimensionNRoute,
+  AuthenticatedConnectReadingReadIdRoute:
+    AuthenticatedConnectReadingReadIdRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =

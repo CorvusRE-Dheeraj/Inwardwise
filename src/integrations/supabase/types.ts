@@ -657,6 +657,48 @@ export type Database = {
           },
         ]
       }
+      connect_book_reads: {
+        Row: {
+          channels: string[]
+          created_at: string
+          id: string
+          last_sent_at: string | null
+          opened_at: string | null
+          prompt_text: string
+          read_at: string | null
+          section_id: string | null
+          section_title: string
+          send_count: number
+          user_id: string
+        }
+        Insert: {
+          channels?: string[]
+          created_at?: string
+          id?: string
+          last_sent_at?: string | null
+          opened_at?: string | null
+          prompt_text: string
+          read_at?: string | null
+          section_id?: string | null
+          section_title: string
+          send_count?: number
+          user_id: string
+        }
+        Update: {
+          channels?: string[]
+          created_at?: string
+          id?: string
+          last_sent_at?: string | null
+          opened_at?: string | null
+          prompt_text?: string
+          read_at?: string | null
+          section_id?: string | null
+          section_title?: string
+          send_count?: number
+          user_id?: string
+        }
+        Relationships: []
+      }
       connect_group_members: {
         Row: {
           created_at: string
@@ -915,6 +957,44 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      connect_reflections: {
+        Row: {
+          body: string
+          context: Json
+          created_at: string
+          id: string
+          read_id: string | null
+          source: string
+          user_id: string
+        }
+        Insert: {
+          body: string
+          context?: Json
+          created_at?: string
+          id?: string
+          read_id?: string | null
+          source?: string
+          user_id: string
+        }
+        Update: {
+          body?: string
+          context?: Json
+          created_at?: string
+          id?: string
+          read_id?: string | null
+          source?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "connect_reflections_read_id_fkey"
+            columns: ["read_id"]
+            isOneToOne: false
+            referencedRelation: "connect_book_reads"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       connect_reports: {
         Row: {
