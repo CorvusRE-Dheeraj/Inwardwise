@@ -44,6 +44,7 @@ export const Route = createFileRoute("/_authenticated/meditation/practice")({
 /** Gap after a spoken line, and the longest we ever wait for one repetition. */
 const PAUSE_MS = 3000;
 const FALLBACK_LINE_MS = 12000;
+const REPEAT_CHOICES = [5, 8, 10, 15, 20, 25];
 
 function detectTimeZone(): string {
   try {
