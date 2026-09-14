@@ -11,7 +11,7 @@ const SET_TITLES: Record<string, string> = {
   sorry: "I am sorry.",
   forgive: "Please forgive me.",
   thank: "Thank you.",
-  love: "I love you.",
+  love: "I love myself.",
 };
 
 /** Turn the saved prayer lines into a single spoken meditation script. */
@@ -20,7 +20,7 @@ function buildScriptText(script: unknown, minutes: number): string {
   if (lines.length === 0) {
     return "Your meditation is not prepared yet. Please open the dashboard and save your settings again.";
   }
-  const order = ["sorry", "forgive", "thank", "love"];
+  const order = ["thank", "forgive", "sorry", "love"];
   const parts: string[] = [
     "Welcome to your meditation. Find a quiet place, and breathe slowly.",
   ];
@@ -28,7 +28,7 @@ function buildScriptText(script: unknown, minutes: number): string {
     const items = lines.filter((l) => l.set === key);
     if (items.length === 0) continue;
     parts.push(SET_TITLES[key] ?? "");
-    for (const l of items) parts.push(l.text);
+    for (const l of items) parts.push(`${l.text} Imagine the situation, and feel it.`);
   }
   parts.push("Rest now. Your meditation is complete.");
   return `This is a ${minutes} minute meditation.\n\n${parts.join("\n")}`;
@@ -183,7 +183,7 @@ async function dispatch(request: Request) {
                   role: "system",
                   content:
                     `You are a calm meditation guide leading a ${minutes} minute Ho'oponopono meditation over the phone. ` +
-                    `Speak the script below slowly, one line at a time, pausing between lines and letting the listener breathe. ` +
+                    `Speak the script below slowly, one line at a time. After each line, stay silent for about one minute so the listener can picture the situation and feel it. ` +
                     `Do not add commentary, do not ask questions, and do not rush. If the listener speaks, respond gently in one short sentence and continue. ` +
                     `When the script is finished, wish them rest and end the call.\n\nSCRIPT:\n${scriptText}`,
                 },
