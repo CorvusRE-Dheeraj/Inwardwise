@@ -79,7 +79,7 @@ function ReadingScreen() {
               About {section.minutes} minute{section.minutes === 1 ? "" : "s"} to read
             </p>
 
-            <article className="mt-8 space-y-5 text-[17px] leading-[1.75] text-justify">
+            <article className="mt-8 space-y-5 text-[17px] leading-[1.75]">
               {section.content.split(/\n{2,}/).map((para, i) => (
                 <p key={i} className="whitespace-pre-line">
                   {para}

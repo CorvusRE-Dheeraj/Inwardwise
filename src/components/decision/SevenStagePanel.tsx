@@ -44,7 +44,7 @@ export function SevenStagePanel() {
         {SEVEN_STAGES.map((s) => (
           <li key={s.label} className="border-b border-glass-border py-4">
             <div className="text-xs uppercase tracking-[0.18em] text-accent">{s.label}</div>
-            <p className="mt-1.5 text-sm leading-relaxed text-justify text-muted-foreground">
+            <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
               {s.text}
             </p>
           </li>

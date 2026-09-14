@@ -80,7 +80,7 @@ export function ConnectAiSuggest() {
         <h2 className="font-display mt-3 text-2xl sm:text-3xl">
           Type how you are feeling, or say it
         </h2>
-        <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-justify text-[color:var(--muted-foreground)]">
+        <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-[color:var(--muted-foreground)]">
           Write what you want to do to connect to this world. It could be going out to meet people,
           sitting quietly with something to read, listening to something that lifts you, or watching
           something that makes you curious. You do not have to choose first.

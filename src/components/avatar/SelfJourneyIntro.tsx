@@ -31,12 +31,12 @@ export function SelfJourneyIntro({ completed, nextStage }: SelfJourneyIntroProps
       ) : (
         <>
           <h2 className="font-display text-2xl sm:text-3xl">Start Your InwardWise Self Journey</h2>
-          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-justify text-[color:var(--muted-foreground)]">
+          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[color:var(--muted-foreground)]">
             Your InwardWise Self is built through a guided conversation designed to understand
             different aspects of who you are, the experiences that have shaped you, your patterns,
             strengths, interests, and what makes your journey unique.
           </p>
-          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-justify text-[color:var(--muted-foreground)]">
+          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[color:var(--muted-foreground)]">
             This is a conversation, not a test. There are no right or wrong answers. Share only what
             you are comfortable sharing.
           </p>
@@ -102,7 +102,7 @@ export function SelfJourneyIntro({ completed, nextStage }: SelfJourneyIntroProps
           <div className="space-y-6 text-sm text-[color:var(--muted-foreground)]">
             <div>
               <div className="text-[color:var(--ink)]">Why build your InwardWise Self?</div>
-              <p className="mt-2 leading-relaxed text-justify">
+              <p className="mt-2 leading-relaxed">
                 The goal is not to label you. It is to build a richer understanding of you that can
                 become more useful as you continue using the platform. Your responses help create a
                 more personalised picture of you and can make future conversations more relevant.

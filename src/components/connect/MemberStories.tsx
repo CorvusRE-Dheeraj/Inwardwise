@@ -16,7 +16,7 @@ function StoryBlock({ story }: { story: Story }) {
       <div className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)]">
         {story.pseudonym ?? "Anonymous Member"} · {story.category}
       </div>
-      <p className="mt-2 text-[15px] leading-relaxed text-justify">{story.situation}</p>
+      <p className="mt-2 text-[15px] leading-relaxed">{story.situation}</p>
 
       {story.audio_url && (
         <audio controls preload="none" src={story.audio_url} className="mt-3 w-full">
@@ -25,7 +25,7 @@ function StoryBlock({ story }: { story: Story }) {
       )}
 
       {open && (
-        <div className="mt-3 space-y-2 text-[14px] leading-relaxed text-justify text-[color:var(--muted-foreground)]">
+        <div className="mt-3 space-y-2 text-[14px] leading-relaxed text-[color:var(--muted-foreground)]">
           {story.fear && <p>{story.fear}</p>}
           {story.action_taken && <p>{story.action_taken}</p>}
           {story.outcome && <p>{story.outcome}</p>}

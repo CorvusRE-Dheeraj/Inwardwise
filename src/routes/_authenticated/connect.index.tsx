@@ -45,7 +45,7 @@ function ConnectPage() {
           <p className="mt-6 max-w-2xl font-display text-[clamp(1.3rem,3vw,2rem)] italic leading-snug text-[color:var(--royal)]">
             Be yourself. Discover that you are not alone.
           </p>
-          <p className="mt-6 max-w-2xl text-base leading-relaxed text-justify text-[color:var(--muted-foreground)]">
+          <p className="mt-6 max-w-2xl text-base leading-relaxed text-[color:var(--muted-foreground)]">
             Share what’s on your mind below with a prompt. <ProductName id="connect" /> will figure
             out which way of connecting suits you best for now, and offer that as a way to connect
             and belong. It could be going out to meet people or attending an event, sitting quietly

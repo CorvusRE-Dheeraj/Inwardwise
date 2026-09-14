@@ -81,7 +81,7 @@ export function ConnectOnly() {
         <h2 className="font-display mt-3 text-2xl sm:text-3xl">
           If you only want to <ProductName id="connect" />
         </h2>
-        <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-justify text-[color:var(--muted-foreground)]">
+        <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-[color:var(--muted-foreground)]">
           If you do not want to make a decision, do not want a Self consultation, are not looking for
           meditation or mantra, or have not filled out the Self build questionnaire, write what is on
           your mind here. Nothing is shown on this page. What fits you is sent to you in small pieces,
@@ -295,7 +295,7 @@ export function ConnectOnly() {
               </button>
               {eventNote && <p className="mt-3 text-[13px] text-[color:var(--royal)]">{eventNote}</p>}
               {events && (
-                <p className="mt-4 whitespace-pre-line text-[15px] leading-relaxed text-justify">{events}</p>
+                <p className="mt-4 whitespace-pre-line text-[15px] leading-relaxed">{events}</p>
               )}
             </div>
           </div>

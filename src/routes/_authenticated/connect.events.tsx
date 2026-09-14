@@ -159,7 +159,7 @@ function EventsPanel() {
 
       {note && <p className="mt-4 text-[13px] text-[color:var(--royal)]">{note}</p>}
       {suggestions && (
-        <p className="mt-5 whitespace-pre-line text-[15px] leading-relaxed text-justify">
+        <p className="mt-5 whitespace-pre-line text-[15px] leading-relaxed">
           {suggestions}
         </p>
       )}

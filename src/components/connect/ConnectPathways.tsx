@@ -14,7 +14,7 @@ export function ConnectPathways() {
       <h2 className="font-display mt-3 text-2xl sm:text-3xl">
         One prompt, <em className="italic text-[color:var(--royal)]">one best next step</em>
       </h2>
-      <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-justify text-[color:var(--muted-foreground)]">
+      <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-[color:var(--muted-foreground)]">
         You do not have to choose first. Write what is going on and Connect AI decides which of these
         is most relevant right now, says why, and gives you the first useful thing along with one clear
         follow-up. The options stay listed here so you can also go straight to one yourself.

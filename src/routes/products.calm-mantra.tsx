@@ -37,7 +37,7 @@ function CalmMantra() {
             <p className="mt-4 max-w-2xl text-lg leading-relaxed text-[color:var(--ink)]">
               Quiet the mental noise. Create space to reconnect with yourself.
             </p>
-            <div className="mt-8 max-w-2xl space-y-5 text-base leading-relaxed text-justify text-[color:var(--muted-foreground)]">
+            <div className="mt-8 max-w-2xl space-y-5 text-base leading-relaxed text-[color:var(--muted-foreground)]">
               <p>
                 Our minds continuously process thoughts, emotions, decisions, memories, and
                 information from the world around us. <ProductName id="calm" /> provides{" "}
@@ -85,7 +85,7 @@ function CalmMantra() {
               The messages you repeatedly tell yourself can influence how you approach your day. Make
               them worth repeating.
             </p>
-            <div className="mt-8 max-w-2xl space-y-5 text-base leading-relaxed text-justify text-[color:var(--muted-foreground)]">
+            <div className="mt-8 max-w-2xl space-y-5 text-base leading-relaxed text-[color:var(--muted-foreground)]">
               <p>
                 We all carry an internal dialogue, about what we can do, what we cannot do, who we
                 are, what others think of us, and what may be possible in our future. Some of these

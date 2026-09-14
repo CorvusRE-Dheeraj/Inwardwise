@@ -49,7 +49,7 @@ function SelfProduct() {
         />
 
         <Volume n={<>V01 · <ProductName id="self" /></>}>
-          <div className="max-w-2xl space-y-5 text-base leading-relaxed text-justify text-[color:var(--muted-foreground)]">
+          <div className="max-w-2xl space-y-5 text-base leading-relaxed text-[color:var(--muted-foreground)]">
             <p>
               <ProductName id="self" /> grew from more than five years of the founder&apos;s interdisciplinary
               research into human happiness, stress physiology, psychology, behavior, and the
