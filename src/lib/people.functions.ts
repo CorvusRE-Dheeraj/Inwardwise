@@ -7,7 +7,7 @@ import { matchScenarioThemes, type PermittedSignal } from "@/lib/people-matching
  * "People Like Me" scenario engine.
  *
  * Everything here reads admin-managed fictional characters and stores only the
- * signed-in member's own progress and answers. Merry and Alex are fictional:
+ * signed-in member's own progress and answers. Mary and Alex are fictional:
  * nothing in this module ever links a scenario to a real person or member.
  */
 

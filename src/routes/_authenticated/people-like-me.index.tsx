@@ -54,7 +54,7 @@ function PeopleLikeMePage() {
         </p>
 
         <p className="mt-6 max-w-2xl rounded-lg border border-[color:var(--rule)] bg-[color:var(--royal)]/[0.04] p-4 text-sm leading-relaxed">
-          Alex and Merry are fictional characters created to help you explore different life
+          Alex and Mary are fictional characters created to help you explore different life
           situations and perspectives.
         </p>
 
