@@ -199,16 +199,16 @@ function SelfLibrary() {
       const text = (edited[r.key] ?? r.answer).trim();
       if (!text) continue;
       const preference = sharing[r.factor] ?? defaultFactorSharingPreference();
-      if ((r.factor === 1 || r.factor === 2) && preference.classification !== "external_approved") {
-        continue;
-      }
+      const sensitive = r.factor === 1 || r.factor === 2;
       if (r.factor !== current) {
         current = r.factor;
         line(`Factor ${r.factor}`, 15, "bold", 6);
         line(
-          preference.classification === "external_approved"
-            ? `External sharing approved by you. ${DO_NOT_SHARE_WARNING}`
-            : "Internal use only. This information should not be shared externally with anyone.",
+          sensitive
+            ? DO_NOT_SHARE_WARNING
+            : preference.classification === "external_approved"
+              ? "External sharing approved by you."
+              : "Internal use only. This information should not be shared externally with anyone.",
           9,
           "italic",
           6,
