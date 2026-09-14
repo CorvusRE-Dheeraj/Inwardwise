@@ -417,6 +417,8 @@ function StoryPage() {
             </div>
           </section>
         )}
+
+        <CharacterOutcomes slug={detail.character.slug} name={detail.character.name} />
       </div>
     </AppShell>
   );
