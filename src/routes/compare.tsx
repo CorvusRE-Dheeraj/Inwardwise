@@ -166,19 +166,26 @@ function CompareModels() {
             What Wise Owl wisdom rests on
           </h2>
           <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[color:var(--muted-foreground)]">
-            Traditional wisdom is not arbitrary. It draws on five well-defined bodies of thought,
+            Traditional wisdom is not arbitrary. Wise Owl reasons through ten established filters,
             each sound within its own limits.
           </p>
           <div className="mt-6 grid gap-5 md:grid-cols-2">
-            {WISE_OWL_FOUNDATIONS.map((f) => (
+            {WISE_OWL_FOUNDATIONS.map((f, i) => (
               <div key={f.title} className="rounded-xl border border-[color:var(--rule)] p-5">
-                <h3 className="text-[0.95rem] text-[color:var(--ink)]">{f.title}</h3>
+                <p className="font-mono-cap text-[10px] text-[color:var(--royal)]">
+                  {String(i + 1).padStart(2, "0")}
+                </p>
+                <h3 className="mt-2 text-[0.95rem] text-[color:var(--ink)]">{f.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-[color:var(--muted-foreground)]">
                   {f.body}
+                </p>
+                <p className="mt-3 text-xs italic leading-relaxed text-[color:var(--muted-foreground)]">
+                  Based on {f.source}
                 </p>
               </div>
             ))}
           </div>
+
           <p className="font-mono-cap mt-8 text-[10px] text-[color:var(--royal)]">
             Where it stops short
           </p>
