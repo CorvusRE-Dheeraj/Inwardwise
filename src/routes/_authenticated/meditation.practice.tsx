@@ -44,6 +44,7 @@ export const Route = createFileRoute("/_authenticated/meditation/practice")({
 /** Gap after a spoken line, and the longest we ever wait for one repetition. */
 const PAUSE_MS = 3000;
 const FALLBACK_LINE_MS = 12000;
+const REPEAT_CHOICES = [5, 8, 10, 15, 20, 25];
 
 function detectTimeZone(): string {
   try {
@@ -71,7 +72,7 @@ function MeditationPractice() {
 
   // Practice
   const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [repeats, setRepeats] = useState(12);
+  const [repeats, setRepeats] = useState(5);
   const [running, setRunning] = useState(false);
   const [count, setCount] = useState(0);
   const [spokenText, setSpokenText] = useState("");
@@ -85,7 +86,7 @@ function MeditationPractice() {
   const [phone, setPhone] = useState("");
   const [timeOfDay, setTimeOfDay] = useState("08:00");
   const [perCall, setPerCall] = useState(1);
-  const [callRepeats, setCallRepeats] = useState(12);
+  const [callRepeats, setCallRepeats] = useState(5);
   const [timeZone, setTimeZone] = useState("");
   const [schedules, setSchedules] = useState<MantraSchedule[]>([]);
   const [savingCall, setSavingCall] = useState(false);
@@ -449,17 +450,18 @@ function MeditationPractice() {
               <label className="text-sm text-[color:var(--muted-foreground)]" htmlFor="repeats">
                 Repetitions
               </label>
-              <input
+              <select
                 id="repeats"
-                type="number"
-                min={1}
-                max={108}
                 value={repeats}
-                onChange={(e) =>
-                  setRepeats(Math.min(108, Math.max(1, Number(e.target.value) || 1)))
-                }
-                className="w-24 rounded-full border border-[color:var(--rule)] bg-transparent px-4 py-2 text-sm"
-              />
+                onChange={(e) => setRepeats(Number(e.target.value))}
+                className="rounded-full border border-[color:var(--rule)] bg-transparent px-5 py-2 text-sm"
+              >
+                {REPEAT_CHOICES.map((n) => (
+                  <option key={n} value={n}>
+                    {n}
+                  </option>
+                ))}
+              </select>
               <button
                 onClick={() => void startMantra()}
                 disabled={!selected}
@@ -544,16 +546,17 @@ function MeditationPractice() {
           </label>
           <label className="flex flex-col gap-2 text-sm">
             <span className="font-mono-cap text-[color:var(--muted-foreground)]">Repetitions</span>
-            <input
-              type="number"
-              min={1}
-              max={108}
+            <select
               value={callRepeats}
-              onChange={(e) =>
-                setCallRepeats(Math.min(108, Math.max(1, Number(e.target.value) || 1)))
-              }
+              onChange={(e) => setCallRepeats(Number(e.target.value))}
               className="rounded-md border border-[color:var(--rule)] bg-white px-3 py-2 text-sm"
-            />
+            >
+              {REPEAT_CHOICES.map((n) => (
+                <option key={n} value={n}>
+                  {n}
+                </option>
+              ))}
+            </select>
             <span className="text-xs text-[color:var(--muted-foreground)]">
               Each mantra is repeated this many times.
             </span>
