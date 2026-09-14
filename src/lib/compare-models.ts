@@ -80,28 +80,59 @@ export const COMPARISONS: ModelComparison[] = [
   },
 ];
 
-export const WISE_OWL_FOUNDATIONS: Array<{ title: string; body: string }> = [
+export const WISE_OWL_FOUNDATIONS: Array<{ title: string; source: string; body: string }> = [
   {
-    title: "Accumulated public knowledge",
-    body: "Proverbs, elders' counsel, self-help literature, advice columns and the aggregated opinion of forums and search results. Its authority comes from repetition: if many people say it, it is treated as true.",
+    title: "Carnegie filter — rapport and cooperation",
+    source: "Dale Carnegie, How to Win Friends and Influence People",
+    body: "Make the other person feel respected, important, heard and willing to cooperate.",
   },
   {
-    title: "Best practice and professional norms",
-    body: "Institutional guidance — clinical protocols, financial planning rules of thumb, career-progression convention. Reliable for the average case, silent about which case you are.",
+    title: "Motivational interviewing filter — draw out their own motivation",
+    source: "Miller, W. R., & Rollnick, S. Motivational Interviewing",
+    body: "Instead of persuading someone directly, help them discover and articulate their own reasons for changing or acting.",
   },
   {
-    title: "Expected-value reasoning",
-    body: "Weigh the odds, compare costs and benefits, pick the higher expected outcome. Classical decision theory, applied to the options already on the table.",
+    title: "Tactical empathy filter — understand before influencing",
+    source: "Chris Voss, Never Split the Difference",
+    body: "Surface hidden concerns and reduce resistance, without necessarily agreeing.",
   },
   {
-    title: "Risk aversion and social safety",
-    body: "Prefer the reversible, the insured, the respectable. Protects against catastrophe and against disapproval, and cannot tell the two apart.",
+    title: "Active listening filter — understand accurately",
+    source: "Rogers, C. R. (1951). Client-centered therapy. Boston: Houghton Mifflin.",
+    body: "Prevent the AI from becoming an intelligent talking machine that does not actually listen.",
   },
   {
-    title: "Precedent and majority behaviour",
-    body: "What comparable people did in comparable situations. Strong pattern matching, weak at noticing that your objective differs from theirs.",
+    title: "Nonviolent communication filter — reduce conflict",
+    source: "Marshall Rosenberg's NVC framework",
+    body: "Separate observation, feeling, need and request, so a disagreement does not become an attack.",
+  },
+  {
+    title: "Cialdini persuasion filter — ethical influence",
+    source: "Robert Cialdini's persuasion research",
+    body: "Use reciprocity, consistency, social proof and authority openly rather than as pressure tactics.",
+  },
+  {
+    title: "Emotional intelligence filter — read the emotional conversation",
+    source: "Emotional intelligence literature",
+    body: "Respond to the person's emotional state, not merely the literal words.",
+  },
+  {
+    title: "Socratic filter — improve thinking through questions",
+    source: "Waltman, S. H., Codd III, R. T., & McFarr, L. M. (2020). Socratic questioning for therapists and counselors. Routledge.",
+    body: "Help someone examine an issue rather than telling them the conclusion.",
+  },
+  {
+    title: "Behavioral economics filter — detect decision biases",
+    source: "Kahneman, D. (2011). Thinking, Fast and Slow. New York: Farrar, Straus and Giroux.",
+    body: "Name the anchoring, loss aversion and framing effects that quietly shape the answer.",
+  },
+  {
+    title: "Face and autonomy filter — protect ego and agency",
+    source: "Brown, P., & Levinson, S. C. (1987). Politeness: Some universals in language usage. Cambridge University Press.",
+    body: "Say the difficult thing in a way that leaves the person's dignity and choice intact.",
   },
 ];
+
 
 export const WISE_OWL_LIMITS = [
   "It answers the question as asked, and never audits whether that is the right question.",
