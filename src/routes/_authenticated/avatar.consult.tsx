@@ -8,7 +8,7 @@ import { decryptText } from "@/lib/avatar-crypto";
 import { buildAvatarSystemPrompt, type AvatarAnswers } from "@/lib/avatar-prompt";
 import { AVATAR_DIMENSIONS } from "@/lib/avatar-factors";
 import { Caution, PinKeypad } from "@/components/avatar/PinKeypad";
-import { ProductName } from "@/components/products/ProductChrome";
+import { ProductName, ProductText } from "@/components/products/ProductChrome";
 
 export const Route = createFileRoute("/_authenticated/avatar/consult")({
   head: () => ({
@@ -181,7 +181,7 @@ function ConsultAvatar() {
       <div ref={scrollRef} className="paper-card flex-1 space-y-4 overflow-y-auto rounded-lg p-6">
         <div className="rounded-lg border border-amber-200 bg-amber-50/60 p-4 text-sm text-amber-900">
           <p className="font-medium">Important legal disclaimer</p>
-          <p className="mt-1 leading-relaxed">{LEGAL_DISCLAIMER}</p>
+           <p className="mt-1 leading-relaxed"><ProductText>{LEGAL_DISCLAIMER}</ProductText></p>
           {!disclaimerAcknowledged && (
             <button
               onClick={() => setDisclaimerAcknowledged(true)}
@@ -194,7 +194,7 @@ function ConsultAvatar() {
 
         {disclaimerAcknowledged && messages.length === 0 && (
           <div className="text-sm text-muted-foreground">
-            <p className="mb-3">Ask your InwardWise Self anything about you. Try:</p>
+             <p className="mb-3">Ask your <ProductName id="self" /> anything about you. Try:</p>
             <ul className="space-y-2">
               {[
                 "What am I avoiding right now that I shouldn't be?",

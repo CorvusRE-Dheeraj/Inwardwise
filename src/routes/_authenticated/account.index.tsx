@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { loadPersonal, personalDefaults, savePersonal, type PersonalDetails } from "@/lib/profile-storage";
+import { ProductName } from "@/components/products/ProductChrome";
 
 export const Route = createFileRoute("/_authenticated/account/")({
   component: PersonalDetailsPage,
@@ -58,8 +59,8 @@ function PersonalDetailsPage() {
         <Field label="Email"><input value={email} disabled className="input opacity-70" /></Field>
 
         <Toggle
-          label="Allow my Inner InwardWise Self to reach out to me automatically"
-          desc="We suggest you turn this on so the full power of the Inner InwardWise Self works for you."
+          label={<>Allow my Inner <ProductName id="self" /> to reach out to me automatically</>}
+          desc={<>We suggest you turn this on so the full power of the Inner <ProductName id="self" /> works for you.</>}
           value={form.reachOutEnabled}
           onChange={(v) => update("reachOutEnabled", v)}
         />
@@ -99,7 +100,7 @@ function Field({ label, hint, children }: { label: string; hint?: string; childr
   );
 }
 
-function Toggle({ label, desc, value, onChange }: { label: string; desc?: string; value: boolean; onChange: (v: boolean) => void }) {
+function Toggle({ label, desc, value, onChange }: { label: React.ReactNode; desc?: React.ReactNode; value: boolean; onChange: (v: boolean) => void }) {
   return (
     <button type="button" onClick={() => onChange(!value)} className="glass flex items-start justify-between gap-4 rounded-2xl px-4 py-3 text-left">
       <div>

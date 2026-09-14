@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Check, ChevronDown } from "lucide-react";
 import { SELF_JOURNEY, TOTAL_JOURNEY_STAGES } from "@/lib/self-journey";
+import { ProductName } from "@/components/products/ProductChrome";
 
 export interface SelfJourneyIntroProps {
   /** Internal factor numbers already complete. */
@@ -22,7 +23,7 @@ export function SelfJourneyIntro({ completed, nextStage }: SelfJourneyIntroProps
     <section className="rounded-lg border border-[color:var(--rule)] p-6 sm:p-8">
       {started ? (
         <>
-          <h2 className="font-display text-2xl sm:text-3xl">Continue InwardWise Self Journey</h2>
+          <h2 className="font-display text-2xl sm:text-3xl">Continue <ProductName id="self" /> Journey</h2>
           <p className="mt-3 text-sm text-[color:var(--muted-foreground)]">
             You've completed {completed.length} of {TOTAL_JOURNEY_STAGES} stages. Continue where you
             left off.
@@ -30,9 +31,9 @@ export function SelfJourneyIntro({ completed, nextStage }: SelfJourneyIntroProps
         </>
       ) : (
         <>
-          <h2 className="font-display text-2xl sm:text-3xl">Start Your InwardWise Self Journey</h2>
+          <h2 className="font-display text-2xl sm:text-3xl">Start Your <ProductName id="self" /> Journey</h2>
           <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[color:var(--muted-foreground)]">
-            Your InwardWise Self is built through a guided conversation designed to understand
+            Your <ProductName id="self" /> is built through a guided conversation designed to understand
             different aspects of who you are, the experiences that have shaped you, your patterns,
             strengths, interests, and what makes your journey unique.
           </p>
@@ -49,7 +50,7 @@ export function SelfJourneyIntro({ completed, nextStage }: SelfJourneyIntroProps
           params={{ n: String(nextStage) }}
           className="inline-flex min-h-11 items-center rounded-full bg-[color:var(--ink)] px-6 py-2.5 text-[13px] text-[color:var(--paper)]"
         >
-          {started ? "Continue InwardWise Self Journey" : "Start My Self Journey"}
+          {started ? <>Continue <ProductName id="self" /> Journey</> : "Start My Self Journey"}
         </Link>
         <button
           type="button"
@@ -95,13 +96,13 @@ export function SelfJourneyIntro({ completed, nextStage }: SelfJourneyIntroProps
               })}
             </ol>
             <p className="font-mono-cap mt-6 text-[10px] text-[color:var(--muted-foreground)]">
-              → Your InwardWise Self
+              → Your <ProductName id="self" />
             </p>
           </div>
 
           <div className="space-y-6 text-sm text-[color:var(--muted-foreground)]">
             <div>
-              <div className="text-[color:var(--ink)]">Why build your InwardWise Self?</div>
+              <div className="text-[color:var(--ink)]">Why build your <ProductName id="self" />?</div>
               <p className="mt-2 leading-relaxed">
                 The goal is not to label you. It is to build a richer understanding of you that can
                 become more useful as you continue using the platform. Your responses help create a

@@ -246,7 +246,7 @@ function DimensionFlow() {
               onClick={() => navigate({ to: "/avatar/consult" })}
               className="min-h-11 rounded-full bg-[color:var(--ink)] px-6 py-2.5 text-[13px] text-[color:var(--paper)]"
             >
-              View My InwardWise Self
+              View My <ProductName id="self" />
             </button>
           ) : (
             nextStage && (

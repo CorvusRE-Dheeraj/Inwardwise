@@ -1,5 +1,6 @@
 // Orientation panel shown next to the decision intro. Presentation only:
 // it describes what happens at each stage in plain language.
+import { ProductText } from "@/components/products/ProductChrome";
 
 export const SEVEN_STAGES: { label: string; text: string }[] = [
   {
@@ -45,7 +46,7 @@ export function SevenStagePanel() {
           <li key={s.label} className="border-b border-glass-border py-4">
             <div className="text-xs uppercase tracking-[0.18em] text-accent">{s.label}</div>
             <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
-              {s.text}
+              <ProductText>{s.text}</ProductText>
             </p>
           </li>
         ))}

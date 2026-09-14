@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, ChevronDown, ExternalLink, Linkedin } from "lucide-react";
 import { motion } from "framer-motion";
 import { AppShell } from "@/components/AppShell";
+import { ProductText } from "@/components/products/ProductChrome";
 import {
   Collapsible,
   CollapsibleContent,
@@ -211,7 +212,7 @@ function History() {
               <CollapsibleContent>
                 <div className="pb-10 max-w-3xl space-y-4 text-[16px] leading-[1.7] text-[color:var(--ink-2)]">
                   {m.body.slice(0, -4).map((p, i) => (
-                    <p key={i}>{p}</p>
+                     <p key={i}><ProductText>{p}</ProductText></p>
                   ))}
                   <div className="mt-6 space-y-0 leading-snug">
                     {m.body.slice(-4).map((line, i) => (

@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/AppShell";
-import { ProductName } from "@/components/products/ProductChrome";
+import { ProductName, ProductText } from "@/components/products/ProductChrome";
 import {
   COMPARISONS,
   COMPARISON_SUMMARY,
@@ -70,10 +70,10 @@ function CompareModels() {
           </div>
           <div className="rounded-2xl border border-[color:var(--royal)]/40 bg-[color:var(--royal)]/[0.04] p-6">
             <h2 className="font-mono-cap text-[10px] text-[color:var(--royal)]">
-              InwardWise Decision, objective first
+              <ProductName id="decision" />, objective first
             </h2>
             <p className="mt-3 text-sm leading-relaxed text-[color:var(--muted-foreground)]">
-              {INWARDWISE_DESCRIPTION}
+              <ProductText>{INWARDWISE_DESCRIPTION}</ProductText>
             </p>
           </div>
         </section>
@@ -107,15 +107,15 @@ function CompareModels() {
                       {c.n} · {c.category}
                     </span>
                     <span className="mt-2 block leading-relaxed text-[color:var(--ink)]">
-                      {c.prompt}
+                      <ProductText>{c.prompt}</ProductText>
                     </span>
                   </td>
                   <td className="p-4 leading-relaxed text-[color:var(--muted-foreground)]">
-                    {c.wiseOwl}
+                    <ProductText>{c.wiseOwl}</ProductText>
                   </td>
-                  <td className="p-4 leading-relaxed text-[color:var(--ink)]">{c.inwardWise}</td>
+                  <td className="p-4 leading-relaxed text-[color:var(--ink)]"><ProductText>{c.inwardWise}</ProductText></td>
                   <td className="p-4 leading-relaxed text-[color:var(--muted-foreground)]">
-                    {c.divergence}
+                    <ProductText>{c.divergence}</ProductText>
                   </td>
                 </tr>
               ))}
@@ -131,23 +131,23 @@ function CompareModels() {
                 {c.n} · {c.category}
               </span>
               <p className="mt-2 text-[0.95rem] leading-relaxed text-[color:var(--ink)]">
-                {c.prompt}
+                <ProductText>{c.prompt}</ProductText>
               </p>
               <p className="font-mono-cap mt-5 text-[10px] text-[color:var(--muted-foreground)]">
                 Wise Owl concludes
               </p>
               <p className="mt-1 text-sm leading-relaxed text-[color:var(--muted-foreground)]">
-                {c.wiseOwl}
+                <ProductText>{c.wiseOwl}</ProductText>
               </p>
               <p className="font-mono-cap mt-4 text-[10px] text-[color:var(--royal)]">
                 InwardWise concludes
               </p>
-              <p className="mt-1 text-sm leading-relaxed text-[color:var(--ink)]">{c.inwardWise}</p>
+              <p className="mt-1 text-sm leading-relaxed text-[color:var(--ink)]"><ProductText>{c.inwardWise}</ProductText></p>
               <p className="font-mono-cap mt-4 text-[10px] text-[color:var(--muted-foreground)]">
                 Why they differ
               </p>
               <p className="mt-1 text-sm leading-relaxed text-[color:var(--muted-foreground)]">
-                {c.divergence}
+                <ProductText>{c.divergence}</ProductText>
               </p>
             </li>
           ))}
@@ -156,7 +156,7 @@ function CompareModels() {
         <ul className="mt-8 space-y-2">
           {COMPARISON_SUMMARY.map((line) => (
             <li key={line} className="text-sm leading-relaxed text-[color:var(--muted-foreground)]">
-              — {line}
+               — <ProductText>{line}</ProductText>
             </li>
           ))}
         </ul>
