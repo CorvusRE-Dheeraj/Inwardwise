@@ -65,6 +65,7 @@ import { Route as ApiPublicConnectStoryDispatchRouteImport } from './routes/api/
 import { Route as ApiPublicConnectStoryCallWebhookRouteImport } from './routes/api/public/connect-story-call-webhook'
 import { Route as ApiPublicAvatarConsultDispatchRouteImport } from './routes/api/public/avatar-consult-dispatch'
 import { Route as AuthenticatedPeopleLikeMeSlugRouteImport } from './routes/_authenticated/people-like-me.$slug'
+import { Route as AuthenticatedMeditationSessionRouteImport } from './routes/_authenticated/meditation.session'
 import { Route as AuthenticatedMeditationScheduleRouteImport } from './routes/_authenticated/meditation.schedule'
 import { Route as AuthenticatedMeditationPracticeRouteImport } from './routes/_authenticated/meditation.practice'
 import { Route as AuthenticatedConnectShareRouteImport } from './routes/_authenticated/connect.share'
@@ -371,6 +372,12 @@ const AuthenticatedPeopleLikeMeSlugRoute =
     path: '/people-like-me/$slug',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedMeditationSessionRoute =
+  AuthenticatedMeditationSessionRouteImport.update({
+    id: '/meditation/session',
+    path: '/meditation/session',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedMeditationScheduleRoute =
   AuthenticatedMeditationScheduleRouteImport.update({
     id: '/meditation/schedule',
@@ -534,6 +541,7 @@ export interface FileRoutesByFullPath {
   '/connect/share': typeof AuthenticatedConnectShareRoute
   '/meditation/practice': typeof AuthenticatedMeditationPracticeRoute
   '/meditation/schedule': typeof AuthenticatedMeditationScheduleRoute
+  '/meditation/session': typeof AuthenticatedMeditationSessionRoute
   '/people-like-me/$slug': typeof AuthenticatedPeopleLikeMeSlugRoute
   '/api/public/avatar-consult-dispatch': typeof ApiPublicAvatarConsultDispatchRoute
   '/api/public/connect-story-call-webhook': typeof ApiPublicConnectStoryCallWebhookRoute
@@ -606,6 +614,7 @@ export interface FileRoutesByTo {
   '/connect/share': typeof AuthenticatedConnectShareRoute
   '/meditation/practice': typeof AuthenticatedMeditationPracticeRoute
   '/meditation/schedule': typeof AuthenticatedMeditationScheduleRoute
+  '/meditation/session': typeof AuthenticatedMeditationSessionRoute
   '/people-like-me/$slug': typeof AuthenticatedPeopleLikeMeSlugRoute
   '/api/public/avatar-consult-dispatch': typeof ApiPublicAvatarConsultDispatchRoute
   '/api/public/connect-story-call-webhook': typeof ApiPublicConnectStoryCallWebhookRoute
@@ -682,6 +691,7 @@ export interface FileRoutesById {
   '/_authenticated/connect/share': typeof AuthenticatedConnectShareRoute
   '/_authenticated/meditation/practice': typeof AuthenticatedMeditationPracticeRoute
   '/_authenticated/meditation/schedule': typeof AuthenticatedMeditationScheduleRoute
+  '/_authenticated/meditation/session': typeof AuthenticatedMeditationSessionRoute
   '/_authenticated/people-like-me/$slug': typeof AuthenticatedPeopleLikeMeSlugRoute
   '/api/public/avatar-consult-dispatch': typeof ApiPublicAvatarConsultDispatchRoute
   '/api/public/connect-story-call-webhook': typeof ApiPublicConnectStoryCallWebhookRoute
@@ -758,6 +768,7 @@ export interface FileRouteTypes {
     | '/connect/share'
     | '/meditation/practice'
     | '/meditation/schedule'
+    | '/meditation/session'
     | '/people-like-me/$slug'
     | '/api/public/avatar-consult-dispatch'
     | '/api/public/connect-story-call-webhook'
@@ -830,6 +841,7 @@ export interface FileRouteTypes {
     | '/connect/share'
     | '/meditation/practice'
     | '/meditation/schedule'
+    | '/meditation/session'
     | '/people-like-me/$slug'
     | '/api/public/avatar-consult-dispatch'
     | '/api/public/connect-story-call-webhook'
@@ -905,6 +917,7 @@ export interface FileRouteTypes {
     | '/_authenticated/connect/share'
     | '/_authenticated/meditation/practice'
     | '/_authenticated/meditation/schedule'
+    | '/_authenticated/meditation/session'
     | '/_authenticated/people-like-me/$slug'
     | '/api/public/avatar-consult-dispatch'
     | '/api/public/connect-story-call-webhook'
@@ -1361,6 +1374,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedPeopleLikeMeSlugRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/meditation/session': {
+      id: '/_authenticated/meditation/session'
+      path: '/meditation/session'
+      fullPath: '/meditation/session'
+      preLoaderRoute: typeof AuthenticatedMeditationSessionRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/meditation/schedule': {
       id: '/_authenticated/meditation/schedule'
       path: '/meditation/schedule'
@@ -1518,6 +1538,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedConnectShareRoute: typeof AuthenticatedConnectShareRoute
   AuthenticatedMeditationPracticeRoute: typeof AuthenticatedMeditationPracticeRoute
   AuthenticatedMeditationScheduleRoute: typeof AuthenticatedMeditationScheduleRoute
+  AuthenticatedMeditationSessionRoute: typeof AuthenticatedMeditationSessionRoute
   AuthenticatedPeopleLikeMeSlugRoute: typeof AuthenticatedPeopleLikeMeSlugRoute
   AuthenticatedAvatarIndexRoute: typeof AuthenticatedAvatarIndexRoute
   AuthenticatedConnectIndexRoute: typeof AuthenticatedConnectIndexRoute
@@ -1544,6 +1565,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedConnectShareRoute: AuthenticatedConnectShareRoute,
   AuthenticatedMeditationPracticeRoute: AuthenticatedMeditationPracticeRoute,
   AuthenticatedMeditationScheduleRoute: AuthenticatedMeditationScheduleRoute,
+  AuthenticatedMeditationSessionRoute: AuthenticatedMeditationSessionRoute,
   AuthenticatedPeopleLikeMeSlugRoute: AuthenticatedPeopleLikeMeSlugRoute,
   AuthenticatedAvatarIndexRoute: AuthenticatedAvatarIndexRoute,
   AuthenticatedConnectIndexRoute: AuthenticatedConnectIndexRoute,

@@ -19,18 +19,13 @@ export type PrayerSet = {
 export const PRAYER_SETS: PrayerSet[] = [
   {
     n: 1,
-    key: "sorry",
-    title: "I am sorry",
-    stem: "I am sorry for",
-    invitation:
-      "Acknowledge, without defending yourself, what you did not see or could not hold.",
+    key: "thank",
+    title: "Thank you",
+    stem: "Thank you for",
+    invitation: "Credit what went your way that you quietly took for granted.",
     guidance:
-      "Each line names something the person did not recognise, suppressed, or let their destructive pattern do. Grounded, humble, never self-flagellating.",
-    dimensions: [1, 2, 3, 4, 5],
-    openings: [
-      "Anything regarding your parents you are sorry for?",
-      "Anything related to those close to you that you are sorry for not stepping up on?",
-    ],
+      "Each line gives credit to something that went their way, a talent, a person, an experience — gratitude they rarely voice. Fresh each day, never repeated.",
+    dimensions: [3, 4, 5, 1, 2],
   },
   {
     n: 2,
@@ -45,19 +40,24 @@ export const PRAYER_SETS: PrayerSet[] = [
   },
   {
     n: 3,
-    key: "thank",
-    title: "Thank you",
-    stem: "Thank you for",
-    invitation: "Credit what went your way that you quietly took for granted.",
+    key: "sorry",
+    title: "I am sorry",
+    stem: "I am sorry for",
+    invitation:
+      "Acknowledge, without defending yourself, what you did not see or could not hold.",
     guidance:
-      "Each line gives credit to something that went their way, a talent, a person, an experience — gratitude they rarely voice. Fresh each day, never repeated.",
-    dimensions: [3, 4, 5, 1, 2],
+      "Each line names something the person did not recognise, suppressed, or let their destructive pattern do. Grounded, humble, never self-flagellating.",
+    dimensions: [1, 2, 3, 4, 5],
+    openings: [
+      "Anything regarding your parents you are sorry for?",
+      "Anything related to those close to you that you are sorry for not stepping up on?",
+    ],
   },
   {
     n: 4,
     key: "love",
-    title: "I love you",
-    stem: "I love you for",
+    title: "I love myself",
+    stem: "I love myself for",
     invitation:
       "Say it to yourself — for the good, and despite the rest. Stay with it.",
     guidance:
