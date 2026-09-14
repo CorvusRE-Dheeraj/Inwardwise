@@ -44,14 +44,20 @@ function CompareModels() {
             Compare models
           </p>
           <h1 className="font-display mt-4 text-[clamp(2.1rem,5vw,3.4rem)] leading-[1.05]">
-            The same decision, answered two ways
+            WiseOwl, conventional wisdom
           </h1>
           <p className="mt-5 text-base leading-relaxed text-[color:var(--muted-foreground)]">
+            We have taken the conventional wisdom below and compared it with our model. The final
+            output is set side by side, so you can clearly see where our model holds an advantage
+            over the others.
+          </p>
+          <p className="mt-4 text-base leading-relaxed text-[color:var(--muted-foreground)]">
             A public-knowledge advisor tells you what most people would do. <ProductName id="decision" />{" "}
             asks whether you are solving the right problem in the first place. Below, five identical
             prompts run through both, with the conclusions set side by side.
           </p>
         </header>
+
 
         <section className="mt-10 grid gap-6 md:grid-cols-2">
           <div className="rounded-2xl border border-[color:var(--rule)] p-6">
