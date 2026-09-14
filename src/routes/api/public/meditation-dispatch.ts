@@ -108,6 +108,8 @@ async function dispatch(request: Request) {
     .limit(25);
 
   if (error) return Response.json({ error: error.message }, { status: 500 });
+  console.log(`[meditation] due=${(due ?? []).length}`);
+
 
   const results: Array<{ id: string; status: string }> = [];
 
