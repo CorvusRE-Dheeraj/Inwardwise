@@ -3,6 +3,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { AppShell } from "@/components/AppShell";
 import { CharacterAvatar } from "@/components/people/CharacterAvatar";
+import { CharacterOutcomes } from "@/components/people/CharacterOutcomes";
 import { listPeopleLikeMe, type CharacterCard } from "@/lib/people.functions";
 
 export const Route = createFileRoute("/_authenticated/people-like-me/")({
