@@ -148,13 +148,12 @@ function SelfLibrary() {
     if (!vault.profile) return;
     setSharingSaving(factor);
     try {
-      const existing = rows.filter((row) => row.factor === factor);
-      const answeredInFactor = existing.filter((row) => (edited[row.key] ?? row.answer).trim()).length;
+      // Only the sharing choice is written here. Completion is owned by the
+      // answer flow, so it must never be recomputed from this screen.
       const { error } = await supabase.from("avatar_dimensions").upsert(
         {
           user_id: vault.profile.user_id,
           dimension_number: factor,
-          progress_pct: existing.length ? Math.round((answeredInFactor / existing.length) * 100) : 0,
           sharing_classification: next.classification,
           external_share_acknowledged: next.acknowledged,
           external_share_acknowledged_at: next.acknowledgedAt,

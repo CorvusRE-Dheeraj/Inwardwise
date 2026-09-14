@@ -199,15 +199,12 @@ function DimensionFlow() {
     if (!vault.profile || !dim) return;
     setSharingSaving(true);
     try {
+      // Only the sharing choice is written here. Completion is owned by the
+      // answer flow, so it must never be recomputed from this screen.
       const { error } = await supabase.from("avatar_dimensions").upsert(
         {
           user_id: vault.profile.user_id,
           dimension_number: dim.n,
-          progress_pct: Math.round(
-            (dim.questions.filter((question) => (answers[question.key] ?? "").trim()).length /
-              dim.questions.length) *
-              100,
-          ),
           sharing_classification: next.classification,
           external_share_acknowledged: next.acknowledged,
           external_share_acknowledged_at: next.acknowledgedAt,
