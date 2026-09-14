@@ -81,6 +81,7 @@ function DecisionProduct() {
           actions={[
             { label: "Start My Decision", to: "/decision", primary: true },
             { label: "Read Example Decisions", to: "/examples" },
+            { label: "Compare Models", to: "/compare" },
           ]}
         />
       </div>
