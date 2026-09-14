@@ -116,7 +116,7 @@ async function dispatch(request: Request) {
   for (const row of due ?? []) {
     // Claim this schedule before contacting the provider. Concurrent scheduler
     // runs cannot place a second call for the same scheduled session.
-    const { data: claimed } = await supabaseAdmin
+    const { data: claimed, error: claimError } = await supabaseAdmin
       .from("meditation_settings")
       .update({ status: "calling", last_error: null })
       .eq("id", row.id)
@@ -124,7 +124,9 @@ async function dispatch(request: Request) {
       .select("id")
       .maybeSingle();
 
+    if (claimError) console.error("[meditation] claim error", claimError);
     if (!claimed) continue;
+
 
     // Voice off, or no number: nothing to call, just close the schedule out.
     if (!row.voice_enabled || !row.phone_number) {
