@@ -3,6 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
 import { ProductName } from "@/components/products/ProductChrome";
 import { ConnectPathways } from "@/components/connect/ConnectPathways";
+import { ConnectAiSuggest } from "@/components/connect/ConnectAiSuggest";
 
 export const Route = createFileRoute("/_authenticated/connect/")({
   head: () => ({
@@ -70,6 +71,7 @@ function ConnectPage() {
         </div>
       </section>
 
+      <ConnectAiSuggest />
       <ConnectPathways />
     </AppShell>
   );
