@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/AppShell";
-import { ProductName } from "@/components/products/ProductChrome";
+import { ProductName, ProductText } from "@/components/products/ProductChrome";
 import {
   COMPARISONS,
   COMPARISON_SUMMARY,
