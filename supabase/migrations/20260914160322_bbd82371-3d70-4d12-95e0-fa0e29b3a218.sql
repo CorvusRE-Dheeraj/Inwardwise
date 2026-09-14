@@ -1,0 +1,2 @@
+ALTER TABLE public.meditation_settings DROP CONSTRAINT IF EXISTS meditation_settings_status_check;
+ALTER TABLE public.meditation_settings ADD CONSTRAINT meditation_settings_status_check CHECK (status = ANY (ARRAY['scheduled'::text, 'calling'::text, 'sent'::text, 'failed'::text, 'cancelled'::text]));
