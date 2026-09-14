@@ -1684,6 +1684,57 @@ export type Database = {
           },
         ]
       }
+      mantra_calls: {
+        Row: {
+          call_attempts: number
+          created_at: string
+          id: string
+          last_call_at: string | null
+          last_error: string | null
+          mantra_text: string
+          phone_number: string | null
+          provider_call_id: string | null
+          repeats: number
+          scheduled_at: string | null
+          status: string
+          timezone: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          call_attempts?: number
+          created_at?: string
+          id?: string
+          last_call_at?: string | null
+          last_error?: string | null
+          mantra_text: string
+          phone_number?: string | null
+          provider_call_id?: string | null
+          repeats?: number
+          scheduled_at?: string | null
+          status?: string
+          timezone?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          call_attempts?: number
+          created_at?: string
+          id?: string
+          last_call_at?: string | null
+          last_error?: string | null
+          mantra_text?: string
+          phone_number?: string | null
+          provider_call_id?: string | null
+          repeats?: number
+          scheduled_at?: string | null
+          status?: string
+          timezone?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       marketing_leads: {
         Row: {
           assigned_employee_id: string | null

@@ -59,6 +59,7 @@ import { Route as AuthenticatedConnectIndexRouteImport } from './routes/_authent
 import { Route as AuthenticatedAvatarIndexRouteImport } from './routes/_authenticated/avatar.index'
 import { Route as AuthenticatedAccountIndexRouteImport } from './routes/_authenticated/account.index'
 import { Route as ApiPublicMeditationDispatchRouteImport } from './routes/api/public/meditation-dispatch'
+import { Route as ApiPublicMantraDispatchRouteImport } from './routes/api/public/mantra-dispatch'
 import { Route as ApiPublicConnectStoryDispatchRouteImport } from './routes/api/public/connect-story-dispatch'
 import { Route as ApiPublicConnectStoryCallWebhookRouteImport } from './routes/api/public/connect-story-call-webhook'
 import { Route as ApiPublicAvatarConsultDispatchRouteImport } from './routes/api/public/avatar-consult-dispatch'
@@ -335,6 +336,11 @@ const ApiPublicMeditationDispatchRoute =
     path: '/api/public/meditation-dispatch',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiPublicMantraDispatchRoute = ApiPublicMantraDispatchRouteImport.update({
+  id: '/api/public/mantra-dispatch',
+  path: '/api/public/mantra-dispatch',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicConnectStoryDispatchRoute =
   ApiPublicConnectStoryDispatchRouteImport.update({
     id: '/api/public/connect-story-dispatch',
@@ -525,6 +531,7 @@ export interface FileRoutesByFullPath {
   '/api/public/avatar-consult-dispatch': typeof ApiPublicAvatarConsultDispatchRoute
   '/api/public/connect-story-call-webhook': typeof ApiPublicConnectStoryCallWebhookRoute
   '/api/public/connect-story-dispatch': typeof ApiPublicConnectStoryDispatchRoute
+  '/api/public/mantra-dispatch': typeof ApiPublicMantraDispatchRoute
   '/api/public/meditation-dispatch': typeof ApiPublicMeditationDispatchRoute
   '/account/': typeof AuthenticatedAccountIndexRoute
   '/avatar/': typeof AuthenticatedAvatarIndexRoute
@@ -595,6 +602,7 @@ export interface FileRoutesByTo {
   '/api/public/avatar-consult-dispatch': typeof ApiPublicAvatarConsultDispatchRoute
   '/api/public/connect-story-call-webhook': typeof ApiPublicConnectStoryCallWebhookRoute
   '/api/public/connect-story-dispatch': typeof ApiPublicConnectStoryDispatchRoute
+  '/api/public/mantra-dispatch': typeof ApiPublicMantraDispatchRoute
   '/api/public/meditation-dispatch': typeof ApiPublicMeditationDispatchRoute
   '/account': typeof AuthenticatedAccountIndexRoute
   '/avatar': typeof AuthenticatedAvatarIndexRoute
@@ -669,6 +677,7 @@ export interface FileRoutesById {
   '/api/public/avatar-consult-dispatch': typeof ApiPublicAvatarConsultDispatchRoute
   '/api/public/connect-story-call-webhook': typeof ApiPublicConnectStoryCallWebhookRoute
   '/api/public/connect-story-dispatch': typeof ApiPublicConnectStoryDispatchRoute
+  '/api/public/mantra-dispatch': typeof ApiPublicMantraDispatchRoute
   '/api/public/meditation-dispatch': typeof ApiPublicMeditationDispatchRoute
   '/_authenticated/account/': typeof AuthenticatedAccountIndexRoute
   '/_authenticated/avatar/': typeof AuthenticatedAvatarIndexRoute
@@ -743,6 +752,7 @@ export interface FileRouteTypes {
     | '/api/public/avatar-consult-dispatch'
     | '/api/public/connect-story-call-webhook'
     | '/api/public/connect-story-dispatch'
+    | '/api/public/mantra-dispatch'
     | '/api/public/meditation-dispatch'
     | '/account/'
     | '/avatar/'
@@ -813,6 +823,7 @@ export interface FileRouteTypes {
     | '/api/public/avatar-consult-dispatch'
     | '/api/public/connect-story-call-webhook'
     | '/api/public/connect-story-dispatch'
+    | '/api/public/mantra-dispatch'
     | '/api/public/meditation-dispatch'
     | '/account'
     | '/avatar'
@@ -886,6 +897,7 @@ export interface FileRouteTypes {
     | '/api/public/avatar-consult-dispatch'
     | '/api/public/connect-story-call-webhook'
     | '/api/public/connect-story-dispatch'
+    | '/api/public/mantra-dispatch'
     | '/api/public/meditation-dispatch'
     | '/_authenticated/account/'
     | '/_authenticated/avatar/'
@@ -937,6 +949,7 @@ export interface RootRouteChildren {
   ApiPublicAvatarConsultDispatchRoute: typeof ApiPublicAvatarConsultDispatchRoute
   ApiPublicConnectStoryCallWebhookRoute: typeof ApiPublicConnectStoryCallWebhookRoute
   ApiPublicConnectStoryDispatchRoute: typeof ApiPublicConnectStoryDispatchRoute
+  ApiPublicMantraDispatchRoute: typeof ApiPublicMantraDispatchRoute
   ApiPublicMeditationDispatchRoute: typeof ApiPublicMeditationDispatchRoute
   LovableEmailQueueProcessRoute: typeof LovableEmailQueueProcessRoute
 }
@@ -1293,6 +1306,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicMeditationDispatchRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/mantra-dispatch': {
+      id: '/api/public/mantra-dispatch'
+      path: '/api/public/mantra-dispatch'
+      fullPath: '/api/public/mantra-dispatch'
+      preLoaderRoute: typeof ApiPublicMantraDispatchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/connect-story-dispatch': {
       id: '/api/public/connect-story-dispatch'
       path: '/api/public/connect-story-dispatch'
@@ -1568,6 +1588,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiPublicAvatarConsultDispatchRoute: ApiPublicAvatarConsultDispatchRoute,
   ApiPublicConnectStoryCallWebhookRoute: ApiPublicConnectStoryCallWebhookRoute,
   ApiPublicConnectStoryDispatchRoute: ApiPublicConnectStoryDispatchRoute,
+  ApiPublicMantraDispatchRoute: ApiPublicMantraDispatchRoute,
   ApiPublicMeditationDispatchRoute: ApiPublicMeditationDispatchRoute,
   LovableEmailQueueProcessRoute: LovableEmailQueueProcessRoute,
 }
