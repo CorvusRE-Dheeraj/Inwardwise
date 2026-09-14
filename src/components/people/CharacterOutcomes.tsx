@@ -31,7 +31,7 @@ export function CharacterOutcomes({ slug, name }: { slug: string; name: string }
             <p className="mt-4 text-[14px] leading-relaxed">{b.situation}</p>
 
             <div className="font-mono-cap mt-5 text-[10px] text-[color:var(--muted-foreground)]">
-              From her Self build
+              From their Self build
             </div>
             <p className="mt-2 text-[14px] leading-relaxed text-[color:var(--muted-foreground)]">
               {b.selfInsight}
