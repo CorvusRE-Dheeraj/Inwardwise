@@ -133,9 +133,9 @@ export const AREAS: Area[] = [
       {
         body: [
           "Most of us have behaviors, habits, fears, or impulses that repeatedly work against what we genuinely want for ourselves.",
-          "We call them Inner Enemies, not because there is something inherently wrong with us, but because sometimes a part of our own behavior can conflict with our larger objectives.",
+          "We call them Habits, not because there is something inherently wrong with us, but because sometimes a part of our own behavior can conflict with our larger objectives.",
           "They may appear relatively ordinary: procrastination, avoiding difficult conversations, excessive screen time, unhealthy eating habits, impulsive spending, fear-driven decisions, or repeatedly abandoning something we intended to finish. Other challenges can be far more serious, including problematic alcohol or drug use, compulsive behaviors, or other patterns that may require professional support.",
-          "What makes an Inner Enemy particularly difficult is that knowing a behavior is harmful doesn't necessarily make it disappear. It may remain dormant for months and return during periods of stress. We may rationalize it, hide it from others, feel ashamed of it, or repeatedly promise ourselves that this time will be different.",
+          "What makes a habit like this particularly difficult is that knowing a behavior is harmful doesn't necessarily make it disappear. It may remain dormant for months and return during periods of stress. We may rationalize it, hide it from others, feel ashamed of it, or repeatedly promise ourselves that this time will be different.",
           "InwardWise approaches these patterns through understanding rather than judgment.",
         ],
       },
