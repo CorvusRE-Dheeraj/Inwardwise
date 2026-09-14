@@ -1,7 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useMutation } from "@tanstack/react-query";
-import { useServerFn } from "@tanstack/react-start";
-import { useState } from "react";
 import { AppShell } from "@/components/AppShell";
 import { ProductName } from "@/components/products/ProductChrome";
 import {
@@ -9,8 +6,9 @@ import {
   COMPARISON_SUMMARY,
   INWARDWISE_DESCRIPTION,
   WISE_OWL_DESCRIPTION,
+  WISE_OWL_FOUNDATIONS,
+  WISE_OWL_LIMITS,
 } from "@/lib/compare-models";
-import { compareDecisionModels } from "@/lib/compare-models.functions";
 
 export const Route = createFileRoute("/compare")({
   head: () => ({
