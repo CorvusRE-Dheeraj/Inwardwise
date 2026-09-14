@@ -148,13 +148,12 @@ function SelfLibrary() {
     if (!vault.profile) return;
     setSharingSaving(factor);
     try {
-      const existing = rows.filter((row) => row.factor === factor);
-      const answeredInFactor = existing.filter((row) => (edited[row.key] ?? row.answer).trim()).length;
+      // Only the sharing choice is written here. Completion is owned by the
+      // answer flow, so it must never be recomputed from this screen.
       const { error } = await supabase.from("avatar_dimensions").upsert(
         {
           user_id: vault.profile.user_id,
           dimension_number: factor,
-          progress_pct: existing.length ? Math.round((answeredInFactor / existing.length) * 100) : 0,
           sharing_classification: next.classification,
           external_share_acknowledged: next.acknowledged,
           external_share_acknowledged_at: next.acknowledgedAt,
@@ -200,16 +199,16 @@ function SelfLibrary() {
       const text = (edited[r.key] ?? r.answer).trim();
       if (!text) continue;
       const preference = sharing[r.factor] ?? defaultFactorSharingPreference();
-      if ((r.factor === 1 || r.factor === 2) && preference.classification !== "external_approved") {
-        continue;
-      }
+      const sensitive = r.factor === 1 || r.factor === 2;
       if (r.factor !== current) {
         current = r.factor;
         line(`Factor ${r.factor}`, 15, "bold", 6);
         line(
-          preference.classification === "external_approved"
-            ? `External sharing approved by you. ${DO_NOT_SHARE_WARNING}`
-            : "Internal use only. This information should not be shared externally with anyone.",
+          sensitive
+            ? DO_NOT_SHARE_WARNING
+            : preference.classification === "external_approved"
+              ? "External sharing approved by you."
+              : "Internal use only. This information should not be shared externally with anyone.",
           9,
           "italic",
           6,
