@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/AppShell";
+import { ProductText } from "@/components/products/ProductChrome";
 
 export const Route = createFileRoute("/science")({
   head: () => ({
@@ -86,7 +87,7 @@ function Science() {
               <h2 className="font-display mt-3 text-3xl tracking-tight md:text-4xl">{s.title}</h2>
               <div className="mt-5 max-w-3xl space-y-4 text-[16px] leading-[1.7] text-[color:var(--ink-2)]">
                 {s.body.map((p, i) => (
-                  <p key={i}>{p}</p>
+                  <p key={i}><ProductText>{p}</ProductText></p>
                 ))}
               </div>
             </article>

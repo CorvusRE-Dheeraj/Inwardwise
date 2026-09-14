@@ -1,6 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ArrowLeft, ArrowRight, Sparkles, Waves } from "lucide-react";
 import { findArea, type Area } from "@/lib/areas";
+import { ProductName, ProductText } from "@/components/products/ProductChrome";
 
 export const Route = createFileRoute("/areas/$slug")({
   loader: ({ params }) => {
@@ -54,7 +55,7 @@ function AreaPage() {
           <section key={i} className="space-y-4">
             {s.heading && <h2 className="text-2xl sm:text-3xl">{s.heading}</h2>}
             {s.body.map((p, j) => (
-              <p key={j}>{p}</p>
+               <p key={j}><ProductText>{p}</ProductText></p>
             ))}
             {area.slug === "individual-development" && i === 1 && <SelfStar />}
           </section>
@@ -149,7 +150,7 @@ function SelfStar() {
         </svg>
       </div>
       <figcaption className="mt-4 text-center text-xs uppercase tracking-[0.18em] text-muted-foreground">
-        InwardWise Self and its five factors
+        <ProductName id="self" /> and its five factors
       </figcaption>
     </figure>
   );

@@ -70,7 +70,7 @@ function CompareModels() {
           </div>
           <div className="rounded-2xl border border-[color:var(--royal)]/40 bg-[color:var(--royal)]/[0.04] p-6">
             <h2 className="font-mono-cap text-[10px] text-[color:var(--royal)]">
-              InwardWise Decision, objective first
+              <ProductName id="decision" />, objective first
             </h2>
             <p className="mt-3 text-sm leading-relaxed text-[color:var(--muted-foreground)]">
               {INWARDWISE_DESCRIPTION}

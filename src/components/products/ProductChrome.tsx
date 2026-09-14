@@ -28,6 +28,27 @@ export function ProductName({
   );
 }
 
+const PRODUCT_NAME_PATTERN = /InwardWise (Decision|Self|Connect|Calm|Mantra)/g;
+const PRODUCT_ID_BY_WORD: Record<string, InwardWiseProductId> = {
+  Decision: "decision",
+  Self: "self",
+  Connect: "connect",
+  Calm: "calm",
+  Mantra: "mantra",
+};
+
+/** Applies the product-name treatment inside longer passages of text. */
+export function ProductText({ children }: { children: string }) {
+  return (
+    <>
+      {children.split(PRODUCT_NAME_PATTERN).map((part, index) => {
+        const id = PRODUCT_ID_BY_WORD[part];
+        return id ? <ProductName key={`${part}-${index}`} id={id} /> : part;
+      })}
+    </>
+  );
+}
+
 /**
  * Visible marker for long-form sections that still need the approved
  * "Website Edits" copy. Structure ships now; wording is swapped in later.

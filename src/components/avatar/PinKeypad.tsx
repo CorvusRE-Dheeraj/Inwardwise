@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Lock } from "lucide-react";
+import { ProductName } from "@/components/products/ProductChrome";
 
 export function Caution({ children }: { children: React.ReactNode }) {
   return (
@@ -55,9 +56,9 @@ export function PinKeypad({
     setActive(active.slice(0, -1));
   }
 
-  const label =
+  const label: React.ReactNode =
     mode === "enter"
-      ? "Enter your InwardWise Self PIN"
+      ? <>Enter your <ProductName id="self" /> PIN</>
       : stage === "first"
         ? "Choose a 4-digit PIN"
         : "Confirm your PIN";

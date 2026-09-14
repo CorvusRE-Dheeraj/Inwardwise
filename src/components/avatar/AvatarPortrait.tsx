@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { sketchFromFile, sketchFromImage } from "@/lib/avatar-sketch";
+import { ProductName } from "@/components/products/ProductChrome";
 
 const BUCKET = "avatar-portraits";
 
@@ -99,7 +100,7 @@ export function AvatarPortrait({ userId, complete, total }: Props) {
       </div>
 
       <div className="font-mono-cap mt-5 text-[10px] text-[color:var(--muted-foreground)]">
-        InwardWise Self Portrait · {complete}/{total} factors
+        <ProductName id="self" /> Portrait · {complete}/{total} factors
       </div>
       <p className="mt-2 text-center text-sm text-[color:var(--muted-foreground)]">
         {sketch
