@@ -231,7 +231,7 @@ function SelfLibrary() {
 
       <header className="mt-8 max-w-3xl">
         <h1 className="font-display text-[clamp(2rem,5vw,3.4rem)] leading-[1.05] tracking-tight">
-          Your <span className="italic text-[color:var(--royal)]"><ProductName id="self" /></span> record
+          Your <ProductName id="self" /> record
         </h1>
         <p className="mt-4 text-base leading-relaxed text-[color:var(--muted-foreground)]">
           Everything you have written, in one place. Search it, change any answer at any time, and

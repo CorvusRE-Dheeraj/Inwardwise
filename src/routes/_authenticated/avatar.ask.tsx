@@ -33,7 +33,7 @@ function AvatarAsk() {
         § 03 · <ProductName id="self" /> Processes
       </div>
       <h1 className="mt-4 font-display text-[clamp(2.2rem,5vw,3.4rem)] leading-[1.05] tracking-tight">
-        Ask <span className="italic text-[color:var(--royal)]"><ProductName id="self" /></span>
+        Ask <ProductName id="self" />
       </h1>
       <p className="mt-6 max-w-2xl text-base leading-relaxed text-[color:var(--muted-foreground)]">
         Your <ProductName id="self" /> is ready. Ask it anything that matters to you, about a decision, a

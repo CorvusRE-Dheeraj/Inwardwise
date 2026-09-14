@@ -90,7 +90,7 @@ function AvatarDashboard() {
           § 01 · <ProductName id="self" /> Design Dashboard
         </div>
         <h1 className="mt-4 font-display text-[clamp(2.4rem,6vw,4.2rem)] leading-[1.02] tracking-tight">
-          Design Your <span className="italic text-[color:var(--royal)]">Inner <ProductName id="self" /></span>
+          Design Your Inner <ProductName id="self" />
         </h1>
         <p className="mt-5 text-base leading-relaxed text-[color:var(--muted-foreground)]">
           A digital representation of you, built through a guided conversation across five stages.
