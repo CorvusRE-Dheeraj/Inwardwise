@@ -4,6 +4,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { AppShell } from "@/components/AppShell";
 import { AnimatedCharacter } from "@/components/people/AnimatedCharacter";
 import { CharacterOutcomes } from "@/components/people/CharacterOutcomes";
+import { PersonalityProfile } from "@/components/people/PersonalityProfile";
 import {
   getScenario,
   saveScenarioProgress,

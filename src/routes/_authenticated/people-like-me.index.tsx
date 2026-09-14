@@ -4,6 +4,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { AppShell } from "@/components/AppShell";
 import { CharacterAvatar } from "@/components/people/CharacterAvatar";
 import { CharacterOutcomes } from "@/components/people/CharacterOutcomes";
+import { PersonalityProfile } from "@/components/people/PersonalityProfile";
 import { listPeopleLikeMe, type CharacterCard } from "@/lib/people.functions";
 
 export const Route = createFileRoute("/_authenticated/people-like-me/")({
