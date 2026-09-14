@@ -23,7 +23,7 @@ export function ProductName({
   return (
     <span className={className}>
       <span className="text-[color:var(--ink)]">InwardWise</span>{" "}
-      <span className="text-[color:var(--royal)]">{PRODUCT_SECOND_WORD[id]}</span>
+      <span className="italic text-[color:var(--royal)]">{PRODUCT_SECOND_WORD[id]}</span>
     </span>
   );
 }
