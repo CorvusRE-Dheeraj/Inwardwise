@@ -1,9 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { CAPACITY_RETRY_MESSAGE, capacityRetryAt, isCapacityError } from "@/lib/call-capacity";
+import { nextRunAt, pickRandom } from "@/lib/mantra-schedule";
 
 /**
- * Polled by the database scheduler. Places one Vapi call per due mantra
- * schedule, and the assistant repeats the member's own line aloud.
+ * Polled by the database scheduler. For every daily mantra call time that is
+ * due, picks one or two of the member's saved mantras at random and places a
+ * single Vapi call that repeats them aloud, then rolls the time to tomorrow.
  */
 async function dispatch(request: Request) {
   const cronSecret = process.env["MEDITATION_CRON_SECRET"];
@@ -18,11 +20,11 @@ async function dispatch(request: Request) {
 
   const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
-  // Settle calls already in flight. Each schedule is called exactly once.
+  // Settle calls already in flight, then free the schedule for tomorrow.
   if (vapiKey) {
     const { data: pending } = await supabaseAdmin
-      .from("mantra_calls")
-      .select("id, provider_call_id")
+      .from("mantra_schedules")
+      .select("id, provider_call_id, time_of_day, timezone, is_active")
       .eq("status", "calling")
       .not("provider_call_id", "is", null)
       .limit(25);
@@ -40,15 +42,16 @@ async function dispatch(request: Request) {
           (r) => reason.includes(r),
         );
         await supabaseAdmin
-          .from("mantra_calls")
-          .update(
-            unreached
-              ? {
-                  status: "failed",
-                  last_error: "The call was not answered. Reschedule when you can pick up.",
-                }
-              : { status: "sent", last_error: null },
-          )
+          .from("mantra_schedules")
+          .update({
+            status: unreached ? "failed" : "sent",
+            last_error: unreached
+              ? "The last call was not answered. We will try again at the next time."
+              : null,
+            next_run_at: row.is_active
+              ? nextRunAt(row.time_of_day as string, row.timezone as string).toISOString()
+              : null,
+          })
           .eq("id", row.id);
       } catch (err) {
         console.error("[mantra] status poll error", err);
@@ -57,10 +60,14 @@ async function dispatch(request: Request) {
   }
 
   const { data: due, error } = await supabaseAdmin
-    .from("mantra_calls")
-    .select("id, phone_number, mantra_text, repeats, call_attempts")
-    .eq("status", "scheduled")
-    .lte("scheduled_at", new Date().toISOString())
+    .from("mantra_schedules")
+    .select(
+      "id, user_id, phone_number, repeats, mantras_per_call, time_of_day, timezone, call_attempts",
+    )
+    .eq("is_active", true)
+    .in("status", ["scheduled", "sent", "failed"])
+    .not("next_run_at", "is", null)
+    .lte("next_run_at", new Date().toISOString())
     .limit(25);
 
   if (error) return Response.json({ error: error.message }, { status: 500 });
@@ -68,28 +75,50 @@ async function dispatch(request: Request) {
   const results: Array<{ id: string; status: string }> = [];
 
   for (const row of due ?? []) {
+    const tomorrow = nextRunAt(row.time_of_day as string, row.timezone as string).toISOString();
+
+    // Claim the slot before contacting the provider, so a second scheduler run
+    // cannot place the same call twice.
     const { data: claimed } = await supabaseAdmin
-      .from("mantra_calls")
+      .from("mantra_schedules")
       .update({ status: "calling", last_error: null })
       .eq("id", row.id)
-      .eq("status", "scheduled")
+      .neq("status", "calling")
       .select("id")
       .maybeSingle();
     if (!claimed) continue;
 
-    if (!row.phone_number) {
+    const { data: library } = await supabaseAdmin
+      .from("mantra_library")
+      .select("text")
+      .eq("user_id", row.user_id);
+
+    const chosen = pickRandom(
+      (library ?? []).map((m) => String(m.text ?? "").slice(0, 400)).filter(Boolean),
+      Math.min(2, Math.max(1, row.mantras_per_call ?? 1)),
+    );
+
+    if (chosen.length === 0) {
       await supabaseAdmin
-        .from("mantra_calls")
-        .update({ status: "cancelled", last_call_at: new Date().toISOString() })
+        .from("mantra_schedules")
+        .update({
+          status: "failed",
+          last_error: "No mantras saved yet, so there was nothing to say.",
+          next_run_at: tomorrow,
+        })
         .eq("id", row.id);
-      results.push({ id: row.id, status: "cancelled" });
+      results.push({ id: row.id, status: "no-mantras" });
       continue;
     }
 
     if (!vapiKey || !phoneNumberId) {
       await supabaseAdmin
-        .from("mantra_calls")
-        .update({ status: "failed", last_error: "Calling is not configured." })
+        .from("mantra_schedules")
+        .update({
+          status: "failed",
+          last_error: "Calling is not configured.",
+          next_run_at: tomorrow,
+        })
         .eq("id", row.id);
       results.push({ id: row.id, status: "failed" });
       continue;
@@ -97,9 +126,9 @@ async function dispatch(request: Request) {
 
     try {
       const repeats = Math.min(108, Math.max(1, row.repeats ?? 12));
-      const mantra = String(row.mantra_text ?? "").slice(0, 400);
-      // Roughly twelve seconds per repetition, plus a little room to close.
-      const seconds = Math.min(3600, Math.max(300, repeats * 14 + 90));
+      const totalLines = repeats * chosen.length;
+      const seconds = Math.min(3600, Math.max(300, totalLines * 14 + 90));
+      const lineBlock = chosen.map((t, i) => `LINE ${i + 1}:\n${t}`).join("\n\n");
 
       const res = await fetch("https://api.vapi.ai/call", {
         method: "POST",
@@ -126,11 +155,11 @@ async function dispatch(request: Request) {
                 {
                   role: "system",
                   content:
-                    `You are a calm guide on a phone call. Repeat the following line aloud slowly, ` +
-                    `exactly ${repeats} times, pausing a few seconds between repetitions. Say nothing else: ` +
-                    `no commentary, no counting aloud, no questions. If the listener speaks, answer in one ` +
-                    `short gentle sentence and continue. After the final repetition, say "Rest now", and end the call.` +
-                    `\n\nLINE:\n${mantra}`,
+                    `You are a calm guide on a phone call. Repeat each line below aloud slowly, ` +
+                    `exactly ${repeats} times each, in order, pausing a few seconds between repetitions. ` +
+                    `Say nothing else: no commentary, no counting aloud, no questions. If the listener ` +
+                    `speaks, answer in one short gentle sentence and continue. After the final ` +
+                    `repetition, say "Rest now", and end the call.\n\n${lineBlock}`,
                 },
               ],
             },
@@ -144,10 +173,10 @@ async function dispatch(request: Request) {
         console.error(`[mantra] Vapi call failed [${res.status}]: ${body}`);
         if (isCapacityError(res.status, body)) {
           await supabaseAdmin
-            .from("mantra_calls")
+            .from("mantra_schedules")
             .update({
               status: "scheduled",
-              scheduled_at: capacityRetryAt(),
+              next_run_at: capacityRetryAt(),
               last_error: CAPACITY_RETRY_MESSAGE,
             })
             .eq("id", row.id);
@@ -164,11 +193,12 @@ async function dispatch(request: Request) {
           /* keep the generic message */
         }
         await supabaseAdmin
-          .from("mantra_calls")
+          .from("mantra_schedules")
           .update({
             status: "failed",
             last_error: detail.slice(0, 300),
             last_call_at: new Date().toISOString(),
+            next_run_at: tomorrow,
           })
           .eq("id", row.id);
         results.push({ id: row.id, status: "failed" });
@@ -177,21 +207,26 @@ async function dispatch(request: Request) {
 
       const placed = (await res.json().catch(() => null)) as { id?: string } | null;
       await supabaseAdmin
-        .from("mantra_calls")
+        .from("mantra_schedules")
         .update({
           status: placed?.id ? "calling" : "sent",
           provider_call_id: placed?.id ?? null,
           call_attempts: (row.call_attempts ?? 0) + 1,
           last_error: null,
           last_call_at: new Date().toISOString(),
+          next_run_at: placed?.id ? null : tomorrow,
         })
         .eq("id", row.id);
       results.push({ id: row.id, status: placed?.id ? "calling" : "sent" });
     } catch (err) {
       console.error("[mantra] dispatch error", err);
       await supabaseAdmin
-        .from("mantra_calls")
-        .update({ status: "failed", last_error: "Call could not be placed." })
+        .from("mantra_schedules")
+        .update({
+          status: "failed",
+          last_error: "Call could not be placed.",
+          next_run_at: tomorrow,
+        })
         .eq("id", row.id);
       results.push({ id: row.id, status: "failed" });
     }
