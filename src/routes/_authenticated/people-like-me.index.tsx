@@ -3,6 +3,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { AppShell } from "@/components/AppShell";
 import { CharacterAvatar } from "@/components/people/CharacterAvatar";
+import { CharacterOutcomes } from "@/components/people/CharacterOutcomes";
 import { listPeopleLikeMe, type CharacterCard } from "@/lib/people.functions";
 
 export const Route = createFileRoute("/_authenticated/people-like-me/")({
@@ -54,7 +55,7 @@ function PeopleLikeMePage() {
         </p>
 
         <p className="mt-6 max-w-2xl rounded-lg border border-[color:var(--rule)] bg-[color:var(--royal)]/[0.04] p-4 text-sm leading-relaxed">
-          Alex and Merry are fictional characters created to help you explore different life
+          Alex and Mary are fictional characters created to help you explore different life
           situations and perspectives.
         </p>
 
@@ -107,6 +108,10 @@ function StoryGroups({ cards }: { cards: CharacterCard[] }) {
           ))}
         </div>
       </section>
+
+      {cards.map((c) => (
+        <CharacterOutcomes key={c.slug} slug={c.slug} name={c.name} />
+      ))}
     </>
   );
 }
