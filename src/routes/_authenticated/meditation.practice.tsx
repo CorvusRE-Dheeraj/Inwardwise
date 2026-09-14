@@ -71,7 +71,7 @@ function MeditationPractice() {
 
   // Practice
   const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [repeats, setRepeats] = useState(12);
+  const [repeats, setRepeats] = useState(5);
   const [running, setRunning] = useState(false);
   const [count, setCount] = useState(0);
   const [spokenText, setSpokenText] = useState("");
@@ -85,7 +85,7 @@ function MeditationPractice() {
   const [phone, setPhone] = useState("");
   const [timeOfDay, setTimeOfDay] = useState("08:00");
   const [perCall, setPerCall] = useState(1);
-  const [callRepeats, setCallRepeats] = useState(12);
+  const [callRepeats, setCallRepeats] = useState(5);
   const [timeZone, setTimeZone] = useState("");
   const [schedules, setSchedules] = useState<MantraSchedule[]>([]);
   const [savingCall, setSavingCall] = useState(false);
