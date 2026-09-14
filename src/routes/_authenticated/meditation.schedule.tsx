@@ -453,11 +453,11 @@ function MeditationSchedule() {
 
       <section className="mt-10 rounded-xl border border-[color:var(--rule)] p-8 text-center">
         <p className="mx-auto max-w-md text-[color:var(--muted-foreground)]">
-          Prefer to practise right now? Your session is prepared fresh each time, so the prayer is
-          never the same twice.
+          Prefer to practise right now? Four lines — thank you, please forgive me, I am sorry, I love
+          myself — each held for a minute, repeated as many times as you choose.
         </p>
         <Link
-          to="/meditation/practice"
+          to="/meditation/session"
           className="mt-6 inline-block rounded-full bg-[color:var(--royal)] px-7 py-3 text-sm text-white transition hover:opacity-90"
         >
           Start the session now

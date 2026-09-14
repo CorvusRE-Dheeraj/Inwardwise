@@ -5,7 +5,7 @@ import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 const E164 = /^\+[1-9]\d{7,14}$/;
 
 const LineSchema = z.object({
-  set: z.enum(["sorry", "forgive", "thank", "love"]),
+  set: z.enum(["thank", "forgive", "sorry", "love"]),
   text: z.string().min(1).max(400),
 });
 
@@ -20,7 +20,7 @@ const SET_TITLES: Record<string, string> = {
   sorry: "I am sorry.",
   forgive: "Please forgive me.",
   thank: "Thank you.",
-  love: "I love you.",
+  love: "I love myself.",
 };
 
 /** Compose the written draft of tonight's meditation, sized to the session. */
@@ -34,7 +34,7 @@ function buildDraft(
       ? `Your ${minutes}-minute meditation for ${when}.`
       : `Your ${minutes}-minute meditation.`,
   ];
-  for (const key of ["sorry", "forgive", "thank", "love"]) {
+  for (const key of ["thank", "forgive", "sorry", "love"]) {
     const items = script.filter((l) => l.set === key);
     if (items.length === 0) continue;
     parts.push("", SET_TITLES[key] ?? "");
