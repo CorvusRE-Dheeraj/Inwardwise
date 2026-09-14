@@ -1735,6 +1735,87 @@ export type Database = {
         }
         Relationships: []
       }
+      mantra_library: {
+        Row: {
+          created_at: string
+          id: string
+          text: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          text: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          text?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      mantra_schedules: {
+        Row: {
+          call_attempts: number
+          created_at: string
+          id: string
+          is_active: boolean
+          last_call_at: string | null
+          last_error: string | null
+          mantras_per_call: number
+          next_run_at: string | null
+          phone_number: string
+          provider_call_id: string | null
+          repeats: number
+          status: string
+          time_of_day: string
+          timezone: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          call_attempts?: number
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          last_call_at?: string | null
+          last_error?: string | null
+          mantras_per_call?: number
+          next_run_at?: string | null
+          phone_number: string
+          provider_call_id?: string | null
+          repeats?: number
+          status?: string
+          time_of_day: string
+          timezone?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          call_attempts?: number
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          last_call_at?: string | null
+          last_error?: string | null
+          mantras_per_call?: number
+          next_run_at?: string | null
+          phone_number?: string
+          provider_call_id?: string | null
+          repeats?: number
+          status?: string
+          time_of_day?: string
+          timezone?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       marketing_leads: {
         Row: {
           assigned_employee_id: string | null
