@@ -44,10 +44,13 @@ function ConnectPage() {
           <p className="mt-6 max-w-2xl font-display text-[clamp(1.3rem,3vw,2rem)] italic leading-snug text-[color:var(--royal)]">
             Be yourself. Discover that you are not alone.
           </p>
-          <p className="mt-6 max-w-2xl text-base leading-relaxed text-[color:var(--muted-foreground)]">
-            Share what’s on your mind. <ProductName id="connect" /> can help you. Choose one of the
-            options below, or start from a decision or your <ProductName id="self" /> if that fits
-            better.
+          <p className="mt-6 max-w-2xl text-base leading-relaxed text-justify text-[color:var(--muted-foreground)]">
+            Share what’s on your mind below with a prompt. <ProductName id="connect" /> will figure
+            out which way of connecting suits you best for now, and offer that as a way to connect
+            and belong. It could be going out to meet people or attending an event, sitting quietly
+            and reading, listening to an inspirational song, or watching something that makes you
+            curious. You do not have to choose first while you are feeling a certain way or facing a
+            certain challenge.
           </p>
 
           <div className="mt-8 flex flex-wrap gap-4">
