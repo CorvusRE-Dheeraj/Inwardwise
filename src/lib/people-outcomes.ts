@@ -23,80 +23,80 @@ export type CharacterOutcomes = {
 export const CHARACTER_OUTCOMES: Record<string, CharacterOutcomes> = {
   mary: {
     intro:
-      "Mary finished her Self build first, so her results are shaped by what she already knows about herself.",
+      "Mary is an ISFJ: loyal, organised, curious, and a people pleaser. Her results are shaped by that pattern, not by anyone else's.",
     blocks: [
       {
         product: "Decision",
         situation:
-          "A relationship has ended and Mary is deciding whether to move city for a fresh start.",
+          "Mary is deciding whether to keep leading a project nobody else volunteered for.",
         selfInsight:
-          "Her Self build shows she makes large outward changes when she is hurt, and later misses the people she left.",
+          "Her Self build shows she says yes to protect other people from discomfort, then absorbs the cost quietly.",
         response: [
-          "Are you moving toward something, or away from a feeling? Both are valid, but they need different plans.",
-          "Before the city question, one smaller question: what would this week look like if you were not alone in it?",
-          "If the answer to that changes how the move feels, the move was never the real decision.",
+          "You are not deciding whether the project matters. You are deciding whether anyone is allowed to disappoint you.",
+          "Before the yes, one smaller question: which single piece could someone else carry badly and it would still be fine?",
+          "If handing that one piece over feels unbearable, the workload was never the real question.",
         ],
       },
       {
         product: "Self Aware",
-        situation: "Mary says she feels lonely and flat, with no clear reason.",
+        situation: "Mary says she is tired and cannot remember the last thing she read for herself.",
         selfInsight:
-          "Her pattern is withdrawal: when a relationship breaks or she feels hurt, she goes quiet and stops replying.",
+          "Her pattern is over-responsibility: high conscientiousness plus high agreeableness means she takes the work instead of delegating it.",
         response: [
-          "You tend to go quiet when you are hurt. Quiet feels safe, and it also keeps the loneliness in place.",
-          "This is not a flaw. It is a habit that once protected you.",
-          "The smallest move against it is answering one message today, not fixing your whole life.",
+          "You take the work on yourself because handing it over feels like letting people down.",
+          "This is not a flaw. It is loyalty aimed outward, with nothing left pointed at you.",
+          "The smallest move against it is asking for one thing today, not redesigning your whole role.",
         ],
       },
       {
         product: "Connect",
-        situation: "Mary agrees she does not want to sit in it alone tonight.",
+        situation: "Mary keeps drafting replies to friends and not sending them.",
         selfInsight:
-          "She responds better to doing something beside a friend than to talking about how she feels.",
+          "She is introverted and does better in small groups, and better still doing something beside one person than talking about feelings.",
         response: [
-          "Reach out to one friend, the one who does not ask heavy questions.",
-          "Would you like a couple of ideas for what to do together? Watching a film side by side counts.",
-          "If a film suits tonight, try something warm rather than sad, and let the evening be ordinary.",
+          "One friend, in a small setting, is enough. Not a group, and not a heavy conversation.",
+          "Send the reply you already wrote. It does not need improving.",
+          "Then do something ordinary together, a film or a walk, and let the evening ask nothing of you.",
         ],
       },
     ],
   },
   alex: {
     intro:
-      "Alex has also completed his Self build, so his results follow his own pattern, not Mary's.",
+      "Alex is an ISTJ: disciplined, analytical, competitive and strategic. His results follow that pattern, not Mary's.",
     blocks: [
       {
         product: "Decision",
         situation:
-          "Alex is choosing between a promotion with longer hours and staying where he is.",
+          "Alex is weighing an offer that pays more but breaks the plan he has been following for years.",
         selfInsight:
-          "His Self build shows he says yes quickly to anything that looks like proof he is doing well.",
+          "His Self build shows he treats the plan as the rule, and calculates outcomes rather than admitting he wants something.",
         response: [
-          "You are not weighing two jobs. You are weighing how much proof you need this year.",
-          "If the title were removed and only the hours remained, would you still want it?",
-          "Answer that first, then the promotion becomes a simple yes or no.",
+          "You are not comparing two offers. You are deciding whether your own plan is allowed to be wrong.",
+          "If nobody ever learned which one you took, would the numbers still be tied?",
+          "Answer that, and the spreadsheet stops being the place you hide.",
         ],
       },
       {
         product: "Self Aware",
-        situation: "Alex says he is tired all the time but cannot slow down.",
+        situation: "Alex says the uncertainty is worse than either outcome.",
         selfInsight:
-          "His pattern is overcommitment: he fills empty time because stillness feels like falling behind.",
+          "His pattern is control: low openness and high discipline mean he would rather decide early than sit in an unorganised state.",
         response: [
-          "You fill time rather than rest in it. Being busy is how you keep worry quiet.",
-          "The tiredness is not weakness. It is the cost of a strategy that works.",
-          "Protect one hour this week with nothing in it, and notice what shows up.",
+          "You are not impatient. You are uncomfortable with the one thing you cannot put in order.",
+          "Deciding fast would end the discomfort, and it would also end the thinking.",
+          "Give the question one more day on purpose, and treat waiting as part of the plan.",
         ],
       },
       {
         product: "Connect",
-        situation: "Alex admits he has not spoken to anyone outside work in weeks.",
+        situation: "Alex has not told a single person about the offer.",
         selfInsight:
-          "He keeps friendships alive through shared activity rather than long conversations.",
+          "He is introverted and competitive, so asking for input feels like handing someone else the decision.",
         response: [
-          "Join one thing that already has a time and a place, so you do not have to organise it.",
-          "A weekly walk, a class, a game. Something that repeats without effort.",
-          "Would you like a few options near you that meet at the same time each week?",
+          "Tell one person, and set the terms: you want their reading, not their verdict.",
+          "Pick someone who will not try to win the conversation.",
+          "You keep ownership either way. That is the point of saying it out loud.",
         ],
       },
     ],

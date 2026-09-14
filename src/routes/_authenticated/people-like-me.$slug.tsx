@@ -4,6 +4,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { AppShell } from "@/components/AppShell";
 import { AnimatedCharacter } from "@/components/people/AnimatedCharacter";
 import { CharacterOutcomes } from "@/components/people/CharacterOutcomes";
+import { PersonalityProfile } from "@/components/people/PersonalityProfile";
 import {
   getScenario,
   saveScenarioProgress,
@@ -164,6 +165,8 @@ function StoryPage() {
           {detail.character.name} is a fictional character created to help you explore different
           life situations and perspectives.
         </p>
+
+        <PersonalityProfile slug={detail.character.slug} name={detail.character.name} />
 
         {error && (
           <p className="mt-5 rounded-lg border border-[color:var(--rule)] p-4 text-sm">{error}</p>
