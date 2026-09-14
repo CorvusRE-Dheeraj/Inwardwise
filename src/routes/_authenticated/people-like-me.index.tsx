@@ -108,6 +108,10 @@ function StoryGroups({ cards }: { cards: CharacterCard[] }) {
           ))}
         </div>
       </section>
+
+      {cards.map((c) => (
+        <CharacterOutcomes key={c.slug} slug={c.slug} name={c.name} />
+      ))}
     </>
   );
 }
