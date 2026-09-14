@@ -42,7 +42,7 @@ export const Route = createFileRoute("/_authenticated/meditation/session")({
       { name: "robots", content: "noindex, nofollow" },
     ],
   }),
-  component: CalmSession;
+  component: CalmSession,
 });
 
 type Phase = "idle" | "preparing" | "speaking" | "pausing" | "done";
