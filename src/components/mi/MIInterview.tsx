@@ -166,7 +166,7 @@ export function MIInterview({
 
   return (
     <div className="space-y-4">
-      <p className="rounded-lg border border-[color:var(--rule)] bg-white/40 px-4 py-3 text-[13px] leading-relaxed text-justify text-[color:var(--muted-foreground)]">
+      <p className="rounded-lg border border-[color:var(--rule)] bg-white/40 px-4 py-3 text-[13px] leading-relaxed text-[color:var(--muted-foreground)]">
         {MI_PRIVACY_NOTICE}
       </p>
       <div
@@ -183,7 +183,7 @@ export function MIInterview({
                 : "mr-auto max-w-[92%] rounded-lg border border-[color:var(--rule)] bg-white px-4 py-3 text-sm leading-relaxed"
             }
           >
-            <div className="text-justify">
+            <div className="">
               <FormattedText text={t.content} />
             </div>
           </div>

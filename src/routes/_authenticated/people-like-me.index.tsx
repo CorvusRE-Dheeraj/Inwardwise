@@ -155,7 +155,7 @@ function StoryCard({ card: c, highlight = false }: { card: CharacterCard; highli
                   </div>
                 </div>
 
-                <p className="mt-5 flex-1 text-[15px] leading-relaxed text-justify text-[color:var(--muted-foreground)]">
+                <p className="mt-5 flex-1 text-[15px] leading-relaxed text-[color:var(--muted-foreground)]">
                   {c.scenario?.summary ?? "A story is being prepared for this character."}
                 </p>
 

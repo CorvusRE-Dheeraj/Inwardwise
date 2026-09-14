@@ -105,12 +105,12 @@ export function BookReading() {
           <h2 className="font-display text-2xl sm:text-3xl">
             Mind It! <em className="italic text-[color:var(--royal)]">For Health and Happiness</em>
           </h2>
-          <p className="mt-4 text-[15px] leading-relaxed text-justify text-[color:var(--muted-foreground)]">
+          <p className="mt-4 text-[15px] leading-relaxed text-[color:var(--muted-foreground)]">
             The habit of reading a whole book you have bought is dwindling. So sections of this book
             are made available to you in bite size, matched to what you write below, small enough to
             finish before the next one arrives.
           </p>
-          <p className="mt-3 text-[15px] leading-relaxed text-justify text-[color:var(--muted-foreground)]">
+          <p className="mt-3 text-[15px] leading-relaxed text-[color:var(--muted-foreground)]">
             Each section opens on its own screen, where you can also save or print it, and you can
             have it sent to your phone or email. Nothing new is sent until you confirm you have read
             the one you have, and anything left unread is sent to you again.

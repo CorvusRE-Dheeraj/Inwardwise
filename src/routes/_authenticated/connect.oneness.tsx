@@ -43,7 +43,7 @@ function OnenessPathway() {
                 <h2 className="font-display mt-3 text-2xl sm:text-3xl">
                   You are <em className="italic text-[color:var(--royal)]">not alone</em>
                 </h2>
-                <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-justify text-[color:var(--muted-foreground)]">
+                <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-[color:var(--muted-foreground)]">
                   {r.aggregate ||
                     "This part of the community is still small, so there is no count to share yet."}
                 </p>
@@ -56,10 +56,10 @@ function OnenessPathway() {
                 <h3 className="font-display mt-3 text-2xl italic text-[color:var(--royal)]">
                   {r.reading.title}
                 </h3>
-                <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-justify">
+                <p className="mt-4 max-w-2xl text-[15px] leading-relaxed">
                   {r.reading.summary}
                 </p>
-                <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-justify">
+                <p className="mt-4 max-w-2xl text-[15px] leading-relaxed">
                   {r.reading.body}
                 </p>
               </PathwayCard>

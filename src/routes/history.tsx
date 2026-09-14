@@ -140,7 +140,7 @@ function History() {
           </div>
         </div>
 
-        <article className="mt-12 max-w-3xl space-y-6 text-justify text-[16px] leading-[1.7] text-[color:var(--ink-2)]">
+        <article className="mt-12 max-w-3xl space-y-6 text-[16px] leading-[1.7] text-[color:var(--ink-2)]">
           <p>
             I began my journey as a philosophical person, it is even my earliest memory, a
             somewhat fearless thinker with a detachment from societal thinking norms, driven by a
@@ -209,7 +209,7 @@ function History() {
                 </button>
               </CollapsibleTrigger>
               <CollapsibleContent>
-                <div className="pb-10 max-w-3xl space-y-4 text-justify text-[16px] leading-[1.7] text-[color:var(--ink-2)]">
+                <div className="pb-10 max-w-3xl space-y-4 text-[16px] leading-[1.7] text-[color:var(--ink-2)]">
                   {m.body.slice(0, -4).map((p, i) => (
                     <p key={i}>{p}</p>
                   ))}

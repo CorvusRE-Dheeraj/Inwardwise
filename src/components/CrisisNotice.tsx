@@ -20,7 +20,7 @@ export function CrisisNotice({ categories }: { categories: MiCrisisCategory[] })
         ))}
         <li>If you need medical care, go to the nearest emergency room or call 911.</li>
       </ul>
-      <p className="mt-2 text-justify text-xs text-muted-foreground">
+      <p className="mt-2 text-xs text-muted-foreground">
         These are US services. Elsewhere, contact your local emergency number or crisis line. None
         of what happened is your fault. You can pause this session and come back any time.
       </p>

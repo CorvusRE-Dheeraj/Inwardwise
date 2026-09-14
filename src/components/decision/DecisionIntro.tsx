@@ -44,7 +44,7 @@ export function DecisionIntro({ onStart, resumable, onResume }: DecisionIntroPro
       <h2 className="font-display text-2xl md:text-3xl">
         Let's work through your decision together
       </h2>
-      <p className="mt-2 text-sm leading-relaxed text-justify text-muted-foreground">
+      <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
         This process is designed to help you understand your decision before jumping to a solution.
         We'll gradually clarify what is happening, what you want, what matters to you, and what
         options you have.

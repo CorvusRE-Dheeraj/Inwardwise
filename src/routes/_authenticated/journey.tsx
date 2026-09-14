@@ -175,7 +175,7 @@ function JourneyPage() {
                       Your journey is paused here. Nothing new will be sent until you continue.
                     </p>
                   ) : (
-                    <article className="mt-5 space-y-4 whitespace-pre-wrap text-justify text-[15px] leading-relaxed text-[color:var(--ink)]">
+                    <article className="mt-5 space-y-4 whitespace-pre-wrap text-[15px] leading-relaxed text-[color:var(--ink)]">
                       {state.active.section.content}
                     </article>
                   )}

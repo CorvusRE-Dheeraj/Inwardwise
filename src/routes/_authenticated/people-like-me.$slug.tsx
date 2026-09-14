@@ -224,7 +224,7 @@ function StoryPage() {
                     )}
                   </div>
                 </div>
-                <article className="mt-6 text-[16px] leading-relaxed text-justify">
+                <article className="mt-6 text-[16px] leading-relaxed">
                   {scene.body}
                 </article>
               </>

@@ -29,7 +29,7 @@ function DecisionProduct() {
           tagline="Before searching for the right answer, make sure you are solving the right problem."
         />
 
-        <div className="mt-10 max-w-2xl space-y-5 text-base leading-relaxed text-justify text-[color:var(--muted-foreground)]">
+        <div className="mt-10 max-w-2xl space-y-5 text-base leading-relaxed text-[color:var(--muted-foreground)]">
           <p>
             <ProductName id="decision" /> is built around the founder&apos;s{" "}
             <strong className="font-medium text-[color:var(--ink)]">

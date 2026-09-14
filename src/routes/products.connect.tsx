@@ -29,7 +29,7 @@ function ConnectProduct() {
           tagline="Understand how you connect. Find where you belong. Build connections that matter."
         />
 
-        <div className="mt-10 max-w-2xl space-y-5 text-base leading-relaxed text-justify text-[color:var(--muted-foreground)]">
+        <div className="mt-10 max-w-2xl space-y-5 text-base leading-relaxed text-[color:var(--muted-foreground)]">
           <p>
             We can be surrounded by people, connected across social media, and still feel
             surprisingly alone. Meaningful connection depends on more than simply meeting more

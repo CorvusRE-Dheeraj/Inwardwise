@@ -40,7 +40,7 @@ export function PathwayShell({
           <p className="mt-5 max-w-2xl font-display text-[clamp(1.1rem,2.4vw,1.6rem)] italic leading-snug text-[color:var(--royal)]">
             {tagline}
           </p>
-          <p className="mt-5 max-w-2xl text-[15px] leading-relaxed text-justify text-[color:var(--muted-foreground)]">
+          <p className="mt-5 max-w-2xl text-[15px] leading-relaxed text-[color:var(--muted-foreground)]">
             {intro}
           </p>
         </div>
