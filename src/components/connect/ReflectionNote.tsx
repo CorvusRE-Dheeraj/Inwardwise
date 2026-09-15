@@ -80,15 +80,15 @@ export function ReflectionNote({ readId }: { readId?: string }) {
   return (
     <div className="rounded-lg border border-[color:var(--rule)] p-6 sm:p-8">
       <div className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)]">
-        § 00 · Write or record
+        § 00 · Connect Only
       </div>
       <h2 className="font-display mt-3 text-2xl sm:text-3xl">
-        Something you want to <em className="italic text-[color:var(--royal)]">keep</em>
+        Write or record <em className="italic text-[color:var(--royal)]">something</em>
       </h2>
       <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-[color:var(--muted-foreground)]">
         Do you want to write or record something based on what happened, or based on what you have
-        just read? Keep it here and you can come back to reflect on it later. It stays private to
-        you.
+        just read? You can use it later to reflect on it. It stays private to you, kept alongside
+        which section was sent to you and when you read it.
       </p>
 
       <textarea
