@@ -5,22 +5,6 @@ import { ProductText } from "@/components/products/ProductChrome";
 
 export const Route = createFileRoute("/areas/")({
   component: AreasIndex,
-  head: () => ({
-    meta: [
-      { title: "Services | InwardWise" },
-      {
-        name: "description",
-        content: "Explore InwardWise services for individual and corporate decisions, wellbeing, relationships and development.",
-      },
-      { property: "og:title", content: "Services | InwardWise" },
-      {
-        property: "og:description",
-        content: "Explore InwardWise services for individual and corporate decisions, wellbeing, relationships and development.",
-      },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-    ],
-  }),
 });
 
 const ORDER: Record<string, number> = {
@@ -52,9 +36,9 @@ function Column({
   card: string;
 }) {
   return (
-    <section className={`rounded-lg border p-5 text-foreground sm:p-6 ${panel}`}>
-      <h2 className="text-2xl text-foreground">{label}</h2>
-      <p className="mt-1 text-sm font-medium leading-relaxed text-foreground">{note}</p>
+    <section className={`rounded-3xl border p-5 text-foreground sm:p-6 ${panel}`}>
+      <h2 className="text-2xl">{label}</h2>
+      <p className="mt-1 text-sm text-foreground">{note}</p>
 
       <div className="mt-5 grid gap-3">
         {areas.map((a) => (
@@ -62,16 +46,16 @@ function Column({
             key={a.slug}
             to="/areas/$slug"
             params={{ slug: a.slug }}
-            className={`group rounded-lg border p-4 text-foreground transition ${card}`}
+            className={`group rounded-2xl border p-4 text-foreground transition ${card}`}
           >
             <div className="flex items-start justify-between gap-3">
               <div>
-                <div className="text-lg font-medium text-foreground">{a.name}</div>
-                <p className="mt-1 text-sm leading-relaxed text-foreground">
+                <div className="text-lg">{a.name}</div>
+                <p className="mt-1 text-sm text-foreground">
                   <ProductText>{a.blurb}</ProductText>
                 </p>
               </div>
-              <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-royal transition group-hover:translate-x-0.5" />
+              <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-foreground transition group-hover:translate-x-0.5" />
             </div>
           </Link>
         ))}
