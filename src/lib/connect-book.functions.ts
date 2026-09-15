@@ -292,3 +292,44 @@ export const listConnectReflections = createServerFn({ method: "GET" })
       createdAt: r.created_at,
     }));
   });
+
+/** Builds a PDF of the matched section so it can be opened on its own screen. */
+export const getBookSectionPdf = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((d: unknown) => z.object({ readId: z.string().uuid() }).parse(d))
+  .handler(async ({ context, data }): Promise<{ fileName: string; base64: string }> => {
+    const db = context.supabase as any;
+    const { data: row } = await db
+      .from("connect_book_reads")
+      .select("id, section_id")
+      .eq("id", data.readId)
+      .eq("user_id", context.userId)
+      .maybeSingle();
+    if (!row?.section_id) throw new Error("That section is no longer available.");
+
+    const { data: section } = await db
+      .from("journey_sections")
+      .select("title, content, estimated_minutes")
+      .eq("id", row.section_id)
+      .maybeSingle();
+    if (!section) throw new Error("That section is no longer available.");
+
+    const { buildSectionPdf } = await import("@/lib/connect-book-pdf.server");
+    const bytes = await buildSectionPdf({
+      title: section.title,
+      content: section.content,
+      minutes: section.estimated_minutes ?? 4,
+    });
+
+    let binary = "";
+    for (const byte of bytes) binary += String.fromCharCode(byte);
+    const fileName = `${String(section.title).replace(/[^a-z0-9]+/gi, "-").toLowerCase()}.pdf`;
+
+    await db
+      .from("connect_book_reads")
+      .update({ opened_at: new Date().toISOString() })
+      .eq("id", row.id)
+      .is("opened_at", null);
+
+    return { fileName, base64: btoa(binary) };
+  });
