@@ -37,6 +37,10 @@
   --color-royal: var(--royal);
   --color-gold: var(--gold);
   --color-forest: var(--forest);
+  --color-service-individual: var(--service-individual);
+  --color-service-individual-border: var(--service-individual-border);
+  --color-service-corporate: var(--service-corporate);
+  --color-service-corporate-border: var(--service-corporate-border);
   --font-display: "Fraunces", "Instrument Serif", ui-serif, Georgia, serif;
   --font-serif: "Fraunces", "Instrument Serif", ui-serif, Georgia, serif;
   --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
@@ -56,6 +60,11 @@
   --gold: #C8A15A;               /* soft gold */
   --forest: #2F5D3A;             /* forest green */
   --rule: #E4E1D6;
+  /* Opaque service surfaces avoid browser-dependent CSS alpha rendering. */
+  --service-individual: #E9EEFC;
+  --service-individual-border: #B8C6EF;
+  --service-corporate: #ECEDEA;
+  --service-corporate-border: #C8CBC6;
 
   --background: var(--paper);
   --foreground: var(--ink);
