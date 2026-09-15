@@ -66,6 +66,7 @@ function CalmSession() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const runIdRef = useRef(0);
+  const skipResolveRef = useRef<(() => void) | null>(null);
 
   useEffect(() => {
     if (vault.status !== "unlocked" || !vault.key || !vault.profile) return;
