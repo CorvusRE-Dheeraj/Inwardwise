@@ -57,7 +57,7 @@ export function CharacterAssessment({
 function CharacterView({ id }: { id: DemonstrationCharacterId }) {
   const character = assessmentFor(id);
   return (
-    <div>oats
+    <div>
       <CharacterProfile id={id} />
       <div className="mt-8 space-y-6">
         {AVATAR_DIMENSIONS.map((dimension) => (
