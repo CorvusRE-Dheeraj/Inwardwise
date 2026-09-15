@@ -2,10 +2,6 @@ import { useEffect, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { AppShell } from "@/components/AppShell";
-import {
-  CharacterAssessment,
-  type AssessmentView,
-} from "@/components/people/CharacterAssessment";
 import { CharacterAvatar } from "@/components/people/CharacterAvatar";
 import { CharacterOutcomes } from "@/components/people/CharacterOutcomes";
 
@@ -37,7 +33,7 @@ function PeopleLikeMePage() {
   const load = useServerFn(listPeopleLikeMe);
   const [cards, setCards] = useState<CharacterCard[] | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [assessmentView, setAssessmentView] = useState<AssessmentView>("compare");
+  
 
   useEffect(() => {
     load({})
@@ -57,14 +53,12 @@ function PeopleLikeMePage() {
           Alex &amp; <em className="italic text-[color:var(--royal)]">Mary</em>
         </h1>
         <p className="mt-4 max-w-2xl text-lg leading-relaxed">
-          Two different hypothetical people answer the same Self questions. Their different answers produce different profiles.
+          Two fictional people whose situations you can explore, and whose examples show how InwardWise answers them.
         </p>
 
         <p className="mt-6 max-w-2xl rounded-lg border border-[color:var(--rule)] bg-[color:var(--royal)]/[0.04] p-4 text-sm leading-relaxed">
-          Alex and Mary are fictional, illustrative characters. Their profiles and answers do not represent real users or customer data.
+          Alex and Mary are fictional, illustrative characters. They do not represent real users or customer data.
         </p>
-
-        <CharacterAssessment view={assessmentView} onViewChange={setAssessmentView} />
 
         {error && (
           <p className="mt-6 rounded-lg border border-[color:var(--rule)] p-4 text-sm">{error}</p>
