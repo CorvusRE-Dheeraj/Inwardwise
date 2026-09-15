@@ -39,6 +39,6 @@
 - [ ] Phase 2+: LISTEN, REFLECT, EXPLORE
 
 ## Alex & Mary assessment demonstration
-- [ ] Add deterministic answers using existing Self questions
-- [ ] Add Alex, Mary, and comparison views
+- [x] Add deterministic answers using existing Self questions
+- [x] Add Alex, Mary, and comparison views
 - [ ] Preserve and verify existing story flows
