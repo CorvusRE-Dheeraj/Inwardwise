@@ -74,7 +74,7 @@ export function ConnectAiSuggest() {
 
   const rawPathway = result ? pathwayById(result.pathwayId) : null;
   const pathway =
-    rawPathway && VISIBLE_PATHWAYS.includes(rawPathway.id)
+    rawPathway && SUGGESTABLE_PATHWAYS.includes(rawPathway.id)
       ? rawPathway
       : result
         ? pathwayById("membership")
