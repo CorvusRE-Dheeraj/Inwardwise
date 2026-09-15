@@ -83,10 +83,7 @@ export function ConnectAiSuggest() {
   return (
     <section className="mx-auto mt-12 w-[min(1100px,calc(100%-2rem))]">
       <div className="rounded-lg border border-[color:var(--rule)] p-6 sm:p-8">
-        <div className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)]">
-          Connect AI · one prompt
-        </div>
-        <h2 className="font-display mt-3 text-2xl sm:text-3xl">
+        <h2 className="font-display text-2xl sm:text-3xl">
           Type how you are feeling, or say it
         </h2>
         <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-[color:var(--muted-foreground)]">
