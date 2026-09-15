@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { createFileRoute, Link, useParams } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
-import { ArrowLeft, CheckCircle2, Printer } from "lucide-react";
+import { ArrowLeft, CheckCircle2, FileText, Printer } from "lucide-react";
+import { openPdfInNewTab } from "@/lib/open-pdf";
 import { AppShell } from "@/components/AppShell";
 import {
   getBookSection,
+  getBookSectionPdf,
   markBookSectionRead,
   type BookSection,
 } from "@/lib/connect-book.functions";
@@ -29,6 +31,7 @@ function ReadingScreen() {
   const { readId } = useParams({ from: "/_authenticated/connect/reading/$readId" });
   const load = useServerFn(getBookSection);
   const markRead = useServerFn(markBookSectionRead);
+  const pdf = useServerFn(getBookSectionPdf);
 
   const [section, setSection] = useState<BookSection | null>(null);
   const [loading, setLoading] = useState(true);
@@ -109,6 +112,21 @@ function ReadingScreen() {
                 className="inline-flex min-h-11 items-center gap-2 rounded-full border border-[color:var(--rule)] px-5 py-3 text-[13px]"
               >
                 <Printer className="h-3.5 w-3.5" /> Save or print as PDF
+              </button>
+              <button
+                disabled={busy}
+                onClick={async () => {
+                  setBusy(true);
+                  try {
+                    const res = await pdf({ data: { readId } });
+                    openPdfInNewTab(res.base64, res.fileName);
+                  } finally {
+                    setBusy(false);
+                  }
+                }}
+                className="inline-flex min-h-11 items-center gap-2 rounded-full border border-[color:var(--rule)] px-5 py-3 text-[13px] disabled:opacity-60"
+              >
+                <FileText className="h-3.5 w-3.5" /> Open the PDF on another screen
               </button>
             </div>
 

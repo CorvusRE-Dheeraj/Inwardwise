@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
-import { ArrowRight, BookOpen, CheckCircle2, Mail, MessageSquare, RotateCw } from "lucide-react";
+import { ArrowRight, BookOpen, CheckCircle2, FileText, Mail, MessageSquare, RotateCw } from "lucide-react";
 import coverAsset from "@/assets/mind-it-cover.jpg";
+import { openPdfInNewTab } from "@/lib/open-pdf";
 import {
+  getBookSectionPdf,
   listBookReads,
   matchBookSection,
   sendBookSection,
@@ -21,6 +23,7 @@ export function BookReading() {
   const match = useServerFn(matchBookSection);
   const send = useServerFn(sendBookSection);
   const list = useServerFn(listBookReads);
+  const pdf = useServerFn(getBookSectionPdf);
 
   const [prompt, setPrompt] = useState("");
   const [email, setEmail] = useState("");
@@ -83,6 +86,20 @@ export function BookReading() {
       await refresh();
     } catch (e) {
       setError(e instanceof Error ? e.message : "It could not be sent just now.");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function openPdf() {
+    if (!current) return;
+    setBusy(true);
+    setError(null);
+    try {
+      const res = await pdf({ data: { readId: current.id } });
+      openPdfInNewTab(res.base64, res.fileName);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "The PDF could not be made just now.");
     } finally {
       setBusy(false);
     }
@@ -159,6 +176,13 @@ export function BookReading() {
           >
             <BookOpen className="h-3.5 w-3.5" /> Open it on its own screen
           </a>
+          <button
+            onClick={openPdf}
+            disabled={busy}
+            className="mt-5 ml-3 inline-flex min-h-11 items-center gap-2 rounded-full border border-[color:var(--ink)] px-5 py-2.5 text-[13px] disabled:opacity-60"
+          >
+            <FileText className="h-3.5 w-3.5" /> Open the PDF on another screen
+          </button>
 
           <div className="mt-7 grid gap-4 sm:grid-cols-2">
             <div>
