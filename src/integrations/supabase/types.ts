@@ -1957,6 +1957,65 @@ export type Database = {
           },
         ]
       }
+      meditation_call_logs: {
+        Row: {
+          attempt_number: number
+          completed_at: string | null
+          created_at: string
+          duration_minutes: number
+          failure_reason: string | null
+          id: string
+          meditation_setting_id: string | null
+          phone_number: string | null
+          placed_at: string | null
+          provider_call_id: string | null
+          scheduled_at: string | null
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          attempt_number?: number
+          completed_at?: string | null
+          created_at?: string
+          duration_minutes?: number
+          failure_reason?: string | null
+          id?: string
+          meditation_setting_id?: string | null
+          phone_number?: string | null
+          placed_at?: string | null
+          provider_call_id?: string | null
+          scheduled_at?: string | null
+          status: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          attempt_number?: number
+          completed_at?: string | null
+          created_at?: string
+          duration_minutes?: number
+          failure_reason?: string | null
+          id?: string
+          meditation_setting_id?: string | null
+          phone_number?: string | null
+          placed_at?: string | null
+          provider_call_id?: string | null
+          scheduled_at?: string | null
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "meditation_call_logs_meditation_setting_id_fkey"
+            columns: ["meditation_setting_id"]
+            isOneToOne: false
+            referencedRelation: "meditation_settings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       meditation_settings: {
         Row: {
           call_attempts: number
