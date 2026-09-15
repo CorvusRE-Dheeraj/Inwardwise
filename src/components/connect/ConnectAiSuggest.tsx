@@ -6,7 +6,14 @@ import { suggestConnectPathway } from "@/lib/connect-suggest.functions";
 import { pathwayById } from "@/lib/connect-pathways";
 
 /** Pathways offered on the Connect page; other suggestions fall back to Membership. */
-const VISIBLE_PATHWAYS = ["book", "membership"];
+const VISIBLE_PATHWAYS = [
+  "book",
+  "events",
+  "membership",
+  "belonging",
+  "oneness",
+  "share",
+];
 import { startRecording, transcribe, type Recorder } from "@/lib/voice";
 import { CrisisNotice } from "@/components/CrisisNotice";
 import { detectCrisis } from "@/lib/crisis-detect";
