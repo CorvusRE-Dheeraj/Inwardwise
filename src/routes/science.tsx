@@ -66,6 +66,45 @@ const SECTIONS: { n: string; title: string; body: string[] }[] = [
   },
 ];
 
+const REFERENCE_GROUPS: { heading: string; entries: string[] }[] = [
+  {
+    heading: "General",
+    entries: [
+      "Freeman, A. (2026). Mind it! For health and happiness [Unpublished manuscript].",
+    ],
+  },
+  {
+    heading: "Decision",
+    entries: [
+      "Cole, S. A., Sannidhi, D., Jadotte, Y. T., & Rozanski, A. (2023). Using motivational interviewing and brief action planning for adopting and maintaining positive health behaviors. Progress in Cardiovascular Diseases, 77, 86–94.",
+      "Miller, W. R., & Rollnick, S. (2012). Motivational interviewing: Helping people change. Guilford Press.",
+    ],
+  },
+  {
+    heading: "Self",
+    entries: [
+      "Christianto, V., & Smarandache, F. (2020). A review on how an ancient forgiveness way called Ho‘oponopono can boost human health and immune system. EC Neurology, 12(6), 64–69.",
+      "Freeman, A. (2026). Mind it! For health and happiness [Unpublished manuscript].",
+      "Hassed, C., & Chambers, R. (2014). Mindful learning: Reduce stress and improve brain performance for effective learning (Vol. 3). Exisle Publishing.",
+      "Ishii, T., Taweesedt, P. T., Chick, C. F., O’Hara, R., & Kawai, M. (2024). From macro to micro: Slow-wave sleep and its pivotal health implications. Frontiers in Sleep, 3, Article 1322995.",
+      "McManus, E., Haroon, H., Duncan, N. W., Elliott, R., & Muhlert, N. (2022). The effects of stress across the lifespan on the brain, cognition and mental health: A UK Biobank study. Neurobiology of Stress, 18, Article 100447.",
+      "Vago, D. R., & Zeidan, F. (2016). The brain on silent: Mind wandering, mindful awareness, and states of mental tranquility. Annals of the New York Academy of Sciences, 1373(1), 96–113.",
+      "Wall, J. A., Jr., & Callister, R. R. (1995). Ho‘oponopono: Some lessons from Hawaiian mediation. Negotiation Journal, 11(1), 45–54.",
+    ],
+  },
+  {
+    heading: "Connect",
+    entries: [
+      "Holt-Lunstad, J., Smith, T. B., & Layton, J. B. (2010). Social relationships and mortality risk: A meta-analytic review. PLoS Medicine, 7(7), Article e1000316.",
+      "Kemp, A. H., Arias, J. A., & Fisher, Z. (2017). Social ties, health and wellbeing: A literature review and model. In Neuroscience and social science: The missing link (pp. 397–427).",
+    ],
+  },
+  {
+    heading: "Biology and Medicine",
+    entries: ["Selye, H. (1975). The stress of life."],
+  },
+];
+
 function Science() {
   return (
     <AppShell>
@@ -78,6 +117,27 @@ function Science() {
           A connected world where intelligent decision making can happen, understand your biases and
           weaknesses, become fully self aware, and improve your chances of follow through and success.
         </p>
+
+        <div className="rule-top mt-10" />
+        <section className="pt-10">
+          <h2 className="font-display text-2xl tracking-tight md:text-3xl">References</h2>
+          <div className="mt-8 max-w-3xl space-y-8 text-[16px] leading-[1.7] text-[color:var(--ink-2)]">
+            {REFERENCE_GROUPS.map((group) => (
+              <div key={group.heading}>
+                <h3 className="font-display text-lg tracking-tight text-[color:var(--royal)]">
+                  {group.heading}
+                </h3>
+                <ul className="mt-3 list-none space-y-3">
+                  {group.entries.map((entry, i) => (
+                    <li key={i}>
+                      <ProductText>{entry}</ProductText>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </section>
         <div className="rule-top mt-10" />
 
         <div className="mt-4">
