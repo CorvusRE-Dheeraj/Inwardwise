@@ -40,7 +40,12 @@ export function CharacterAssessment({
             onClick={() => onViewChange(id)}
             role="tab"
             aria-selected={view === id}
-            className={cn("min-h-11 rounded-full px-5", view === id && "bg-[color:var(--royal)]")}
+            className={cn(
+              "min-h-11 rounded-full px-5",
+              view === id
+                ? "bg-[color:var(--royal)] text-[color:var(--paper)]"
+                : "border-[color:var(--rule)] bg-[color:var(--paper)] text-[color:var(--ink)] hover:bg-[color:var(--royal)]/[0.06] hover:text-[color:var(--ink)]",
+            )}
           >
             {label}
           </Button>

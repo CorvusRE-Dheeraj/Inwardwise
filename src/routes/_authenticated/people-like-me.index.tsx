@@ -112,18 +112,20 @@ function StoryGroups({ cards }: { cards: CharacterCard[] }) {
         </section>
       )}
 
-      <section className="mt-12">
-        {personalised.length > 0 && (
-          <h2 className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)]">
-            Other stories
-          </h2>
-        )}
-        <div className="mt-5 grid gap-6 md:grid-cols-2">
+      {others.length > 0 && (
+        <section className="mt-12">
+          {personalised.length > 0 && (
+            <h2 className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)]">
+              Other stories
+            </h2>
+          )}
+          <div className="mt-5 grid gap-6 md:grid-cols-2">
           {others.map((c) => (
             <StoryCard key={c.slug} card={c} />
           ))}
-        </div>
-      </section>
+          </div>
+        </section>
+      )}
 
       {cards.map((c) => (
         <div key={c.slug}>
