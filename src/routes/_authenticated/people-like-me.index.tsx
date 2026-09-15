@@ -8,7 +8,7 @@ import {
 } from "@/components/people/CharacterAssessment";
 import { CharacterAvatar } from "@/components/people/CharacterAvatar";
 import { CharacterOutcomes } from "@/components/people/CharacterOutcomes";
-import { PersonalityProfile } from "@/components/people/PersonalityProfile";
+
 import { listPeopleLikeMe, type CharacterCard } from "@/lib/people.functions";
 
 export const Route = createFileRoute("/_authenticated/people-like-me/")({
@@ -129,7 +129,6 @@ function StoryGroups({ cards }: { cards: CharacterCard[] }) {
 
       {cards.map((c) => (
         <div key={c.slug}>
-          <PersonalityProfile slug={c.slug} name={c.name} />
           <CharacterOutcomes slug={c.slug} name={c.name} />
         </div>
       ))}
