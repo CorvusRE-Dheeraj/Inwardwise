@@ -2,10 +2,6 @@ import { useEffect, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { AppShell } from "@/components/AppShell";
-import {
-  CharacterAssessment,
-  type AssessmentView,
-} from "@/components/people/CharacterAssessment";
 import { CharacterAvatar } from "@/components/people/CharacterAvatar";
 import { CharacterOutcomes } from "@/components/people/CharacterOutcomes";
 
