@@ -2,7 +2,14 @@ import { Link } from "@tanstack/react-router";
 import { PATHWAYS } from "@/lib/connect-pathways";
 
 /** Pathways currently offered on the Connect page. */
-const VISIBLE_PATHWAYS = ["book", "membership"];
+const VISIBLE_PATHWAYS = [
+  "book",
+  "events",
+  "membership",
+  "belonging",
+  "oneness",
+  "share",
+];
 const visible = PATHWAYS.filter((p) => VISIBLE_PATHWAYS.includes(p.id));
 
 /**
