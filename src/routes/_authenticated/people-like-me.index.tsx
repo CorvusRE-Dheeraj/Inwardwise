@@ -2,6 +2,10 @@ import { useEffect, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { AppShell } from "@/components/AppShell";
+import {
+  CharacterAssessment,
+  type AssessmentView,
+} from "@/components/people/CharacterAssessment";
 import { CharacterAvatar } from "@/components/people/CharacterAvatar";
 import { CharacterOutcomes } from "@/components/people/CharacterOutcomes";
 import { PersonalityProfile } from "@/components/people/PersonalityProfile";
@@ -33,6 +37,7 @@ function PeopleLikeMePage() {
   const load = useServerFn(listPeopleLikeMe);
   const [cards, setCards] = useState<CharacterCard[] | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [assessmentView, setAssessmentView] = useState<AssessmentView>("compare");
 
   useEffect(() => {
     load({})
@@ -45,20 +50,21 @@ function PeopleLikeMePage() {
   return (
     <AppShell>
       <div className="mx-auto w-[min(1100px,calc(100%-2rem))] py-12 md:py-16">
-        <div className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)]">
-          My Journey · People Like Me
+        <div className="font-mono-cap text-[10px] text-[color:var(--royal)]">
+          My Journey · Illustrative profiles
         </div>
         <h1 className="font-display mt-3 text-[clamp(2.2rem,6vw,3.6rem)] leading-[1.05] tracking-tight">
-          People Like <em className="italic text-[color:var(--royal)]">Me</em>
+          Alex &amp; <em className="italic text-[color:var(--royal)]">Mary</em>
         </h1>
-        <p className="mt-4 max-w-2xl text-lg leading-relaxed text-[color:var(--muted-foreground)]">
-          Explore fictional stories and situations that may feel familiar.
+        <p className="mt-4 max-w-2xl text-lg leading-relaxed">
+          Two different hypothetical people answer the same Self questions. Their different answers produce different profiles.
         </p>
 
         <p className="mt-6 max-w-2xl rounded-lg border border-[color:var(--rule)] bg-[color:var(--royal)]/[0.04] p-4 text-sm leading-relaxed">
-          Alex and Mary are fictional characters created to help you explore different life
-          situations and perspectives.
+          Alex and Mary are fictional, illustrative characters. Their profiles and answers do not represent real users or customer data.
         </p>
+
+        <CharacterAssessment view={assessmentView} onViewChange={setAssessmentView} />
 
         {error && (
           <p className="mt-6 rounded-lg border border-[color:var(--rule)] p-4 text-sm">{error}</p>
@@ -84,6 +90,15 @@ function StoryGroups({ cards }: { cards: CharacterCard[] }) {
 
   return (
     <>
+      <div className="mt-16 border-t border-[color:var(--rule)] pt-10">
+        <div className="font-mono-cap text-[10px] text-[color:var(--royal)]">Existing interactive stories</div>
+        <h2 className="font-display mt-3 text-3xl">
+          Explore their <em className="italic text-[color:var(--royal)]">situations</em>
+        </h2>
+        <p className="mt-3 max-w-2xl text-[15px] leading-relaxed">
+          The existing stories and personal reflection features remain available below.
+        </p>
+      </div>
       {personalised.length > 0 && (
         <section className="mt-12">
           <h2 className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)]">
@@ -97,18 +112,20 @@ function StoryGroups({ cards }: { cards: CharacterCard[] }) {
         </section>
       )}
 
-      <section className="mt-12">
-        {personalised.length > 0 && (
-          <h2 className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)]">
-            Other stories
-          </h2>
-        )}
-        <div className="mt-5 grid gap-6 md:grid-cols-2">
+      {others.length > 0 && (
+        <section className="mt-12">
+          {personalised.length > 0 && (
+            <h2 className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)]">
+              Other stories
+            </h2>
+          )}
+          <div className="mt-5 grid gap-6 md:grid-cols-2">
           {others.map((c) => (
             <StoryCard key={c.slug} card={c} />
           ))}
-        </div>
-      </section>
+          </div>
+        </section>
+      )}
 
       {cards.map((c) => (
         <div key={c.slug}>

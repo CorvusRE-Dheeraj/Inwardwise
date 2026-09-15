@@ -37,3 +37,8 @@
 - [x] /journey member page, admin content library at /admin/journey-content
 - [ ] Ingest "Health, Part 1 and 2 for Class (Refined)" PDF (file not supplied yet)
 - [ ] Phase 2+: LISTEN, REFLECT, EXPLORE
+
+## Alex & Mary assessment demonstration
+- [x] Add deterministic answers using existing Self questions
+- [x] Add Alex, Mary, and comparison views
+- [x] Preserve and verify existing story flows
