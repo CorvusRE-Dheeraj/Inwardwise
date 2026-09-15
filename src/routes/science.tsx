@@ -66,12 +66,18 @@ function Science() {
   return (
     <AppShell>
       <section className="mx-auto w-[min(1100px,calc(100%-2rem))] pb-24 pt-10 md:pt-16">
-        <div className="max-w-3xl space-y-8 text-[16px] leading-[1.7] text-[color:var(--ink-2)]">
+        <header className="border-b border-[color:var(--rule)] pb-10">
+          <h1 className="font-display text-4xl leading-[1.05] tracking-tight text-[color:var(--ink)] md:text-6xl">
+            Science
+          </h1>
+        </header>
+
+        <div className="mt-10 max-w-3xl space-y-8 text-base leading-relaxed text-[color:var(--ink)]">
           {REFERENCE_GROUPS.map((group) => (
             <div key={group.heading}>
-              <h3 className="font-display text-lg tracking-tight text-[color:var(--royal)]">
+              <h2 className="font-display text-xl tracking-tight text-[color:var(--royal)]">
                 {group.heading}
-              </h3>
+              </h2>
               <ul className="mt-3 list-none space-y-3">
                 {group.entries.map((entry, i) => (
                   <li key={i}>
