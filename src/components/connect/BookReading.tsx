@@ -211,7 +211,7 @@ export function BookReading() {
           </div>
           <div className="mt-5 flex flex-wrap gap-3">
             <button
-              onClick={deliver}
+              onClick={() => deliver()}
               disabled={busy}
               className="inline-flex min-h-10 items-center gap-2 rounded-full border border-[color:var(--ink)] px-5 py-2.5 text-[13px] disabled:opacity-60"
             >
@@ -219,7 +219,7 @@ export function BookReading() {
             </button>
             {current.sendCount > 0 && (
               <button
-                onClick={deliver}
+                onClick={() => deliver()}
                 disabled={busy}
                 className="inline-flex min-h-10 items-center gap-2 rounded-full border border-[color:var(--rule)] px-5 py-2.5 text-[13px] disabled:opacity-60"
               >
