@@ -25,8 +25,7 @@ export const PATHWAYS: PathwayDef[] = [
     id: "book",
     name: "Connect",
     accent: "Book",
-    purpose:
-      "Reading that is relevant to what you described, sent in small pieces, with one follow-up action.",
+    purpose: "Reading that fits what you are living through, in pieces small enough to finish.",
     to: "/connect/book",
     action: "Open Book",
   },
@@ -42,7 +41,7 @@ export const PATHWAYS: PathwayDef[] = [
     id: "membership",
     name: "Connect",
     accent: "Membership",
-    purpose: "Groups and networks you can be part of over time, and how to join them.",
+    purpose: "Somewhere to return to, with moderated groups working through something similar.",
     to: "/connect/membership",
     action: "See Groups",
   },

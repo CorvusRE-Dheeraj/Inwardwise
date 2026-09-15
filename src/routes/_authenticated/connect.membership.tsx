@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
-import { Users } from "lucide-react";
+import { ArrowRight, Users } from "lucide-react";
 import { PathwayShell, PathwayCard, PathwaySection } from "@/components/connect/PathwayShell";
 import { PathwayPrompt, type PathwayAnalysis } from "@/components/connect/PathwayPrompt";
 import { joinConnectGroupWaitlist } from "@/lib/connect.functions";
@@ -110,6 +110,15 @@ function MembershipPathway() {
         <PathwayPrompt
           placeholder="Describe what you would like to work through with others…"
           cta="Find me a group"
+          secondaryAction={
+            <Link
+              to="/areas/$slug"
+              params={{ slug: "special-interest-groups" }}
+              className="inline-flex min-h-11 items-center gap-2 rounded-full border border-[color:var(--ink)] px-6 py-3 text-sm transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)]"
+            >
+              Find out more <ArrowRight className="h-4 w-4" />
+            </Link>
+          }
         >
           {(r) => <Groups result={r} />}
         </PathwayPrompt>
