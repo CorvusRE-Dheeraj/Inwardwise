@@ -12,17 +12,7 @@ const visible = PATHWAYS.filter((p) => VISIBLE_PATHWAYS.includes(p.id));
 export function ConnectPathways() {
   return (
     <section className="mx-auto mt-14 w-[min(1100px,calc(100%-2rem))] pb-16">
-      <div className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)]">
-        Connect AI · pathways
-      </div>
-      <h2 className="font-display mt-3 text-2xl sm:text-3xl">
-        One prompt, <em className="italic text-[color:var(--royal)]">one best next step</em>
-      </h2>
-      <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-[color:var(--muted-foreground)]">
-        You do not have to choose first. Write what is going on and Connect AI decides which of these
-        is most relevant right now, says why, and gives you the first useful thing along with one clear
-        follow-up. The options stay listed here so you can also go straight to one yourself.
-      </p>
+
 
       <div className="mt-12 grid gap-x-12 gap-y-14 sm:grid-cols-2">
         {visible.map((p, i) => (
