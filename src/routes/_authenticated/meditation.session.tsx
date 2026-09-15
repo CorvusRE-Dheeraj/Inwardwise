@@ -66,6 +66,7 @@ function CalmSession() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const runIdRef = useRef(0);
+  const skipResolveRef = useRef<(() => void) | null>(null);
 
   useEffect(() => {
     if (vault.status !== "unlocked" || !vault.key || !vault.profile) return;
@@ -116,6 +117,7 @@ function CalmSession() {
       clearInterval(timerRef.current);
       timerRef.current = null;
     }
+    skipResolveRef.current?.();
     const audio = audioRef.current;
     if (audio) {
       audio.pause();
@@ -152,10 +154,15 @@ function CalmSession() {
       new Promise<void>((resolve) => {
         setRemaining(PAUSE_SECONDS);
         let left = PAUSE_SECONDS;
+        skipResolveRef.current = () => {
+          skipResolveRef.current = null;
+          resolve();
+        };
         timerRef.current = setInterval(() => {
           if (runId !== runIdRef.current) {
             if (timerRef.current) clearInterval(timerRef.current);
             timerRef.current = null;
+            skipResolveRef.current = null;
             resolve();
             return;
           }
@@ -164,6 +171,7 @@ function CalmSession() {
           if (left <= 0) {
             if (timerRef.current) clearInterval(timerRef.current);
             timerRef.current = null;
+            skipResolveRef.current = null;
             resolve();
           }
         }, 1000);
@@ -231,6 +239,7 @@ function CalmSession() {
       timerRef.current = null;
     }
     setRemaining(0);
+    skipResolveRef.current?.();
   }
 
   if (vault.status === "loading") return <div className="min-h-[60vh]" />;
