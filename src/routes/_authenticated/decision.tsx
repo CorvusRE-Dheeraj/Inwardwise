@@ -713,7 +713,7 @@ function EmptyIntro({ onPick }: { onPick: (t: string) => void }) {
           <button
             key={s}
             onClick={() => onPick(s)}
-            className="glass rounded-2xl px-4 py-3 text-left text-sm text-foreground/90 transition hover:bg-foreground/5"
+            className="glass rounded-2xl px-4 py-3 text-left text-sm text-foreground transition hover:bg-foreground/5"
           >
             {s}
           </button>

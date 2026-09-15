@@ -23,7 +23,7 @@ export function DecisionIntro({ onStart, resumable, onResume }: DecisionIntroPro
             You've completed {Math.max(0, Math.min(resumable.stage, TOTAL_STAGES) - 1)} of{" "}
             {TOTAL_STAGES} stages. Continue where you left off.
           </p>
-          <p className="mt-1 truncate text-xs text-foreground/80">{resumable.title}</p>
+          <p className="mt-1 truncate text-xs text-foreground">{resumable.title}</p>
           <div className="mt-3 flex flex-wrap gap-2">
             <button
               onClick={() => onResume(resumable)}

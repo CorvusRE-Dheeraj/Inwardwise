@@ -151,7 +151,7 @@ function TestimonialCard({
         <div>
           <div className="text-xs text-muted-foreground">{time}</div>
           <div className="mt-1 font-medium">By {author}</div>
-          <blockquote className="mt-3 text-base leading-relaxed text-foreground/90">
+          <blockquote className="mt-3 text-base leading-relaxed text-foreground">
             “{quote}”
           </blockquote>
         </div>
@@ -196,7 +196,7 @@ function FeedbackCard({ row }: { row: FeedbackRow }) {
           )}
 
           {row.suggestions && (
-            <blockquote className="mt-3 whitespace-pre-wrap text-base leading-relaxed text-foreground/90">
+            <blockquote className="mt-3 whitespace-pre-wrap text-base leading-relaxed text-foreground">
               “{row.suggestions}”
             </blockquote>
           )}

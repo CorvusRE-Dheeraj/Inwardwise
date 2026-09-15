@@ -52,7 +52,7 @@ function SelfAvatarPage() {
     <div>
       <h1 className="font-display text-3xl"><ProductName id="self" /> Design</h1>
 
-      <div className="mt-4 max-w-2xl space-y-4 text-sm leading-relaxed text-foreground/80">
+      <div className="mt-4 max-w-2xl space-y-4 text-sm leading-relaxed text-foreground">
         <p>
           Your inner <ProductName id="self" /> is a unique representation of you psychologically. But it&apos;s built from first
           principles that shaped you and will shape you based on future actions. Our unique approach does

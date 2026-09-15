@@ -204,7 +204,7 @@ function ConsultAvatar() {
                 <li key={s}>
                   <button
                     onClick={() => setInput(s)}
-                    className="text-left text-foreground/80 hover:text-royal"
+                    className="text-left text-foreground hover:text-royal"
                   >
                     → {s}
                   </button>
