@@ -152,6 +152,10 @@ function CalmSession() {
       new Promise<void>((resolve) => {
         setRemaining(PAUSE_SECONDS);
         let left = PAUSE_SECONDS;
+        skipResolveRef.current = () => {
+          skipResolveRef.current = null;
+          resolve();
+        };
         timerRef.current = setInterval(() => {
           if (runId !== runIdRef.current) {
             if (timerRef.current) clearInterval(timerRef.current);
