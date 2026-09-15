@@ -1,6 +1,10 @@
 import { Link } from "@tanstack/react-router";
 import { PATHWAYS } from "@/lib/connect-pathways";
 
+/** Pathways currently offered on the Connect page. */
+const VISIBLE_PATHWAYS = ["book", "membership"];
+const visible = PATHWAYS.filter((p) => VISIBLE_PATHWAYS.includes(p.id));
+
 /**
  * The Connect AI pathway map. Connect AI reads a prompt and chooses one of these
  * routes; the list stays visible so anyone can see the options or go direct.
@@ -21,7 +25,7 @@ export function ConnectPathways() {
       </p>
 
       <div className="mt-12 grid gap-x-12 gap-y-14 sm:grid-cols-2">
-        {PATHWAYS.map((p, i) => (
+        {visible.map((p, i) => (
           <div key={p.accent} className="border-t border-[color:var(--rule)] pt-6">
             <div className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)]">
               {String(i + 1).padStart(2, "0")} · InwardWise {p.accent}

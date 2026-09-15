@@ -4,6 +4,9 @@ import { useServerFn } from "@tanstack/react-start";
 import { ArrowRight, Mic, Square } from "lucide-react";
 import { suggestConnectPathway } from "@/lib/connect-suggest.functions";
 import { pathwayById } from "@/lib/connect-pathways";
+
+/** Pathways offered on the Connect page; other suggestions fall back to Membership. */
+const VISIBLE_PATHWAYS = ["book", "membership"];
 import { startRecording, transcribe, type Recorder } from "@/lib/voice";
 import { CrisisNotice } from "@/components/CrisisNotice";
 import { detectCrisis } from "@/lib/crisis-detect";
@@ -69,7 +72,13 @@ export function ConnectAiSuggest() {
     }
   }
 
-  const pathway = result ? pathwayById(result.pathwayId) : null;
+  const rawPathway = result ? pathwayById(result.pathwayId) : null;
+  const pathway =
+    rawPathway && VISIBLE_PATHWAYS.includes(rawPathway.id)
+      ? rawPathway
+      : result
+        ? pathwayById("membership")
+        : null;
 
   return (
     <section className="mx-auto mt-12 w-[min(1100px,calc(100%-2rem))]">
