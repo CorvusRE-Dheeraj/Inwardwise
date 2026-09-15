@@ -29,6 +29,18 @@ export type MeditationSettings = {
   last_call_at: string | null;
 };
 
+export type MeditationCallLog = {
+  id: string;
+  scheduled_at: string | null;
+  duration_minutes: number;
+  attempt_number: number;
+  status: string;
+  failure_reason: string | null;
+  placed_at: string | null;
+  completed_at: string | null;
+  created_at: string;
+};
+
 export const getMeditationSettings = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
@@ -40,6 +52,21 @@ export const getMeditationSettings = createServerFn({ method: "POST" })
       .eq("user_id", context.userId)
       .maybeSingle();
     return { settings: (data as MeditationSettings | null) ?? null };
+  });
+
+export const getMeditationCallLogs = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }) => {
+    const { data, error } = await context.supabase
+      .from("meditation_call_logs")
+      .select(
+        "id, scheduled_at, duration_minutes, attempt_number, status, failure_reason, placed_at, completed_at, created_at",
+      )
+      .eq("user_id", context.userId)
+      .order("created_at", { ascending: false })
+      .limit(20);
+    if (error) throw new Error(error.message);
+    return { logs: (data as MeditationCallLog[] | null) ?? [] };
   });
 
 export const saveMeditationSettings = createServerFn({ method: "POST" })

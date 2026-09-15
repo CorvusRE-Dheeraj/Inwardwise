@@ -86,11 +86,29 @@ async function dispatch(request: Request) {
               last_error: "The call was not answered. Reschedule when you can pick up.",
             })
             .eq("id", row.id);
+          await supabaseAdmin
+            .from("meditation_call_logs")
+            .update({
+              status: "unanswered",
+              failure_reason: "The call was not answered.",
+              completed_at: new Date().toISOString(),
+            })
+            .eq("provider_call_id", row.provider_call_id)
+            .eq("status", "calling");
         } else {
           await supabaseAdmin
             .from("meditation_settings")
             .update({ status: "sent", last_error: null })
             .eq("id", row.id);
+          await supabaseAdmin
+            .from("meditation_call_logs")
+            .update({
+              status: "completed",
+              failure_reason: null,
+              completed_at: new Date().toISOString(),
+            })
+            .eq("provider_call_id", row.provider_call_id)
+            .eq("status", "calling");
         }
       } catch (err) {
         console.error("[meditation] status poll error", err);
@@ -127,6 +145,22 @@ async function dispatch(request: Request) {
     if (claimError) console.error("[meditation] claim error", claimError);
     if (!claimed) continue;
 
+    const attemptNumber = (row.call_attempts ?? 0) + 1;
+    const { data: callLog, error: logError } = await supabaseAdmin
+      .from("meditation_call_logs")
+      .insert({
+        user_id: row.user_id,
+        meditation_setting_id: row.id,
+        phone_number: row.phone_number,
+        scheduled_at: row.scheduled_at,
+        duration_minutes: row.duration_minutes ?? 10,
+        attempt_number: attemptNumber,
+        status: "queued",
+      })
+      .select("id")
+      .single();
+    if (logError) console.error("[meditation] call log error", logError);
+
 
     // Voice off, or no number: nothing to call, just close the schedule out.
     if (!row.voice_enabled || !row.phone_number) {
@@ -134,6 +168,12 @@ async function dispatch(request: Request) {
         .from("meditation_settings")
         .update({ status: "cancelled", last_call_at: new Date().toISOString() })
         .eq("id", row.id);
+      if (callLog) {
+        await supabaseAdmin
+          .from("meditation_call_logs")
+          .update({ status: "cancelled", completed_at: new Date().toISOString() })
+          .eq("id", callLog.id);
+      }
       results.push({ id: row.id, status: "cancelled" });
       continue;
     }
@@ -143,6 +183,16 @@ async function dispatch(request: Request) {
         .from("meditation_settings")
         .update({ status: "failed", last_error: "Calling is not configured." })
         .eq("id", row.id);
+      if (callLog) {
+        await supabaseAdmin
+          .from("meditation_call_logs")
+          .update({
+            status: "failed",
+            failure_reason: "Calling is not configured.",
+            completed_at: new Date().toISOString(),
+          })
+          .eq("id", callLog.id);
+      }
       results.push({ id: row.id, status: "failed" });
       continue;
     }
@@ -209,6 +259,16 @@ async function dispatch(request: Request) {
               last_error: CAPACITY_RETRY_MESSAGE,
             })
             .eq("id", row.id);
+          if (callLog) {
+            await supabaseAdmin
+              .from("meditation_call_logs")
+              .update({
+                status: "requeued",
+                failure_reason: CAPACITY_RETRY_MESSAGE,
+                completed_at: new Date().toISOString(),
+              })
+              .eq("id", callLog.id);
+          }
           results.push({ id: row.id, status: "requeued" });
           continue;
         }
@@ -230,6 +290,16 @@ async function dispatch(request: Request) {
             last_call_at: new Date().toISOString(),
           })
           .eq("id", row.id);
+        if (callLog) {
+          await supabaseAdmin
+            .from("meditation_call_logs")
+            .update({
+              status: "failed",
+              failure_reason: detail.slice(0, 300),
+              completed_at: new Date().toISOString(),
+            })
+            .eq("id", callLog.id);
+        }
         results.push({ id: row.id, status: "failed" });
         continue;
       }
@@ -243,11 +313,22 @@ async function dispatch(request: Request) {
         .update({
           status: placed?.id ? "calling" : "sent",
           provider_call_id: placed?.id ?? null,
-          call_attempts: (row.call_attempts ?? 0) + 1,
+          call_attempts: attemptNumber,
           last_error: null,
           last_call_at: new Date().toISOString(),
         })
         .eq("id", row.id);
+      if (callLog) {
+        await supabaseAdmin
+          .from("meditation_call_logs")
+          .update({
+            status: placed?.id ? "calling" : "completed",
+            provider_call_id: placed?.id ?? null,
+            placed_at: new Date().toISOString(),
+            completed_at: placed?.id ? null : new Date().toISOString(),
+          })
+          .eq("id", callLog.id);
+      }
       results.push({ id: row.id, status: placed?.id ? "calling" : "sent" });
     } catch (err) {
       console.error("[meditation] dispatch error", err);
@@ -255,6 +336,16 @@ async function dispatch(request: Request) {
         .from("meditation_settings")
         .update({ status: "failed", last_error: "Call could not be placed." })
         .eq("id", row.id);
+      if (callLog) {
+        await supabaseAdmin
+          .from("meditation_call_logs")
+          .update({
+            status: "failed",
+            failure_reason: "Call could not be placed.",
+            completed_at: new Date().toISOString(),
+          })
+          .eq("id", callLog.id);
+      }
       results.push({ id: row.id, status: "failed" });
     }
   }
