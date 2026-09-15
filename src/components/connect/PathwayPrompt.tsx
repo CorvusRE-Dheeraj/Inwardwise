@@ -17,10 +17,12 @@ export type PathwayAnalysis = Awaited<ReturnType<typeof analyzeConnectPrompt>>;
 export function PathwayPrompt({
   placeholder,
   cta,
+  secondaryAction,
   children,
 }: {
   placeholder: string;
   cta: string;
+  secondaryAction?: React.ReactNode;
   children: (result: PathwayAnalysis) => React.ReactNode;
 }) {
   const analyze = useServerFn(analyzeConnectPrompt);
@@ -64,13 +66,16 @@ export function PathwayPrompt({
           className="mt-4 w-full resize-y rounded-md border border-[color:var(--rule)] bg-transparent px-4 py-3 text-[15px] leading-relaxed focus:outline-none focus:ring-2 focus:ring-[color:var(--royal)]/30"
         />
         {error && <p className="mt-3 text-sm text-destructive">{error}</p>}
-        <button
-          onClick={submit}
-          disabled={busy}
-          className="mt-5 inline-flex items-center gap-2 rounded-full bg-[color:var(--ink)] px-6 py-3 text-sm text-[color:var(--paper)] disabled:opacity-60"
-        >
-          {busy ? "Working…" : cta} <ArrowRight className="h-4 w-4" />
-        </button>
+        <div className="mt-5 flex flex-wrap items-center gap-3">
+          <button
+            onClick={submit}
+            disabled={busy}
+            className="inline-flex min-h-11 items-center gap-2 rounded-full bg-[color:var(--ink)] px-6 py-3 text-sm text-[color:var(--paper)] disabled:opacity-60"
+          >
+            {busy ? "Working…" : cta} <ArrowRight className="h-4 w-4" />
+          </button>
+          {secondaryAction}
+        </div>
       </div>
 
       <CrisisNotice categories={crisis} />

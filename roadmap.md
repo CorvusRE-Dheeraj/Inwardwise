@@ -1,6 +1,7 @@
 # InwardWise redesign roadmap (prompt_2.docx)
 
 ## Done
+- Connect correction document applied: retained the established site design, kept only Book and Membership, and added Membership's Services/Special Interest Groups action.
 - Shared content config `src/lib/products.ts` (names, taglines, routes, CTAs, OOOI stages, disclaimer).
 - Products dropdown shows only Decision / Self / Connect, anchored to `/products`.
 - `/products` overview: exactly three equal cards.
