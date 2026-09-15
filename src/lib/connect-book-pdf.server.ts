@@ -41,7 +41,7 @@ export async function buildSectionPdf(opts: {
 }): Promise<Uint8Array> {
   const doc = await PDFDocument.create();
   const body = await doc.embedFont(StandardFonts.TimesRoman);
-  const display = await doc.embedFont(StandardFonts.TimesBold);
+  const display = await doc.embedFont(StandardFonts.TimesRomanBold);
   const mono = await doc.embedFont(StandardFonts.Helvetica);
 
   const ink = rgb(0.07, 0.07, 0.07);
