@@ -78,7 +78,7 @@ function Science() {
               <h2 className="font-display text-xl tracking-tight text-[color:var(--royal)]">
                 {group.heading}
               </h2>
-              <ul className="mt-3 list-none space-y-3">
+              <ul className="mt-3 list-disc space-y-3 pl-5">
                 {group.entries.map((entry, i) => (
                   <li key={i}>
                     <ProductText>{entry}</ProductText>
