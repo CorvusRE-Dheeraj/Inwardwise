@@ -92,6 +92,28 @@ export function BookReading() {
 
   return (
     <div className="space-y-8">
+      <div className="rounded-lg border border-[color:var(--rule)] p-6 sm:p-8">
+        <div className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)]">
+          Prompt below what is going on, and a matched section is opened for you
+        </div>
+        <textarea
+          value={prompt}
+          onChange={(e) => setPrompt(e.target.value)}
+          rows={5}
+          placeholder="Write what is going on for you, in your own words…"
+          className={`mt-4 resize-y ${field}`}
+        />
+        {error && <p className="mt-3 text-sm text-destructive">{error}</p>}
+        <button
+          onClick={findSection}
+          disabled={busy}
+          className="mt-5 inline-flex min-h-11 items-center gap-2 rounded-full bg-[color:var(--ink)] px-6 py-3 text-sm text-[color:var(--paper)] disabled:opacity-60"
+        >
+          {busy ? "Matching…" : "Find my section"} <ArrowRight className="h-4 w-4" />
+        </button>
+        {note && <p className="mt-4 text-[13px] text-[color:var(--royal)]">{note}</p>}
+      </div>
+
       <div className="grid gap-8 sm:grid-cols-[minmax(0,220px)_1fr] sm:items-start">
         <img
           src={coverAsset}
@@ -116,28 +138,6 @@ export function BookReading() {
             the one you have, and anything left unread is sent to you again.
           </p>
         </div>
-      </div>
-
-      <div className="rounded-lg border border-[color:var(--rule)] p-6 sm:p-8">
-        <div className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)]">
-          Prompt below what is going on, and a matched section is opened for you
-        </div>
-        <textarea
-          value={prompt}
-          onChange={(e) => setPrompt(e.target.value)}
-          rows={5}
-          placeholder="Write what is going on for you, in your own words…"
-          className={`mt-4 resize-y ${field}`}
-        />
-        {error && <p className="mt-3 text-sm text-destructive">{error}</p>}
-        <button
-          onClick={findSection}
-          disabled={busy}
-          className="mt-5 inline-flex min-h-11 items-center gap-2 rounded-full bg-[color:var(--ink)] px-6 py-3 text-sm text-[color:var(--paper)] disabled:opacity-60"
-        >
-          {busy ? "Matching…" : "Find my section"} <ArrowRight className="h-4 w-4" />
-        </button>
-        {note && <p className="mt-4 text-[13px] text-[color:var(--royal)]">{note}</p>}
       </div>
 
       {current && (
