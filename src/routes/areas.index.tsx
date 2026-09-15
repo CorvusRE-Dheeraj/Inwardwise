@@ -5,22 +5,6 @@ import { ProductText } from "@/components/products/ProductChrome";
 
 export const Route = createFileRoute("/areas/")({
   component: AreasIndex,
-  head: () => ({
-    meta: [
-      { title: "Services | InwardWise" },
-      {
-        name: "description",
-        content: "Explore InwardWise services for individual and corporate decisions, wellbeing, relationships and development.",
-      },
-      { property: "og:title", content: "Services | InwardWise" },
-      {
-        property: "og:description",
-        content: "Explore InwardWise services for individual and corporate decisions, wellbeing, relationships and development.",
-      },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-    ],
-  }),
 });
 
 const ORDER: Record<string, number> = {
