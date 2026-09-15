@@ -13,7 +13,9 @@ import { buildMeditationPrompt, parseMeditationLines } from "@/lib/meditation-pr
 import { toast } from "sonner";
 import {
   getMeditationSettings,
+  getMeditationCallLogs,
   saveMeditationSettings,
+  type MeditationCallLog,
   type MeditationSettings,
 } from "@/lib/meditation-settings.functions";
 import { sendMeditationText } from "@/lib/meditation-sms.functions";
@@ -61,6 +63,7 @@ function MeditationSchedule() {
   const chatFn = useServerFn(chatWithAvatar);
   const saveSettingsFn = useServerFn(saveMeditationSettings);
   const statusFn = useServerFn(getMeditationSettings);
+  const callLogsFn = useServerFn(getMeditationCallLogs);
   const sendTextFn = useServerFn(sendMeditationText);
 
   const vault = useAvatarVault();
@@ -77,6 +80,7 @@ function MeditationSchedule() {
   const [saving, setSaving] = useState(false);
   const [texting, setTexting] = useState(false);
   const [callStatus, setCallStatus] = useState<MeditationSettings | null>(null);
+  const [callLogs, setCallLogs] = useState<MeditationCallLog[]>([]);
   const [lines, setLines] = useState<PrayerLine[] | null>(null);
   const hydratedRef = useRef(false);
 
@@ -129,8 +133,11 @@ function MeditationSchedule() {
   useEffect(() => {
     if (vault.status !== "unlocked") return;
     let cancelled = false;
-    void statusFn({}).then(({ settings }) => {
-      if (!cancelled) setCallStatus(settings);
+    void Promise.all([statusFn({}), callLogsFn({})]).then(([{ settings }, { logs }]) => {
+      if (!cancelled) {
+        setCallStatus(settings);
+        setCallLogs(logs);
+      }
     });
     return () => {
       cancelled = true;
@@ -249,6 +256,8 @@ function MeditationSchedule() {
       toast.success(note);
       const { settings } = await statusFn({});
       setCallStatus(settings);
+      const { logs } = await callLogsFn({});
+      setCallLogs(logs);
     } catch (e) {
       const msg = e instanceof Error ? e.message : "Could not save your settings.";
       setSavedNote(msg);
@@ -449,6 +458,59 @@ function MeditationSchedule() {
                   ? `Last call did not go through. ${callStatus.last_error ?? ""}`
                   : "No call scheduled."}
           </p>
+        )}
+      </section>
+
+      <section className="mt-10 border-t border-[color:var(--rule)] pt-8">
+        <div className="flex items-end justify-between gap-4">
+          <div>
+            <div className="font-mono-cap text-[color:var(--royal)]">Self-Calm call history</div>
+            <h2 className="font-display mt-2 text-2xl">Your recent calls</h2>
+          </div>
+          <button
+            type="button"
+            onClick={() => void callLogsFn({}).then(({ logs }) => setCallLogs(logs))}
+            className="text-sm text-[color:var(--royal)] underline underline-offset-4"
+          >
+            Refresh
+          </button>
+        </div>
+        {callLogs.length === 0 ? (
+          <p className="mt-5 text-sm">No Self-Calm calls have been attempted yet.</p>
+        ) : (
+          <div className="mt-5 divide-y divide-[color:var(--rule)] border-y border-[color:var(--rule)]">
+            {callLogs.map((log) => {
+              const happenedAt = log.placed_at ?? log.scheduled_at ?? log.created_at;
+              const labels: Record<string, string> = {
+                queued: "Queued",
+                calling: "Calling now",
+                completed: "Completed",
+                unanswered: "Not answered",
+                cancelled: "Cancelled",
+                requeued: "Waiting to retry",
+                failed: "Failed",
+              };
+              return (
+                <div key={log.id} className="grid gap-2 py-4 sm:grid-cols-[1fr_auto] sm:items-start">
+                  <div>
+                    <div className="font-medium">{labels[log.status] ?? log.status}</div>
+                    <div className="mt-1 text-sm">
+                      {new Date(happenedAt).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" })}
+                      {` · ${log.duration_minutes} minutes · Attempt ${log.attempt_number}`}
+                    </div>
+                    {log.failure_reason && (
+                      <p className="mt-1 text-sm text-[color:var(--royal)]">{log.failure_reason}</p>
+                    )}
+                  </div>
+                  {log.completed_at && (
+                    <div className="text-xs text-[color:var(--royal)]">
+                      Updated {new Date(log.completed_at).toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit" })}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
         )}
       </section>
 
