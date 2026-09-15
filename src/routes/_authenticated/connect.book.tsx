@@ -32,7 +32,7 @@ function BookPathway() {
         </>
       }
       tagline="Reading that fits what you are living through."
-      intro="Book excerpts are made available based on your prompt. These days the habit of reading a purchased book is dwindling, so instead sections are made available to you in bite size, to read and finish before you receive the next one. Write below what is going on, and a matched section opens on its own screen where you can read, save or print it, or have it sent to you by phone or email."
+      intro="Book excerpts are made available based on your prompt. These days the habit of reading a purchased book is dwindling, so instead sections are made available to you in bite size, to read and finish before you receive the next one."
     >
       <PathwaySection>
         <BookReading />
