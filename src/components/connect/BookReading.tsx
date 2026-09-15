@@ -120,7 +120,7 @@ export function BookReading() {
 
       <div className="rounded-lg border border-[color:var(--rule)] p-6 sm:p-8">
         <div className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)]">
-          Write what is going on
+          Prompt below what is going on, and a matched section is opened for you
         </div>
         <textarea
           value={prompt}
