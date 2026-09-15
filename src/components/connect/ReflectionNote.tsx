@@ -83,12 +83,12 @@ export function ReflectionNote({ readId }: { readId?: string }) {
         § 00 · Connect Only
       </div>
       <h2 className="font-display mt-3 text-2xl sm:text-3xl">
-        Write or record <em className="italic text-[color:var(--royal)]">something</em>
+        Writing something or saying <em className="italic text-[color:var(--royal)]">something</em>
       </h2>
       <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-[color:var(--muted-foreground)]">
-        Do you want to write or record something based on what happened, or based on what you have
-        just read? You can use it later to reflect on it. It stays private to you, kept alongside
-        which section was sent to you and when you read it.
+        Do you want to write something or say something instead, based on what happened, or based on
+        what you have just read? You can use it later to reflect on it. It stays private to you,
+        kept alongside which section was sent to you and when you read it.
       </p>
 
       <textarea
