@@ -73,7 +73,7 @@ export function JourneyProgress({
                 </span>
                 <span
                   className={`text-xs ${
-                    active ? "font-medium text-foreground" : "text-foreground/70"
+                    active ? "font-medium text-foreground" : "text-foreground"
                   }`}
                 >
                   Step {s.n}

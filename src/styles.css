@@ -50,7 +50,7 @@
   --paper: #FAFAF7;              /* warm off-white */
   --paper-2: #F3F2EC;            /* deeper paper */
   --ink: #14171A;                /* deep charcoal */
-  --ink-2: #2A2E33;
+  --ink-2: var(--ink);
   --royal: #1E3A8A;              /* royal blue */
   --royal-soft: #3B5BDB;
   --gold: #C8A15A;               /* soft gold */
@@ -68,7 +68,7 @@
   --secondary: var(--paper-2);
   --secondary-foreground: var(--ink);
   --muted: var(--paper-2);
-  --muted-foreground: #6B6A63;
+  --muted-foreground: var(--ink);
   --accent: var(--royal);
   --accent-foreground: #FFFFFF;
   --destructive: #B23A2E;
@@ -93,7 +93,7 @@
   --secondary: var(--paper-2);
   --secondary-foreground: var(--ink);
   --muted: var(--paper-2);
-  --muted-foreground: #6B6A63;
+  --muted-foreground: var(--ink);
   --accent: var(--royal);
   --accent-foreground: #FFFFFF;
   --border: var(--rule);
