@@ -117,6 +117,7 @@ function CalmSession() {
       clearInterval(timerRef.current);
       timerRef.current = null;
     }
+    skipResolveRef.current?.();
     const audio = audioRef.current;
     if (audio) {
       audio.pause();
