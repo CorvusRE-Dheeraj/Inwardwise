@@ -161,6 +161,7 @@ function CalmSession() {
           if (runId !== runIdRef.current) {
             if (timerRef.current) clearInterval(timerRef.current);
             timerRef.current = null;
+            skipResolveRef.current = null;
             resolve();
             return;
           }
@@ -169,6 +170,7 @@ function CalmSession() {
           if (left <= 0) {
             if (timerRef.current) clearInterval(timerRef.current);
             timerRef.current = null;
+            skipResolveRef.current = null;
             resolve();
           }
         }, 1000);
@@ -236,6 +238,7 @@ function CalmSession() {
       timerRef.current = null;
     }
     setRemaining(0);
+    skipResolveRef.current?.();
   }
 
   if (vault.status === "loading") return <div className="min-h-[60vh]" />;
