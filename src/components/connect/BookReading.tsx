@@ -73,15 +73,16 @@ export function BookReading() {
     }
   }
 
-  async function deliver() {
-    if (!current) return;
+  async function deliver(readId?: string) {
+    const id = readId ?? current?.id;
+    if (!id) return;
     setBusy(true);
     setError(null);
     try {
       const res = await send({
-        data: { readId: current.id, contactEmail: email.trim(), phoneNumber: phone.trim() },
+        data: { readId: id, contactEmail: email.trim(), phoneNumber: phone.trim() },
       });
-      if (res.read) setCurrent(res.read);
+      if (res.read && res.read.id === current?.id) setCurrent(res.read);
       setNote(res.note);
       await refresh();
     } catch (e) {
@@ -244,23 +245,40 @@ export function BookReading() {
             What has been sent, and what you have read
           </div>
           <p className="mt-3 text-[14px] leading-relaxed text-[color:var(--muted-foreground)]">
-            A section counts as read only when you confirm it on its own screen. Anything left
-            unread can be sent to you again, and no new section is matched over the top of it.
+            A section counts as read only when you confirm it on its own screen with "I have read
+            this". Until you do, it stays open here, no new section is matched over the top of it,
+            and you can have the very same section sent to you again with "Send this again" — it
+            goes to the email or phone number above.
           </p>
           <ul className="mt-5 divide-y divide-[color:var(--rule)]">
             {history.map((r) => (
               <li key={r.id} className="flex flex-wrap items-center justify-between gap-3 py-3">
                 <span className="text-[14px]">{r.sectionTitle}</span>
-                <span className="inline-flex items-center gap-2 text-[12px] text-[color:var(--muted-foreground)]">
+                <span className="inline-flex flex-wrap items-center gap-3 text-[12px] text-[color:var(--muted-foreground)]">
                   {r.readAt ? (
-                    <>
+                    <span className="inline-flex items-center gap-1.5">
                       <CheckCircle2 className="h-3 w-3" /> read{" "}
                       {new Date(r.readAt).toLocaleDateString()}
-                    </>
-                  ) : r.openedAt ? (
-                    "opened, not confirmed"
+                    </span>
                   ) : (
-                    "not opened yet"
+                    <>
+                      <span>{r.openedAt ? "opened, not confirmed as read" : "not opened yet"}</span>
+                      <a
+                        href={`/connect/reading/${r.id}`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="rounded-full border border-[color:var(--rule)] px-3 py-1 text-[color:var(--ink)]"
+                      >
+                        Open it
+                      </a>
+                      <button
+                        onClick={() => deliver(r.id)}
+                        disabled={busy}
+                        className="inline-flex items-center gap-1.5 rounded-full border border-[color:var(--ink)] px-3 py-1 text-[color:var(--ink)] disabled:opacity-60"
+                      >
+                        <RotateCw className="h-3 w-3" /> Send this again
+                      </button>
+                    </>
                   )}
                 </span>
               </li>
@@ -268,7 +286,7 @@ export function BookReading() {
           </ul>
           {unread.length > 0 && (
             <p className="mt-4 text-[13px] text-[color:var(--royal)]">
-              {unread.length} section{unread.length === 1 ? "" : "s"} still waiting for you.
+              {unread.length} section{unread.length === 1 ? "" : "s"} still waiting to be read.
             </p>
           )}
         </div>
