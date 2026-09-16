@@ -163,7 +163,7 @@ function MeditationSchedule() {
   const normalizedPhone = phone.replace(/[\s()-]/g, "").trim();
   const phoneError =
     normalizedPhone.length > 0 && !/^\+[1-9]\d{7,14}$/.test(normalizedPhone)
-      ? "Use the international format, e.g. +14155550123."
+      ? "Use the international format, e.g. +44 7700 900123."
       : null;
   const scheduleError =
     scheduledAt && new Date(scheduledAt).getTime() <= Date.now()
@@ -384,7 +384,7 @@ function MeditationSchedule() {
               type="tel"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
-              placeholder="+1 555 000 0000"
+              placeholder="+44 7700 900123"
               className="rounded-md border border-[color:var(--rule)] bg-white px-3 py-2 text-sm"
             />
             <span

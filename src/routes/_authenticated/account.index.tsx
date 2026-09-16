@@ -54,7 +54,7 @@ function PersonalDetailsPage() {
           label="Phone"
           hint="For personal text communication with AI only. No one else will reach out to you."
         >
-          <input value={form.phone} onChange={(e) => update("phone", e.target.value)} className="input" placeholder="+1 555 000 0000" />
+          <input value={form.phone} onChange={(e) => update("phone", e.target.value)} className="input" placeholder="+44 7700 900123" />
         </Field>
         <Field label="Email"><input value={email} disabled className="input opacity-70" /></Field>
 

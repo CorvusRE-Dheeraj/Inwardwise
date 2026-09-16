@@ -204,7 +204,7 @@ export function BookReading() {
               <input
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                placeholder="+14155550123"
+                placeholder="+44 7700 900123"
                 className={field}
               />
             </div>
