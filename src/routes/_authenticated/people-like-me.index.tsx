@@ -3,8 +3,6 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { AppShell } from "@/components/AppShell";
 import { CharacterAvatar } from "@/components/people/CharacterAvatar";
-import { CharacterOutcomes } from "@/components/people/CharacterOutcomes";
-
 import { listPeopleLikeMe, type CharacterCard } from "@/lib/people.functions";
 
 export const Route = createFileRoute("/_authenticated/people-like-me/")({
@@ -46,19 +44,9 @@ function PeopleLikeMePage() {
   return (
     <AppShell>
       <div className="mx-auto w-[min(1100px,calc(100%-2rem))] py-12 md:py-16">
-        <div className="font-mono-cap text-[10px] text-[color:var(--royal)]">
-          My Journey · Illustrative profiles
-        </div>
         <h1 className="font-display mt-3 text-[clamp(2.2rem,6vw,3.6rem)] leading-[1.05] tracking-tight">
           Alex &amp; <em className="italic text-[color:var(--royal)]">Mary</em>
         </h1>
-        <p className="mt-4 max-w-2xl text-lg leading-relaxed">
-          Two fictional people whose situations you can explore, and whose examples show how InwardWise answers them.
-        </p>
-
-        <p className="mt-6 max-w-2xl rounded-lg border border-[color:var(--rule)] bg-[color:var(--royal)]/[0.04] p-4 text-sm leading-relaxed">
-          Alex and Mary are fictional, illustrative characters. They do not represent real users or customer data.
-        </p>
 
         {error && (
           <p className="mt-6 rounded-lg border border-[color:var(--rule)] p-4 text-sm">{error}</p>
@@ -84,14 +72,10 @@ function StoryGroups({ cards }: { cards: CharacterCard[] }) {
 
   return (
     <>
-      <div className="mt-16 border-t border-[color:var(--rule)] pt-10">
-        <div className="font-mono-cap text-[10px] text-[color:var(--royal)]">Existing interactive stories</div>
+      <div className="mt-10 border-t border-[color:var(--rule)] pt-10">
         <h2 className="font-display mt-3 text-3xl">
-          Explore their <em className="italic text-[color:var(--royal)]">situations</em>
+          Use their InwardWise Self to <em className="italic text-[color:var(--royal)]">test drive</em>
         </h2>
-        <p className="mt-3 max-w-2xl text-[15px] leading-relaxed">
-          The existing stories and personal reflection features remain available below.
-        </p>
       </div>
       {personalised.length > 0 && (
         <section className="mt-12">
@@ -121,16 +105,23 @@ function StoryGroups({ cards }: { cards: CharacterCard[] }) {
         </section>
       )}
 
-      {cards.map((c) => (
-        <div key={c.slug}>
-          <CharacterOutcomes slug={c.slug} name={c.name} />
-        </div>
-      ))}
     </>
   );
 }
 
 function StoryCard({ card: c, highlight = false }: { card: CharacterCard; highlight?: boolean }) {
+  const isMary = c.slug === "mary";
+  const isAlex = c.slug === "alex";
+  const testDriveSummary = isMary || isAlex
+    ? `${c.name} has completed ${isMary ? "her" : "his"} InwardWise Self build. ${isMary ? "She" : "He"} represents an average American youth. See how a prompt on ${isMary ? "her" : "his"} behalf feels when exploring InwardWise Self Aware.`
+    : c.scenario?.summary ?? "A story is being prepared for this character.";
+  const hiddenThemes = isMary
+    ? new Set(["Pleasing people"])
+    : isAlex
+      ? new Set(["Rules and order", "Competing priorities"])
+      : new Set<string>();
+  const visibleThemes = c.themes.filter((theme) => !hiddenThemes.has(theme));
+
   return (
     <>
       <article
@@ -174,17 +165,17 @@ function StoryCard({ card: c, highlight = false }: { card: CharacterCard; highli
                   </div>
                 </div>
 
-                <p className="mt-5 flex-1 text-[15px] leading-relaxed text-[color:var(--muted-foreground)]">
-                  {c.scenario?.summary ?? "A story is being prepared for this character."}
+                <p className="mt-5 flex-1 text-[15px] leading-relaxed">
+                  {testDriveSummary}
                 </p>
 
-                {c.themes.length > 0 && (
+                {visibleThemes.length > 0 && (
                   <div className="mt-5">
                     <div className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)]">
                       Themes
                     </div>
                     <div className="mt-2 flex flex-wrap gap-2">
-                      {c.themes.map((t) => (
+                      {visibleThemes.map((t) => (
                         <span
                           key={t}
                           className="rounded-full border border-[color:var(--rule)] px-3 py-1 text-xs text-[color:var(--muted-foreground)]"
@@ -205,6 +196,16 @@ function StoryCard({ card: c, highlight = false }: { card: CharacterCard; highli
                     >
                       Explore {c.name}'s story
                     </Link>
+                    {(isMary || isAlex) && (
+                      <Link
+                        to="/people-like-me/$slug"
+                        params={{ slug: c.slug }}
+                        search={{ mode: "self-aware" }}
+                        className="inline-flex min-h-11 items-center px-2 text-sm text-[color:var(--royal)] underline underline-offset-4"
+                      >
+                        {c.name}&apos;s Self Aware →
+                      </Link>
+                    )}
                     {c.progress && (
                       <span className="text-xs text-[color:var(--muted-foreground)]">
                         {c.progress.status === "completed"

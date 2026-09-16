@@ -43,3 +43,5 @@
 - [x] Add deterministic answers using existing Self questions
 - [x] Add Alex, Mary, and comparison views
 - [x] Preserve and verify existing story flows
+- [x] Apply the red-marked Alex and Mary test-drive copy, remove crossed-out content, and add persona prompts
+- [ ] Add the forthcoming personality dimensions when supplied by the user

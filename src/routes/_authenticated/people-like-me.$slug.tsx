@@ -3,8 +3,7 @@ import { createFileRoute, Link, useParams } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { AppShell } from "@/components/AppShell";
 import { AnimatedCharacter } from "@/components/people/AnimatedCharacter";
-import { CharacterOutcomes } from "@/components/people/CharacterOutcomes";
-import { PersonalityProfile } from "@/components/people/PersonalityProfile";
+import { CharacterPersonaPrompt } from "@/components/people/CharacterPersonaPrompt";
 import {
   getScenario,
   saveScenarioProgress,
@@ -14,6 +13,9 @@ import {
 } from "@/lib/people.functions";
 
 export const Route = createFileRoute("/_authenticated/people-like-me/$slug")({
+  validateSearch: (search: Record<string, unknown>) => ({
+    mode: search.mode === "self-aware" ? ("self-aware" as const) : ("story" as const),
+  }),
   head: () => ({
     meta: [
       { title: "A fictional story | People Like Me | InwardWise" },
@@ -42,6 +44,7 @@ const FAMILIARITY = [
 
 function StoryPage() {
   const { slug } = useParams({ from: "/_authenticated/people-like-me/$slug" });
+  const { mode } = Route.useSearch();
   const load = useServerFn(getScenario);
   const saveProgress = useServerFn(saveScenarioProgress);
   const saveResponse = useServerFn(saveScenarioResponse);
@@ -155,24 +158,36 @@ function StoryPage() {
             <div className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)]">
               Fictional scenario
             </div>
-            <h1 className="font-display mt-1 text-[clamp(1.8rem,5vw,2.8rem)] leading-tight">
-              {detail.scenario.title}
-            </h1>
+            <div className="mt-1 flex flex-wrap items-baseline gap-x-5 gap-y-2">
+              <Link
+                to="/people-like-me/$slug"
+                params={{ slug }}
+                search={{ mode: "story" }}
+                className={`font-display text-[clamp(1.8rem,5vw,2.8rem)] leading-tight ${mode === "story" ? "text-[color:var(--ink)]" : "text-[color:var(--royal)]"}`}
+              >
+                {detail.character.name}&apos;s Story
+              </Link>
+              <Link
+                to="/people-like-me/$slug"
+                params={{ slug }}
+                search={{ mode: "self-aware" }}
+                className={`font-display text-2xl leading-tight ${mode === "self-aware" ? "text-[color:var(--ink)]" : "text-[color:var(--royal)]"}`}
+              >
+                {detail.character.name}&apos;s Self Aware
+              </Link>
+            </div>
           </div>
         </div>
 
-        <p className="mt-5 rounded-lg border border-[color:var(--rule)] bg-[color:var(--royal)]/[0.04] p-4 text-sm leading-relaxed">
-          {detail.character.name} is a fictional character created to help you explore different
-          life situations and perspectives.
-        </p>
-
-        <PersonalityProfile slug={detail.character.slug} name={detail.character.name} />
+        {mode === "self-aware" && (slug === "mary" || slug === "alex") && (
+          <CharacterPersonaPrompt id={slug} />
+        )}
 
         {error && (
           <p className="mt-5 rounded-lg border border-[color:var(--rule)] p-4 text-sm">{error}</p>
         )}
 
-        {!finished && scene && (
+        {mode === "story" && !finished && scene && (
           <section className="mt-8 rounded-2xl border border-[color:var(--rule)] p-6 md:p-8">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div className="font-mono-cap text-[10px] text-[color:var(--royal)]">
@@ -328,7 +343,7 @@ function StoryPage() {
           </section>
         )}
 
-        {finished && (
+        {mode === "story" && finished && (
           <section className="mt-8 rounded-2xl border border-[color:var(--rule)] p-6 md:p-8">
             <div className="font-mono-cap text-[10px] text-[color:var(--royal)]">Reflection</div>
             <h2 className="font-display mt-3 text-2xl leading-tight">
@@ -421,8 +436,6 @@ function StoryPage() {
             </div>
           </section>
         )}
-
-        <CharacterOutcomes slug={detail.character.slug} name={detail.character.name} />
       </div>
     </AppShell>
   );
