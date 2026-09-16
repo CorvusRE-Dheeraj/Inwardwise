@@ -25,39 +25,40 @@ export type Personality = {
 
 export const PERSONALITIES: Record<string, Personality> = {
   alex: {
-    type: "INTP",
-    typeWords: "Introverted · Intuitive · Thinking · Perceiving",
-    typeNote: "A reflective, idea-driven type: curious, independent and slow to act without a deadline.",
+    type: "ISTP",
+    typeWords: "Introverted · Sensing · Thinking · Perceiving",
+    typeNote: "A physical, practical type: learns by doing, keeps feelings private and acts fast under pressure.",
     summary:
-      "A quiet, deeply curious thinker who writes and reflects his way to insight, and needs a deadline to act.",
+      "A driven young athlete who trains his way through everything, hides how smart he is, and lets anger speak for the feelings he was never allowed to show.",
     traits: [
-      "Withdraws from noise and crowds, and keeps a small circle of trusted people.",
-      "Writes and self-reflects to find hidden patterns, then builds tools and ideas from them.",
-      "Integrates widely across science, philosophy and psychology, but procrastinates on physical or open-ended tasks.",
+      "Works through problems with the body first — drills, conditioning, the gym — rather than by talking.",
+      "Grasps math, chemistry and physics quickly, but keeps it quiet so his friends will not call him a nerd.",
+      "Under stress he either blows up or shuts down, then escapes into games, music or a drive to reset.",
     ],
     house: {
-      name: "Ravenclaw",
+      name: "Gryffindor",
       traits: [
-        "Curiosity, originality and truth seeking.",
-        "Values understanding over status, money or power.",
-        "Thinks first and acts once the pattern is clear.",
+        "Courage, competitiveness and loyalty to his group.",
+        "Values earning respect through effort on the field.",
+        "Acts first, reflects afterwards.",
       ],
     },
     background: [
-      "Read widely as a child and ran his own chemistry, physics and astronomy experiments.",
-      "Educated in engineering up to a PhD, with exposure to both eastern and western cultures.",
+      "Grew up in a home where his parents fought until his mother left, and where boys don't cry.",
+      "Starting linebacker as a sophomore and school shot put record holder, chasing a football scholarship to UCSB.",
     ],
-    music: "Wide-ranging, across three languages and both eastern and western traditions",
-    major: "Engineering, with self-taught interests in astronomy, medicine, physics and psychology",
-    politics: "Sceptical of money, status and concentrated power",
+    music: "Loud rap and rock through headphones, mostly to drown out the noise in his head",
+    major: "Aiming at college on a football scholarship, with real strength in math and chemistry",
+    politics: "Not interested; loyalty is to his team and his people, not to sides",
     ocean: [
-      { label: "Openness", level: "High", note: "Endlessly curious and experimental." },
-      { label: "Conscientiousness", level: "Medium", note: "Disciplined in thought, procrastinates on action." },
-      { label: "Extraversion", level: "Low", note: "Needs long stretches of quiet." },
-      { label: "Agreeableness", level: "Medium", note: "Kind to a few, distant from the crowd." },
-      { label: "Neuroticism", level: "Medium", note: "Wary of conflict and pretence." },
+      { label: "Openness", level: "Medium", note: "Curious about science, but shuts it down around his friends." },
+      { label: "Conscientiousness", level: "High", note: "Relentless in training and practice." },
+      { label: "Extraversion", level: "Medium", note: "Always with the boys, rarely open with them." },
+      { label: "Agreeableness", level: "Low", note: "Anger comes out sideways; he pulls away instead of talking." },
+      { label: "Neuroticism", level: "High", note: "Stress builds fast into tension, blowing up or shutting down." },
     ],
   },
+
   mary: {
     type: "ISFJ",
     typeWords: "Introverted · Sensing · Feeling · Judging",
