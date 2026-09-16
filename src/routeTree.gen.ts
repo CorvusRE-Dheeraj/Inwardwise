@@ -25,6 +25,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProductsIndexRouteImport } from './routes/products.index'
 import { Route as AreasIndexRouteImport } from './routes/areas.index'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as ProductsSelfRouteImport } from './routes/products.self'
 import { Route as ProductsDecisionRouteImport } from './routes/products.decision'
 import { Route as ProductsConnectRouteImport } from './routes/products.connect'
@@ -164,6 +165,11 @@ const AreasIndexRoute = AreasIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AreasRoute,
+} as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/admin/',
+  path: '/admin/',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const ProductsSelfRoute = ProductsSelfRouteImport.update({
   id: '/products/self',
@@ -538,6 +544,7 @@ export interface FileRoutesByFullPath {
   '/products/connect': typeof ProductsConnectRoute
   '/products/decision': typeof ProductsDecisionRoute
   '/products/self': typeof ProductsSelfRoute
+  '/admin/': typeof AdminIndexRoute
   '/areas/': typeof AreasIndexRoute
   '/products/': typeof ProductsIndexRoute
   '/account/billing': typeof AuthenticatedAccountBillingRoute
@@ -583,7 +590,7 @@ export interface FileRoutesByTo {
   '/science': typeof ScienceRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/testimonials': typeof TestimonialsRoute
-  '/admin': typeof AuthenticatedAdminRoute
+  '/admin': typeof AdminIndexRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/decision': typeof AuthenticatedDecisionRoute
   '/journey': typeof AuthenticatedJourneyRoute
@@ -692,6 +699,7 @@ export interface FileRoutesById {
   '/products/connect': typeof ProductsConnectRoute
   '/products/decision': typeof ProductsDecisionRoute
   '/products/self': typeof ProductsSelfRoute
+  '/admin/': typeof AdminIndexRoute
   '/areas/': typeof AreasIndexRoute
   '/products/': typeof ProductsIndexRoute
   '/_authenticated/account/billing': typeof AuthenticatedAccountBillingRoute
@@ -771,6 +779,7 @@ export interface FileRouteTypes {
     | '/products/connect'
     | '/products/decision'
     | '/products/self'
+    | '/admin/'
     | '/areas/'
     | '/products/'
     | '/account/billing'
@@ -924,6 +933,7 @@ export interface FileRouteTypes {
     | '/products/connect'
     | '/products/decision'
     | '/products/self'
+    | '/admin/'
     | '/areas/'
     | '/products/'
     | '/_authenticated/account/billing'
@@ -997,6 +1007,7 @@ export interface RootRouteChildren {
   ProductsConnectRoute: typeof ProductsConnectRoute
   ProductsDecisionRoute: typeof ProductsDecisionRoute
   ProductsSelfRoute: typeof ProductsSelfRoute
+  AdminIndexRoute: typeof AdminIndexRoute
   ProductsIndexRoute: typeof ProductsIndexRoute
   ApiPublicAvatarConsultDispatchRoute: typeof ApiPublicAvatarConsultDispatchRoute
   ApiPublicConnectStoryCallWebhookRoute: typeof ApiPublicConnectStoryCallWebhookRoute
@@ -1119,6 +1130,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/areas/'
       preLoaderRoute: typeof AreasIndexRouteImport
       parentRoute: typeof AreasRoute
+    }
+    '/admin/': {
+      id: '/admin/'
+      path: '/admin'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/products/self': {
       id: '/products/self'
@@ -1671,6 +1689,7 @@ const rootRouteChildren: RootRouteChildren = {
   ProductsConnectRoute: ProductsConnectRoute,
   ProductsDecisionRoute: ProductsDecisionRoute,
   ProductsSelfRoute: ProductsSelfRoute,
+  AdminIndexRoute: AdminIndexRoute,
   ProductsIndexRoute: ProductsIndexRoute,
   ApiPublicAvatarConsultDispatchRoute: ApiPublicAvatarConsultDispatchRoute,
   ApiPublicConnectStoryCallWebhookRoute: ApiPublicConnectStoryCallWebhookRoute,
