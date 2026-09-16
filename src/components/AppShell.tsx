@@ -344,6 +344,8 @@ export function AppShell({ children }: { children: ReactNode }) {
               A laboratory for thinking. Removing bias, fear, and ego, one decision at a time.
             </p>
           </div>
+          {user ? (
+            <>
           <div>
             <div className="font-mono-cap mb-3">Explore</div>
             <ul className="space-y-2 text-sm">
@@ -420,6 +422,31 @@ export function AppShell({ children }: { children: ReactNode }) {
               </li>
             </ul>
           </div>
+            </>
+          ) : (
+            <div className="md:col-span-2">
+              <div className="font-mono-cap mb-3">Get started</div>
+              <p className="text-sm text-[color:var(--ink)]">
+                Create an account to open everything InwardWise offers.
+              </p>
+              <div className="mt-4 flex gap-3">
+                <Link
+                  to="/auth"
+                  search={{ mode: "signup" }}
+                  className="rounded-full bg-[color:var(--royal)] px-5 py-2 text-[13px] text-white"
+                >
+                  Sign up
+                </Link>
+                <Link
+                  to="/auth"
+                  search={{ mode: "signin" }}
+                  className="rounded-full border border-[color:var(--rule)] px-5 py-2 text-[13px]"
+                >
+                  Sign in
+                </Link>
+              </div>
+            </div>
+          )}
           <div>
             <div className="font-mono-cap mb-3">Colophon</div>
             <p className="text-sm text-[color:var(--muted-foreground)]">
