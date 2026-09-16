@@ -5,7 +5,10 @@ import { Brain, Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable";
 
-const searchSchema = z.object({ redirect: z.string().optional() });
+const searchSchema = z.object({
+  redirect: z.string().optional(),
+  mode: z.enum(["signin", "signup"]).optional(),
+});
 
 export const Route = createFileRoute("/auth")({
   head: () => ({
