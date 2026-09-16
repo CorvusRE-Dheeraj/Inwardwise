@@ -125,6 +125,9 @@ export function ConnectAiSuggest() {
             )}
           </button>
         </div>
+        <p className="mt-4 text-sm leading-relaxed text-[color:var(--ink)]">
+          Connect AI uses AI and recommends one of the products below
+        </p>
 
         <CrisisNotice categories={crisis} />
 
