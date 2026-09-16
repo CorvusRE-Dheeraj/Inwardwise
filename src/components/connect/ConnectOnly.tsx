@@ -116,7 +116,7 @@ export function ConnectOnly() {
                 <input
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  placeholder="+14155550123"
+                  placeholder="+919876543210"
                   className={field}
                 />
               </div>

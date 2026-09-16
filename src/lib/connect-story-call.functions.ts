@@ -39,7 +39,7 @@ export const scheduleStoryCall = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     const phone = data.phoneNumber.replace(/[\s()-]/g, "");
     if (!E164.test(phone)) {
-      throw new Error("Enter the phone number in international format, e.g. +14155550123.");
+      throw new Error("Enter the phone number with its country code, e.g. +919876543210 for India or +14155550123 for the US.");
     }
     if (new Date(data.scheduledAt).getTime() <= Date.now()) {
       throw new Error("Choose a time in the future.");
