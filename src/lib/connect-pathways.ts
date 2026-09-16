@@ -25,7 +25,8 @@ export const PATHWAYS: PathwayDef[] = [
     id: "book",
     name: "Connect",
     accent: "Book",
-    purpose: "Reading that fits what you are living through, in pieces small enough to finish.",
+    purpose:
+      "AI looks at your prompt and your InwardWise Self, and based on that understanding recommends among various Connect alternatives if reading a book is relevant. If that is the case, it offers sections of the book the Founder wrote based on research for over 5 years at the intersections of psychology, philosophy, medicine and social sciences. But he put on his engineer and physicist hat so it has a unique flair on which the products are based on.",
     to: "/connect/book",
     action: "Open Book",
   },
