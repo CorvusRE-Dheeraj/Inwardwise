@@ -18,6 +18,9 @@ export const Route = createFileRoute("/feedback")({
   component: Feedback,
 });
 
+const FORM_URL =
+  "https://docs.google.com/forms/d/1GosZF-drvOFOjz1FFzFLxH3j0Kw0kiqrt2kEvZT4Kx4/viewform?embedded=true";
+
 function Feedback() {
   return (
     <AppShell>
@@ -25,8 +28,16 @@ function Feedback() {
         <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground">User Feedback</p>
         <h1 className="font-display mt-2 text-4xl md:text-5xl">Share your feedback</h1>
         <p className="mt-3 text-muted-foreground">
-          Our feedback forms are being updated and will be available here soon.
+          Tell us what is working and what is not — your answers help us improve InwardWise.
         </p>
+        <iframe
+          src={FORM_URL}
+          title="InwardWise feedback form"
+          className="mt-8 h-[1200px] w-full rounded-lg border border-[color:var(--rule)] bg-white"
+          loading="lazy"
+        >
+          Loading…
+        </iframe>
       </div>
     </AppShell>
   );
