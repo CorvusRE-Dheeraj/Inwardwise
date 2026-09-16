@@ -145,7 +145,14 @@ function StoryPage() {
   return (
     <AppShell>
       <div className="mx-auto w-[min(900px,calc(100%-2rem))] py-12 md:py-16">
-        <div className="flex items-center gap-4">
+        <Link
+          to="/people-like-me"
+          search={{}}
+          className="inline-flex items-center gap-2 text-sm text-[color:var(--royal)] underline"
+        >
+          &larr; Back to Alex and Mary
+        </Link>
+        <div className="mt-6 flex items-center gap-4">
           <AnimatedCharacter
             avatarKey={detail.character.avatarKey}
             name={detail.character.name}
