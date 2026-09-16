@@ -73,12 +73,11 @@ export function ConnectAiSuggest() {
   }
 
   const rawPathway = result ? pathwayById(result.pathwayId) : null;
-  const pathway =
-    rawPathway && SUGGESTABLE_PATHWAYS.includes(rawPathway.id)
-      ? rawPathway
-      : result
-        ? pathwayById("membership")
-        : null;
+  const suggestable = !!rawPathway && SUGGESTABLE_PATHWAYS.includes(rawPathway.id);
+  const pathway = suggestable ? rawPathway : result ? pathwayById("membership") : null;
+  /** True when the suggested pathway is not open yet and Membership is offered instead. */
+  const substituted = !!result && !suggestable;
+
 
   return (
     <section className="mx-auto mt-12 w-[min(1100px,calc(100%-2rem))]">
