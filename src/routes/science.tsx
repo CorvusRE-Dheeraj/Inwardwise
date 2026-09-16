@@ -36,9 +36,6 @@ function Science() {
 
         <div className="mt-10 max-w-3xl space-y-8 text-base leading-relaxed text-[color:var(--ink)]">
           <div>
-            <h2 className="font-display text-xl tracking-tight text-[color:var(--royal)]">
-              Science
-            </h2>
             <ul className="mt-3 list-disc space-y-3 pl-5">
               <li>
                 <ProductText>
