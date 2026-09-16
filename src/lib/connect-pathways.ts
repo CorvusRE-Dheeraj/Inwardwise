@@ -61,7 +61,7 @@ export const PATHWAYS: PathwayDef[] = [
     name: "Connect",
     accent: "Oneness",
     purpose:
-      "A wider view that places your situation inside a larger picture, with one reflection prompt.",
+      "Oneness is the feeling we all are similar and belong to this universe and have a bigger connection than an insignificant place. We make our small problems very big and forget the bigger wonders of the universe we are part of. This helps maintain our connection to the world and feel happy rather than become miserable.",
     to: "/connect/oneness",
     action: "Widen the View",
   },
