@@ -440,6 +440,15 @@ export const askAboutSection = createServerFn({ method: "POST" })
       if (!res.ok) throw new Error("gateway");
       const json = (await res.json()) as { choices?: Array<{ message?: { content?: string } }> };
       const answer = json.choices?.[0]?.message?.content?.trim() ?? "";
+      const { recordAiExchange } = await import("@/lib/ai-memory.server");
+      void recordAiExchange({
+        surface: "journey_section_question",
+        userId,
+        model: "google/gemini-2.5-flash",
+        prompt: data.question,
+        response: answer,
+        metadata: { sectionTitle: section.title },
+      });
       return {
         completed: false,
         answer: answer || "I could not find that in this section.",
