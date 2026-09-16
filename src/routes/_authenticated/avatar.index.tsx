@@ -163,7 +163,7 @@ function AvatarDashboard() {
                   <input
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    placeholder="+1 555 000 0000"
+                    placeholder="+44 7700 900123"
                     className="w-full rounded-md border border-[color:var(--rule)] bg-transparent px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[color:var(--royal)]/30"
                   />
                 </label>

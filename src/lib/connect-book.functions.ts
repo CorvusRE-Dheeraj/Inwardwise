@@ -160,7 +160,7 @@ export const sendBookSection = createServerFn({ method: "POST" })
     const db = context.supabase as any;
     const phone = (data.phoneNumber ?? "").replace(/[\s()-]/g, "");
     if (phone && !E164.test(phone)) {
-      throw new Error("Enter the phone number in international format, e.g. +14155550123.");
+      throw new Error("Enter the phone number in international format, e.g. +44 7700 900123.");
     }
     if (!data.contactEmail && !phone) {
       throw new Error("Add an email address or a phone number so it can reach you.");
