@@ -175,7 +175,7 @@ function History() {
             be made very quickly, thanks to the speed of AI.
           </p>
           <p>
-            Combining the old wisdom with the new AI tools, I was able to synthesize deep
+            Combining the old with the new AI tools, I was able to synthesize deep
             philosophical approaches into a very simple 7-step process filter that runs on AI. All
             decisions can go through the 7 steps fast to reach critical decisions in any field for
             anyone, which is my goal.
