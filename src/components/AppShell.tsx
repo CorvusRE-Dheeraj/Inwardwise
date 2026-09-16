@@ -188,6 +188,9 @@ export function AppShell({ children }: { children: ReactNode }) {
                 </div>
               )}
             </div>
+            </>
+            )}
+
 
             {topLevelNav.map((item) => {
               const active = isActive(item.to);
