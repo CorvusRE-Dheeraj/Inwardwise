@@ -40,7 +40,7 @@ export function CharacterPersonaPrompt({ id }: { id: DemonstrationCharacterId })
   return (
     <section className="mt-8 border-t border-[color:var(--rule)] pt-8" aria-labelledby="persona-prompt-heading">
       <h2 id="persona-prompt-heading" className="font-display text-2xl leading-tight">
-        Try out {character.name}&apos;s Persona. Find out what their persona reveals.
+        Try out {character.name}&apos;s Persona. Find out what {id === "mary" ? "her" : "his"} persona reveals.
       </h2>
 
       <div className="mt-6 grid gap-6 md:grid-cols-2">
