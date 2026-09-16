@@ -25,37 +25,37 @@ export type Personality = {
 
 export const PERSONALITIES: Record<string, Personality> = {
   alex: {
-    type: "ISTJ",
-    typeWords: "Introverted · Sensing · Thinking · Judging",
-    typeNote: "About 14% of the US male population fall into this type.",
+    type: "INTP",
+    typeWords: "Introverted · Intuitive · Thinking · Perceiving",
+    typeNote: "A reflective, idea-driven type: curious, independent and slow to act without a deadline.",
     summary:
-      "Reliable, consistent and at his best in an organised environment with clear rules.",
+      "A quiet, deeply curious thinker who writes and reflects his way to insight, and needs a deadline to act.",
     traits: [
-      "Reliable and consistent, and responds well to organised environments.",
-      "Works best when rules are enforced, and takes responsibility easily.",
-      "Analytical, and a stickler for the rules and the details.",
+      "Withdraws from noise and crowds, and keeps a small circle of trusted people.",
+      "Writes and self-reflects to find hidden patterns, then builds tools and ideas from them.",
+      "Integrates widely across science, philosophy and psychology, but procrastinates on physical or open-ended tasks.",
     ],
     house: {
-      name: "Slytherin",
+      name: "Ravenclaw",
       traits: [
-        "Ambition, cunning, resourcefulness and determination.",
-        "Values strategic thinking, leadership and self-preservation.",
-        "Calculates outcomes rather than acting on impulse.",
+        "Curiosity, originality and truth seeking.",
+        "Values understanding over status, money or power.",
+        "Thinks first and acts once the pattern is clear.",
       ],
     },
     background: [
-      "Grew up middle class between 2000 and 2005.",
-      "Raised at the breakthrough of modern technology.",
+      "Read widely as a child and ran his own chemistry, physics and astronomy experiments.",
+      "Educated in engineering up to a PhD, with exposure to both eastern and western cultures.",
     ],
-    music: "Drake, Travis Scott, Post Malone, Bad Bunny, The Weeknd, Tyler the Creator",
-    major: "Business and economics",
-    politics: "Moderately conservative",
+    music: "Wide-ranging, across three languages and both eastern and western traditions",
+    major: "Engineering, with self-taught interests in astronomy, medicine, physics and psychology",
+    politics: "Sceptical of money, status and concentrated power",
     ocean: [
-      { label: "Openness", level: "Low", note: "Prefers safe routines." },
-      { label: "Conscientiousness", level: "High", note: "Highly organised and disciplined." },
-      { label: "Extraversion", level: "Low", note: "Keeps to himself when possible." },
-      { label: "Agreeableness", level: "Low", note: "Very competitive." },
-      { label: "Neuroticism", level: "Medium", note: "Feels pressure, rarely shows it." },
+      { label: "Openness", level: "High", note: "Endlessly curious and experimental." },
+      { label: "Conscientiousness", level: "Medium", note: "Disciplined in thought, procrastinates on action." },
+      { label: "Extraversion", level: "Low", note: "Needs long stretches of quiet." },
+      { label: "Agreeableness", level: "Medium", note: "Kind to a few, distant from the crowd." },
+      { label: "Neuroticism", level: "Medium", note: "Wary of conflict and pretence." },
     ],
   },
   mary: {
