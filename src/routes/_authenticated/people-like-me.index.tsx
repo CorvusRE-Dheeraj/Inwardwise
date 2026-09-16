@@ -115,12 +115,6 @@ function StoryCard({ card: c, highlight = false }: { card: CharacterCard; highli
   const testDriveSummary = isMary || isAlex
     ? `${c.name} has completed ${isMary ? "her" : "his"} InwardWise Self build. ${isMary ? "She" : "He"} represents an average American youth. See how a prompt on ${isMary ? "her" : "his"} behalf feels when exploring InwardWise Self Aware.`
     : c.scenario?.summary ?? "A story is being prepared for this character.";
-  const hiddenThemes = isMary
-    ? new Set(["Pleasing people"])
-    : isAlex
-      ? new Set(["Rules and order", "Competing priorities"])
-      : new Set<string>();
-  const visibleThemes = c.themes.filter((theme) => !hiddenThemes.has(theme));
 
   return (
     <>
@@ -131,30 +125,6 @@ function StoryCard({ card: c, highlight = false }: { card: CharacterCard; highli
             : "border-[color:var(--rule)]"
         }`}
       >
-                {c.match && (
-                  <div className="mb-5 rounded-lg border border-[color:var(--royal)]/30 p-4">
-                    <p className="text-sm leading-relaxed">
-                      Some themes in this fictional scenario may feel familiar.
-                    </p>
-                    <div className="font-mono-cap mt-3 text-[10px] text-[color:var(--muted-foreground)]">
-                      Shared themes
-                    </div>
-                    <ul className="mt-2 flex flex-wrap gap-2">
-                      {c.match.sharedThemes.map((t) => (
-                        <li
-                          key={t}
-                          className="rounded-full bg-[color:var(--royal)]/10 px-3 py-1 text-xs text-[color:var(--royal)]"
-                        >
-                          {t}
-                        </li>
-                      ))}
-                    </ul>
-                    <p className="mt-3 text-xs text-[color:var(--muted-foreground)]">
-                      {c.match.recommendationReason}
-                    </p>
-                  </div>
-                )}
-
                 <div className="flex items-center gap-4">
                   <CharacterAvatar avatarKey={c.avatarKey} name={c.name} />
                   <div>
@@ -168,24 +138,6 @@ function StoryCard({ card: c, highlight = false }: { card: CharacterCard; highli
                 <p className="mt-5 flex-1 text-[15px] leading-relaxed">
                   {testDriveSummary}
                 </p>
-
-                {visibleThemes.length > 0 && (
-                  <div className="mt-5">
-                    <div className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)]">
-                      Themes
-                    </div>
-                    <div className="mt-2 flex flex-wrap gap-2">
-                      {visibleThemes.map((t) => (
-                        <span
-                          key={t}
-                          className="rounded-full border border-[color:var(--rule)] px-3 py-1 text-xs text-[color:var(--muted-foreground)]"
-                        >
-                          {t}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
 
                 {c.scenario && (
                   <div className="mt-6 flex flex-wrap items-center gap-3">
