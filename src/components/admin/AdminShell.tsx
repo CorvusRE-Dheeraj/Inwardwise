@@ -165,9 +165,6 @@ export function AdminShell({
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [claiming, setClaiming] = useState(false);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => setMounted(true), []);
 
   useEffect(() => {
     if (!loading && userId === null) {
@@ -188,7 +185,7 @@ export function AdminShell({
     [can, context],
   );
 
-  if (!mounted || loading || userId === undefined || userId === null) {
+  if (loading || userId === undefined || userId === null) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-background">
         <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />

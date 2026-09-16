@@ -174,7 +174,7 @@ function StoryCall() {
               <input
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                placeholder="+919876543210"
+                placeholder="+14155550123"
                 className="w-full rounded-md border border-[color:var(--rule)] bg-transparent px-3 py-2 text-[15px]"
               />
             </label>

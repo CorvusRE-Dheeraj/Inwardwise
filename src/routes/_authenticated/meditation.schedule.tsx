@@ -163,7 +163,7 @@ function MeditationSchedule() {
   const normalizedPhone = phone.replace(/[\s()-]/g, "").trim();
   const phoneError =
     normalizedPhone.length > 0 && !/^\+[1-9]\d{7,14}$/.test(normalizedPhone)
-      ? "Include your country code, e.g. +91 for India, +1 for the US."
+      ? "Use the international format, e.g. +14155550123."
       : null;
   const scheduleError =
     scheduledAt && new Date(scheduledAt).getTime() <= Date.now()

@@ -279,7 +279,7 @@ function MeditationPractice() {
   const normalizedPhone = phone.replace(/[\s()-]/g, "").trim();
   const phoneError =
     normalizedPhone.length > 0 && !/^\+[1-9]\d{7,14}$/.test(normalizedPhone)
-      ? "Include your country code, e.g. +91 for India, +1 for the US."
+      ? "Use the international format, e.g. +14155550123."
       : null;
   const canAddCall =
     mantras.length > 0 && normalizedPhone.length > 0 && !phoneError && !!timeOfDay && !savingCall;
