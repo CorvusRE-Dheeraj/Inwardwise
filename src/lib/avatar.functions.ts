@@ -51,5 +51,16 @@ export const chatWithAvatar = createServerFn({ method: "POST" })
       choices?: Array<{ message?: { content?: string } }>;
     };
     const reply = json.choices?.[0]?.message?.content?.trim() ?? "";
+
+    const { recordAiExchange } = await import("@/lib/ai-memory.server");
+    const lastUser = [...data.messages].reverse().find((m) => m.role === "user");
+    void recordAiExchange({
+      surface: "self_avatar_chat",
+      model: "google/gemini-2.5-flash",
+      prompt: lastUser?.content ?? "",
+      response: reply,
+      metadata: { turns: data.messages.length },
+    });
+
     return { reply };
   });
