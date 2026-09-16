@@ -221,7 +221,7 @@ export const startConnectOnly = createServerFn({ method: "POST" })
     const ctx = { supabase: context.supabase, userId: context.userId };
     const phone = (data.phoneNumber ?? "").replace(/[\s()-]/g, "");
     if (phone && !E164.test(phone)) {
-      throw new Error("Enter the phone number in international format, e.g. +14155550123.");
+      throw new Error("Enter the phone number with its country code, e.g. +919876543210 for India or +14155550123 for the US.");
     }
 
     await ctx.supabase

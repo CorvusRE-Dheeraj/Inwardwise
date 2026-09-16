@@ -84,7 +84,7 @@ function ConsultSchedule() {
   const normalizedPhone = phone.replace(/[\s()-]/g, "").trim();
   const phoneError =
     normalizedPhone.length > 0 && !/^\+[1-9]\d{7,14}$/.test(normalizedPhone)
-      ? "Use the international format, e.g. +14155550123."
+      ? "Include your country code, e.g. +91 for India, +1 for the US."
       : null;
   const timeError =
     scheduledAt && new Date(scheduledAt).getTime() <= Date.now()
@@ -163,7 +163,7 @@ function ConsultSchedule() {
             id="phone"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
-            placeholder="+14155550123"
+            placeholder="+919876543210"
             className="mt-2 w-full rounded-md border border-[var(--rule)] px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-royal/40"
           />
           {phoneError && <p className="mt-1 text-xs text-destructive">{phoneError}</p>}

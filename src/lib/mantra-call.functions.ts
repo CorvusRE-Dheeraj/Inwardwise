@@ -108,7 +108,7 @@ export const addMantraSchedule = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     const phone = data.phoneNumber.replace(/[\s()-]/g, "");
     if (!E164.test(phone)) {
-      throw new Error("Enter the phone number in international format, e.g. +14155550123.");
+      throw new Error("Enter the phone number with its country code, e.g. +919876543210 for India or +14155550123 for the US.");
     }
     const { count } = await context.supabase
       .from("mantra_schedules")
