@@ -5,7 +5,10 @@ import { Brain, Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable";
 
-const searchSchema = z.object({ redirect: z.string().optional() });
+const searchSchema = z.object({
+  redirect: z.string().optional(),
+  mode: z.enum(["signin", "signup"]).optional(),
+});
 
 export const Route = createFileRoute("/auth")({
   head: () => ({
@@ -25,10 +28,10 @@ function isSafeRedirect(v: string | undefined): v is string {
 
 function AuthPage() {
   const navigate = useNavigate();
-  const { redirect } = Route.useSearch();
+  const { redirect, mode: initialMode } = Route.useSearch();
   const target = isSafeRedirect(redirect) ? redirect : "/decision";
 
-  const [mode, setMode] = useState<"signin" | "signup">("signin");
+  const [mode, setMode] = useState<"signin" | "signup">(initialMode ?? "signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);

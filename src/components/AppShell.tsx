@@ -60,36 +60,36 @@ export function AppShell({ children }: { children: ReactNode }) {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const nav: { to: string; label: string; external?: boolean }[] = [
-    { to: "/areas", label: "Services" },
-    { to: "/science", label: "Science" },
-    { to: "/history", label: "Founder" },
-    { to: "/testimonials", label: "Voices" },
-    { to: "/pricing", label: "Pricing" },
-    { to: "/donate", label: "Donate" },
-    { to: "/feedback", label: "Feedback" },
-    ...(user ? [{ to: "/people-like-me", label: "Alex and Mary" }] : []),
-    ...(user ? [{ to: "/account", label: "Account" }] : []),
-    ...(isAdmin ? [{ to: "/admin", label: "Admin" }] : []),
-  ];
+  const nav: { to: string; label: string; external?: boolean }[] = user
+    ? [
+        { to: "/areas", label: "Services" },
+        { to: "/science", label: "Science" },
+        { to: "/history", label: "Founder" },
+        { to: "/testimonials", label: "Voices" },
+        { to: "/pricing", label: "Pricing" },
+        { to: "/donate", label: "Donate" },
+        { to: "/feedback", label: "Feedback" },
+        { to: "/people-like-me", label: "Alex and Mary" },
+        { to: "/account", label: "Account" },
+        ...(isAdmin ? [{ to: "/admin", label: "Admin" }] : []),
+      ]
+    : [];
 
-  const startMenu: { to: string; label: string; sub?: boolean }[] = [
-    { to: "/decision", label: "Decision" },
-    { to: "/avatar", label: "Build Self" },
-    { to: "/avatar/ask", label: "Self Aware" },
-    { to: "/meditation/practice", label: "Meditation", sub: true },
-    { to: "/connect", label: "Connect" },
-  ];
+  const startMenu: { to: string; label: string; sub?: boolean }[] = user
+    ? [
+        { to: "/decision", label: "Decision" },
+        { to: "/avatar", label: "Build Self" },
+        { to: "/avatar/ask", label: "Self Aware" },
+        { to: "/meditation/practice", label: "Meditation", sub: true },
+        { to: "/connect", label: "Connect" },
+      ]
+    : [];
 
   const startActive = startMenu.some((item) => isActive(item.to));
   const topLevelNav = nav;
-  const mobileNav: { to: string; label: string; external?: boolean }[] = [
-    { to: "/products", label: "Products" },
-    ...nav,
-    { to: "/donate", label: "Donate" },
-    { to: "/feedback", label: "Feedback" },
-    { to: "/contact", label: "Contact Us" },
-  ];
+  const mobileNav: { to: string; label: string; external?: boolean }[] = user
+    ? [{ to: "/products", label: "Products" }, ...nav, { to: "/contact", label: "Contact Us" }]
+    : [];
 
   function isActive(to: string): boolean {
     return pathname === to || (to !== "/" && pathname.startsWith(to));
@@ -120,6 +120,8 @@ export function AppShell({ children }: { children: ReactNode }) {
           </Link>
 
           <nav className="hidden items-center gap-7 md:flex md:ml-8 lg:ml-12">
+            {user && (
+            <>
             <div className="relative" onMouseEnter={() => setStartOpen(true)} onMouseLeave={() => setStartOpen(false)}>
               <button
                 onClick={() => setStartOpen((v) => !v)}
@@ -186,6 +188,9 @@ export function AppShell({ children }: { children: ReactNode }) {
                 </div>
               )}
             </div>
+            </>
+            )}
+
 
             {topLevelNav.map((item) => {
               const active = isActive(item.to);
@@ -217,12 +222,22 @@ export function AppShell({ children }: { children: ReactNode }) {
 
           <div className="flex shrink-0 items-center gap-3">
             {!user && (
-              <Link
-                to="/auth"
-                className="hidden text-[13px] text-[color:var(--muted-foreground)] transition hover:text-[color:var(--ink)] sm:inline"
-              >
-                Sign in
-              </Link>
+              <>
+                <Link
+                  to="/auth"
+                  search={{ mode: "signin" }}
+                  className="hidden text-[13px] text-[color:var(--muted-foreground)] transition hover:text-[color:var(--ink)] sm:inline"
+                >
+                  Sign in
+                </Link>
+                <Link
+                  to="/auth"
+                  search={{ mode: "signup" }}
+                  className="rounded-full bg-[color:var(--royal)] px-5 py-2 text-[13px] text-white transition hover:opacity-90"
+                >
+                  Sign up
+                </Link>
+              </>
             )}
 
             <button
@@ -239,6 +254,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         {menuOpen && (
           <div className="mx-auto w-[min(1280px,calc(100%-2rem))] pb-6 md:hidden">
             <div className="rule-top pt-4">
+              {user && (
               <div className="mb-4">
                 <button
                   onClick={() => setMobileStartOpen((v) => !v)}
@@ -264,6 +280,7 @@ export function AppShell({ children }: { children: ReactNode }) {
                   </div>
                 )}
               </div>
+              )}
               <nav className="grid grid-cols-2 gap-x-6 gap-y-2">
                 {mobileNav.map((item, i) => {
                   const active = isActive(item.to);
@@ -284,20 +301,31 @@ export function AppShell({ children }: { children: ReactNode }) {
                 })}
               </nav>
               <div className="mt-5 flex gap-3">
-                {!user && (
+                {user ? (
                   <Link
-                    to="/auth"
-                    className="flex-1 rounded-full border border-[color:var(--rule)] px-4 py-2 text-center text-[13px]"
+                    to="/decision"
+                    className="flex-1 rounded-full bg-[color:var(--royal)] px-4 py-2 text-center text-[14px] text-white"
                   >
-                    Sign in
+                    Decision
                   </Link>
+                ) : (
+                  <>
+                    <Link
+                      to="/auth"
+                      search={{ mode: "signin" }}
+                      className="flex-1 rounded-full border border-[color:var(--rule)] px-4 py-2 text-center text-[13px]"
+                    >
+                      Sign in
+                    </Link>
+                    <Link
+                      to="/auth"
+                      search={{ mode: "signup" }}
+                      className="flex-1 rounded-full bg-[color:var(--royal)] px-4 py-2 text-center text-[14px] text-white"
+                    >
+                      Sign up
+                    </Link>
+                  </>
                 )}
-                <Link
-                  to="/decision"
-                  className="flex-1 rounded-full bg-[color:var(--royal)] px-4 py-2 text-center text-[14px] text-white"
-                >
-                  Decision
-                </Link>
               </div>
             </div>
           </div>
@@ -316,6 +344,8 @@ export function AppShell({ children }: { children: ReactNode }) {
               A laboratory for thinking. Removing bias, fear, and ego, one decision at a time.
             </p>
           </div>
+          {user ? (
+            <>
           <div>
             <div className="font-mono-cap mb-3">Explore</div>
             <ul className="space-y-2 text-sm">
@@ -392,6 +422,31 @@ export function AppShell({ children }: { children: ReactNode }) {
               </li>
             </ul>
           </div>
+            </>
+          ) : (
+            <div className="md:col-span-2">
+              <div className="font-mono-cap mb-3">Get started</div>
+              <p className="text-sm text-[color:var(--ink)]">
+                Create an account to open everything InwardWise offers.
+              </p>
+              <div className="mt-4 flex gap-3">
+                <Link
+                  to="/auth"
+                  search={{ mode: "signup" }}
+                  className="rounded-full bg-[color:var(--royal)] px-5 py-2 text-[13px] text-white"
+                >
+                  Sign up
+                </Link>
+                <Link
+                  to="/auth"
+                  search={{ mode: "signin" }}
+                  className="rounded-full border border-[color:var(--rule)] px-5 py-2 text-[13px]"
+                >
+                  Sign in
+                </Link>
+              </div>
+            </div>
+          )}
           <div>
             <div className="font-mono-cap mb-3">Colophon</div>
             <p className="text-sm text-[color:var(--muted-foreground)]">
