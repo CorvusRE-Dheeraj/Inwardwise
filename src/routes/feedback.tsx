@@ -30,14 +30,16 @@ function Feedback() {
         <p className="mt-3 text-muted-foreground">
           Tell us what is working and what is not — your answers help us improve InwardWise.
         </p>
-        <iframe
-          src={FORM_URL}
-          title="InwardWise feedback form"
-          className="mt-8 h-[1200px] w-full rounded-lg border border-[color:var(--rule)] bg-white"
-          loading="lazy"
-        >
-          Loading…
-        </iframe>
+        <div className="mt-8 overflow-hidden">
+          <iframe
+            src={FORM_URL}
+            title="InwardWise feedback form"
+            className="h-[1150px] w-full rounded-lg border border-[color:var(--rule)] bg-white md:-ml-[10%] md:h-[1000px] md:w-[120%] md:origin-top md:scale-[1.2]"
+            loading="lazy"
+          >
+            Loading…
+          </iframe>
+        </div>
       </div>
     </AppShell>
   );
