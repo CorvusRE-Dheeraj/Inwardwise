@@ -33,7 +33,8 @@ export const PATHWAYS: PathwayDef[] = [
     id: "events",
     name: "Connect",
     accent: "Events",
-    purpose: "Local or online gatherings where you can take part rather than read alone.",
+    purpose:
+      "AI looks at your prompt and your InwardWise Self, and based on that understanding recommends events to be part of, among other Connect alternatives.",
     to: "/connect/events",
     action: "Find Events",
   },
