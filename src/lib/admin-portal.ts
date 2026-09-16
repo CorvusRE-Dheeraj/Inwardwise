@@ -99,7 +99,12 @@ export function labelOf(options: Option[], value: string | null | undefined): st
   return options.find((o) => o.value === value)?.label ?? value;
 }
 
-export type NavItem = { label: string; to: string; permission?: PermissionKey };
+export type NavItem = {
+  label: string;
+  to: string;
+  permission?: PermissionKey;
+  superAdminOnly?: boolean;
+};
 export type NavGroup = { label: string; items: NavItem[] };
 
 export const ADMIN_NAV: NavGroup[] = [
@@ -142,6 +147,7 @@ export const ADMIN_NAV: NavGroup[] = [
     items: [
       { label: "Settings", to: "/admin/settings", permission: "settings.view" },
       { label: "Audit logs", to: "/admin/audit-logs", permission: "audit.view" },
+      { label: "Deep learn memory", to: "/admin/deep-memory", superAdminOnly: true },
     ],
   },
 ];

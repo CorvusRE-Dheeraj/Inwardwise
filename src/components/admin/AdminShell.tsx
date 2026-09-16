@@ -176,10 +176,13 @@ export function AdminShell({
 
   const nav = useMemo(
     () =>
-      ADMIN_NAV.map((g) => ({ ...g, items: g.items.filter((i) => can(i.permission)) })).filter(
-        (g) => g.items.length > 0,
-      ),
-    [can],
+      ADMIN_NAV.map((g) => ({
+        ...g,
+        items: g.items.filter(
+          (i) => (i.superAdminOnly ? !!context?.is_super_admin : true) && can(i.permission),
+        ),
+      })).filter((g) => g.items.length > 0),
+    [can, context],
   );
 
   if (loading || userId === undefined || userId === null) {

@@ -1,0 +1,1 @@
+REVOKE ALL ON FUNCTION public.guard_employee_privileges() FROM PUBLIC, anon, authenticated;

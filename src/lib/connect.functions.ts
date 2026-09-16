@@ -72,6 +72,16 @@ export const analyzeConnectPrompt = createServerFn({ method: "POST" })
     const path = selfBuilt ? ("self" as const) : ("community" as const);
 
     const reflection = await generateReflection(data.prompt, category, selfBuilt);
+    {
+      const { recordAiExchange } = await import("@/lib/ai-memory.server");
+      void recordAiExchange({
+        surface: "connect_reflection",
+        userId: context.userId,
+        prompt: data.prompt,
+        response: reflection,
+        metadata: { category, selfBuilt, riskFlag: risk },
+      });
+    }
     const aggregate = aggregateInsight(count ?? 0, category);
     const reading = readingFor(category);
 
