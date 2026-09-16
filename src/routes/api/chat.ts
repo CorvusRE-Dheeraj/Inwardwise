@@ -43,10 +43,31 @@ export const Route = createFileRoute("/api/chat")({
         // Fire-and-forget activity log
         void logDecisionRequest(request, messages?.length ?? 0);
 
+        const modelMessages = await convertToModelMessages(messages);
+        const lastUser = [...modelMessages].reverse().find((m) => m.role === "user");
+        const promptText =
+          typeof lastUser?.content === "string"
+            ? lastUser.content
+            : JSON.stringify(lastUser?.content ?? "");
+        const memoryUserId = await import("@/lib/ai-memory.server").then((m) =>
+          m.userIdFromRequest(request),
+        );
+
         const result = streamText({
           model: gateway("google/gemini-3-flash-preview"),
           system: OOOI_SYSTEM_PROMPT,
-          messages: await convertToModelMessages(messages),
+          messages: modelMessages,
+          onFinish: async ({ text }) => {
+            const { recordAiExchange } = await import("@/lib/ai-memory.server");
+            void recordAiExchange({
+              surface: "decision_chat",
+              userId: memoryUserId,
+              model: "google/gemini-3-flash-preview",
+              prompt: promptText,
+              response: text,
+              metadata: { messageCount: messages?.length ?? 0 },
+            });
+          },
         });
 
         return result.toUIMessageStreamResponse({
