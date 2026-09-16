@@ -52,7 +52,7 @@ export const PATHWAYS: PathwayDef[] = [
     name: "Connect",
     accent: "Belonging",
     purpose:
-      "Gentle ways to feel less isolated and more socially at home, one small step at a time.",
+      "We have become very social and mobile, connect with many through online means, yet we feel more and more alone, feel no one shares our opinions and no one makes the effort to know us. Using AI, and knowing you via the InwardWise Self, assess your belongingness and how to improve it.",
     to: "/connect/belonging",
     action: "Find Belonging",
   },
