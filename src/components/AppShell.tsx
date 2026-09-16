@@ -254,6 +254,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         {menuOpen && (
           <div className="mx-auto w-[min(1280px,calc(100%-2rem))] pb-6 md:hidden">
             <div className="rule-top pt-4">
+              {user && (
               <div className="mb-4">
                 <button
                   onClick={() => setMobileStartOpen((v) => !v)}
