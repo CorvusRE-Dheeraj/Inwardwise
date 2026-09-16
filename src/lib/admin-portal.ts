@@ -99,7 +99,12 @@ export function labelOf(options: Option[], value: string | null | undefined): st
   return options.find((o) => o.value === value)?.label ?? value;
 }
 
-export type NavItem = { label: string; to: string; permission?: PermissionKey };
+export type NavItem = {
+  label: string;
+  to: string;
+  permission?: PermissionKey;
+  superAdminOnly?: boolean;
+};
 export type NavGroup = { label: string; items: NavItem[] };
 
 export const ADMIN_NAV: NavGroup[] = [
