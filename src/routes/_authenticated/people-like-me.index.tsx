@@ -159,11 +159,9 @@ function StoryCard({ card: c, highlight = false }: { card: CharacterCard; highli
                         {c.name}&apos;s Self Aware →
                       </Link>
                     )}
-                    {c.progress && (
+                    {c.progress?.status === "completed" && (
                       <span className="text-xs text-[color:var(--muted-foreground)]">
-                        {c.progress.status === "completed"
-                          ? "You have finished this story"
-                          : `Scene ${c.progress.currentScene} of ${c.scenario.sceneCount}`}
+                        You have finished this story
                       </span>
                     )}
                   </div>
