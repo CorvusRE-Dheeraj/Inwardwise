@@ -136,10 +136,27 @@ export function ConnectAiSuggest() {
             <h3 className="font-display mt-3 text-xl sm:text-2xl">
               {pathway.name} <span className="text-[color:var(--royal)]">{pathway.accent}</span>
             </h3>
-            <p className="mt-3 max-w-2xl text-[15px] leading-relaxed">{result.why}</p>
-            <p className="mt-3 max-w-2xl text-[14px] leading-relaxed text-[color:var(--muted-foreground)]">
-              {result.firstStep}
-            </p>
+            {substituted ? (
+              <>
+                <p className="mt-3 max-w-2xl text-[15px] leading-relaxed">
+                  {rawPathway
+                    ? `${rawPathway.name} ${rawPathway.accent} would suit what you wrote, but it is still being built.`
+                    : "The closest way of connecting for what you wrote is still being built."}{" "}
+                  For now, {pathway.name} {pathway.accent} is the nearest place to start.
+                </p>
+                <p className="mt-3 max-w-2xl text-[14px] leading-relaxed">
+                  {pathway.purpose}
+                </p>
+              </>
+            ) : (
+              <>
+                <p className="mt-3 max-w-2xl text-[15px] leading-relaxed">{result.why}</p>
+                <p className="mt-3 max-w-2xl text-[14px] leading-relaxed">
+                  {result.firstStep}
+                </p>
+              </>
+            )}
+
             <Link
               to={pathway.to}
               className="mt-5 inline-flex min-h-10 items-center gap-2 rounded-full bg-[color:var(--ink)] px-5 py-2.5 text-[13px] text-[color:var(--paper)]"
