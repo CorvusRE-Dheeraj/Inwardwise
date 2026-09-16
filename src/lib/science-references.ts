@@ -2,9 +2,7 @@ export const SCIENCE_REFERENCE_GROUPS: { heading: string; entries: string[] }[] 
   {
     "heading": "General",
     "entries": [
-      "Freeman, A. (2026). Mind It! For Health & Happiness [Unpublished manuscript].",
-      "Lester, A. (2006). Project management, planning and control: Managing engineering, construction and manufacturing projects to PMI, APM and BSI standards (5th ed.). Elsevier Science & Technology Books.",
-      "Routledge. (n.d.). An introduction to construction management. Routledge."
+      "Freeman, A. (2026). Mind It! For Health & Happiness [Unpublished manuscript]."
     ]
   },
   {
