@@ -264,6 +264,45 @@ export type Database = {
           },
         ]
       }
+      ai_memory_log: {
+        Row: {
+          created_at: string
+          id: string
+          latency_ms: number | null
+          metadata: Json
+          model: string | null
+          ok: boolean
+          prompt: string | null
+          response: string | null
+          surface: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          latency_ms?: number | null
+          metadata?: Json
+          model?: string | null
+          ok?: boolean
+          prompt?: string | null
+          response?: string | null
+          surface: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          latency_ms?: number | null
+          metadata?: Json
+          model?: string | null
+          ok?: boolean
+          prompt?: string | null
+          response?: string | null
+          surface?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       audit_logs: {
         Row: {
           action: string
