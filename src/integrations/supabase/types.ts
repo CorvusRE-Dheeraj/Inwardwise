@@ -1336,6 +1336,7 @@ export type Database = {
         Row: {
           author_name: string | null
           created_at: string
+          hidden: boolean
           id: string
           improved: string | null
           paid: string | null
@@ -1345,6 +1346,7 @@ export type Database = {
         Insert: {
           author_name?: string | null
           created_at?: string
+          hidden?: boolean
           id?: string
           improved?: string | null
           paid?: string | null
@@ -1354,6 +1356,7 @@ export type Database = {
         Update: {
           author_name?: string | null
           created_at?: string
+          hidden?: boolean
           id?: string
           improved?: string | null
           paid?: string | null
