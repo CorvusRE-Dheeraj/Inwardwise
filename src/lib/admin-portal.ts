@@ -147,6 +147,7 @@ export const ADMIN_NAV: NavGroup[] = [
     items: [
       { label: "Settings", to: "/admin/settings", permission: "settings.view" },
       { label: "Audit logs", to: "/admin/audit-logs", permission: "audit.view" },
+      { label: "Deep learn memory", to: "/admin/deep-memory", superAdminOnly: true },
     ],
   },
 ];
