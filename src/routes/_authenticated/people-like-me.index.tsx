@@ -115,12 +115,6 @@ function StoryCard({ card: c, highlight = false }: { card: CharacterCard; highli
   const testDriveSummary = isMary || isAlex
     ? `${c.name} has completed ${isMary ? "her" : "his"} InwardWise Self build. ${isMary ? "She" : "He"} represents an average American youth. See how a prompt on ${isMary ? "her" : "his"} behalf feels when exploring InwardWise Self Aware.`
     : c.scenario?.summary ?? "A story is being prepared for this character.";
-  const hiddenThemes = isMary
-    ? new Set(["Pleasing people"])
-    : isAlex
-      ? new Set(["Rules and order", "Competing priorities"])
-      : new Set<string>();
-  const visibleThemes = c.themes.filter((theme) => !hiddenThemes.has(theme));
 
   return (
     <>
@@ -168,24 +162,6 @@ function StoryCard({ card: c, highlight = false }: { card: CharacterCard; highli
                 <p className="mt-5 flex-1 text-[15px] leading-relaxed">
                   {testDriveSummary}
                 </p>
-
-                {visibleThemes.length > 0 && (
-                  <div className="mt-5">
-                    <div className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)]">
-                      Themes
-                    </div>
-                    <div className="mt-2 flex flex-wrap gap-2">
-                      {visibleThemes.map((t) => (
-                        <span
-                          key={t}
-                          className="rounded-full border border-[color:var(--rule)] px-3 py-1 text-xs text-[color:var(--muted-foreground)]"
-                        >
-                          {t}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
 
                 {c.scenario && (
                   <div className="mt-6 flex flex-wrap items-center gap-3">
