@@ -280,6 +280,7 @@ export function AppShell({ children }: { children: ReactNode }) {
                   </div>
                 )}
               </div>
+              )}
               <nav className="grid grid-cols-2 gap-x-6 gap-y-2">
                 {mobileNav.map((item, i) => {
                   const active = isActive(item.to);
@@ -300,20 +301,31 @@ export function AppShell({ children }: { children: ReactNode }) {
                 })}
               </nav>
               <div className="mt-5 flex gap-3">
-                {!user && (
+                {user ? (
                   <Link
-                    to="/auth"
-                    className="flex-1 rounded-full border border-[color:var(--rule)] px-4 py-2 text-center text-[13px]"
+                    to="/decision"
+                    className="flex-1 rounded-full bg-[color:var(--royal)] px-4 py-2 text-center text-[14px] text-white"
                   >
-                    Sign in
+                    Decision
                   </Link>
+                ) : (
+                  <>
+                    <Link
+                      to="/auth"
+                      search={{ mode: "signin" }}
+                      className="flex-1 rounded-full border border-[color:var(--rule)] px-4 py-2 text-center text-[13px]"
+                    >
+                      Sign in
+                    </Link>
+                    <Link
+                      to="/auth"
+                      search={{ mode: "signup" }}
+                      className="flex-1 rounded-full bg-[color:var(--royal)] px-4 py-2 text-center text-[14px] text-white"
+                    >
+                      Sign up
+                    </Link>
+                  </>
                 )}
-                <Link
-                  to="/decision"
-                  className="flex-1 rounded-full bg-[color:var(--royal)] px-4 py-2 text-center text-[14px] text-white"
-                >
-                  Decision
-                </Link>
               </div>
             </div>
           </div>
