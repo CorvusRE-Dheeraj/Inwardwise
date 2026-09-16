@@ -222,12 +222,22 @@ export function AppShell({ children }: { children: ReactNode }) {
 
           <div className="flex shrink-0 items-center gap-3">
             {!user && (
-              <Link
-                to="/auth"
-                className="hidden text-[13px] text-[color:var(--muted-foreground)] transition hover:text-[color:var(--ink)] sm:inline"
-              >
-                Sign in
-              </Link>
+              <>
+                <Link
+                  to="/auth"
+                  search={{ mode: "signin" }}
+                  className="hidden text-[13px] text-[color:var(--muted-foreground)] transition hover:text-[color:var(--ink)] sm:inline"
+                >
+                  Sign in
+                </Link>
+                <Link
+                  to="/auth"
+                  search={{ mode: "signup" }}
+                  className="rounded-full bg-[color:var(--royal)] px-5 py-2 text-[13px] text-white transition hover:opacity-90"
+                >
+                  Sign up
+                </Link>
+              </>
             )}
 
             <button
