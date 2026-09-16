@@ -24,7 +24,7 @@ const FORM_URL =
 function Feedback() {
   return (
     <AppShell>
-      <div className="mx-auto max-w-3xl">
+      <div className="mx-auto max-w-5xl">
         <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground">User Feedback</p>
         <h1 className="font-display mt-2 text-4xl md:text-5xl">Share your feedback</h1>
         <p className="mt-3 text-muted-foreground">
