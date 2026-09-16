@@ -69,7 +69,8 @@ export const PATHWAYS: PathwayDef[] = [
     id: "share",
     name: "Connect",
     accent: "Share",
-    purpose: "Record your own experience for someone else, anonymously and consent-led.",
+    purpose:
+      "Sometimes in order to connect to the outside world, you genuinely need to share and help but the social noises make it very difficult to gain that connection. AI takes your desire to connect and share and gets it to others who need it without you struggling to help. AI makes that one on one connection knowing the inner needs rather than the external egos.",
     to: "/connect/share",
     action: "Share Experience",
   },
