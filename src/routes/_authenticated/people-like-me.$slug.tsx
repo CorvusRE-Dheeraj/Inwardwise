@@ -131,7 +131,7 @@ function StoryPage() {
       <AppShell>
         <div className="mx-auto w-[min(900px,calc(100%-2rem))] py-16">
           <p className="text-sm">This story is not available.</p>
-          <Link to="/people-like-me" className="mt-4 inline-block text-sm underline">
+          <Link to="/people-like-me" search={{}} className="mt-4 inline-block text-sm underline">
             Back to People Like Me
           </Link>
         </div>
@@ -334,6 +334,7 @@ function StoryPage() {
               </button>
               <Link
                 to="/people-like-me"
+                search={{}}
                 onClick={() => persist(index, paused ? "paused" : "in_progress")}
                 className="inline-flex min-h-11 items-center rounded-full border border-[color:var(--rule)] px-5 text-sm"
               >
@@ -425,7 +426,7 @@ function StoryPage() {
               >
                 Read again
               </button>
-              <Link to="/people-like-me" className="text-sm underline">
+              <Link to="/people-like-me" search={{}} className="text-sm underline">
                 Back to People Like Me
               </Link>
               {saved && (

@@ -192,6 +192,7 @@ function StoryCard({ card: c, highlight = false }: { card: CharacterCard; highli
                     <Link
                       to="/people-like-me/$slug"
                       params={{ slug: c.slug }}
+                       search={{ mode: "story" }}
                       className="inline-flex min-h-11 items-center rounded-full bg-[color:var(--ink)] px-6 text-sm text-[color:var(--paper)] transition hover:opacity-90"
                     >
                       Explore {c.name}'s story
