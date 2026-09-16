@@ -60,36 +60,36 @@ export function AppShell({ children }: { children: ReactNode }) {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const nav: { to: string; label: string; external?: boolean }[] = [
-    { to: "/areas", label: "Services" },
-    { to: "/science", label: "Science" },
-    { to: "/history", label: "Founder" },
-    { to: "/testimonials", label: "Voices" },
-    { to: "/pricing", label: "Pricing" },
-    { to: "/donate", label: "Donate" },
-    { to: "/feedback", label: "Feedback" },
-    ...(user ? [{ to: "/people-like-me", label: "Alex and Mary" }] : []),
-    ...(user ? [{ to: "/account", label: "Account" }] : []),
-    ...(isAdmin ? [{ to: "/admin", label: "Admin" }] : []),
-  ];
+  const nav: { to: string; label: string; external?: boolean }[] = user
+    ? [
+        { to: "/areas", label: "Services" },
+        { to: "/science", label: "Science" },
+        { to: "/history", label: "Founder" },
+        { to: "/testimonials", label: "Voices" },
+        { to: "/pricing", label: "Pricing" },
+        { to: "/donate", label: "Donate" },
+        { to: "/feedback", label: "Feedback" },
+        { to: "/people-like-me", label: "Alex and Mary" },
+        { to: "/account", label: "Account" },
+        ...(isAdmin ? [{ to: "/admin", label: "Admin" }] : []),
+      ]
+    : [];
 
-  const startMenu: { to: string; label: string; sub?: boolean }[] = [
-    { to: "/decision", label: "Decision" },
-    { to: "/avatar", label: "Build Self" },
-    { to: "/avatar/ask", label: "Self Aware" },
-    { to: "/meditation/practice", label: "Meditation", sub: true },
-    { to: "/connect", label: "Connect" },
-  ];
+  const startMenu: { to: string; label: string; sub?: boolean }[] = user
+    ? [
+        { to: "/decision", label: "Decision" },
+        { to: "/avatar", label: "Build Self" },
+        { to: "/avatar/ask", label: "Self Aware" },
+        { to: "/meditation/practice", label: "Meditation", sub: true },
+        { to: "/connect", label: "Connect" },
+      ]
+    : [];
 
   const startActive = startMenu.some((item) => isActive(item.to));
   const topLevelNav = nav;
-  const mobileNav: { to: string; label: string; external?: boolean }[] = [
-    { to: "/products", label: "Products" },
-    ...nav,
-    { to: "/donate", label: "Donate" },
-    { to: "/feedback", label: "Feedback" },
-    { to: "/contact", label: "Contact Us" },
-  ];
+  const mobileNav: { to: string; label: string; external?: boolean }[] = user
+    ? [{ to: "/products", label: "Products" }, ...nav, { to: "/contact", label: "Contact Us" }]
+    : [];
 
   function isActive(to: string): boolean {
     return pathname === to || (to !== "/" && pathname.startsWith(to));
