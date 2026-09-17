@@ -99,7 +99,7 @@ function Landing() {
                 className="flex flex-col items-start gap-4 md:items-end"
               >
                 <Link
-                  to="/decision"
+                  to="/products"
                   className="group inline-flex items-center gap-4 rounded-full bg-[color:var(--ink)] px-6 py-3.5 text-sm tracking-wide text-[color:var(--paper)] transition-transform duration-500 hover:-translate-y-0.5"
                 >
                   Start a Decision
