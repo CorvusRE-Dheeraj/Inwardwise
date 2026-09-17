@@ -142,13 +142,13 @@ function Landing() {
         actions={
           <>
             <Link
-              to="/avatar"
+              to="/products"
               className="inline-flex items-center gap-3 rounded-full bg-[color:var(--ink)] px-6 py-3.5 text-sm text-[color:var(--paper)] transition-transform duration-500 hover:-translate-y-0.5"
             >
               Build Self <span>→</span>
             </Link>
             <Link
-              to="/avatar/ask"
+              to="/products"
               className="inline-flex items-center gap-3 rounded-full border border-[color:var(--ink)] px-6 py-3.5 text-sm text-[color:var(--ink)] transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)]"
             >
               Self Aware <span>→</span>
@@ -176,7 +176,7 @@ function Landing() {
         actions={
           <>
             <Link
-              to="/connect"
+              to="/products"
               className="inline-flex items-center gap-3 rounded-full bg-[color:var(--ink)] px-6 py-3.5 text-sm text-[color:var(--paper)] transition-transform duration-500 hover:-translate-y-0.5"
             >
               Connect AI <span>→</span>
