@@ -32,6 +32,15 @@ export const PATHWAYS: PathwayDef[] = [
     action: "Open Book",
   },
   {
+    id: "journal",
+    name: "Connect",
+    accent: "Journal",
+    purpose:
+      "All of your observations and thoughts after reading, watching or encountering anything, journal them here. Based on that, AI learns your thought processes and your shifted outlook and keeps up with you, with the goal of helping you with a deeper understanding of yourself and your decision making, and wants to see you happier. We would not have it any other way.",
+    to: "/connect/journal",
+    action: "Open Journal",
+  },
+  {
     id: "events",
     name: "Connect",
     accent: "Events",
