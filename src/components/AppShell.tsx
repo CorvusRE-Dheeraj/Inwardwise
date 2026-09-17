@@ -71,13 +71,11 @@ export function AppShell({ children }: { children: ReactNode }) {
       ]
     : [];
 
-  // Products + Services stay visible on every page, signed in or not.
-  const topLevelNav = user
-    ? fullNav
-    : [{ to: "/areas", label: "Services" }];
+  // Signed-out visitors see no menu; everything appears only after login.
+  const topLevelNav = user ? fullNav : [];
   const mobileNav: { to: string; label: string; external?: boolean }[] = user
     ? [...fullNav, { to: "/contact", label: "Contact Us" }]
-    : [{ to: "/areas", label: "Services" }];
+    : [];
 
   function isActive(to: string): boolean {
     return pathname === to || (to !== "/" && pathname.startsWith(to));
