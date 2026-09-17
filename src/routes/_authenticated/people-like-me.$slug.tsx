@@ -161,29 +161,35 @@ function StoryPage() {
             animation={scene?.animation}
             size={84}
           />
-          <div>
-            <div className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)]">
-              Fictional scenario
+          {mode === "self-aware" && (slug === "mary" || slug === "alex") ? (
+            <h1 className="font-display text-[clamp(1.8rem,5vw,2.8rem)] leading-tight text-[color:var(--ink)]">
+              {detail.character.name}&apos;s Self
+            </h1>
+          ) : (
+            <div>
+              <div className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)]">
+                Fictional scenario
+              </div>
+              <div className="mt-1 flex flex-wrap items-baseline gap-x-5 gap-y-2">
+                <Link
+                  to="/people-like-me/$slug"
+                  params={{ slug }}
+                  search={{ mode: "story" }}
+                  className={`font-display text-[clamp(1.8rem,5vw,2.8rem)] leading-tight ${mode === "story" ? "text-[color:var(--ink)]" : "text-[color:var(--royal)]"}`}
+                >
+                  {detail.character.name}&apos;s Story
+                </Link>
+                <Link
+                  to="/people-like-me/$slug"
+                  params={{ slug }}
+                  search={{ mode: "self-aware" }}
+                  className={`font-display text-2xl leading-tight ${mode === "self-aware" ? "text-[color:var(--ink)]" : "text-[color:var(--royal)]"}`}
+                >
+                  {detail.character.name}&apos;s Self Aware
+                </Link>
+              </div>
             </div>
-            <div className="mt-1 flex flex-wrap items-baseline gap-x-5 gap-y-2">
-              <Link
-                to="/people-like-me/$slug"
-                params={{ slug }}
-                search={{ mode: "story" }}
-                className={`font-display text-[clamp(1.8rem,5vw,2.8rem)] leading-tight ${mode === "story" ? "text-[color:var(--ink)]" : "text-[color:var(--royal)]"}`}
-              >
-                {detail.character.name}&apos;s Story
-              </Link>
-              <Link
-                to="/people-like-me/$slug"
-                params={{ slug }}
-                search={{ mode: "self-aware" }}
-                className={`font-display text-2xl leading-tight ${mode === "self-aware" ? "text-[color:var(--ink)]" : "text-[color:var(--royal)]"}`}
-              >
-                {detail.character.name}&apos;s Self Aware
-              </Link>
-            </div>
-          </div>
+          )}
         </div>
 
         {mode === "self-aware" && (slug === "mary" || slug === "alex") && (
