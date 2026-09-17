@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { ArrowRight, BookOpen, CheckCircle2, FileText, Mail, MessageSquare, RotateCw } from "lucide-react";
-import coverAsset from "@/assets/mind-it-cover.jpg";
+import coverAsset from "@/assets/mind-it-cover.png.asset.json";
 import { openPdfInNewTab } from "@/lib/open-pdf";
 import {
   getBookSectionPdf,
@@ -134,10 +134,10 @@ export function BookReading() {
 
       <div className="grid gap-8 sm:grid-cols-[minmax(0,220px)_1fr] sm:items-start">
         <img
-          src={coverAsset}
-          alt="Cover of the book Mind It! For Health and Happiness"
-          width={768}
-          height={1024}
+          src={coverAsset.url}
+          alt="Cover of the book Mind It! For Health and Happiness by Alex Freeman, Ph.D."
+          width={1024}
+          height={1536}
           loading="lazy"
           className="w-full max-w-[220px] rounded-md border border-[color:var(--rule)] shadow-sm"
         />
