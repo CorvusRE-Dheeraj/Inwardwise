@@ -30,7 +30,6 @@ function ReadingScreen() {
   const { readId } = useParams({ from: "/_authenticated/connect/reading/$readId" });
   const load = useServerFn(getBookSection);
   const markRead = useServerFn(markBookSectionRead);
-  const pdf = useServerFn(getBookSectionPdf);
 
   const [section, setSection] = useState<BookSection | null>(null);
   const [loading, setLoading] = useState(true);
