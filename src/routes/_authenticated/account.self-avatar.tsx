@@ -26,7 +26,6 @@ function SelfAvatarPage() {
 
   function update<K extends keyof SelfAvatar>(k: K, v: SelfAvatar[K]) {
     setForm((f) => ({ ...f, [k]: v }));
-    setSaved(false);
   }
 
   function onSave(e: React.FormEvent) {
