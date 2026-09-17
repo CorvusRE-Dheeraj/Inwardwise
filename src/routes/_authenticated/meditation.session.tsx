@@ -248,6 +248,7 @@ function CalmSession() {
   if (vault.status !== "unlocked") {
     return (
       <div className="mx-auto grid w-[min(900px,calc(100%-2rem))] gap-8 py-20 md:grid-cols-2">
+        <SiteHeader />
         <div className="rounded-lg border border-[color:var(--rule)] p-8">
           <PinKeypad
             mode={vault.status === "needs-setup" ? "setup" : "enter"}
