@@ -98,6 +98,13 @@ function Landing() {
                 transition={{ delay: 1.4, duration: 0.9 }}
                 className="flex flex-col items-start gap-4 md:items-end"
               >
+                <Link
+                  to="/decision"
+                  className="group inline-flex items-center gap-4 rounded-full bg-[color:var(--ink)] px-6 py-3.5 text-sm tracking-wide text-[color:var(--paper)] transition-transform duration-500 hover:-translate-y-0.5"
+                >
+                  Start a Decision
+                  <span className="grid h-6 w-6 place-items-center rounded-full bg-[color:var(--paper)] text-[color:var(--ink)]">→</span>
+                </Link>
                 <Link to="/examples" className="text-sm text-[color:var(--muted-foreground)] underline-offset-4 hover:text-[color:var(--ink)] hover:underline">
                   Or: read past decisions
                 </Link>
