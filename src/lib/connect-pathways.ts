@@ -3,6 +3,7 @@
 
 export type PathwayId =
   | "book"
+  | "journal"
   | "events"
   | "membership"
   | "belonging"

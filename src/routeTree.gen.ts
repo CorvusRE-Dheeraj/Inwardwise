@@ -73,6 +73,7 @@ import { Route as AuthenticatedMeditationPracticeRouteImport } from './routes/_a
 import { Route as AuthenticatedConnectShareRouteImport } from './routes/_authenticated/connect.share'
 import { Route as AuthenticatedConnectOnenessRouteImport } from './routes/_authenticated/connect.oneness'
 import { Route as AuthenticatedConnectMembershipRouteImport } from './routes/_authenticated/connect.membership'
+import { Route as AuthenticatedConnectJournalRouteImport } from './routes/_authenticated/connect.journal'
 import { Route as AuthenticatedConnectEventsRouteImport } from './routes/_authenticated/connect.events'
 import { Route as AuthenticatedConnectBookRouteImport } from './routes/_authenticated/connect.book'
 import { Route as AuthenticatedConnectBelongingRouteImport } from './routes/_authenticated/connect.belonging'
@@ -421,6 +422,12 @@ const AuthenticatedConnectMembershipRoute =
     path: '/connect/membership',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedConnectJournalRoute =
+  AuthenticatedConnectJournalRouteImport.update({
+    id: '/connect/journal',
+    path: '/connect/journal',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedConnectEventsRoute =
   AuthenticatedConnectEventsRouteImport.update({
     id: '/connect/events',
@@ -557,6 +564,7 @@ export interface FileRoutesByFullPath {
   '/connect/belonging': typeof AuthenticatedConnectBelongingRoute
   '/connect/book': typeof AuthenticatedConnectBookRoute
   '/connect/events': typeof AuthenticatedConnectEventsRoute
+  '/connect/journal': typeof AuthenticatedConnectJournalRoute
   '/connect/membership': typeof AuthenticatedConnectMembershipRoute
   '/connect/oneness': typeof AuthenticatedConnectOnenessRoute
   '/connect/share': typeof AuthenticatedConnectShareRoute
@@ -632,6 +640,7 @@ export interface FileRoutesByTo {
   '/connect/belonging': typeof AuthenticatedConnectBelongingRoute
   '/connect/book': typeof AuthenticatedConnectBookRoute
   '/connect/events': typeof AuthenticatedConnectEventsRoute
+  '/connect/journal': typeof AuthenticatedConnectJournalRoute
   '/connect/membership': typeof AuthenticatedConnectMembershipRoute
   '/connect/oneness': typeof AuthenticatedConnectOnenessRoute
   '/connect/share': typeof AuthenticatedConnectShareRoute
@@ -712,6 +721,7 @@ export interface FileRoutesById {
   '/_authenticated/connect/belonging': typeof AuthenticatedConnectBelongingRoute
   '/_authenticated/connect/book': typeof AuthenticatedConnectBookRoute
   '/_authenticated/connect/events': typeof AuthenticatedConnectEventsRoute
+  '/_authenticated/connect/journal': typeof AuthenticatedConnectJournalRoute
   '/_authenticated/connect/membership': typeof AuthenticatedConnectMembershipRoute
   '/_authenticated/connect/oneness': typeof AuthenticatedConnectOnenessRoute
   '/_authenticated/connect/share': typeof AuthenticatedConnectShareRoute
@@ -792,6 +802,7 @@ export interface FileRouteTypes {
     | '/connect/belonging'
     | '/connect/book'
     | '/connect/events'
+    | '/connect/journal'
     | '/connect/membership'
     | '/connect/oneness'
     | '/connect/share'
@@ -867,6 +878,7 @@ export interface FileRouteTypes {
     | '/connect/belonging'
     | '/connect/book'
     | '/connect/events'
+    | '/connect/journal'
     | '/connect/membership'
     | '/connect/oneness'
     | '/connect/share'
@@ -946,6 +958,7 @@ export interface FileRouteTypes {
     | '/_authenticated/connect/belonging'
     | '/_authenticated/connect/book'
     | '/_authenticated/connect/events'
+    | '/_authenticated/connect/journal'
     | '/_authenticated/connect/membership'
     | '/_authenticated/connect/oneness'
     | '/_authenticated/connect/share'
@@ -1467,6 +1480,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedConnectMembershipRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/connect/journal': {
+      id: '/_authenticated/connect/journal'
+      path: '/connect/journal'
+      fullPath: '/connect/journal'
+      preLoaderRoute: typeof AuthenticatedConnectJournalRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/connect/events': {
       id: '/_authenticated/connect/events'
       path: '/connect/events'
@@ -1591,6 +1611,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedConnectBelongingRoute: typeof AuthenticatedConnectBelongingRoute
   AuthenticatedConnectBookRoute: typeof AuthenticatedConnectBookRoute
   AuthenticatedConnectEventsRoute: typeof AuthenticatedConnectEventsRoute
+  AuthenticatedConnectJournalRoute: typeof AuthenticatedConnectJournalRoute
   AuthenticatedConnectMembershipRoute: typeof AuthenticatedConnectMembershipRoute
   AuthenticatedConnectOnenessRoute: typeof AuthenticatedConnectOnenessRoute
   AuthenticatedConnectShareRoute: typeof AuthenticatedConnectShareRoute
@@ -1619,6 +1640,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedConnectBelongingRoute: AuthenticatedConnectBelongingRoute,
   AuthenticatedConnectBookRoute: AuthenticatedConnectBookRoute,
   AuthenticatedConnectEventsRoute: AuthenticatedConnectEventsRoute,
+  AuthenticatedConnectJournalRoute: AuthenticatedConnectJournalRoute,
   AuthenticatedConnectMembershipRoute: AuthenticatedConnectMembershipRoute,
   AuthenticatedConnectOnenessRoute: AuthenticatedConnectOnenessRoute,
   AuthenticatedConnectShareRoute: AuthenticatedConnectShareRoute,
