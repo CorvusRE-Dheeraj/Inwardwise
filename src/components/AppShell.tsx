@@ -88,7 +88,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   const startActive = startMenu.some((item) => isActive(item.to));
   const topLevelNav = nav;
   const mobileNav: { to: string; label: string; external?: boolean }[] = user
-    ? [{ to: "/products", label: "Products" }, ...nav, { to: "/contact", label: "Contact Us" }]
+    ? [...nav, { to: "/contact", label: "Contact Us" }]
     : [];
 
   function isActive(to: string): boolean {
@@ -122,20 +122,56 @@ export function AppShell({ children }: { children: ReactNode }) {
           <nav className="hidden items-center gap-7 md:flex md:ml-8 lg:ml-12">
             {user && (
             <>
+            <div
+              className="relative"
+              onMouseEnter={() => setProductsOpen(true)}
+              onMouseLeave={() => setProductsOpen(false)}
+            >
+              <button
+                onClick={() => setProductsOpen((v) => !v)}
+                aria-expanded={productsOpen}
+                aria-haspopup="menu"
+                className={`inline-flex items-center gap-2 rounded-full px-6 py-2.5 text-[15px] tracking-wide transition hover:opacity-90 ${
+                  isActive("/products") ? "bg-[color:var(--ink)] text-[color:var(--paper)]" : "bg-[color:var(--royal)] text-white"
+                }`}
+              >
+                Products
+                <ChevronDown className={`h-4 w-4 transition-transform ${productsOpen ? "rotate-180" : ""}`} />
+              </button>
+              {productsOpen && (
+                <div className="absolute left-0 top-full z-50 w-60 pt-2">
+                  <div className="overflow-hidden rounded-xl border border-[color:var(--rule)] bg-[color:var(--paper)] shadow-lg">
+                    {PRODUCTS.map((p) => (
+                      <Link
+                        key={p.id}
+                        to="/products"
+                        onClick={() => setProductsOpen(false)}
+                        className="block px-5 py-3 text-[14px] text-[color:var(--ink)] transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)]"
+                      >
+                        {p.shortName}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
             <div className="relative" onMouseEnter={() => setStartOpen(true)} onMouseLeave={() => setStartOpen(false)}>
               <button
                 onClick={() => setStartOpen((v) => !v)}
                 aria-expanded={startOpen}
                 aria-haspopup="menu"
-                className={`inline-flex items-center gap-2 rounded-full px-6 py-2.5 text-[15px] tracking-wide transition hover:opacity-90 ${
-                  startActive ? "bg-[color:var(--ink)] text-[color:var(--paper)]" : "bg-[color:var(--royal)] text-white"
+                className={`group relative inline-flex items-center gap-1.5 text-[13px] tracking-wide transition ${
+                  startActive
+                    ? "text-[color:var(--ink)]"
+                    : "text-[color:var(--muted-foreground)] hover:text-[color:var(--ink)]"
                 }`}
               >
                 Start
-                <ChevronDown className={`h-4 w-4 transition-transform ${startOpen ? "rotate-180" : ""}`} />
+                <ChevronDown className={`h-3.5 w-3.5 transition-transform ${startOpen ? "rotate-180" : ""}`} />
               </button>
               {startOpen && (
-                <div className="absolute left-0 top-full z-50 w-60 pt-2">
+                <div className="absolute left-0 top-full z-50 w-60 pt-3">
                   <div className="overflow-hidden rounded-xl border border-[color:var(--rule)] bg-[color:var(--paper)] shadow-lg">
                     {startMenu.map((item) => (
                       <Link
@@ -146,42 +182,6 @@ export function AppShell({ children }: { children: ReactNode }) {
                       >
                         {item.sub ? "↳ " : ""}
                         {item.label}
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-
-            <div
-              className="relative"
-              onMouseEnter={() => setProductsOpen(true)}
-              onMouseLeave={() => setProductsOpen(false)}
-            >
-              <button
-                onClick={() => setProductsOpen((v) => !v)}
-                aria-expanded={productsOpen}
-                aria-haspopup="menu"
-                className={`group relative inline-flex items-center gap-1.5 text-[13px] tracking-wide transition ${
-                  isActive("/products")
-                    ? "text-[color:var(--ink)]"
-                    : "text-[color:var(--muted-foreground)] hover:text-[color:var(--ink)]"
-                }`}
-              >
-                Products
-                <ChevronDown className={`h-3.5 w-3.5 transition-transform ${productsOpen ? "rotate-180" : ""}`} />
-              </button>
-              {productsOpen && (
-                <div className="absolute left-0 top-full z-50 w-60 pt-3">
-                  <div className="overflow-hidden rounded-xl border border-[color:var(--rule)] bg-[color:var(--paper)] shadow-lg">
-                    {PRODUCTS.map((p) => (
-                      <Link
-                        key={p.id}
-                        to="/products"
-                        onClick={() => setProductsOpen(false)}
-                        className="block px-5 py-3 text-[14px] text-[color:var(--ink)] transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)]"
-                      >
-                        {p.shortName}
                       </Link>
                     ))}
                   </div>
@@ -255,13 +255,39 @@ export function AppShell({ children }: { children: ReactNode }) {
           <div className="mx-auto w-[min(1280px,calc(100%-2rem))] pb-6 md:hidden">
             <div className="rule-top pt-4">
               {user && (
+              <>
+              <div className="mb-4">
+                <button
+                  onClick={() => setProductsOpen((v) => !v)}
+                  className="flex w-full items-center justify-between py-1 text-[15px] text-[color:var(--ink)]"
+                >
+                  <span className="flex items-baseline gap-3">
+                    <span className="font-mono-cap">01</span> Products
+                  </span>
+                  <ChevronDown className={`h-4 w-4 transition-transform ${productsOpen ? "rotate-180" : ""}`} />
+                </button>
+                {productsOpen && (
+                  <div className="ml-8 grid grid-cols-1 gap-y-2 pt-2">
+                    {PRODUCTS.map((p) => (
+                      <Link
+                        key={p.id}
+                        to="/products"
+                        onClick={() => setProductsOpen(false)}
+                        className="text-[14px] text-[color:var(--muted-foreground)] transition hover:text-[color:var(--ink)]"
+                      >
+                        {p.shortName}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
               <div className="mb-4">
                 <button
                   onClick={() => setMobileStartOpen((v) => !v)}
                   className="flex w-full items-center justify-between py-1 text-[15px] text-[color:var(--ink)]"
                 >
                   <span className="flex items-baseline gap-3">
-                    <span className="font-mono-cap">01</span> Start
+                    <span className="font-mono-cap">02</span> Start
                   </span>
                   <ChevronDown className={`h-4 w-4 transition-transform ${mobileStartOpen ? "rotate-180" : ""}`} />
                 </button>
@@ -280,6 +306,7 @@ export function AppShell({ children }: { children: ReactNode }) {
                   </div>
                 )}
               </div>
+              </>
               )}
               <nav className="grid grid-cols-2 gap-x-6 gap-y-2">
                 {mobileNav.map((item, i) => {
@@ -289,12 +316,12 @@ export function AppShell({ children }: { children: ReactNode }) {
                   }`;
                   return item.external ? (
                     <a key={item.to} href={item.to} target="_blank" rel="noopener noreferrer" className={cls}>
-                      <span className="font-mono-cap">{String(i + 2).padStart(2, "0")}</span>
+                      <span className="font-mono-cap">{String(i + 3).padStart(2, "0")}</span>
                       {item.label}
                     </a>
                   ) : (
                     <Link key={item.to} to={item.to} className={cls}>
-                      <span className="font-mono-cap">{String(i + 2).padStart(2, "0")}</span>
+                      <span className="font-mono-cap">{String(i + 3).padStart(2, "0")}</span>
                       {item.label}
                     </Link>
                   );
