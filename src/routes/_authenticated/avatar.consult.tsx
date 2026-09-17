@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { SiteHeader } from "@/components/SiteHeader";
 import { useEffect, useRef, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { supabase } from "@/integrations/supabase/client";
@@ -106,7 +107,9 @@ function ConsultAvatar() {
 
   if (vault.status !== "unlocked") {
     return (
-      <div className="mx-auto grid w-[min(900px,calc(100%-2rem))] gap-8 py-20 md:grid-cols-2">
+      <>
+        <SiteHeader />
+        <div className="mx-auto grid w-[min(900px,calc(100%-2rem))] gap-8 py-20 md:grid-cols-2">
         <div className="rounded-lg border border-[color:var(--rule)] p-8">
           <PinKeypad
             mode={vault.status === "needs-setup" ? "setup" : "enter"}
@@ -122,6 +125,7 @@ function ConsultAvatar() {
           in your browser and never readable by anyone else.
         </Caution>
       </div>
+      </>
     );
   }
 
@@ -136,6 +140,7 @@ function ConsultAvatar() {
       className="mx-auto flex max-w-3xl flex-col px-6 sm:px-8 pt-12 pb-8"
       style={{ minHeight: "calc(100vh - 120px)" }}
     >
+      <SiteHeader />
       <Link
         to="/"
         className="inline-flex items-center gap-2 font-mono-cap text-xs text-muted-foreground hover:text-foreground transition-colors"
