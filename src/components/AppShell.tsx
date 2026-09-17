@@ -56,7 +56,7 @@ export function AppShell({ children }: { children: ReactNode }) {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const nav: { to: string; label: string; external?: boolean }[] = user
+  const fullNav: { to: string; label: string; external?: boolean }[] = user
     ? [
         { to: "/areas", label: "Services" },
         { to: "/science", label: "Science" },
@@ -71,10 +71,13 @@ export function AppShell({ children }: { children: ReactNode }) {
       ]
     : [];
 
-  const topLevelNav = nav;
+  // Products + Services stay visible on every page, signed in or not.
+  const topLevelNav = user
+    ? fullNav
+    : [{ to: "/areas", label: "Services" }];
   const mobileNav: { to: string; label: string; external?: boolean }[] = user
-    ? [...nav, { to: "/contact", label: "Contact Us" }]
-    : [];
+    ? [...fullNav, { to: "/contact", label: "Contact Us" }]
+    : [{ to: "/areas", label: "Services" }];
 
   function isActive(to: string): boolean {
     return pathname === to || (to !== "/" && pathname.startsWith(to));
@@ -105,8 +108,6 @@ export function AppShell({ children }: { children: ReactNode }) {
           </Link>
 
           <nav className="hidden items-center gap-7 md:flex md:ml-8 lg:ml-12">
-            {user && (
-            <>
             <div
               className="relative"
               onMouseEnter={() => setProductsOpen(true)}
@@ -140,8 +141,6 @@ export function AppShell({ children }: { children: ReactNode }) {
                 </div>
               )}
             </div>
-            </>
-            )}
 
 
             {topLevelNav.map((item) => {
