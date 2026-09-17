@@ -88,7 +88,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   const startActive = startMenu.some((item) => isActive(item.to));
   const topLevelNav = nav;
   const mobileNav: { to: string; label: string; external?: boolean }[] = user
-    ? [{ to: "/products", label: "Products" }, ...nav, { to: "/contact", label: "Contact Us" }]
+    ? [...nav, { to: "/contact", label: "Contact Us" }]
     : [];
 
   function isActive(to: string): boolean {
