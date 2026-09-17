@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { ProductName } from "@/components/products/ProductChrome";
@@ -128,8 +128,16 @@ function SelfAvatarPage() {
 
 
         <div className="mt-2 flex items-center gap-3">
-          <button className="rounded-full bg-foreground px-5 py-2 text-sm text-background">Save changes</button>
-          {saved && <span className="text-xs text-accent">Saved locally.</span>}
+          <button
+            type="button"
+            onClick={() => {
+              if (uid) saveSelfAvatar(uid, form);
+              navigate({ to: "/avatar/dimension/$n", params: { n: "1" } });
+            }}
+            className="rounded-full bg-foreground px-5 py-2 text-sm text-background"
+          >
+            Self build
+          </button>
         </div>
       </form>
 
