@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { SiteHeader } from "@/components/SiteHeader";
 import { ProductName } from "@/components/products/ProductChrome";
 
 export const Route = createFileRoute("/_authenticated/avatar/ask")({
@@ -23,6 +24,7 @@ export const Route = createFileRoute("/_authenticated/avatar/ask")({
 function AvatarAsk() {
   return (
     <div className="mx-auto w-[min(820px,calc(100%-2rem))] py-20">
+      <SiteHeader />
       <Link
         to="/avatar"
         className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)] transition hover:text-[color:var(--ink)]"

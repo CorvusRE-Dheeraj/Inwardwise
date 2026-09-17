@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { SiteHeader } from "@/components/SiteHeader";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { supabase } from "@/integrations/supabase/client";
@@ -319,6 +320,7 @@ function MeditationSchedule() {
 
   return (
     <div className="mx-auto w-[min(980px,calc(100%-2rem))] py-14 md:py-20">
+      <SiteHeader />
       <Link
         to="/products/calm-mantra"
         className="font-mono-cap text-xs text-[color:var(--muted-foreground)] hover:text-[color:var(--ink)]"

@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { SiteHeader } from "@/components/SiteHeader";
 import { useEffect, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { toast } from "sonner";
@@ -133,6 +134,7 @@ function ConsultSchedule() {
 
   return (
     <div className="mx-auto w-[min(880px,calc(100%-2rem))] px-2 pt-12 pb-16">
+      <SiteHeader />
       <Link
         to="/avatar/consult"
         className="inline-flex items-center gap-2 font-mono-cap text-xs text-muted-foreground transition-colors hover:text-foreground"

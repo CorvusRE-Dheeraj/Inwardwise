@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { SiteHeader } from "@/components/SiteHeader";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useServerFn } from "@tanstack/react-start";
@@ -271,6 +272,7 @@ function CalmSession() {
 
   return (
     <div className="mx-auto w-[min(880px,calc(100%-2rem))] py-14 md:py-20">
+      <SiteHeader />
       <Link
         to="/meditation/schedule"
         className="font-mono-cap text-xs text-[color:var(--muted-foreground)] hover:text-[color:var(--ink)]"

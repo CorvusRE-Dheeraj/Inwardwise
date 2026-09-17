@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { SiteHeader } from "@/components/SiteHeader";
 import { useEffect, useMemo, useState } from "react";
 import { Download, Save, Search } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
@@ -222,6 +223,7 @@ function SelfLibrary() {
 
   return (
     <div className="mx-auto w-[min(1000px,calc(100%-2rem))] py-14 sm:py-20">
+      <SiteHeader />
       <Link
         to="/avatar"
         className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)] transition hover:text-[color:var(--ink)]"
