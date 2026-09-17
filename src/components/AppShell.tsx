@@ -257,11 +257,36 @@ export function AppShell({ children }: { children: ReactNode }) {
               {user && (
               <div className="mb-4">
                 <button
+                  onClick={() => setProductsOpen((v) => !v)}
+                  className="flex w-full items-center justify-between py-1 text-[15px] text-[color:var(--ink)]"
+                >
+                  <span className="flex items-baseline gap-3">
+                    <span className="font-mono-cap">01</span> Products
+                  </span>
+                  <ChevronDown className={`h-4 w-4 transition-transform ${productsOpen ? "rotate-180" : ""}`} />
+                </button>
+                {productsOpen && (
+                  <div className="ml-8 grid grid-cols-1 gap-y-2 pt-2">
+                    {PRODUCTS.map((p) => (
+                      <Link
+                        key={p.id}
+                        to="/products"
+                        onClick={() => setProductsOpen(false)}
+                        className="text-[14px] text-[color:var(--muted-foreground)] transition hover:text-[color:var(--ink)]"
+                      >
+                        {p.shortName}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+              <div className="mb-4">
+                <button
                   onClick={() => setMobileStartOpen((v) => !v)}
                   className="flex w-full items-center justify-between py-1 text-[15px] text-[color:var(--ink)]"
                 >
                   <span className="flex items-baseline gap-3">
-                    <span className="font-mono-cap">01</span> Start
+                    <span className="font-mono-cap">02</span> Start
                   </span>
                   <ChevronDown className={`h-4 w-4 transition-transform ${mobileStartOpen ? "rotate-180" : ""}`} />
                 </button>
