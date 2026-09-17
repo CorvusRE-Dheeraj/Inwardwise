@@ -58,8 +58,6 @@ export function AppShell({ children }: { children: ReactNode }) {
 
   const fullNav: { to: string; label: string; external?: boolean }[] = user
     ? [
-        { to: "/areas", label: "Services" },
-        { to: "/science", label: "Science" },
         { to: "/history", label: "Founder" },
         { to: "/testimonials", label: "Voices" },
         { to: "/pricing", label: "Pricing" },
@@ -71,13 +69,11 @@ export function AppShell({ children }: { children: ReactNode }) {
       ]
     : [];
 
-  // Products + Services stay visible on every page, signed in or not.
-  const topLevelNav = user
-    ? fullNav
-    : [{ to: "/areas", label: "Services" }];
+  // Signed-out visitors see no menu; everything appears only after login.
+  const topLevelNav = user ? fullNav : [];
   const mobileNav: { to: string; label: string; external?: boolean }[] = user
     ? [...fullNav, { to: "/contact", label: "Contact Us" }]
-    : [{ to: "/areas", label: "Services" }];
+    : [];
 
   function isActive(to: string): boolean {
     return pathname === to || (to !== "/" && pathname.startsWith(to));
@@ -108,6 +104,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           </Link>
 
           <nav className="hidden items-center gap-7 md:flex md:ml-8 lg:ml-12">
+            {user && (
             <div
               className="relative"
               onMouseEnter={() => setProductsOpen(true)}
@@ -137,10 +134,27 @@ export function AppShell({ children }: { children: ReactNode }) {
                         {p.shortName}
                       </Link>
                     ))}
+                    <div className="rule-top">
+                      <Link
+                        to="/areas"
+                        onClick={() => setProductsOpen(false)}
+                        className="block px-5 py-3 text-[14px] text-[color:var(--ink)] transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)]"
+                      >
+                        Services
+                      </Link>
+                      <Link
+                        to="/science"
+                        onClick={() => setProductsOpen(false)}
+                        className="block px-5 py-3 text-[14px] text-[color:var(--ink)] transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)]"
+                      >
+                        Science
+                      </Link>
+                    </div>
                   </div>
                 </div>
               )}
             </div>
+            )}
 
 
             {topLevelNav.map((item) => {
@@ -205,6 +219,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         {menuOpen && (
           <div className="mx-auto w-[min(1280px,calc(100%-2rem))] pb-6 md:hidden">
             <div className="rule-top pt-4">
+              {user && (
               <div className="mb-4">
                 <button
                   onClick={() => setProductsOpen((v) => !v)}
@@ -227,9 +242,26 @@ export function AppShell({ children }: { children: ReactNode }) {
                         {p.shortName}
                       </Link>
                     ))}
+                    <div className="rule-top pt-2">
+                      <Link
+                        to="/areas"
+                        onClick={() => setProductsOpen(false)}
+                        className="block py-1 text-[14px] text-[color:var(--muted-foreground)] transition hover:text-[color:var(--ink)]"
+                      >
+                        Services
+                      </Link>
+                      <Link
+                        to="/science"
+                        onClick={() => setProductsOpen(false)}
+                        className="block py-1 text-[14px] text-[color:var(--muted-foreground)] transition hover:text-[color:var(--ink)]"
+                      >
+                        Science
+                      </Link>
+                    </div>
                   </div>
                 )}
               </div>
+              )}
               <nav className="grid grid-cols-2 gap-x-6 gap-y-2">
                 {mobileNav.map((item, i) => {
                   const active = isActive(item.to);
