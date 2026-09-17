@@ -12,6 +12,8 @@ function SelfAvatarPage() {
   const [uid, setUid] = useState<string | null>(null);
   const [form, setForm] = useState<SelfAvatar>(selfAvatarDefaults);
   const [saved, setSaved] = useState(false);
+  const navigate = useNavigate();
+
   
 
   useEffect(() => {
