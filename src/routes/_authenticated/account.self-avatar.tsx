@@ -12,7 +12,7 @@ function SelfAvatarPage() {
   const [uid, setUid] = useState<string | null>(null);
   const [form, setForm] = useState<SelfAvatar>(selfAvatarDefaults);
   const [saved, setSaved] = useState(false);
-  const [openDim, setOpenDim] = useState<string | null>(null);
+  
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => {
@@ -126,48 +126,6 @@ function SelfAvatarPage() {
           </p>
         </div>
 
-        <div className="mt-4 divide-y divide-border/60 rounded-2xl border border-border/60">
-          {dims.map((d) => {
-            const isOpen = openDim === d.key;
-            return (
-              <div key={d.key}>
-                <button
-                  type="button"
-                  onClick={() => setOpenDim(isOpen ? null : d.key)}
-                  className="flex w-full items-center justify-between px-5 py-4 text-left"
-                >
-                  <span className="text-sm font-medium">{d.label}, Questions</span>
-                  <span className="text-xs text-muted-foreground">{isOpen ? "Close" : "Open"}</span>
-                </button>
-                {isOpen && (
-                  <div className="space-y-3 border-t border-border/60 bg-background/40 px-5 py-4">
-                    <p className="text-xs uppercase tracking-[0.16em] text-muted-foreground">
-                      Guided questions for {d.label.toLowerCase()} will appear here.
-                    </p>
-                    <textarea
-                      value={form[d.key]}
-                      onChange={(e) => update(d.key, e.target.value)}
-                      rows={5}
-                      className="input"
-                      placeholder={`Begin your reflection on ${d.label.toLowerCase()}. Take your time, this is a first-principles exercise.`}
-                    />
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </div>
-
-        <label className="block">
-          <span className="mb-1 block text-xs text-muted-foreground">Private note</span>
-          <textarea
-            value={form.note}
-            onChange={(e) => update("note", e.target.value)}
-            rows={4}
-            className="input"
-            placeholder="Anything else your inner self should know about you..."
-          />
-        </label>
 
         <div className="mt-2 flex items-center gap-3">
           <button className="rounded-full bg-foreground px-5 py-2 text-sm text-background">Save changes</button>
