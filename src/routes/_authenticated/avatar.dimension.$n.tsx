@@ -119,6 +119,7 @@ function DimensionFlow() {
   if (!dim) {
     return (
       <div className="mx-auto w-[min(700px,calc(100%-2rem))] py-24 text-center">
+        <SiteHeader />
         <p className="font-display text-3xl">That stage does not exist.</p>
         <Link to="/avatar" className="mt-6 inline-block text-sm underline">
           Back to your Self Journey
@@ -131,7 +132,9 @@ function DimensionFlow() {
 
   if (vault.status !== "unlocked") {
     return (
-      <div className="mx-auto grid w-[min(900px,calc(100%-2rem))] gap-8 py-20 md:grid-cols-2">
+      <>
+        <SiteHeader />
+        <div className="mx-auto grid w-[min(900px,calc(100%-2rem))] gap-8 py-20 md:grid-cols-2">
         <div className="rounded-lg border border-[color:var(--rule)] p-8">
           <PinKeypad
             mode={vault.status === "needs-setup" ? "setup" : "enter"}
@@ -147,6 +150,7 @@ function DimensionFlow() {
           means permanently losing access to what you wrote here.
         </Caution>
       </div>
+      </>
     );
   }
 
@@ -228,6 +232,7 @@ function DimensionFlow() {
     const nextStage = SELF_JOURNEY.find((s) => s.n > dim.n);
     return (
       <div className="mx-auto w-[min(820px,calc(100%-2rem))] py-20">
+        <SiteHeader />
         <SelfJourneyProgress current={dim.n} compact />
         <h1 className="mt-10 font-display text-[clamp(2rem,4.5vw,3rem)] leading-tight">
           {finished.allDone ? "Your Self Journey is Complete" : stage.milestone}
