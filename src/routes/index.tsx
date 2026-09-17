@@ -181,12 +181,6 @@ function Landing() {
             >
               Connect AI <span>→</span>
             </Link>
-            <Link
-              to="/products"
-              className="inline-flex items-center gap-3 rounded-full border border-[color:var(--ink)] px-6 py-3.5 text-sm text-[color:var(--ink)] transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)]"
-            >
-              All products <span>→</span>
-            </Link>
           </>
         }
         meta={[
