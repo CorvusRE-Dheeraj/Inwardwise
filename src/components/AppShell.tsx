@@ -316,12 +316,12 @@ export function AppShell({ children }: { children: ReactNode }) {
                   }`;
                   return item.external ? (
                     <a key={item.to} href={item.to} target="_blank" rel="noopener noreferrer" className={cls}>
-                      <span className="font-mono-cap">{String(i + 2).padStart(2, "0")}</span>
+                      <span className="font-mono-cap">{String(i + 3).padStart(2, "0")}</span>
                       {item.label}
                     </a>
                   ) : (
                     <Link key={item.to} to={item.to} className={cls}>
-                      <span className="font-mono-cap">{String(i + 2).padStart(2, "0")}</span>
+                      <span className="font-mono-cap">{String(i + 3).padStart(2, "0")}</span>
                       {item.label}
                     </Link>
                   );
