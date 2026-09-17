@@ -32,7 +32,6 @@ function SelfAvatarPage() {
     e.preventDefault();
     if (!uid) return;
     saveSelfAvatar(uid, form);
-    setSaved(true);
   }
 
   const dims = [
