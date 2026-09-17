@@ -3,6 +3,7 @@
 
 export type PathwayId =
   | "book"
+  | "journal"
   | "events"
   | "membership"
   | "belonging"
@@ -29,6 +30,15 @@ export const PATHWAYS: PathwayDef[] = [
       "AI looks at your prompt and your InwardWise Self, and based on that understanding recommends among various Connect alternatives if reading a book is relevant. If that is the case, it offers sections of the book the Founder wrote based on research for over 5 years at the intersections of psychology, philosophy, medicine and social sciences. But he put on his engineer and physicist hat so it has a unique flair on which the products are based on.",
     to: "/connect/book",
     action: "Open Book",
+  },
+  {
+    id: "journal",
+    name: "Connect",
+    accent: "Journal",
+    purpose:
+      "All of your observations and thoughts after reading, watching or encountering anything, journal them here. Based on that, AI learns your thought processes and your shifted outlook and keeps up with you, with the goal of helping you with a deeper understanding of yourself and your decision making, and wants to see you happier. We would not have it any other way.",
+    to: "/connect/journal",
+    action: "Open Journal",
   },
   {
     id: "events",

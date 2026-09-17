@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
-import { Check, Mic, Square } from "lucide-react";
+import { ArrowRight, Check, Mic, Square } from "lucide-react";
 import {
   listConnectReflections,
   saveConnectReflection,
@@ -9,8 +9,8 @@ import {
 import { startRecording, transcribe, type Recorder } from "@/lib/voice";
 
 /**
- * A private note, written or spoken, kept so it can be reflected on later.
- * Nothing here is shared with anyone else.
+ * Connect Journal. Anything observed, read, watched or lived through can be
+ * written or spoken here. It stays private to the person who wrote it.
  */
 export function ReflectionNote({ readId }: { readId?: string }) {
   const save = useServerFn(saveConnectReflection);
@@ -83,12 +83,13 @@ export function ReflectionNote({ readId }: { readId?: string }) {
         § 00 · Connect Only
       </div>
       <h2 className="font-display mt-3 text-2xl sm:text-3xl">
-        Writing something or saying <em className="italic text-[color:var(--royal)]">something</em>
+        Connect <em className="italic text-[color:var(--royal)]">Journal</em>
       </h2>
       <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-[color:var(--muted-foreground)]">
-        Do you want to write something or say something instead, based on what happened, or based on
-        what you have just read? You can use it later to reflect on it. It stays private to you,
-        kept alongside which section was sent to you and when you read it.
+        All of your observations and thoughts after reading, watching or encountering anything,
+        journal them here. Based on that, AI learns your thought processes and your shifted outlook
+        and keeps up with you, with the goal of helping you with a deeper understanding of yourself
+        and your decision making. It stays private to you.
       </p>
 
       <textarea
@@ -110,7 +111,8 @@ export function ReflectionNote({ readId }: { readId?: string }) {
           disabled={busy}
           className="inline-flex min-h-11 items-center gap-2 rounded-full bg-[color:var(--ink)] px-6 py-3 text-sm text-[color:var(--paper)] disabled:opacity-60"
         >
-          {busy && !recording ? "Keeping…" : "Keep this"}
+          {busy && !recording ? "Keeping…" : "Connect Journal It"}{" "}
+          <ArrowRight className="h-4 w-4" />
         </button>
         <button
           onClick={toggleRecording}
@@ -122,7 +124,7 @@ export function ReflectionNote({ readId }: { readId?: string }) {
             </>
           ) : (
             <>
-              <Mic className="h-3.5 w-3.5" /> Say it instead
+              <Mic className="h-3.5 w-3.5" /> Voice Journal It
             </>
           )}
         </button>
@@ -135,9 +137,7 @@ export function ReflectionNote({ readId }: { readId?: string }) {
 
       {past.length > 0 && (
         <div className="mt-8 border-t border-[color:var(--rule)] pt-6">
-          <div className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)]">
-            What you have kept
-          </div>
+          <h3 className="font-display text-xl">Your Journal List</h3>
           <ul className="mt-4 space-y-4">
             {past.map((r) => (
               <li key={r.id} className="text-[14px] leading-relaxed">

@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PathwayShell, PathwaySection } from "@/components/connect/PathwayShell";
 import { BookReading } from "@/components/connect/BookReading";
-import { ReflectionNote } from "@/components/connect/ReflectionNote";
 
 export const Route = createFileRoute("/_authenticated/connect/book")({
   head: () => ({
@@ -36,9 +35,6 @@ function BookPathway() {
     >
       <PathwaySection>
         <BookReading />
-        <div className="mt-10">
-          <ReflectionNote />
-        </div>
       </PathwaySection>
     </PathwayShell>
   );
