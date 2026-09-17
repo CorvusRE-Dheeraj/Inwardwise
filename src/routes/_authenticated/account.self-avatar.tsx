@@ -12,7 +12,7 @@ function SelfAvatarPage() {
   const [uid, setUid] = useState<string | null>(null);
   const [form, setForm] = useState<SelfAvatar>(selfAvatarDefaults);
   const [saved, setSaved] = useState(false);
-  const [openDim, setOpenDim] = useState<string | null>(null);
+  
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => {
