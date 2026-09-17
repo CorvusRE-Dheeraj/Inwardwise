@@ -58,8 +58,6 @@ export function AppShell({ children }: { children: ReactNode }) {
 
   const fullNav: { to: string; label: string; external?: boolean }[] = user
     ? [
-        { to: "/areas", label: "Services" },
-        { to: "/science", label: "Science" },
         { to: "/history", label: "Founder" },
         { to: "/testimonials", label: "Voices" },
         { to: "/pricing", label: "Pricing" },
