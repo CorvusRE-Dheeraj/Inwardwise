@@ -137,6 +137,7 @@ function ConsultAvatar() {
       className="mx-auto flex max-w-3xl flex-col px-6 sm:px-8 pt-12 pb-8"
       style={{ minHeight: "calc(100vh - 120px)" }}
     >
+      <SiteHeader />
       <Link
         to="/"
         className="inline-flex items-center gap-2 font-mono-cap text-xs text-muted-foreground hover:text-foreground transition-colors"
