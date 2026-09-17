@@ -58,6 +58,8 @@ export function AppShell({ children }: { children: ReactNode }) {
 
   const fullNav: { to: string; label: string; external?: boolean }[] = user
     ? [
+        { to: "/areas", label: "Services" },
+        { to: "/science", label: "Science" },
         { to: "/history", label: "Founder" },
         { to: "/testimonials", label: "Voices" },
         { to: "/pricing", label: "Pricing" },
@@ -134,22 +136,6 @@ export function AppShell({ children }: { children: ReactNode }) {
                         {p.shortName}
                       </Link>
                     ))}
-                    <div className="rule-top">
-                      <Link
-                        to="/areas"
-                        onClick={() => setProductsOpen(false)}
-                        className="block px-5 py-3 text-[14px] text-[color:var(--ink)] transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)]"
-                      >
-                        Services
-                      </Link>
-                      <Link
-                        to="/science"
-                        onClick={() => setProductsOpen(false)}
-                        className="block px-5 py-3 text-[14px] text-[color:var(--ink)] transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)]"
-                      >
-                        Science
-                      </Link>
-                    </div>
                   </div>
                 </div>
               )}
@@ -242,22 +228,6 @@ export function AppShell({ children }: { children: ReactNode }) {
                         {p.shortName}
                       </Link>
                     ))}
-                    <div className="rule-top pt-2">
-                      <Link
-                        to="/areas"
-                        onClick={() => setProductsOpen(false)}
-                        className="block py-1 text-[14px] text-[color:var(--muted-foreground)] transition hover:text-[color:var(--ink)]"
-                      >
-                        Services
-                      </Link>
-                      <Link
-                        to="/science"
-                        onClick={() => setProductsOpen(false)}
-                        className="block py-1 text-[14px] text-[color:var(--muted-foreground)] transition hover:text-[color:var(--ink)]"
-                      >
-                        Science
-                      </Link>
-                    </div>
                   </div>
                 )}
               </div>
