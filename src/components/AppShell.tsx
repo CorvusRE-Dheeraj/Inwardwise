@@ -12,8 +12,6 @@ export function AppShell({ children }: { children: ReactNode }) {
   const [isAdmin, setIsAdmin] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [startOpen, setStartOpen] = useState(false);
-  const [mobileStartOpen, setMobileStartOpen] = useState(false);
   const [productsOpen, setProductsOpen] = useState(false);
 
   useEffect(() => {
@@ -48,8 +46,6 @@ export function AppShell({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     setMenuOpen(false);
-    setStartOpen(false);
-    setMobileStartOpen(false);
     setProductsOpen(false);
   }, [pathname]);
 
@@ -75,17 +71,6 @@ export function AppShell({ children }: { children: ReactNode }) {
       ]
     : [];
 
-  const startMenu: { to: string; label: string; sub?: boolean }[] = user
-    ? [
-        { to: "/decision", label: "Decision" },
-        { to: "/avatar", label: "Build Self" },
-        { to: "/avatar/ask", label: "Self Aware" },
-        { to: "/products/calm-mantra", label: "Meditation", sub: true },
-        { to: "/connect", label: "Connect" },
-      ]
-    : [];
-
-  const startActive = startMenu.some((item) => isActive(item.to));
   const topLevelNav = nav;
   const mobileNav: { to: string; label: string; external?: boolean }[] = user
     ? [...nav, { to: "/contact", label: "Contact Us" }]
@@ -149,39 +134,6 @@ export function AppShell({ children }: { children: ReactNode }) {
                         className="block px-5 py-3 text-[14px] text-[color:var(--ink)] transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)]"
                       >
                         {p.shortName}
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-
-            <div className="relative" onMouseEnter={() => setStartOpen(true)} onMouseLeave={() => setStartOpen(false)}>
-              <button
-                onClick={() => setStartOpen((v) => !v)}
-                aria-expanded={startOpen}
-                aria-haspopup="menu"
-                className={`group relative inline-flex items-center gap-1.5 text-[13px] tracking-wide transition ${
-                  startActive
-                    ? "text-[color:var(--ink)]"
-                    : "text-[color:var(--muted-foreground)] hover:text-[color:var(--ink)]"
-                }`}
-              >
-                Start
-                <ChevronDown className={`h-3.5 w-3.5 transition-transform ${startOpen ? "rotate-180" : ""}`} />
-              </button>
-              {startOpen && (
-                <div className="absolute left-0 top-full z-50 w-60 pt-3">
-                  <div className="overflow-hidden rounded-xl border border-[color:var(--rule)] bg-[color:var(--paper)] shadow-lg">
-                    {startMenu.map((item) => (
-                      <Link
-                        key={item.to}
-                        to={item.to}
-                        onClick={() => setStartOpen(false)}
-                        className={`block py-3 text-[14px] text-[color:var(--ink)] transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)] ${item.sub ? "pl-9 pr-5 text-[13px] text-[color:var(--muted-foreground)]" : "px-5"}`}
-                      >
-                        {item.sub ? "↳ " : ""}
-                        {item.label}
                       </Link>
                     ))}
                   </div>
@@ -281,31 +233,6 @@ export function AppShell({ children }: { children: ReactNode }) {
                   </div>
                 )}
               </div>
-              <div className="mb-4">
-                <button
-                  onClick={() => setMobileStartOpen((v) => !v)}
-                  className="flex w-full items-center justify-between py-1 text-[15px] text-[color:var(--ink)]"
-                >
-                  <span className="flex items-baseline gap-3">
-                    <span className="font-mono-cap">02</span> Start
-                  </span>
-                  <ChevronDown className={`h-4 w-4 transition-transform ${mobileStartOpen ? "rotate-180" : ""}`} />
-                </button>
-                {mobileStartOpen && (
-                  <div className="ml-8 grid grid-cols-1 gap-y-2 pt-2">
-                    {startMenu.map((item) => (
-                      <Link
-                        key={item.to}
-                        to={item.to}
-                        className={`text-[14px] text-[color:var(--muted-foreground)] transition hover:text-[color:var(--ink)] ${item.sub ? "pl-4 text-[13px]" : ""}`}
-                      >
-                        {item.sub ? "↳ " : ""}
-                        {item.label}
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
               </>
               )}
               <nav className="grid grid-cols-2 gap-x-6 gap-y-2">
@@ -316,12 +243,12 @@ export function AppShell({ children }: { children: ReactNode }) {
                   }`;
                   return item.external ? (
                     <a key={item.to} href={item.to} target="_blank" rel="noopener noreferrer" className={cls}>
-                      <span className="font-mono-cap">{String(i + 3).padStart(2, "0")}</span>
+                      <span className="font-mono-cap">{String(i + 2).padStart(2, "0")}</span>
                       {item.label}
                     </a>
                   ) : (
                     <Link key={item.to} to={item.to} className={cls}>
-                      <span className="font-mono-cap">{String(i + 3).padStart(2, "0")}</span>
+                      <span className="font-mono-cap">{String(i + 2).padStart(2, "0")}</span>
                       {item.label}
                     </Link>
                   );
