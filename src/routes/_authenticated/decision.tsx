@@ -323,6 +323,7 @@ function DecisionChat() {
     setMessages(s.messages);
     setInput(s.draft ?? "");
     prevStageRef.current = s.stage;
+    setSessionDone(s.stage >= TOTAL_STAGES);
     setStarted(true);
     if (typeof window !== "undefined") {
       const url = new URL(window.location.href);
@@ -411,7 +412,7 @@ function DecisionChat() {
     doc.save(`${safe}.pdf`);
   };
 
-  const canDownload = currentStage >= 8;
+  const canDownload = displayStage >= 8;
 
   return (
     <AppShell>
@@ -464,7 +465,7 @@ function DecisionChat() {
             {/* Desktop: sticky left sidebar, stays visible while the chat scrolls */}
             <div className="hidden lg:block">
               <aside className="glass-strong sticky top-24 h-fit rounded-3xl">
-                <JourneyProgress current={currentStage} vertical />
+                <JourneyProgress current={displayStage} vertical />
                 <p className="mx-4 mb-4 rounded-xl border border-glass-border bg-foreground/[0.02] p-3 text-[10px] leading-relaxed text-muted-foreground">
                   The facilitator asks 2 to 5 questions per stage and waits for your confirmation
                   before advancing. After step 7 the session completes on its own — no further
@@ -474,7 +475,7 @@ function DecisionChat() {
             </div>
             {/* Mobile: compact bar pinned to the top of the viewport */}
             <div className="glass-strong sticky top-16 z-20 -mx-1 rounded-2xl lg:hidden">
-              <JourneyProgress current={currentStage} />
+              <JourneyProgress current={displayStage} />
             </div>
           </>
         )}
