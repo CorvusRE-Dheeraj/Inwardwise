@@ -145,12 +145,24 @@ function DecisionChat() {
   // "continue" so the journey moves to the final step without prompt input.
   const autoAdvanceTriesRef = useRef(0);
   const [autoAdvancing, setAutoAdvancing] = useState(false);
+  // Session finished: the Action Stage was delivered (or the facilitator closed
+  // step 7 without emitting the tag). Locks the progress bar at step 8.
+  const [sessionDone, setSessionDone] = useState(false);
   useEffect(() => {
     if (status !== "ready" || !started) return;
-    if (currentStage < 7 || currentStage >= TOTAL_STAGES) return;
+    if (currentStage >= TOTAL_STAGES) {
+      setSessionDone(true);
+      return;
+    }
+    if (currentStage < 7) return;
     const last = messages[messages.length - 1];
     if (!last || last.role !== "assistant") return;
-    if (autoAdvanceTriesRef.current >= 2) return;
+    // The facilitator finished step 7 without moving on: after two automatic
+    // nudges, conclude the session ourselves so the person is never stuck.
+    if (autoAdvanceTriesRef.current >= 2) {
+      setSessionDone(true);
+      return;
+    }
     autoAdvanceTriesRef.current += 1;
     setAutoAdvancing(true);
     const t = setTimeout(() => {
@@ -162,6 +174,9 @@ function DecisionChat() {
       setAutoAdvancing(false);
     };
   }, [status, started, currentStage, messages, sendMessage]);
+
+  // What the progress rail shows: jumps to step 8 the moment the session concludes.
+  const displayStage = sessionDone ? TOTAL_STAGES : currentStage;
 
   // Deterministic safety net: surface hotlines whenever the person describes a crisis.
   const crisisCategories = useMemo(
