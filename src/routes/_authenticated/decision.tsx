@@ -104,6 +104,7 @@ function DecisionChat() {
       if (saved.messages.length) setMessages(saved.messages);
       setInput(saved.draft ?? "");
       prevStageRef.current = saved.stage;
+      if (saved.stage >= TOTAL_STAGES) setSessionDone(true);
       setStarted(saved.messages.length > 0 || Boolean(saved.started));
       requestAnimationFrame(() =>
         listRef.current?.scrollTo({ top: listRef.current.scrollHeight }),
@@ -189,7 +190,7 @@ function DecisionChat() {
   const snapshot = (): DecisionSession => ({
     ...session,
     category,
-    stage: currentStage,
+    stage: displayStage,
     title: deriveTitle(messages) || session.title,
     messages,
     draft: input,
@@ -298,6 +299,7 @@ function DecisionChat() {
     setInput("");
     prevStageRef.current = 1;
     autoAdvanceTriesRef.current = 0;
+    setSessionDone(false);
     setMilestone(null);
     if (typeof window !== "undefined") {
       const url = new URL(window.location.href);
