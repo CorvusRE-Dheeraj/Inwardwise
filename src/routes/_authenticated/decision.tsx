@@ -282,6 +282,7 @@ function DecisionChat() {
     setStarted(false);
     setInput("");
     prevStageRef.current = 1;
+    autoAdvanceTriesRef.current = 0;
     setMilestone(null);
     if (typeof window !== "undefined") {
       const url = new URL(window.location.href);
@@ -449,7 +450,8 @@ function DecisionChat() {
                 <JourneyProgress current={currentStage} vertical />
                 <p className="mx-4 mb-4 rounded-xl border border-glass-border bg-foreground/[0.02] p-3 text-[10px] leading-relaxed text-muted-foreground">
                   The facilitator asks 2 to 5 questions per stage and waits for your confirmation
-                  before advancing. Recommendations only come after the final step.
+                  before advancing. After step 7 the session completes on its own — no further
+                  answers are needed, and the final step is yours to download.
                 </p>
               </aside>
             </div>
@@ -494,6 +496,11 @@ function DecisionChat() {
                 <Loader2 className="h-3.5 w-3.5 animate-spin" /> Facilitator is thinking…
               </div>
             )}
+            {autoAdvancing && (
+              <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                <Loader2 className="h-3.5 w-3.5 animate-spin" /> Moving to the Action Stage…
+              </div>
+            )}
             {canDownload && messages.length > 0 && (
               <motion.div
                 initial={{ opacity: 0, y: 8 }}
@@ -520,7 +527,7 @@ function DecisionChat() {
             )}
           </div>
 
-          {started && !canDownload && (
+          {started && currentStage < 7 && (
           <div className="border-t border-glass-border p-3 md:p-4">
             <form
               onSubmit={(e) => {
