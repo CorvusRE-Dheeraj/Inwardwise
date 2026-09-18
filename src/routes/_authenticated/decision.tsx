@@ -535,12 +535,20 @@ function DecisionChat() {
                   the full transcript, every stage's questions, your answers, and the facilitator's
                   recommendation.
                 </p>
-                <button
-                  onClick={downloadSession}
-                  className="mt-4 inline-flex items-center gap-2 rounded-full bg-accent px-5 py-2.5 text-sm font-medium text-background transition hover:opacity-90"
-                >
-                  <Download className="h-4 w-4" /> Download whole session (PDF)
-                </button>
+                <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
+                  <button
+                    onClick={downloadSession}
+                    className="inline-flex items-center gap-2 rounded-full bg-accent px-5 py-2.5 text-sm font-medium text-background transition hover:opacity-90"
+                  >
+                    <Download className="h-4 w-4" /> Download whole session (PDF)
+                  </button>
+                  <button
+                    onClick={resetConversation}
+                    className="inline-flex items-center gap-2 rounded-full border border-glass-border bg-foreground/5 px-5 py-2.5 text-sm font-medium text-foreground transition hover:bg-foreground/10"
+                  >
+                    <RotateCcw className="h-4 w-4" /> Start a New Decision
+                  </button>
+                </div>
               </motion.div>
             )}
           </div>
@@ -658,10 +666,19 @@ function DecisionChat() {
 }
 
 
+// Closing invitations like "Is there a new situation you would like to explore?"
+// are never useful — the interface ends the session with download/restart actions.
+const CLOSING_INVITATION =
+  /(?:is there (?:a|another|any) (?:new )?(?:situation|decision|part)[^.?]*\?|would you like to (?:revisit|explore|continue|go back)[^.?]*\?|shall we (?:continue|move on|proceed)[^.?]*\?)/gi;
+
+function stripClosingInvitation(text: string): string {
+  return text.replace(CLOSING_INVITATION, "").replace(/[ \t]+\n/g, "\n").trim();
+}
+
 function MessageBubble({ m }: { m: UIMessage }) {
   const raw = extractText(m);
   const isUser = m.role === "user";
-  const text = !isUser ? stripStageTag(raw) : raw;
+  const text = !isUser ? stripClosingInvitation(stripStageTag(raw)) : raw;
 
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
   const [isLoading, setIsLoading] = useState(false);
