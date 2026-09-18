@@ -139,6 +139,30 @@ function DecisionChat() {
     prevStageRef.current = Math.max(prevStageRef.current, currentStage);
   }, [currentStage]);
 
+  // Step 7 → Step 8 completes on its own. Once the facilitator reaches step 7
+  // the person never types again: if a facilitator reply still ends inside
+  // step 7 instead of carrying the Action Stage with it, send one automatic
+  // "continue" so the journey moves to the final step without prompt input.
+  const autoAdvanceTriesRef = useRef(0);
+  const [autoAdvancing, setAutoAdvancing] = useState(false);
+  useEffect(() => {
+    if (status !== "ready" || !started) return;
+    if (currentStage < 7 || currentStage >= TOTAL_STAGES) return;
+    const last = messages[messages.length - 1];
+    if (!last || last.role !== "assistant") return;
+    if (autoAdvanceTriesRef.current >= 2) return;
+    autoAdvanceTriesRef.current += 1;
+    setAutoAdvancing(true);
+    const t = setTimeout(() => {
+      setAutoAdvancing(false);
+      sendMessage({ text: "Please continue to the next step." });
+    }, 1200);
+    return () => {
+      clearTimeout(t);
+      setAutoAdvancing(false);
+    };
+  }, [status, started, currentStage, messages, sendMessage]);
+
   // Deterministic safety net: surface hotlines whenever the person describes a crisis.
   const crisisCategories = useMemo(
     () =>
