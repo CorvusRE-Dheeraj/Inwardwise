@@ -477,16 +477,14 @@ function DecisionChat() {
                 className="glass-strong mt-4 rounded-2xl border border-accent/40 p-5 text-center"
               >
                 <div className="mb-1 text-[10px] uppercase tracking-[0.18em] text-accent">
-                  Your Decision Journey is Complete
+                  Decision Making Completed
                 </div>
-                <p className="mx-auto mb-2 max-w-md text-xs text-muted-foreground">
-                  You've worked through your situation, objective, constraints, boundary and
-                  options.
-                </p>
                 <h3 className="font-display text-xl">Your decision session is ready</h3>
-                <p className="mx-auto mt-1 max-w-md text-xs text-muted-foreground">
-                  Download the full transcript, every stage's questions, your answers, and the
-                  facilitator's recommendation.
+                <p className="mx-auto mt-2 max-w-md text-xs text-muted-foreground">
+                  Nothing more to answer. The final stage, the Action Stage, is yours to work
+                  through on your own: use the sub-objectives above to find each answer. Download
+                  the full transcript, every stage's questions, your answers, and the facilitator's
+                  recommendation.
                 </p>
                 <button
                   onClick={downloadSession}
@@ -498,7 +496,8 @@ function DecisionChat() {
             )}
           </div>
 
-          <div className={`border-t border-glass-border p-3 md:p-4 ${started ? "" : "hidden"}`}>
+          {started && !canDownload && (
+          <div className="border-t border-glass-border p-3 md:p-4">
             <form
               onSubmit={(e) => {
                 e.preventDefault();
@@ -595,6 +594,7 @@ function DecisionChat() {
               </p>
             )}
           </div>
+          )}
         </div>
       </div>
 
