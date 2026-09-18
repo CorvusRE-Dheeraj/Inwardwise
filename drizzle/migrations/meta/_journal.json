@@ -1,0 +1,13 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1789745880653,
+      "tag": "0000_grant_journey_library_dml_to_authenticated",
+      "breakpoints": true
+    }
+  ]
+}
