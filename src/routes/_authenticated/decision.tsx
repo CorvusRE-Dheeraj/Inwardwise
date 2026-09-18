@@ -139,6 +139,30 @@ function DecisionChat() {
     prevStageRef.current = Math.max(prevStageRef.current, currentStage);
   }, [currentStage]);
 
+  // Step 7 → Step 8 completes on its own. Once the facilitator reaches step 7
+  // the person never types again: if a facilitator reply still ends inside
+  // step 7 instead of carrying the Action Stage with it, send one automatic
+  // "continue" so the journey moves to the final step without prompt input.
+  const autoAdvanceTriesRef = useRef(0);
+  const [autoAdvancing, setAutoAdvancing] = useState(false);
+  useEffect(() => {
+    if (status !== "ready" || !started) return;
+    if (currentStage < 7 || currentStage >= TOTAL_STAGES) return;
+    const last = messages[messages.length - 1];
+    if (!last || last.role !== "assistant") return;
+    if (autoAdvanceTriesRef.current >= 2) return;
+    autoAdvanceTriesRef.current += 1;
+    setAutoAdvancing(true);
+    const t = setTimeout(() => {
+      setAutoAdvancing(false);
+      sendMessage({ text: "Please continue to the next step." });
+    }, 1200);
+    return () => {
+      clearTimeout(t);
+      setAutoAdvancing(false);
+    };
+  }, [status, started, currentStage, messages, sendMessage]);
+
   // Deterministic safety net: surface hotlines whenever the person describes a crisis.
   const crisisCategories = useMemo(
     () =>
@@ -258,6 +282,7 @@ function DecisionChat() {
     setStarted(false);
     setInput("");
     prevStageRef.current = 1;
+    autoAdvanceTriesRef.current = 0;
     setMilestone(null);
     if (typeof window !== "undefined") {
       const url = new URL(window.location.href);
@@ -425,7 +450,8 @@ function DecisionChat() {
                 <JourneyProgress current={currentStage} vertical />
                 <p className="mx-4 mb-4 rounded-xl border border-glass-border bg-foreground/[0.02] p-3 text-[10px] leading-relaxed text-muted-foreground">
                   The facilitator asks 2 to 5 questions per stage and waits for your confirmation
-                  before advancing. Recommendations only come after the final step.
+                  before advancing. After step 7 the session completes on its own — no further
+                  answers are needed, and the final step is yours to download.
                 </p>
               </aside>
             </div>
@@ -470,6 +496,11 @@ function DecisionChat() {
                 <Loader2 className="h-3.5 w-3.5 animate-spin" /> Facilitator is thinking…
               </div>
             )}
+            {autoAdvancing && (
+              <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                <Loader2 className="h-3.5 w-3.5 animate-spin" /> Moving to the Action Stage…
+              </div>
+            )}
             {canDownload && messages.length > 0 && (
               <motion.div
                 initial={{ opacity: 0, y: 8 }}
@@ -496,7 +527,7 @@ function DecisionChat() {
             )}
           </div>
 
-          {started && !canDownload && (
+          {started && currentStage < 7 && (
           <div className="border-t border-glass-border p-3 md:p-4">
             <form
               onSubmit={(e) => {
