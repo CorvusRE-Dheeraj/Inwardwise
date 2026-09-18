@@ -387,7 +387,7 @@ function DecisionChat() {
       if (!raw) return;
       if (m.role === "assistant") {
         writeBlock("Facilitator", { size: 12, style: "bold", color: [20, 90, 190], gap: 4 });
-        writeBlock(stripStageTag(raw), { size: 11, gap: 12 });
+        writeBlock(stripClosingInvitation(stripStageTag(raw)), { size: 11, gap: 12 });
       } else {
         writeBlock(`You`, { size: 12, style: "bold", color: [40, 40, 40], gap: 4 });
         writeBlock(raw, { size: 11, gap: 12 });
