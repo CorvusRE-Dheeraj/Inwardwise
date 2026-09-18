@@ -104,6 +104,7 @@ function DecisionChat() {
       if (saved.messages.length) setMessages(saved.messages);
       setInput(saved.draft ?? "");
       prevStageRef.current = saved.stage;
+      if (saved.stage >= TOTAL_STAGES) setSessionDone(true);
       setStarted(saved.messages.length > 0 || Boolean(saved.started));
       requestAnimationFrame(() =>
         listRef.current?.scrollTo({ top: listRef.current.scrollHeight }),
@@ -145,12 +146,24 @@ function DecisionChat() {
   // "continue" so the journey moves to the final step without prompt input.
   const autoAdvanceTriesRef = useRef(0);
   const [autoAdvancing, setAutoAdvancing] = useState(false);
+  // Session finished: the Action Stage was delivered (or the facilitator closed
+  // step 7 without emitting the tag). Locks the progress bar at step 8.
+  const [sessionDone, setSessionDone] = useState(false);
   useEffect(() => {
     if (status !== "ready" || !started) return;
-    if (currentStage < 7 || currentStage >= TOTAL_STAGES) return;
+    if (currentStage >= TOTAL_STAGES) {
+      setSessionDone(true);
+      return;
+    }
+    if (currentStage < 7) return;
     const last = messages[messages.length - 1];
     if (!last || last.role !== "assistant") return;
-    if (autoAdvanceTriesRef.current >= 2) return;
+    // The facilitator finished step 7 without moving on: after two automatic
+    // nudges, conclude the session ourselves so the person is never stuck.
+    if (autoAdvanceTriesRef.current >= 2) {
+      setSessionDone(true);
+      return;
+    }
     autoAdvanceTriesRef.current += 1;
     setAutoAdvancing(true);
     const t = setTimeout(() => {
@@ -163,6 +176,9 @@ function DecisionChat() {
     };
   }, [status, started, currentStage, messages, sendMessage]);
 
+  // What the progress rail shows: jumps to step 8 the moment the session concludes.
+  const displayStage = sessionDone ? TOTAL_STAGES : currentStage;
+
   // Deterministic safety net: surface hotlines whenever the person describes a crisis.
   const crisisCategories = useMemo(
     () =>
@@ -174,7 +190,7 @@ function DecisionChat() {
   const snapshot = (): DecisionSession => ({
     ...session,
     category,
-    stage: currentStage,
+    stage: displayStage,
     title: deriveTitle(messages) || session.title,
     messages,
     draft: input,
@@ -283,6 +299,7 @@ function DecisionChat() {
     setInput("");
     prevStageRef.current = 1;
     autoAdvanceTriesRef.current = 0;
+    setSessionDone(false);
     setMilestone(null);
     if (typeof window !== "undefined") {
       const url = new URL(window.location.href);
@@ -306,6 +323,7 @@ function DecisionChat() {
     setMessages(s.messages);
     setInput(s.draft ?? "");
     prevStageRef.current = s.stage;
+    setSessionDone(s.stage >= TOTAL_STAGES);
     setStarted(true);
     if (typeof window !== "undefined") {
       const url = new URL(window.location.href);
@@ -369,7 +387,7 @@ function DecisionChat() {
       if (!raw) return;
       if (m.role === "assistant") {
         writeBlock("Facilitator", { size: 12, style: "bold", color: [20, 90, 190], gap: 4 });
-        writeBlock(stripStageTag(raw), { size: 11, gap: 12 });
+        writeBlock(stripClosingInvitation(stripStageTag(raw)), { size: 11, gap: 12 });
       } else {
         writeBlock(`You`, { size: 12, style: "bold", color: [40, 40, 40], gap: 4 });
         writeBlock(raw, { size: 11, gap: 12 });
@@ -394,7 +412,7 @@ function DecisionChat() {
     doc.save(`${safe}.pdf`);
   };
 
-  const canDownload = currentStage >= 8;
+  const canDownload = displayStage >= 8;
 
   return (
     <AppShell>
@@ -447,7 +465,7 @@ function DecisionChat() {
             {/* Desktop: sticky left sidebar, stays visible while the chat scrolls */}
             <div className="hidden lg:block">
               <aside className="glass-strong sticky top-24 h-fit rounded-3xl">
-                <JourneyProgress current={currentStage} vertical />
+                <JourneyProgress current={displayStage} vertical />
                 <p className="mx-4 mb-4 rounded-xl border border-glass-border bg-foreground/[0.02] p-3 text-[10px] leading-relaxed text-muted-foreground">
                   The facilitator asks 2 to 5 questions per stage and waits for your confirmation
                   before advancing. After step 7 the session completes on its own — no further
@@ -457,7 +475,7 @@ function DecisionChat() {
             </div>
             {/* Mobile: compact bar pinned to the top of the viewport */}
             <div className="glass-strong sticky top-16 z-20 -mx-1 rounded-2xl lg:hidden">
-              <JourneyProgress current={currentStage} />
+              <JourneyProgress current={displayStage} />
             </div>
           </>
         )}
@@ -517,12 +535,20 @@ function DecisionChat() {
                   the full transcript, every stage's questions, your answers, and the facilitator's
                   recommendation.
                 </p>
-                <button
-                  onClick={downloadSession}
-                  className="mt-4 inline-flex items-center gap-2 rounded-full bg-accent px-5 py-2.5 text-sm font-medium text-background transition hover:opacity-90"
-                >
-                  <Download className="h-4 w-4" /> Download whole session (PDF)
-                </button>
+                <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
+                  <button
+                    onClick={downloadSession}
+                    className="inline-flex items-center gap-2 rounded-full bg-accent px-5 py-2.5 text-sm font-medium text-background transition hover:opacity-90"
+                  >
+                    <Download className="h-4 w-4" /> Download whole session (PDF)
+                  </button>
+                  <button
+                    onClick={resetConversation}
+                    className="inline-flex items-center gap-2 rounded-full border border-glass-border bg-foreground/5 px-5 py-2.5 text-sm font-medium text-foreground transition hover:bg-foreground/10"
+                  >
+                    <RotateCcw className="h-4 w-4" /> Start a New Decision
+                  </button>
+                </div>
               </motion.div>
             )}
           </div>
@@ -640,10 +666,19 @@ function DecisionChat() {
 }
 
 
+// Closing invitations like "Is there a new situation you would like to explore?"
+// are never useful — the interface ends the session with download/restart actions.
+const CLOSING_INVITATION =
+  /(?:is there (?:a|another|any) (?:new )?(?:situation|decision|part)[^.?]*\?|would you like to (?:revisit|explore|continue|go back)[^.?]*\?|shall we (?:continue|move on|proceed)[^.?]*\?)/gi;
+
+function stripClosingInvitation(text: string): string {
+  return text.replace(CLOSING_INVITATION, "").replace(/[ \t]+\n/g, "\n").trim();
+}
+
 function MessageBubble({ m }: { m: UIMessage }) {
   const raw = extractText(m);
   const isUser = m.role === "user";
-  const text = !isUser ? stripStageTag(raw) : raw;
+  const text = !isUser ? stripClosingInvitation(stripStageTag(raw)) : raw;
 
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
   const [isLoading, setIsLoading] = useState(false);
