@@ -14,6 +14,7 @@ import { SelfJourneyProgress } from "@/components/avatar/SelfJourneyProgress";
 import { useAvatarVault } from "@/lib/avatar-vault";
 import { Caution, PinKeypad } from "@/components/avatar/PinKeypad";
 import { MIInterview } from "@/components/mi/MIInterview";
+import { DirectAnswer } from "@/components/avatar/DirectAnswer";
 import { decryptText, encryptText } from "@/lib/avatar-crypto";
 import { ProductName } from "@/components/products/ProductChrome";
 import {
