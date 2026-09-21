@@ -14,6 +14,7 @@ import { SelfJourneyProgress } from "@/components/avatar/SelfJourneyProgress";
 import { useAvatarVault } from "@/lib/avatar-vault";
 import { Caution, PinKeypad } from "@/components/avatar/PinKeypad";
 import { MIInterview } from "@/components/mi/MIInterview";
+import { DirectAnswer } from "@/components/avatar/DirectAnswer";
 import { decryptText, encryptText } from "@/lib/avatar-crypto";
 import { ProductName } from "@/components/products/ProductChrome";
 import {
@@ -432,29 +433,50 @@ function DimensionFlow() {
             </div>
 
             <div className="mt-6">
-              <MIInterview
-                key={q!.key}
-                targetQuestion={q!.prompt}
-                openingQuestion={q!.opening}
-                context={`${dim.intro}${q!.helper ? `\n\n${q!.helper}` : ""}`}
-                initialAnswer={answers[q!.key] ?? ""}
-                sessionKey={`${dim.n}:${q!.key}`}
-                onCapture={(text) => setAnswers((a) => ({ ...a, [q!.key]: text }))}
-                onDraft={(text) =>
-                  setAnswers((a) => (a[q!.key] === text ? a : { ...a, [q!.key]: text }))
-                }
-                completeLabel={step + 1 < total ? "Next question" : "Complete this stage"}
-                onComplete={async () => {
-                  if (step + 1 < total) {
-                    await persist(false);
-                    setStep((s) => s + 1);
-                  } else {
-                    const allDone = await persist(true);
-                    setFinished({ allDone });
+              {dim.n <= 2 ? (
+                <MIInterview
+                  key={q!.key}
+                  targetQuestion={q!.prompt}
+                  openingQuestion={q!.opening}
+                  context={`${dim.intro}${q!.helper ? `\n\n${q!.helper}` : ""}`}
+                  initialAnswer={answers[q!.key] ?? ""}
+                  sessionKey={`${dim.n}:${q!.key}`}
+                  onCapture={(text) => setAnswers((a) => ({ ...a, [q!.key]: text }))}
+                  onDraft={(text) =>
+                    setAnswers((a) => (a[q!.key] === text ? a : { ...a, [q!.key]: text }))
                   }
-                }}
-              />
+                  completeLabel={step + 1 < total ? "Next question" : "Complete this stage"}
+                  onComplete={async () => {
+                    if (step + 1 < total) {
+                      await persist(false);
+                      setStep((s) => s + 1);
+                    } else {
+                      const allDone = await persist(true);
+                      setFinished({ allDone });
+                    }
+                  }}
+                />
+              ) : (
+                <DirectAnswer
+                  key={q!.key}
+                  question={q!.prompt}
+                  helper={q!.helper}
+                  value={answers[q!.key] ?? ""}
+                  onChange={(text) => setAnswers((a) => ({ ...a, [q!.key]: text }))}
+                  completeLabel={step + 1 < total ? "Next question" : "Complete this stage"}
+                  onComplete={async () => {
+                    if (step + 1 < total) {
+                      await persist(false);
+                      setStep((s) => s + 1);
+                    } else {
+                      const allDone = await persist(true);
+                      setFinished({ allDone });
+                    }
+                  }}
+                />
+              )}
             </div>
+
 
             <div className="mt-8 flex flex-wrap items-center gap-3 border-t border-[color:var(--rule)] pt-6">
               <button
