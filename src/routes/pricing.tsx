@@ -73,7 +73,7 @@ function PricingPage() {
               ))}
             </ul>
             <Link
-              to="/feedback"
+              to="/contact"
               className="mt-6 inline-flex items-center justify-center rounded-full border border-glass-border px-5 py-2.5 text-sm"
             >
               Contact us
