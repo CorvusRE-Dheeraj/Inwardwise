@@ -66,7 +66,7 @@ export function AppShell({ children }: { children: ReactNode }) {
                 </Link>
               </li>
               <li>
-                <Link to="/decision" className="hover:text-[color:var(--royal)]">
+                <Link to="/products" className="hover:text-[color:var(--royal)]">
                   Start a decision
                 </Link>
               </li>
@@ -76,13 +76,8 @@ export function AppShell({ children }: { children: ReactNode }) {
                 </Link>
               </li>
               <li>
-                <Link to="/avatar/ask" className="hover:text-[color:var(--royal)]">
+                <Link to="/products" className="hover:text-[color:var(--royal)]">
                   Self Aware
-                </Link>
-              </li>
-              <li className="pl-4">
-                <Link to="/products/calm-mantra" className="hover:text-[color:var(--royal)]">
-                  ↳ Meditation
                 </Link>
               </li>
 
