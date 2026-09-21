@@ -9,6 +9,7 @@ export type PathwayId =
   | "belonging"
   | "oneness"
   | "share"
+  | "music"
   | "decision"
   | "self";
 
@@ -83,6 +84,15 @@ export const PATHWAYS: PathwayDef[] = [
       "Sometimes in order to connect to the outside world, you genuinely need to share and help but the social noises make it very difficult to gain that connection. AI takes your desire to connect and share and gets it to others who need it without you struggling to help. AI makes that one on one connection knowing the inner needs rather than the external egos.",
     to: "/connect/share",
     action: "Share Experience",
+  },
+  {
+    id: "music",
+    name: "Connect",
+    accent: "Music",
+    purpose:
+      "Sometimes a song says what we cannot put into words. AI looks at your prompt, your InwardWise Self, and, where appropriate, your Connect Journal to recommend music that resonates with what you are experiencing or trying to express. Use music to discover, reflect, or share something with another person when words aren't enough.",
+    to: "/connect",
+    action: "Connect Music",
   },
   {
     id: "decision",
