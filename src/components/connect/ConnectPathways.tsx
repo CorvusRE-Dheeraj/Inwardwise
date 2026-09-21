@@ -10,6 +10,7 @@ const VISIBLE_PATHWAYS = [
   "belonging",
   "oneness",
   "share",
+  "music",
 ];
 const visible = PATHWAYS.filter((p) => VISIBLE_PATHWAYS.includes(p.id));
 
