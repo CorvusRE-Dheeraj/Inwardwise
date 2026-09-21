@@ -20,15 +20,21 @@ export const STAGES: Stage[] = [
   { n: 8, id: "solutions",  name: "Solution Synthesis",  short: "Concrete solutions per sub-objective",          purpose: "For each boundary sentence, propose concrete solutions, then combine into the final recommendation." },
 ];
 
-const STAGE_REGEX = /\[STAGE:\s*(\d)\s*[—\-–:]\s*([^\]]+)\]/i;
+// Global: a single reply can carry more than one tag (e.g. the model delivers
+// Stage 7 and the Action Stage in the same message, emitting "[STAGE: 8 — …]"
+// mid-reply after the leading "[STAGE: 7 — …]"). The LAST tag wins — that is
+// where the reply actually ends.
+const STAGE_REGEX_GLOBAL = /\[STAGE:\s*(\d)\s*[—\-–:]\s*([^\]]+)\]/gi;
 
 export function parseStageTag(text: string): number | null {
-  const m = text.match(STAGE_REGEX);
-  if (!m) return null;
-  const n = parseInt(m[1], 10);
-  return n >= 1 && n <= 8 ? n : null;
+  let n: number | null = null;
+  for (const m of text.matchAll(STAGE_REGEX_GLOBAL)) {
+    const v = parseInt(m[1], 10);
+    if (v >= 1 && v <= 8) n = v;
+  }
+  return n;
 }
 
 export function stripStageTag(text: string): string {
-  return text.replace(STAGE_REGEX, "").replace(/^\s*\n+/, "");
+  return text.replace(STAGE_REGEX_GLOBAL, "").replace(/^\s*\n+/, "");
 }
