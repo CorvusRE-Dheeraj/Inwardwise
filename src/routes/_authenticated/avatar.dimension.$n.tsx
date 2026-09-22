@@ -230,7 +230,9 @@ function DimensionFlow() {
 
 
   if (finished) {
-    const nextStage = SELF_JOURNEY.find((s) => s.n > dim.n);
+    // Journey order comes from SELF_JOURNEY's array order (factor 5 first, factor 1 last).
+    const journeyPos = SELF_JOURNEY.findIndex((s) => s.n === dim.n);
+    const nextStage = journeyPos >= 0 ? SELF_JOURNEY[journeyPos + 1] : undefined;
     return (
       <div className="mx-auto w-[min(820px,calc(100%-2rem))] py-20">
         <SiteHeader />
