@@ -10,7 +10,8 @@ import {
   MI_PRIVACY_NOTICE,
   type MiCrisisCategory,
 } from "@/lib/mi-filter";
-import { startRecording, transcribe, type Recorder } from "@/lib/voice";
+import { startRecording, synthesizeSpeech, transcribe, type Recorder } from "@/lib/voice";
+import { VoiceReminder } from "@/components/avatar/VoiceReminder";
 import { detectCrisisInMessages } from "@/lib/crisis-detect";
 
 export interface MIInterviewProps {
@@ -68,6 +69,26 @@ export function MIInterview({
   const [crisisCategories, setCrisisCategories] = useState<MiCrisisCategory[]>([]);
   const [recorder, setRecorder] = useState<Recorder | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  async function speak(text: string) {
+    try {
+      audioRef.current?.pause();
+      const blob = await synthesizeSpeech(text.replace(/\[[^\]]*\]/g, ""));
+      const a = new Audio(URL.createObjectURL(blob));
+      audioRef.current = a;
+      await a.play();
+    } catch {
+      /* playback blocked; text is shown */
+    }
+  }
+
+  // Read each new interviewer message aloud.
+  const lastAssistant = [...turns].reverse().find((t) => t.role === "assistant")?.content ?? "";
+  useEffect(() => {
+    if (lastAssistant) void speak(lastAssistant);
+    return () => audioRef.current?.pause();
+  }, [lastAssistant]);
 
   // Restore (or start) the conversation when the question changes.
   useEffect(() => {
@@ -151,6 +172,7 @@ export function MIInterview({
       return;
     }
     try {
+      audioRef.current?.pause();
       setRecorder(await startRecording());
     } catch {
       setError("Microphone unavailable. You can type instead.");
@@ -166,6 +188,7 @@ export function MIInterview({
 
   return (
     <div className="space-y-4">
+      <VoiceReminder />
       <p className="rounded-lg border border-[color:var(--rule)] bg-white/40 px-4 py-3 text-[13px] leading-relaxed text-[color:var(--muted-foreground)]">
         {MI_PRIVACY_NOTICE}
       </p>
@@ -218,6 +241,21 @@ export function MIInterview({
         </div>
       )}
 
+      <div className="flex flex-col items-center gap-2">
+        <button
+          type="button"
+          onClick={toggleMic}
+          disabled={busy}
+          aria-label={recorder ? "Stop recording" : "Speak your answer"}
+          className={`flex h-20 w-20 items-center justify-center rounded-full text-[color:var(--paper)] shadow-md disabled:opacity-60 ${recorder ? "animate-pulse bg-destructive" : "bg-[color:var(--royal)]"}`}
+        >
+          {recorder ? <Square className="h-7 w-7" /> : <Mic className="h-8 w-8" />}
+        </button>
+        <span className="text-sm text-[color:var(--ink)]">
+          {recorder ? "Listening… tap to stop and send" : "Tap to speak your answer"}
+        </span>
+      </div>
+
       <div className="flex gap-2">
         <textarea
           aria-label="Your answer"
@@ -230,7 +268,7 @@ export function MIInterview({
             }
           }}
           rows={2}
-          placeholder="Answer in your own words…"
+          placeholder="Or type your answer…"
           className="flex-1 resize-none rounded-md border border-[color:var(--rule)] bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[color:var(--royal)]/30"
         />
         <div className="flex flex-col gap-2">
