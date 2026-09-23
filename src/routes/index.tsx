@@ -130,6 +130,39 @@ function Landing() {
         </motion.div>
       </section>
 
+      {/* ============ INTRO VIDEO ============ */}
+      <section className="rule-top">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-12% 0px" }}
+          transition={{ duration: 1, ease: [0.2, 0.7, 0.2, 1] }}
+          className="mx-auto w-[min(1280px,calc(100%-2rem))] py-24 md:py-32"
+        >
+          <div className="grid grid-cols-12 gap-6">
+            <div className="col-span-12 md:col-span-1">
+              <span className="font-mono-cap text-[color:var(--muted-foreground)]">§ 02</span>
+            </div>
+            <div className="col-span-12 md:col-span-11">
+              <h2 className="font-display max-w-4xl text-[clamp(1.8rem,4vw,3.2rem)] leading-[1.05] tracking-tight text-[color:var(--ink)]">
+                InwardWise, <em className="italic text-[color:var(--royal)]">The Path to Clarity</em>
+              </h2>
+              <div className="mt-10 overflow-hidden rounded-2xl border border-[color:var(--rule)]">
+                <video
+                  src={introVideo.url}
+                  controls
+                  playsInline
+                  preload="metadata"
+                  className="aspect-video w-full"
+                >
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      </section>
+
       {/* ============ VOLUME II, SELF ============ */}
       <Volume
         eyebrow={<>Volume II · <ProductName id="self" /> · Create and Connect with Your Inner <ProductName id="self" /></>}
