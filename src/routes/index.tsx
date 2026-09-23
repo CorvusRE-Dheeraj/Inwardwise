@@ -3,6 +3,7 @@ import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import { AppShell } from "@/components/AppShell";
 import { ProductName } from "@/components/products/ProductChrome";
+import introVideo from "@/assets/inwardwise-path-to-clarity.mp4.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
