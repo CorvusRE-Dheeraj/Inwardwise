@@ -37,6 +37,7 @@ function AuthPage() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [info, setInfo] = useState<string | null>(null);
+  const [needsConfirmation, setNeedsConfirmation] = useState(false);
 
   useEffect(() => {
     let mounted = true;
@@ -48,10 +49,52 @@ function AuthPage() {
     };
   }, [navigate, target]);
 
-  async function onEmailSubmit(e: React.FormEvent) {
-    e.preventDefault();
+  function friendlyAuthError(err: unknown): string {
+    const raw = err instanceof Error ? err.message : String(err ?? "");
+    const m = raw.toLowerCase();
+    if (m.includes("weak") || m.includes("pwned") || m.includes("known to be"))
+      return "That password has appeared in known data breaches. Please choose a longer, more unusual password — a phrase of a few unrelated words works well.";
+    if (m.includes("rate limit") || m.includes("after") && m.includes("second"))
+      return "Too many attempts in a row. Please wait a few seconds and try again.";
+    if (m.includes("not confirmed"))
+      return "Your email isn't confirmed yet. Please open the confirmation link we sent you, or resend it below.";
+    if (m.includes("invalid login credentials"))
+      return "That email and password don't match an account. Please check them and try again.";
+    if (m.includes("already registered") || m.includes("already been registered"))
+      return "An account with this email already exists. Try signing in instead.";
+    return raw || "Something went wrong. Please try again.";
+  }
+
+  async function onResendConfirmation() {
     setError(null);
     setInfo(null);
+    setBusy(true);
+    try {
+      const { error } = await supabase.auth.resend({
+        type: "signup",
+        email,
+        options: { emailRedirectTo: window.location.origin },
+      });
+      if (error) throw error;
+      setInfo("Confirmation email sent. Please check your inbox.");
+      setNeedsConfirmation(false);
+    } catch (err) {
+      setError(friendlyAuthError(err));
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function onEmailSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (busy) return;
+    setError(null);
+    setInfo(null);
+    setNeedsConfirmation(false);
+    if (mode === "signup" && password.length < 8) {
+      setError("Please use at least 8 characters. Common or breached passwords are not accepted.");
+      return;
+    }
     setBusy(true);
     try {
       if (mode === "signup") {
@@ -69,7 +112,9 @@ function AuthPage() {
         navigate({ to: target, replace: true });
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Something went wrong");
+      const raw = err instanceof Error ? err.message : String(err ?? "");
+      if (raw.toLowerCase().includes("not confirmed")) setNeedsConfirmation(true);
+      setError(friendlyAuthError(err));
     } finally {
       setBusy(false);
     }
@@ -149,16 +194,32 @@ function AuthPage() {
               <input
                 type="password"
                 required
-                minLength={6}
+                minLength={mode === "signup" ? 8 : 6}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full rounded-xl border border-glass-border bg-background/40 px-3 py-2.5 text-sm outline-none focus:border-accent"
-                placeholder="At least 6 characters"
+                placeholder={mode === "signup" ? "At least 8 characters" : "Your password"}
               />
+              {mode === "signup" && (
+                <p className="mt-1 text-xs text-muted-foreground">
+                  Use at least 8 characters. Passwords found in known data breaches are not accepted, so avoid
+                  common words — a phrase of a few unrelated words works well.
+                </p>
+              )}
             </div>
 
             {error && <p className="text-xs text-red-500">{error}</p>}
             {info && <p className="text-xs text-accent">{info}</p>}
+            {needsConfirmation && (
+              <button
+                type="button"
+                onClick={onResendConfirmation}
+                disabled={busy}
+                className="text-xs text-accent hover:underline disabled:opacity-60"
+              >
+                Resend the confirmation email
+              </button>
+            )}
 
             <button
               type="submit"

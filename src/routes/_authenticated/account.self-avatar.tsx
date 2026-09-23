@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { ProductName } from "@/components/products/ProductChrome";
 import { loadSelfAvatar, saveSelfAvatar, selfAvatarDefaults, type SelfAvatar } from "@/lib/profile-storage";
+import { SELF_JOURNEY } from "@/lib/self-journey";
 
 export const Route = createFileRoute("/_authenticated/account/self-avatar")({
   component: SelfAvatarPage,
@@ -132,7 +133,7 @@ function SelfAvatarPage() {
             type="button"
             onClick={() => {
               if (uid) saveSelfAvatar(uid, form);
-              navigate({ to: "/avatar/dimension/$n", params: { n: "1" } });
+              navigate({ to: "/avatar/dimension/$n", params: { n: String(SELF_JOURNEY[0].n) } });
             }}
             className="rounded-full bg-foreground px-5 py-2 text-sm text-background"
           >
