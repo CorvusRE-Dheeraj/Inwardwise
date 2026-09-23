@@ -30,16 +30,19 @@ export function DirectAnswer({
   const [error, setError] = useState<string | null>(null);
   const [text, setText] = useState(value);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const speakId = useRef(0);
 
   useEffect(() => {
     setText(value);
   }, [value]);
 
   async function speak() {
+    const id = ++speakId.current;
+    audioRef.current?.pause();
     try {
-      audioRef.current?.pause();
       const blob = await synthesizeSpeech(question);
       const audio = new Audio(URL.createObjectURL(blob));
+      if (id !== speakId.current) return;
       audioRef.current = audio;
       await audio.play();
     } catch {
@@ -50,7 +53,10 @@ export function DirectAnswer({
   // Read each new question aloud.
   useEffect(() => {
     void speak();
-    return () => audioRef.current?.pause();
+    return () => {
+      speakId.current++;
+      audioRef.current?.pause();
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [question]);
 
@@ -76,6 +82,7 @@ export function DirectAnswer({
       return;
     }
     try {
+      speakId.current++;
       audioRef.current?.pause();
       setRecorder(await startRecording());
     } catch {
