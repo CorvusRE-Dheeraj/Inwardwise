@@ -194,16 +194,32 @@ function AuthPage() {
               <input
                 type="password"
                 required
-                minLength={6}
+                minLength={mode === "signup" ? 8 : 6}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full rounded-xl border border-glass-border bg-background/40 px-3 py-2.5 text-sm outline-none focus:border-accent"
-                placeholder="At least 6 characters"
+                placeholder={mode === "signup" ? "At least 8 characters" : "Your password"}
               />
+              {mode === "signup" && (
+                <p className="mt-1 text-xs text-muted-foreground">
+                  Use at least 8 characters. Passwords found in known data breaches are not accepted, so avoid
+                  common words — a phrase of a few unrelated words works well.
+                </p>
+              )}
             </div>
 
             {error && <p className="text-xs text-red-500">{error}</p>}
             {info && <p className="text-xs text-accent">{info}</p>}
+            {needsConfirmation && (
+              <button
+                type="button"
+                onClick={onResendConfirmation}
+                disabled={busy}
+                className="text-xs text-accent hover:underline disabled:opacity-60"
+              >
+                Resend the confirmation email
+              </button>
+            )}
 
             <button
               type="submit"
