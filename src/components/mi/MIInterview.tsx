@@ -70,12 +70,15 @@ export function MIInterview({
   const [recorder, setRecorder] = useState<Recorder | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const speakId = useRef(0);
 
   async function speak(text: string) {
+    const id = ++speakId.current;
+    audioRef.current?.pause();
     try {
-      audioRef.current?.pause();
       const blob = await synthesizeSpeech(text.replace(/\[[^\]]*\]/g, ""));
       const a = new Audio(URL.createObjectURL(blob));
+      if (id !== speakId.current) return;
       audioRef.current = a;
       await a.play();
     } catch {
@@ -87,7 +90,10 @@ export function MIInterview({
   const lastAssistant = [...turns].reverse().find((t) => t.role === "assistant")?.content ?? "";
   useEffect(() => {
     if (lastAssistant) void speak(lastAssistant);
-    return () => audioRef.current?.pause();
+    return () => {
+      speakId.current++;
+      audioRef.current?.pause();
+    };
   }, [lastAssistant]);
 
   // Restore (or start) the conversation when the question changes.
@@ -172,6 +178,7 @@ export function MIInterview({
       return;
     }
     try {
+      speakId.current++;
       audioRef.current?.pause();
       setRecorder(await startRecording());
     } catch {
