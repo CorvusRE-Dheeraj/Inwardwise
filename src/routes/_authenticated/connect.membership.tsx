@@ -1,3 +1,4 @@
+import { SongForThisMoment } from "@/components/connect/music/SongForThisMoment";
 import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
@@ -123,6 +124,7 @@ function MembershipPathway() {
           {(r) => <Groups result={r} />}
         </PathwayPrompt>
       </PathwaySection>
+      <SongForThisMoment page="membership" />
     </PathwayShell>
   );
 }

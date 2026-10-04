@@ -91,7 +91,7 @@ export const PATHWAYS: PathwayDef[] = [
     accent: "Music",
     purpose:
       "Sometimes a song says what we cannot put into words. AI looks at your prompt, your InwardWise Self, and, where appropriate, your Connect Journal to recommend music that resonates with what you are experiencing or trying to express. Use music to discover, reflect, or share something with another person when words aren't enough.",
-    to: "/connect",
+    to: "/connect/music",
     action: "Connect Music",
   },
   {
