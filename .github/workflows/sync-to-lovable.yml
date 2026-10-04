@@ -19,7 +19,6 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          # Otherwise checkout's GITHUB_TOKEN header overrides LOVABLE_REPO_TOKEN on the push.
           persist-credentials: false
 
       - uses: oven-sh/setup-bun@v2
@@ -32,12 +31,18 @@ jobs:
 
       - name: Push to Lovable repo
         env:
-          LOVABLE_REPO_TOKEN: ${{ secrets.LOVABLE_REPO_TOKEN }}
+          # Private half of a write-enabled deploy key on Inwardwise/clear-path-finder-61.
+          LOVABLE_DEPLOY_KEY: ${{ secrets.LOVABLE_DEPLOY_KEY }}
         run: |
-          if [ -z "$LOVABLE_REPO_TOKEN" ]; then
-            echo "::error::Secret LOVABLE_REPO_TOKEN is not set."
+          if [ -z "$LOVABLE_DEPLOY_KEY" ]; then
+            echo "::error::Secret LOVABLE_DEPLOY_KEY is not set."
             exit 1
           fi
+          mkdir -p ~/.ssh
+          printf '%s\n' "$LOVABLE_DEPLOY_KEY" > ~/.ssh/lovable_deploy_key
+          chmod 600 ~/.ssh/lovable_deploy_key
+          ssh-keyscan github.com >> ~/.ssh/known_hosts 2>/dev/null
+          export GIT_SSH_COMMAND="ssh -i ~/.ssh/lovable_deploy_key -o IdentitiesOnly=yes"
           # Plain (non-force) push: if Lovable has edits not in this repo, this fails
           # instead of overwriting them. Merge those edits into main here, then re-run.
-          git push "https://x-access-token:${LOVABLE_REPO_TOKEN}@github.com/Inwardwise/clear-path-finder-61.git" HEAD:main
+          git push git@github.com:Inwardwise/clear-path-finder-61.git HEAD:main
