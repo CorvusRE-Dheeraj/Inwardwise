@@ -1,0 +1,55 @@
+name: Deploy to GitHub Pages
+
+# Every push to dev builds the site and deploys it to GitHub Pages.
+# Needs a static build (index.html in .output/public) — until the server
+# functions move to Supabase Edge Functions, the "Check static build" step fails.
+
+on:
+  push:
+    branches: [dev]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deploy at a time; a second push waits instead of racing the first.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run build
+
+      - name: Check static build
+        run: |
+          if [ ! -f .output/public/index.html ]; then
+            echo "::error::No index.html in .output/public — the app still renders on a server and can't be served by GitHub Pages yet."
+            exit 1
+          fi
+          # SPA fallback so deep links like /connect/music load the app.
+          cp .output/public/index.html .output/public/404.html
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .output/public
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
