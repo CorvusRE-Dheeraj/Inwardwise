@@ -7,6 +7,7 @@ import {
   type StoredReflection,
 } from "@/lib/connect-book.functions";
 import { startRecording, transcribe, type Recorder } from "@/lib/voice";
+import { SongHeading, SongLinks } from "@/components/connect/music/SongLinks";
 
 /**
  * Connect Journal. Anything observed, read, watched or lived through can be
@@ -143,8 +144,16 @@ export function ReflectionNote({ readId }: { readId?: string }) {
               <li key={r.id} className="text-[14px] leading-relaxed">
                 <span className="text-[color:var(--muted-foreground)]">
                   {new Date(r.createdAt).toLocaleString()} ·{" "}
-                  {r.source === "spoken" ? "spoken" : "written"}
+                  {r.song ? "song" : r.source === "spoken" ? "spoken" : "written"}
                 </span>
+                {r.song && (
+                  <div className="mt-2 rounded-md border border-[color:var(--rule)] p-4">
+                    <SongHeading song={r.song} />
+                    <div className="mt-3">
+                      <SongLinks song={r.song} />
+                    </div>
+                  </div>
+                )}
                 <p className="mt-1 whitespace-pre-line">{r.body}</p>
               </li>
             ))}

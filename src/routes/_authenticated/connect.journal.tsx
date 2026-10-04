@@ -1,3 +1,4 @@
+import { SongForThisMoment } from "@/components/connect/music/SongForThisMoment";
 import { createFileRoute } from "@tanstack/react-router";
 import { PathwayShell, PathwaySection } from "@/components/connect/PathwayShell";
 import { ReflectionNote } from "@/components/connect/ReflectionNote";
@@ -39,6 +40,7 @@ function JournalPathway() {
       <PathwaySection>
         <ReflectionNote />
       </PathwaySection>
+      <SongForThisMoment page="journal" />
     </PathwayShell>
   );
 }
