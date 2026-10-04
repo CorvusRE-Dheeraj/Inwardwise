@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TestimonialsRouteImport } from './routes/testimonials'
+import { Route as SongRouteImport } from './routes/song'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ScienceRouteImport } from './routes/science'
 import { Route as PricingRouteImport } from './routes/pricing'
@@ -72,6 +73,7 @@ import { Route as AuthenticatedMeditationScheduleRouteImport } from './routes/_a
 import { Route as AuthenticatedMeditationPracticeRouteImport } from './routes/_authenticated/meditation.practice'
 import { Route as AuthenticatedConnectShareRouteImport } from './routes/_authenticated/connect.share'
 import { Route as AuthenticatedConnectOnenessRouteImport } from './routes/_authenticated/connect.oneness'
+import { Route as AuthenticatedConnectMusicRouteImport } from './routes/_authenticated/connect.music'
 import { Route as AuthenticatedConnectMembershipRouteImport } from './routes/_authenticated/connect.membership'
 import { Route as AuthenticatedConnectJournalRouteImport } from './routes/_authenticated/connect.journal'
 import { Route as AuthenticatedConnectEventsRouteImport } from './routes/_authenticated/connect.events'
@@ -91,6 +93,11 @@ import { Route as AuthenticatedAvatarDimensionNRouteImport } from './routes/_aut
 const TestimonialsRoute = TestimonialsRouteImport.update({
   id: '/testimonials',
   path: '/testimonials',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SongRoute = SongRouteImport.update({
+  id: '/song',
+  path: '/song',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
@@ -416,6 +423,12 @@ const AuthenticatedConnectOnenessRoute =
     path: '/connect/oneness',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedConnectMusicRoute =
+  AuthenticatedConnectMusicRouteImport.update({
+    id: '/connect/music',
+    path: '/connect/music',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedConnectMembershipRoute =
   AuthenticatedConnectMembershipRouteImport.update({
     id: '/connect/membership',
@@ -519,6 +532,7 @@ export interface FileRoutesByFullPath {
   '/pricing': typeof PricingRoute
   '/science': typeof ScienceRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/song': typeof SongRoute
   '/testimonials': typeof TestimonialsRoute
   '/account': typeof AuthenticatedAccountRouteWithChildren
   '/admin': typeof AuthenticatedAdminRoute
@@ -566,6 +580,7 @@ export interface FileRoutesByFullPath {
   '/connect/events': typeof AuthenticatedConnectEventsRoute
   '/connect/journal': typeof AuthenticatedConnectJournalRoute
   '/connect/membership': typeof AuthenticatedConnectMembershipRoute
+  '/connect/music': typeof AuthenticatedConnectMusicRoute
   '/connect/oneness': typeof AuthenticatedConnectOnenessRoute
   '/connect/share': typeof AuthenticatedConnectShareRoute
   '/meditation/practice': typeof AuthenticatedMeditationPracticeRoute
@@ -597,6 +612,7 @@ export interface FileRoutesByTo {
   '/pricing': typeof PricingRoute
   '/science': typeof ScienceRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/song': typeof SongRoute
   '/testimonials': typeof TestimonialsRoute
   '/admin': typeof AdminIndexRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
@@ -642,6 +658,7 @@ export interface FileRoutesByTo {
   '/connect/events': typeof AuthenticatedConnectEventsRoute
   '/connect/journal': typeof AuthenticatedConnectJournalRoute
   '/connect/membership': typeof AuthenticatedConnectMembershipRoute
+  '/connect/music': typeof AuthenticatedConnectMusicRoute
   '/connect/oneness': typeof AuthenticatedConnectOnenessRoute
   '/connect/share': typeof AuthenticatedConnectShareRoute
   '/meditation/practice': typeof AuthenticatedMeditationPracticeRoute
@@ -676,6 +693,7 @@ export interface FileRoutesById {
   '/pricing': typeof PricingRoute
   '/science': typeof ScienceRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/song': typeof SongRoute
   '/testimonials': typeof TestimonialsRoute
   '/_authenticated/account': typeof AuthenticatedAccountRouteWithChildren
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
@@ -723,6 +741,7 @@ export interface FileRoutesById {
   '/_authenticated/connect/events': typeof AuthenticatedConnectEventsRoute
   '/_authenticated/connect/journal': typeof AuthenticatedConnectJournalRoute
   '/_authenticated/connect/membership': typeof AuthenticatedConnectMembershipRoute
+  '/_authenticated/connect/music': typeof AuthenticatedConnectMusicRoute
   '/_authenticated/connect/oneness': typeof AuthenticatedConnectOnenessRoute
   '/_authenticated/connect/share': typeof AuthenticatedConnectShareRoute
   '/_authenticated/meditation/practice': typeof AuthenticatedMeditationPracticeRoute
@@ -757,6 +776,7 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/science'
     | '/sitemap.xml'
+    | '/song'
     | '/testimonials'
     | '/account'
     | '/admin'
@@ -804,6 +824,7 @@ export interface FileRouteTypes {
     | '/connect/events'
     | '/connect/journal'
     | '/connect/membership'
+    | '/connect/music'
     | '/connect/oneness'
     | '/connect/share'
     | '/meditation/practice'
@@ -835,6 +856,7 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/science'
     | '/sitemap.xml'
+    | '/song'
     | '/testimonials'
     | '/admin'
     | '/dashboard'
@@ -880,6 +902,7 @@ export interface FileRouteTypes {
     | '/connect/events'
     | '/connect/journal'
     | '/connect/membership'
+    | '/connect/music'
     | '/connect/oneness'
     | '/connect/share'
     | '/meditation/practice'
@@ -913,6 +936,7 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/science'
     | '/sitemap.xml'
+    | '/song'
     | '/testimonials'
     | '/_authenticated/account'
     | '/_authenticated/admin'
@@ -960,6 +984,7 @@ export interface FileRouteTypes {
     | '/_authenticated/connect/events'
     | '/_authenticated/connect/journal'
     | '/_authenticated/connect/membership'
+    | '/_authenticated/connect/music'
     | '/_authenticated/connect/oneness'
     | '/_authenticated/connect/share'
     | '/_authenticated/meditation/practice'
@@ -994,6 +1019,7 @@ export interface RootRouteChildren {
   PricingRoute: typeof PricingRoute
   ScienceRoute: typeof ScienceRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  SongRoute: typeof SongRoute
   TestimonialsRoute: typeof TestimonialsRoute
   AdminActivitiesRoute: typeof AdminActivitiesRoute
   AdminAuditLogsRoute: typeof AdminAuditLogsRoute
@@ -1037,6 +1063,13 @@ declare module '@tanstack/react-router' {
       path: '/testimonials'
       fullPath: '/testimonials'
       preLoaderRoute: typeof TestimonialsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/song': {
+      id: '/song'
+      path: '/song'
+      fullPath: '/song'
+      preLoaderRoute: typeof SongRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sitemap.xml': {
@@ -1473,6 +1506,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedConnectOnenessRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/connect/music': {
+      id: '/_authenticated/connect/music'
+      path: '/connect/music'
+      fullPath: '/connect/music'
+      preLoaderRoute: typeof AuthenticatedConnectMusicRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/connect/membership': {
       id: '/_authenticated/connect/membership'
       path: '/connect/membership'
@@ -1613,6 +1653,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedConnectEventsRoute: typeof AuthenticatedConnectEventsRoute
   AuthenticatedConnectJournalRoute: typeof AuthenticatedConnectJournalRoute
   AuthenticatedConnectMembershipRoute: typeof AuthenticatedConnectMembershipRoute
+  AuthenticatedConnectMusicRoute: typeof AuthenticatedConnectMusicRoute
   AuthenticatedConnectOnenessRoute: typeof AuthenticatedConnectOnenessRoute
   AuthenticatedConnectShareRoute: typeof AuthenticatedConnectShareRoute
   AuthenticatedMeditationPracticeRoute: typeof AuthenticatedMeditationPracticeRoute
@@ -1642,6 +1683,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedConnectEventsRoute: AuthenticatedConnectEventsRoute,
   AuthenticatedConnectJournalRoute: AuthenticatedConnectJournalRoute,
   AuthenticatedConnectMembershipRoute: AuthenticatedConnectMembershipRoute,
+  AuthenticatedConnectMusicRoute: AuthenticatedConnectMusicRoute,
   AuthenticatedConnectOnenessRoute: AuthenticatedConnectOnenessRoute,
   AuthenticatedConnectShareRoute: AuthenticatedConnectShareRoute,
   AuthenticatedMeditationPracticeRoute: AuthenticatedMeditationPracticeRoute,
@@ -1685,6 +1727,7 @@ const rootRouteChildren: RootRouteChildren = {
   PricingRoute: PricingRoute,
   ScienceRoute: ScienceRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  SongRoute: SongRoute,
   TestimonialsRoute: TestimonialsRoute,
   AdminActivitiesRoute: AdminActivitiesRoute,
   AdminAuditLogsRoute: AdminAuditLogsRoute,

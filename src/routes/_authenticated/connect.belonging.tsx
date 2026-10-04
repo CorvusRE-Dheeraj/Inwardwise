@@ -1,3 +1,4 @@
+import { SongForThisMoment } from "@/components/connect/music/SongForThisMoment";
 import { createFileRoute } from "@tanstack/react-router";
 import { PathwayShell, PathwayCard, PathwaySection } from "@/components/connect/PathwayShell";
 import { PathwayPrompt } from "@/components/connect/PathwayPrompt";
@@ -78,6 +79,7 @@ function BelongingPathway() {
           )}
         </PathwayPrompt>
       </PathwaySection>
+      <SongForThisMoment page="belonging" />
     </PathwayShell>
   );
 }

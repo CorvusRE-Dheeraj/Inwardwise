@@ -35,7 +35,10 @@ export function ConnectPathways() {
             <p className="mt-4 max-w-md text-[14px] leading-relaxed text-[color:var(--muted-foreground)]">
               {p.purpose}
             </p>
-            {(p.id === "book" || p.id === "journal" || p.id === "membership") && (
+            {(p.id === "book" ||
+              p.id === "journal" ||
+              p.id === "membership" ||
+              p.id === "music") && (
               <Link
                 to={p.to}
                 className="mt-6 inline-flex min-h-10 items-center gap-2 rounded-full border border-[color:var(--ink)] px-5 py-2 text-[13px] transition hover:bg-[color:var(--ink)] hover:text-[color:var(--paper)]"

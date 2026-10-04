@@ -273,6 +273,8 @@ export type StoredReflection = {
   body: string;
   source: string;
   createdAt: string;
+  /** Set when the entry was a song saved from Connect Music. */
+  song: { title: string; artist: string; url: string | null } | null;
 };
 
 export const listConnectReflections = createServerFn({ method: "GET" })
@@ -281,16 +283,29 @@ export const listConnectReflections = createServerFn({ method: "GET" })
     const db = context.supabase as any;
     const { data } = await db
       .from("connect_reflections")
-      .select("id, body, source, created_at")
+      .select("id, body, source, created_at, context")
       .eq("user_id", context.userId)
+      // Connect Music playlist songs are kept in this table but are not journal entries.
+      .or("context->>kind.is.null,context->>kind.neq.playlist")
       .order("created_at", { ascending: false })
       .limit(20);
-    return ((data ?? []) as any[]).map((r) => ({
-      id: r.id,
-      body: r.body,
-      source: r.source,
-      createdAt: r.created_at,
-    }));
+    return ((data ?? []) as any[]).map((r) => {
+      const song = r.context?.pathway === "music" ? r.context?.song : null;
+      return {
+        id: r.id,
+        body: r.body,
+        source: r.source,
+        createdAt: r.created_at,
+        song:
+          song && typeof song.title === "string"
+            ? {
+                title: song.title,
+                artist: typeof song.artist === "string" ? song.artist : "",
+                url: typeof song.url === "string" ? song.url : null,
+              }
+            : null,
+      };
+    });
   });
 
 /** Builds a PDF of the matched section so it can be opened on its own screen. */

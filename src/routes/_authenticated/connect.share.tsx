@@ -1,3 +1,4 @@
+import { SongForThisMoment } from "@/components/connect/music/SongForThisMoment";
 import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
@@ -240,6 +241,7 @@ function SharePathway() {
           <StoryCall />
         </div>
       </PathwaySection>
+      <SongForThisMoment page="share" />
     </PathwayShell>
   );
 }
