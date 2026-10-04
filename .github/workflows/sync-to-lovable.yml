@@ -19,6 +19,8 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          # Otherwise checkout's GITHUB_TOKEN header overrides LOVABLE_REPO_TOKEN on the push.
+          persist-credentials: false
 
       - uses: oven-sh/setup-bun@v2
 
