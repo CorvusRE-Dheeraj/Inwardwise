@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { ArrowRight, BookOpen, CheckCircle2, Mail, MessageSquare, RotateCw } from "lucide-react";
-import coverAsset from "@/assets/mind-it-cover.png.asset.json";
+import coverAsset from "@/assets/mind-it-cover.png";
 import {
   listBookReads,
   matchBookSection,
@@ -119,7 +119,7 @@ export function BookReading() {
 
       <div className="grid gap-8 sm:grid-cols-[minmax(0,220px)_1fr] sm:items-start">
         <img
-          src={coverAsset.url}
+          src={coverAsset}
           alt="Cover of the book Mind It! For Health and Happiness by Alex Freeman, Ph.D."
           width={1024}
           height={1536}

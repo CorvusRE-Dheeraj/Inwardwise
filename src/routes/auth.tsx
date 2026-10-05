@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { z } from "zod";
 import { Brain, Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import { lovable } from "@/integrations/lovable";
 
 const searchSchema = z.object({
   redirect: z.string().optional(),
@@ -124,17 +123,15 @@ function AuthPage() {
     setError(null);
     setBusy(true);
     try {
-      if (isSafeRedirect(redirect)) {
-        try { sessionStorage.setItem("osf.postAuthRedirect", redirect); } catch { /* ignore */ }
-      }
-      const result = await lovable.auth.signInWithOAuth("google", {
-        redirect_uri: window.location.origin,
+      // Google sends the user back to this page; the session effect above then
+      // forwards them to `target`, so carry the redirect through the round trip.
+      const back = new URL(`${import.meta.env.BASE_URL}auth`, window.location.origin);
+      if (isSafeRedirect(redirect)) back.searchParams.set("redirect", redirect);
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: { redirectTo: back.toString() },
       });
-      if (result.error) {
-        setError(result.error instanceof Error ? result.error.message : String(result.error));
-      } else if (!result.redirected) {
-        navigate({ to: target, replace: true });
-      }
+      if (error) setError(error.message);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Sign in failed");
     } finally {
