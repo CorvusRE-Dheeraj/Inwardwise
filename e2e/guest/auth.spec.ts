@@ -5,7 +5,7 @@ import { test, expect, type Page } from "@playwright/test";
 // Supabase Auth endpoints, and sign-up is only exercised up to client-side
 // validation.
 
-const SUPABASE = "https://zrdxcwwonbdhqyzkqrvs.supabase.co";
+const SUPABASE = "https://tshrzmldnesjvcmystnb.supabase.co";
 
 function emailInput(page: Page) {
   return page.getByPlaceholder("you@example.com");

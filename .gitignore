@@ -34,3 +34,6 @@ dist-ssr
 # Playwright
 test-results/
 playwright-report/
+
+# Supabase CLI local link state
+supabase/.temp/
