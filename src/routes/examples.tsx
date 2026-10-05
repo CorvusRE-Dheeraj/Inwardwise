@@ -1,12 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/AppShell";
 
-import surgeryPdf from "@/assets/examples/surgery.pdf.asset.json";
-import careerPdf from "@/assets/examples/career-pay-cut.pdf.asset.json";
-import startupPdf from "@/assets/examples/govt-job-startup.pdf.asset.json";
-import sonPdf from "@/assets/examples/son-youtuber.pdf.asset.json";
-import spousePdf from "@/assets/examples/spouse-money.pdf.asset.json";
-import canadaPdf from "@/assets/examples/move-canada.pdf.asset.json";
+import surgeryPdf from "@/assets/examples/surgery.pdf";
+import careerPdf from "@/assets/examples/career-pay-cut.pdf";
+import startupPdf from "@/assets/examples/govt-job-startup.pdf";
+import sonPdf from "@/assets/examples/son-youtuber.pdf";
+import spousePdf from "@/assets/examples/spouse-money.pdf";
+import canadaPdf from "@/assets/examples/move-canada.pdf";
 
 export const Route = createFileRoute("/examples")({
   head: () => ({
@@ -46,7 +46,7 @@ const EXAMPLES: Example[] = [
     title: "Doctor recommends surgery with 85% success rate but 15% risk of permanent disability.",
     summary:
       "Kidney failure with an urgent timeline. The session separates the raw medical facts from the fear driving the question, then works from a pseudo objective (“avoid disability”) toward the deeper objective of a livable, functioning life.",
-    url: surgeryPdf.url,
+    url: surgeryPdf,
     file: "surgery.pdf",
   },
   {
@@ -55,7 +55,7 @@ const EXAMPLES: Example[] = [
     title: "I earn ₹45 lakh annually but hate my job. I have another offer for ₹25 lakh doing work I love.",
     summary:
       "A ₹20 lakh pay cut against meaningful work, with existing debt and a two-week deadline. The session tests whether the real objective is income, identity, or stability, and what boundary makes the trade survivable.",
-    url: careerPdf.url,
+    url: careerPdf,
     file: "career-pay-cut.pdf",
   },
   {
@@ -64,7 +64,7 @@ const EXAMPLES: Example[] = [
     title: "I have a secure government job but dream of launching a startup.",
     summary:
       "Security versus ambition on a one-year horizon, with family responsibilities in the frame. The session abstracts “start a company” into the higher objective it serves, then designs an out-in path that doesn't require a single leap.",
-    url: startupPdf.url,
+    url: startupPdf,
     file: "govt-job-startup.pdf",
   },
   {
@@ -73,7 +73,7 @@ const EXAMPLES: Example[] = [
     title: "My son wants to quit engineering and become a YouTuber.",
     summary:
       "A parent's decision disguised as their child's. The session surfaces whose objective is actually being solved for, and turns a binary confrontation into a set of testable conditions.",
-    url: sonPdf.url,
+    url: sonPdf,
     file: "son-youtuber.pdf",
   },
   {
@@ -82,7 +82,7 @@ const EXAMPLES: Example[] = [
     title: "My spouse has lied to me multiple times about money. Should I divorce?",
     summary:
       "Repeated financial deception, two children, and eroded trust. The session refuses the yes/no framing, isolates trust as the real variable, and builds a verification boundary before any irreversible step.",
-    url: spousePdf.url,
+    url: spousePdf,
     file: "spouse-money.pdf",
   },
   {
@@ -91,7 +91,7 @@ const EXAMPLES: Example[] = [
     title: "Should I move to Canada leaving my aging parents in India?",
     summary:
       "An unstable career, a job offer abroad, independent but ageing parents who are against the move. The session works the obligation and the opportunity as one system rather than two opposing loyalties.",
-    url: canadaPdf.url,
+    url: canadaPdf,
     file: "move-canada.pdf",
   },
 ];

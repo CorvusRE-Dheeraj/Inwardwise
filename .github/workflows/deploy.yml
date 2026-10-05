@@ -8,8 +8,9 @@ name: Deploy Inwardwise
 # (src/routes/api/*) are NOT available on this deploy until they move off
 # TanStack Start's server (e.g. to Supabase Edge Functions).
 #
-# Tests run in pr-checks.yml on the PR itself, which gates the merge that
-# produces this push; this workflow only builds and ships.
+# Unit tests run in pr-checks.yml on the PR itself, which gates the merge
+# that produces this push; this workflow re-runs only the e2e suite against
+# the build it's about to ship.
 #
 # One-time setup: Settings -> Pages -> Source: "GitHub Actions".
 
@@ -45,6 +46,11 @@ jobs:
       - run: bun run build
         env:
           SITE_BASE: /Inwardwise/
+
+      # Last check on exactly the files about to ship (same suite as
+      # pr-checks.yml); a failure here stops the deploy.
+      - run: bunx playwright install --with-deps chromium
+      - run: bun run test:e2e
 
       # SPA fallback: Pages serves 404.html for unknown paths, so deep links
       # like /Inwardwise/connect/music still load the app.

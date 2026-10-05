@@ -1,0 +1,11 @@
+# Media is binary: never convert line endings (a Windows checkout would
+# otherwise rewrite bytes inside PDFs).
+*.pdf binary
+*.mp4 binary
+*.mp3 binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.ico binary
+*.woff2 binary

@@ -10,13 +10,13 @@
     "preview": "vite preview",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "test": "vitest run"
+    "test": "vitest run",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@ai-sdk/openai-compatible": "^3.0.7",
     "@ai-sdk/react": "^4.0.19",
     "@hookform/resolvers": "^5.2.2",
-    "@lovable.dev/cloud-auth-js": "^1.1.2",
     "@lovable.dev/email-js": "^0.1.2",
     "@lovable.dev/webhooks-js": "^0.0.2",
     "@radix-ui/react-accordion": "^1.2.12",
@@ -79,6 +79,7 @@
   "devDependencies": {
     "@eslint/js": "^9.32.0",
     "@lovable.dev/vite-tanstack-config": "2.23.1",
+    "@playwright/test": "^1.63.0",
     "@testing-library/jest-dom": "^7.0.0",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
