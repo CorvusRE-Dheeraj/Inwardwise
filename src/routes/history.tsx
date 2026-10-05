@@ -8,7 +8,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import alexPortrait from "@/assets/alex-freeman.jpg.asset.json";
+import alexPortrait from "@/assets/alex-freeman.jpg";
 
 export const Route = createFileRoute("/history")({
   head: () => ({
@@ -108,7 +108,7 @@ function History() {
         <div className="mt-10 flex flex-col items-center gap-8 sm:flex-row sm:items-end">
           <div className="paper-card relative aspect-square w-40 shrink-0 overflow-hidden rounded-3xl p-1">
             <img
-              src={alexPortrait.url}
+              src={alexPortrait}
               alt="Alex Freeman, Ph.D."
               className="h-full w-full rounded-[1.25rem] object-cover"
             />

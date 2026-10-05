@@ -1,1 +1,35 @@
-project_id = "zrdxcwwonbdhqyzkqrvs"
+project_id = "tshrzmldnesjvcmystnb"
+
+# Auth settings for the project linked with `supabase link`, applied with
+# `supabase config push`. Secrets are read from the environment at push time
+# (env(...)) and are never stored in this file.
+[auth]
+site_url = "https://inwardwise.com"
+additional_redirect_urls = [
+  "https://inwardwise.com/**",
+  "https://www.inwardwise.com/**",
+  "https://corvusre-dheeraj.github.io/Inwardwise/**",
+  "http://localhost:8080/**",
+]
+enable_signup = true
+
+[auth.email]
+enable_signup = true
+enable_confirmations = true
+
+# Confirmation and password-reset emails go out through Resend. Uncomment once
+# inwardwise.com is verified in Resend; until then Supabase's built-in mailer
+# sends them (rate-limited, delivers only to the Supabase org's members).
+# [auth.email.smtp]
+# enabled = true
+# host = "smtp.resend.com"
+# port = 465
+# user = "resend"
+# pass = "env(RESEND_API_KEY)"
+# admin_email = "no-reply@inwardwise.com"
+# sender_name = "InwardWise"
+
+[auth.external.google]
+enabled = true
+client_id = "env(GOOGLE_CLIENT_ID)"
+secret = "env(GOOGLE_CLIENT_SECRET)"

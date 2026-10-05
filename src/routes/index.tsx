@@ -3,7 +3,7 @@ import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import { AppShell } from "@/components/AppShell";
 import { ProductName } from "@/components/products/ProductChrome";
-import introVideo from "@/assets/inwardwise-path-to-clarity.mp4.asset.json";
+import introVideo from "@/assets/inwardwise-path-to-clarity.mp4";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -149,7 +149,7 @@ function Landing() {
               </h2>
               <div className="mt-10 overflow-hidden rounded-2xl border border-[color:var(--rule)]">
                 <video
-                  src={introVideo.url}
+                  src={introVideo}
                   controls
                   playsInline
                   preload="metadata"

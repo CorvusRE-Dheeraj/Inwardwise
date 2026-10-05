@@ -65,6 +65,13 @@ function AvatarGate() {
   );
 }
 
+/** The prompt is split across styled brand spans, so match on the label's full text. */
+function findPinPrompt() {
+  return screen.findByText(
+    (_, el) => el?.textContent?.replace(/\s+/g, " ").trim() === "Enter your InwardWise Self PIN",
+  );
+}
+
 async function enterPin(pin: string) {
   const user = userEvent.setup();
   for (const digit of pin) {
@@ -91,7 +98,7 @@ describe("InwardWise Self PIN gate", () => {
     };
 
     render(<AvatarGate />);
-    await screen.findByText("Enter your InwardWise Self PIN");
+    await findPinPrompt();
 
     await enterPin("1234");
 
@@ -110,7 +117,7 @@ describe("InwardWise Self PIN gate", () => {
     };
 
     render(<AvatarGate />);
-    await screen.findByText("Enter your InwardWise Self PIN");
+    await findPinPrompt();
 
     await enterPin("9999");
 

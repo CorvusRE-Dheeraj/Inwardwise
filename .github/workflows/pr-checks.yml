@@ -1,0 +1,33 @@
+name: PR Checks
+
+# Runs on every pull request into dev or main. Mirrors deploy.yml's build
+# (without the actual deploy) plus the unit tests, so a PR's status checks
+# show whether the site would build and ship -- deploy.yml itself only runs
+# after a push already lands on dev, so it can't gate the merge.
+
+on:
+  pull_request:
+    branches: [dev, main]
+
+permissions:
+  contents: read
+
+jobs:
+  pr-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - uses: oven-sh/setup-bun@v2
+      - run: bun install --frozen-lockfile
+      - run: bun run test
+      - run: bun run build
+        env:
+          SITE_BASE: /Inwardwise/
+
+      # Guest e2e suite against the built site, served like GitHub Pages
+      # (see playwright.config.ts). Writes nothing to Supabase.
+      - run: bunx playwright install --with-deps chromium
+      - run: bun run test:e2e

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { ArrowRight, BookOpen, CheckCircle2, Mail, MessageSquare, RotateCw } from "lucide-react";
-import coverAsset from "@/assets/mind-it-cover.png.asset.json";
+import coverAsset from "@/assets/mind-it-cover.png";
 import {
   listBookReads,
   matchBookSection,
@@ -119,7 +119,7 @@ export function BookReading() {
 
       <div className="grid gap-8 sm:grid-cols-[minmax(0,220px)_1fr] sm:items-start">
         <img
-          src={coverAsset.url}
+          src={coverAsset}
           alt="Cover of the book Mind It! For Health and Happiness by Alex Freeman, Ph.D."
           width={1024}
           height={1536}
@@ -155,7 +155,7 @@ export function BookReading() {
           </p>
 
           <a
-            href={`/connect/reading/${current.id}`}
+            href={`${import.meta.env.BASE_URL}connect/reading/${current.id}`}
             target="_blank"
             rel="noreferrer"
             className="mt-5 inline-flex min-h-11 items-center gap-2 rounded-full bg-[color:var(--ink)] px-5 py-2.5 text-[13px] text-[color:var(--paper)]"
@@ -242,7 +242,7 @@ export function BookReading() {
                     <>
                       <span>{r.openedAt ? "opened, not confirmed as read" : "not opened yet"}</span>
                       <a
-                        href={`/connect/reading/${r.id}`}
+                        href={`${import.meta.env.BASE_URL}connect/reading/${r.id}`}
                         target="_blank"
                         rel="noreferrer"
                         className="rounded-full border border-[color:var(--rule)] px-3 py-1 text-[color:var(--ink)]"
