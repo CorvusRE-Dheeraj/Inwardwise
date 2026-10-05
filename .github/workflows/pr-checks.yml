@@ -26,3 +26,8 @@ jobs:
       - run: bun run build
         env:
           SITE_BASE: /Inwardwise/
+
+      # Guest e2e suite against the built site, served like GitHub Pages
+      # (see playwright.config.ts). Writes nothing to Supabase.
+      - run: bunx playwright install --with-deps chromium
+      - run: bun run test:e2e
