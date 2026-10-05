@@ -155,7 +155,7 @@ export function BookReading() {
           </p>
 
           <a
-            href={`/connect/reading/${current.id}`}
+            href={`${import.meta.env.BASE_URL}connect/reading/${current.id}`}
             target="_blank"
             rel="noreferrer"
             className="mt-5 inline-flex min-h-11 items-center gap-2 rounded-full bg-[color:var(--ink)] px-5 py-2.5 text-[13px] text-[color:var(--paper)]"
@@ -242,7 +242,7 @@ export function BookReading() {
                     <>
                       <span>{r.openedAt ? "opened, not confirmed as read" : "not opened yet"}</span>
                       <a
-                        href={`/connect/reading/${r.id}`}
+                        href={`${import.meta.env.BASE_URL}connect/reading/${r.id}`}
                         target="_blank"
                         rel="noreferrer"
                         className="rounded-full border border-[color:var(--rule)] px-3 py-1 text-[color:var(--ink)]"
