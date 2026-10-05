@@ -36,8 +36,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 24
-      # bun.lock is the maintained lockfile (package-lock.json is stale, so
-      # `npm ci` fails).
+      # bun.lock is the project's lockfile.
       - uses: oven-sh/setup-bun@v2
       - run: bun install --frozen-lockfile
 
