@@ -1,15 +1,16 @@
 // Serves the static build (dist/client) the way GitHub Pages does, so the
 // e2e suite tests exactly what deploy.yml ships:
-//   - everything lives under /Inwardwise/ (the project-site subpath)
+//   - everything lives under SITE_BASE ("/" on the inwardwise.com custom
+//     domain; "/Inwardwise/" on the plain github.io project-site URL)
 //   - the site root serves the SPA shell (deploy.yml copies it to index.html)
 //   - unknown paths get 404.html, i.e. the same shell, with a 404 status —
-//     that's how deep links like /Inwardwise/pricing load the app on Pages.
-// Build first: SITE_BASE=/Inwardwise/ bun run build
+//     that's how deep links like /pricing load the app on Pages.
+// Build first with the same SITE_BASE: bun run build
 import { createServer } from "node:http";
 import { readFile, stat } from "node:fs/promises";
 import { extname, join, normalize } from "node:path";
 
-const BASE = "/Inwardwise/";
+const BASE = process.env.SITE_BASE || "/";
 const ROOT = join(process.cwd(), "dist", "client");
 const PORT = Number(process.env.PORT ?? 4173);
 const TYPES = {
@@ -41,7 +42,7 @@ async function fileAt(rel) {
 
 createServer(async (req, res) => {
   const pathname = decodeURIComponent(new URL(req.url, "http://x").pathname);
-  if (pathname === "/Inwardwise") {
+  if (`${pathname}/` === BASE) {
     res.writeHead(301, { Location: BASE }).end();
     return;
   }

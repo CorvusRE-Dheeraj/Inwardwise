@@ -6,9 +6,10 @@
 // You can pass additional config via defineConfig({ vite: { ... }, etc... }) if needed.
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
-// GitHub Pages serves a project site under a subpath matching the repo name
-// (https://corvusre-dheeraj.github.io/Inwardwise/), so .github/workflows/deploy.yml
-// sets SITE_BASE=/Inwardwise/. Defaults to "/" for local `npm run dev`/`npm run build`.
+// The URL path the site is served under. Production is the root of the custom
+// domain (https://inwardwise.com/), so deploy.yml sets SITE_BASE=/. Without a
+// custom domain, a GitHub project site lives under /Inwardwise/ and this must
+// match, or every script 404s and the page renders blank. Defaults to "/".
 const base = process.env.SITE_BASE || "/";
 
 export default defineConfig({
