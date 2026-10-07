@@ -1,7 +1,7 @@
 name: Deploy Inwardwise
 
 # Every push to dev (i.e. every PR merged into dev) builds the site and
-# deploys it to GitHub Pages: https://corvusre-dheeraj.github.io/Inwardwise/
+# deploys it to GitHub Pages at the custom domain https://inwardwise.com/
 #
 # Static hosting only: vite.config.ts builds the app as an SPA (nitro off),
 # so server functions (src/lib/*.functions.ts) and server routes
@@ -12,7 +12,10 @@ name: Deploy Inwardwise
 # that produces this push; this workflow re-runs only the e2e suite against
 # the build it's about to ship.
 #
-# One-time setup: Settings -> Pages -> Source: "GitHub Actions".
+# One-time setup: Settings -> Pages -> Source: "GitHub Actions", custom
+# domain inwardwise.com. If the custom domain is ever removed, the site moves
+# to https://corvusre-dheeraj.github.io/Inwardwise/ and SITE_BASE below must
+# become /Inwardwise/ (in pr-checks.yml too), or the page loads blank.
 
 on:
   push:
@@ -32,6 +35,10 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    # The site is served at the root of the custom domain, so it's built for
+    # "/". The build and the e2e suite both read this.
+    env:
+      SITE_BASE: /
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -44,8 +51,6 @@ jobs:
       # VITE_SUPABASE_* (public, client-side-by-design) come from the
       # committed .env.
       - run: bun run build
-        env:
-          SITE_BASE: /Inwardwise/
 
       # Last check on exactly the files about to ship (same suite as
       # pr-checks.yml); a failure here stops the deploy.
@@ -53,7 +58,7 @@ jobs:
       - run: bun run test:e2e
 
       # SPA fallback: Pages serves 404.html for unknown paths, so deep links
-      # like /Inwardwise/connect/music still load the app.
+      # like /connect/music still load the app.
       - name: Prepare static site
         run: |
           cp dist/client/_shell.html dist/client/index.html

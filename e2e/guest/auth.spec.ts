@@ -1,4 +1,5 @@
 import { test, expect, type Page } from "@playwright/test";
+import { BASE, BASE_RE } from "./base";
 
 // Sign-in / sign-up flows, signed out. Nothing here creates an account or
 // session: password sign-in and the Google redirect are intercepted at the
@@ -15,7 +16,7 @@ test("Sign up in the header opens the create-account form", async ({ page }) => 
   await page.goto("./", { waitUntil: "networkidle" });
   await page.getByRole("link", { name: "Sign up" }).first().click();
 
-  await expect(page).toHaveURL(/\/Inwardwise\/auth\?mode=signup$/);
+  await expect(page).toHaveURL(new RegExp(`${BASE_RE}auth\\?mode=signup$`));
   await expect(page.getByRole("heading", { name: "Create your account" })).toBeVisible();
   await expect(page.getByRole("button", { name: "Create account" })).toBeVisible();
 });
@@ -68,8 +69,8 @@ test("wrong email/password shows a friendly error", async ({ page }) => {
 
 // Regression: this used to go to Lovable's /~oauth/initiate, which 404s on
 // GitHub Pages. It must go to Supabase's own Google sign-in and come back to
-// /Inwardwise/auth (keeping the post-login redirect).
-test("Continue with Google goes to Supabase's Google sign-in and returns to /Inwardwise/auth", async ({ page }) => {
+// the site's /auth page (keeping the post-login redirect).
+test("Continue with Google goes to Supabase's Google sign-in and returns to /auth", async ({ page }) => {
   await page.route(`${SUPABASE}/auth/v1/authorize**`, (route) =>
     route.fulfill({ status: 200, contentType: "text/html", body: "<h1>stub google</h1>" }),
   );
@@ -83,13 +84,13 @@ test("Continue with Google goes to Supabase's Google sign-in and returns to /Inw
   const url = new URL(page.url());
   expect(url.searchParams.get("provider")).toBe("google");
   const back = new URL(url.searchParams.get("redirect_to")!);
-  expect(back.pathname).toBe("/Inwardwise/auth");
+  expect(back.pathname).toBe(`${BASE}auth`);
   expect(back.searchParams.get("redirect")).toBe("/decision");
 });
 
 test("a members-only page sends signed-out visitors to sign in", async ({ page }) => {
   await page.goto("decision", { waitUntil: "networkidle" });
 
-  await expect(page).toHaveURL(/\/Inwardwise\/auth\?redirect=/);
+  await expect(page).toHaveURL(new RegExp(`${BASE_RE}auth\\?redirect=`));
   await expect(page.getByRole("heading", { name: "Welcome back" })).toBeVisible();
 });

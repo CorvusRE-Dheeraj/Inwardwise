@@ -1,6 +1,10 @@
 import { test, expect, type Page } from "@playwright/test";
+import { BASE_RE } from "./base";
 
-// The public site, signed out, as served from GitHub Pages under /Inwardwise/.
+// The public site, signed out, as served from GitHub Pages (at the root of
+// inwardwise.com).
+
+const ASSETS = new RegExp(`^${BASE_RE}assets/`);
 
 /** Records every same-origin request that fails — a missing script, image, video or PDF. */
 function trackMissingFiles(page: Page) {
@@ -15,7 +19,9 @@ function trackMissingFiles(page: Page) {
   return missing;
 }
 
-test("home page renders the hero and loads all its files from /Inwardwise/", async ({ page }) => {
+// Regression: a build made for the wrong base path (/Inwardwise/ while served
+// at the domain root) 404s every script and renders a blank page.
+test("home page renders the hero and loads all its files", async ({ page }) => {
   const missing = trackMissingFiles(page);
   await page.goto("./", { waitUntil: "networkidle" });
 
@@ -26,7 +32,7 @@ test("home page renders the hero and loads all its files from /Inwardwise/", asy
 
   // The intro video used to live on Lovable's asset host and 404'd on Pages.
   const video = page.locator("video[src]").first();
-  await expect(video).toHaveAttribute("src", /^\/Inwardwise\/assets\//);
+  await expect(video).toHaveAttribute("src", ASSETS);
   expect(missing).toEqual([]);
 });
 
@@ -36,7 +42,7 @@ test("example decision PDFs are served from the site", async ({ page, request })
   const hrefs = await page.locator('a[href$=".pdf"]').evaluateAll((as) => as.map((a) => a.getAttribute("href")!));
   expect(hrefs.length).toBeGreaterThan(0);
   for (const href of new Set(hrefs)) {
-    expect(href).toMatch(/^\/Inwardwise\/assets\//);
+    expect(href).toMatch(ASSETS);
     const res = await request.get(href);
     expect(res.status(), href).toBe(200);
     expect(res.headers()["content-type"]).toContain("pdf");
@@ -76,6 +82,6 @@ test("unknown pages show the app's not-found page with a working Go home link", 
 
   await expect(page.getByRole("heading", { name: "Page not found" })).toBeVisible();
   await page.getByRole("link", { name: "Go home" }).click();
-  await expect(page).toHaveURL(/\/Inwardwise\/$/);
+  await expect(page).toHaveURL(new RegExp(`:4173${BASE_RE}$`));
   await expect(page.getByRole("heading", { level: 1 })).toContainText("Life is About");
 });
