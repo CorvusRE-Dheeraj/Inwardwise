@@ -57,7 +57,9 @@ jobs:
       - run: bunx playwright install --with-deps chromium
       - run: bun run test:e2e
 
-      # SPA fallback: Pages serves 404.html for unknown paths, so deep links
+      # Static routes already have their own <path>.html (bun run build runs
+      # scripts/write-route-pages.mjs). SPA fallback for the rest (dynamic
+      # routes): Pages serves 404.html for unknown paths, so deep links
       # like /connect/music still load the app.
       - name: Prepare static site
         run: |

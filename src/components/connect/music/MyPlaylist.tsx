@@ -1,11 +1,10 @@
 import { useState } from "react";
-import { useServerFn } from "@tanstack/react-start";
 import { Link2, Trash2 } from "lucide-react";
 import {
   removeFromPlaylist,
   updatePlaylistLink,
   type PlaylistItem,
-} from "@/lib/connect-music.functions";
+} from "@/lib/connect-music-data";
 import { SONG_URL_MAX, normalizeMusicUrl, type Song } from "@/lib/music";
 import { SongHeading, SongLinks } from "./SongLinks";
 import { ACTION_BUTTON, SMALL_INPUT } from "./SongActions";
@@ -19,8 +18,6 @@ function PlaylistRow({
   onChange: () => void;
   renderSend?: (song: Song, close: () => void) => React.ReactNode;
 }) {
-  const saveLink = useServerFn(updatePlaylistLink);
-  const remove = useServerFn(removeFromPlaylist);
   const [editing, setEditing] = useState(false);
   const [sending, setSending] = useState(false);
   const [link, setLink] = useState(item.url ?? "");
@@ -35,7 +32,7 @@ function PlaylistRow({
     setBusy(true);
     setError(null);
     try {
-      await saveLink({ data: { id: item.id, url: link.trim() || null } });
+      await updatePlaylistLink(item.id, link.trim() || null);
       setEditing(false);
       onChange();
     } catch (e) {
@@ -48,7 +45,7 @@ function PlaylistRow({
   async function drop() {
     setBusy(true);
     try {
-      await remove({ data: { id: item.id } });
+      await removeFromPlaylist(item.id);
       onChange();
     } catch (e) {
       setError(e instanceof Error ? e.message : "It could not be removed.");
@@ -108,11 +105,14 @@ function PlaylistRow({
 export function MyPlaylist({
   items,
   loading,
+  error,
   onChange,
   renderSend,
 }: {
   items: PlaylistItem[];
   loading: boolean;
+  /** Set when the playlist couldn't be loaded, so it isn't shown as empty. */
+  error?: string | null;
   onChange: () => void;
   renderSend?: (song: Song, close: () => void) => React.ReactNode;
 }) {
@@ -126,6 +126,13 @@ export function MyPlaylist({
       </h2>
       {loading ? (
         <p className="mt-4 text-[14px] text-[color:var(--muted-foreground)]">Loading…</p>
+      ) : error ? (
+        <div className="mt-4 flex flex-wrap items-center gap-3">
+          <p className="text-sm text-destructive">{error}</p>
+          <button type="button" onClick={onChange} className={ACTION_BUTTON}>
+            Try again
+          </button>
+        </div>
       ) : items.length === 0 ? (
         <p className="mt-4 max-w-2xl text-[14px] leading-relaxed text-[color:var(--muted-foreground)]">
           Nothing here yet. Use “Add to My Playlist” on any song above, and add your own Spotify or

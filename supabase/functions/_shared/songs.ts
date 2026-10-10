@@ -1,7 +1,9 @@
-// Server-only reasoning for Connect Music: suggests real songs for a feeling.
-// Links are never taken from the model; the page builds search links itself.
+// Connect Music song suggestions: the AI prompt, the reply parsing and the
+// fallback picks. Links are never taken from the model; the page builds search
+// links itself. Runs in the music-suggest Edge Function; the API key is passed
+// in so this file stays free of runtime-specific globals.
 
-import { FEELINGS, cleanSong, type MusicMode, type Song } from "@/lib/music";
+import { FEELINGS, cleanSong, type MusicMode, type Song } from "./music.ts";
 
 /** Well-known songs used when the AI is unavailable, so the page still helps. */
 const PICKS: Record<string, Song[]> = {
@@ -252,30 +254,123 @@ export function buildSongMessages(
   ];
 }
 
+/** Why a request got the fallback picks instead of AI songs. Never includes user text. */
+export type FallbackReason =
+  "no_key" | `http_${number}` | "bad_reply" | "no_songs" | "network" | "timeout";
+
+/** Temporary provider errors worth one retry: overloaded, rate-limited, hiccup. */
+const BUSY = new Set([429, 500, 503]);
+
+function sleep(ms: number, signal: AbortSignal): Promise<void> {
+  return new Promise((resolve, reject) => {
+    const t = setTimeout(resolve, ms);
+    signal.addEventListener("abort", () => {
+      clearTimeout(t);
+      reject(new DOMException("aborted", "AbortError"));
+    });
+  });
+}
+
+/** Long enough for a good answer; short enough that nobody stares at "Finding songs…". */
+export const SUGGEST_TIMEOUT_MS = 20_000;
+
+export type SuggestOptions = {
+  apiKey?: string | null;
+  baseUrl?: string;
+  model?: string;
+  /** Tried on the retry when the main model is overloaded (503) or rate-limited (429). */
+  fallbackModel?: string;
+  retryDelayMs?: number;
+  /** Extra provider-specific request fields, e.g. { reasoning_effort: "low" }. */
+  extraBody?: Record<string, unknown>;
+  timeoutMs?: number;
+  /** `detail` is the provider's own error message, never the member's text. */
+  onFallback?: (reason: FallbackReason, detail?: string) => void;
+};
+
+/** The provider's error message from a failed response, e.g. "models/x is not found". */
+async function providerError(res: Response): Promise<string> {
+  const text = await res.text().catch(() => "");
+  try {
+    const body = JSON.parse(text) as unknown;
+    const err = (Array.isArray(body) ? body[0] : body) as { error?: { message?: string } };
+    if (err?.error?.message) return err.error.message.slice(0, 300);
+  } catch {
+    // Not JSON; fall through.
+  }
+  return text.slice(0, 300);
+}
+
 export async function suggestSongsFor(
   mode: MusicMode,
   feeling: string | null,
   note: string,
   selfProfile?: string | null,
+  options: SuggestOptions = {},
 ): Promise<SongSuggestions> {
-  const apiKey = process.env["LOVABLE_API_KEY"];
-  if (!apiKey) return fallback(feeling);
+  const {
+    apiKey,
+    baseUrl = "https://generativelanguage.googleapis.com/v1beta/openai",
+    model = "gemini-3.8-flash",
+    fallbackModel,
+    extraBody = {},
+    timeoutMs = SUGGEST_TIMEOUT_MS,
+    retryDelayMs = 1500,
+    onFallback,
+  } = options;
+  const fall = (reason: FallbackReason, detail?: string) => {
+    onFallback?.(reason, detail);
+    return fallback(feeling);
+  };
+  if (!apiKey) return fall("no_key");
+  // One deadline for the whole exchange, including reading the reply.
+  const deadline = new AbortController();
+  const timer = setTimeout(() => deadline.abort(), timeoutMs);
   try {
-    const res = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+    return await ask();
+  } finally {
+    clearTimeout(timer);
+  }
+
+  function request(withModel: string): Promise<Response> {
+    return fetch(`${baseUrl}/chat/completions`, {
       method: "POST",
       headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
       body: JSON.stringify({
-        model: "google/gemini-2.5-flash",
+        ...extraBody,
+        model: withModel,
         messages: buildSongMessages(mode, feeling, note, selfProfile),
       }),
+      signal: deadline.signal,
     });
-    if (!res.ok) return fallback(feeling);
-    const json = (await res.json()) as { choices?: Array<{ message?: { content?: string } }> };
-    const raw = (json.choices?.[0]?.message?.content ?? "")
-      .replace(/^```(?:json)?/i, "")
-      .replace(/```$/i, "")
-      .trim();
-    const parsed = JSON.parse(raw) as { songs?: Array<Partial<Song>> };
+  }
+
+  async function ask(): Promise<SongSuggestions> {
+    let res: Response;
+    try {
+      res = await request(model);
+      // Overloaded or rate-limited: usually gone within seconds. Retry once,
+      // on the backup model if one is set, still within the same deadline.
+      if (BUSY.has(res.status)) {
+        await res.body?.cancel();
+        await sleep(retryDelayMs, deadline.signal);
+        res = await request(fallbackModel ?? model);
+      }
+    } catch {
+      return fall(deadline.signal.aborted ? "timeout" : "network");
+    }
+    if (!res.ok) return fall(`http_${res.status}`, await providerError(res));
+    let parsed: { songs?: Array<Partial<Song>> };
+    try {
+      const json = (await res.json()) as { choices?: Array<{ message?: { content?: string } }> };
+      const raw = (json.choices?.[0]?.message?.content ?? "")
+        .replace(/^```(?:json)?/i, "")
+        .replace(/```$/i, "")
+        .trim();
+      parsed = JSON.parse(raw) as { songs?: Array<Partial<Song>> };
+    } catch {
+      return fall(deadline.signal.aborted ? "timeout" : "bad_reply");
+    }
     const songs = (parsed.songs ?? [])
       .map((s) =>
         cleanSong({
@@ -286,8 +381,6 @@ export async function suggestSongsFor(
       )
       .filter((s): s is Song => !!s && !!s.artist)
       .slice(0, 5);
-    return songs.length > 0 ? { songs, source: "ai" } : fallback(feeling);
-  } catch {
-    return fallback(feeling);
+    return songs.length > 0 ? { songs, source: "ai" } : fall("no_songs");
   }
 }
