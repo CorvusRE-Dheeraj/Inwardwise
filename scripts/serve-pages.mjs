@@ -3,8 +3,10 @@
 //   - everything lives under SITE_BASE ("/" on the inwardwise.com custom
 //     domain; "/Inwardwise/" on the plain github.io project-site URL)
 //   - the site root serves the SPA shell (deploy.yml copies it to index.html)
+//   - static routes have their own copy of the shell (<path>.html), so deep
+//     links like /pricing load with a 200
 //   - unknown paths get 404.html, i.e. the same shell, with a 404 status —
-//     that's how deep links like /pricing load the app on Pages.
+//     that's how dynamic routes like /areas/<slug> still load on Pages.
 // Build first with the same SITE_BASE: bun run build
 import { createServer } from "node:http";
 import { readFile, stat } from "node:fs/promises";
@@ -47,7 +49,16 @@ createServer(async (req, res) => {
     return;
   }
   const rel = pathname.startsWith(BASE) ? pathname.slice(BASE.length) : null;
-  const file = rel === null ? null : rel === "" ? await fileAt("_shell.html") : await fileAt(rel);
+  // Like Pages: the file itself, then <path>.html, then <path>/index.html
+  // (scripts/write-route-pages.mjs writes those for every static route).
+  const file =
+    rel === null
+      ? null
+      : rel === ""
+        ? await fileAt("_shell.html")
+        : ((await fileAt(rel)) ??
+          (await fileAt(`${rel.replace(/\/$/, "")}.html`)) ??
+          (await fileAt(`${rel.replace(/\/$/, "")}/index.html`)));
   const body = await readFile(file ?? join(ROOT, "_shell.html"));
   const type = file ? (TYPES[extname(file)] ?? "application/octet-stream") : TYPES[".html"];
   res.writeHead(file ? 200 : 404, { "Content-Type": type }).end(body);

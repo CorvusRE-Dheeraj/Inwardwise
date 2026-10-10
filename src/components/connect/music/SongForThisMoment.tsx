@@ -1,8 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { useServerFn } from "@tanstack/react-start";
 import { ArrowRight, Music } from "lucide-react";
-import { getCurrentSong, saveSongToJournal } from "@/lib/connect-music.functions";
+import { getCurrentSong, saveSongToJournal } from "@/lib/connect-music-data";
 import {
   SONG_ARTIST_MAX,
   SONG_TITLE_MAX,
@@ -31,9 +30,6 @@ export type MomentPage = keyof typeof MOMENT_PROMPTS;
  * right here, and always points to Connect Music, where it can be changed.
  */
 export function SongForThisMoment({ page }: { page: MomentPage }) {
-  const load = useServerFn(getCurrentSong);
-  const save = useServerFn(saveSongToJournal);
-
   const [current, setCurrent] = useState<(Song & { savedAt: string }) | null>(null);
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState(false);
@@ -44,11 +40,11 @@ export function SongForThisMoment({ page }: { page: MomentPage }) {
   const [error, setError] = useState<string | null>(null);
 
   const refresh = useCallback(() => {
-    load({})
+    getCurrentSong()
       .then(setCurrent)
       .catch(() => undefined)
       .finally(() => setLoading(false));
-  }, [load]);
+  }, []);
   useEffect(() => refresh(), [refresh]);
 
   async function submit() {
@@ -64,7 +60,7 @@ export function SongForThisMoment({ page }: { page: MomentPage }) {
     setBusy(true);
     setError(null);
     try {
-      await save({ data: { song, note: "" } });
+      await saveSongToJournal({ song, note: "" });
       setTitle("");
       setArtist("");
       setUrl("");

@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { useServerFn } from "@tanstack/react-start";
 import { ArrowRight } from "lucide-react";
 import { PathwayShell, PathwayCard, PathwaySection } from "@/components/connect/PathwayShell";
 import { SongCard } from "@/components/connect/music/SongCard";
@@ -13,7 +12,7 @@ import { useSongSuggestions } from "@/components/connect/music/useSongSuggestion
 import type { MusicSelfProfile } from "@/lib/music-self";
 import { CrisisNotice } from "@/components/CrisisNotice";
 import { detectCrisis } from "@/lib/crisis-detect";
-import { listPlaylist, type PlaylistItem } from "@/lib/connect-music.functions";
+import { listPlaylist, type PlaylistItem } from "@/lib/connect-music-data";
 import {
   FEELINGS,
   MIND_MIN,
@@ -293,15 +292,22 @@ function MusicPathway() {
   const [selfProfile, setSelfProfile] = useState<MusicSelfProfile | null>(null);
   const crisis = note.trim() ? detectCrisis(note) : [];
 
-  const loadPlaylist = useServerFn(listPlaylist);
   const [playlist, setPlaylist] = useState<PlaylistItem[]>([]);
   const [playlistLoading, setPlaylistLoading] = useState(true);
+  const [playlistError, setPlaylistError] = useState<string | null>(null);
   const refreshPlaylist = useCallback(() => {
-    loadPlaylist({})
-      .then(setPlaylist)
-      .catch(() => undefined)
+    listPlaylist()
+      .then((items) => {
+        setPlaylist(items);
+        setPlaylistError(null);
+      })
+      .catch((e: unknown) =>
+        setPlaylistError(
+          e instanceof Error ? e.message : "Your playlist couldn't be loaded just now.",
+        ),
+      )
       .finally(() => setPlaylistLoading(false));
-  }, [loadPlaylist]);
+  }, []);
   useEffect(() => refreshPlaylist(), [refreshPlaylist]);
 
   const renderSend = (song: Song, close: () => void) => <SendSong song={song} onClose={close} />;
@@ -349,6 +355,7 @@ function MusicPathway() {
           <MyPlaylist
             items={playlist}
             loading={playlistLoading}
+            error={playlistError}
             onChange={refreshPlaylist}
             renderSend={renderSend}
           />

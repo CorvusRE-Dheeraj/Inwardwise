@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { useServerFn } from "@tanstack/react-start";
 import { BookOpen, Check, ListPlus, Send } from "lucide-react";
-import { addToPlaylist, saveSongToJournal } from "@/lib/connect-music.functions";
+import { addToPlaylist, saveSongToJournal } from "@/lib/connect-music-data";
 import {
   SONG_URL_MAX,
   normalizeMusicUrl,
@@ -31,9 +30,6 @@ export function SongActions({
   onPlaylistChange: () => void;
   renderSend?: (song: Song, close: () => void) => React.ReactNode;
 }) {
-  const add = useServerFn(addToPlaylist);
-  const journal = useServerFn(saveSongToJournal);
-
   const [panel, setPanel] = useState<Panel>(null);
   const [link, setLink] = useState("");
   const [note, setNote] = useState("");
@@ -55,9 +51,7 @@ export function SongActions({
     setBusy(true);
     setError(null);
     try {
-      const res = await add({
-        data: { song: { ...song, url: link.trim() || song.url || null } },
-      });
+      const res = await addToPlaylist({ ...song, url: link.trim() || song.url || null });
       setDone(res.alreadyThere ? "Already in your playlist." : "Added to your playlist.");
       setPanel(null);
       setLink("");
@@ -77,7 +71,7 @@ export function SongActions({
     setBusy(true);
     setError(null);
     try {
-      await journal({ data: { song, note: note.trim(), feeling, mode } });
+      await saveSongToJournal({ song, note: note.trim(), feeling, mode });
       setDone("Saved to your Journal.");
       setPanel(null);
       setNote("");

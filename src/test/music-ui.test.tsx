@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { SongLinks, SongHeading } from "@/components/connect/music/SongLinks";
-import { suggestSongsFor } from "@/lib/connect-music.server";
+import { suggestSongsFor } from "../../supabase/functions/_shared/songs.ts";
 
 describe("SongLinks", () => {
   it("shows the member's own link first, labelled by service, opening in a new tab", () => {

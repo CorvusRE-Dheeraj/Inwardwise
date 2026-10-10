@@ -6,7 +6,7 @@ import {
   MUSIC_SELF_TOTAL_MAX,
   buildMusicSelfProfile,
 } from "@/lib/music-self";
-import { buildSongMessages } from "@/lib/connect-music.server";
+import { buildSongMessages } from "../../supabase/functions/_shared/songs.ts";
 
 /** A made-up member, "Ravi". Not a real person's answers. */
 function keysOf(n: number): string[] {
@@ -107,7 +107,7 @@ describe("songs from the Self alone (no feeling, no note)", () => {
   });
 
   it("falls back to a gentle general mix without the AI", async () => {
-    const { suggestSongsFor } = await import("@/lib/connect-music.server");
+    const { suggestSongsFor } = await import("../../supabase/functions/_shared/songs.ts");
     const saved = process.env["LOVABLE_API_KEY"];
     delete process.env["LOVABLE_API_KEY"];
     try {

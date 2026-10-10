@@ -39,7 +39,9 @@ test("home page renders the hero and loads all its files", async ({ page }) => {
 test("example decision PDFs are served from the site", async ({ page, request }) => {
   await page.goto("examples", { waitUntil: "networkidle" });
 
-  const hrefs = await page.locator('a[href$=".pdf"]').evaluateAll((as) => as.map((a) => a.getAttribute("href")!));
+  const hrefs = await page
+    .locator('a[href$=".pdf"]')
+    .evaluateAll((as) => as.map((a) => a.getAttribute("href")!));
   expect(hrefs.length).toBeGreaterThan(0);
   for (const href of new Set(hrefs)) {
     expect(href).toMatch(ASSETS);
@@ -67,17 +69,34 @@ test("signed-out header shows Sign up and no member menu", async ({ page }) => {
   await expect(page.getByRole("button", { name: "Products" })).toHaveCount(0);
 });
 
-// Pages has no server routing: a direct visit to a deep link is served
-// 404.html (the SPA shell), and the client router renders the right page.
-test("deep links load the right page", async ({ page }) => {
-  await page.goto("pricing", { waitUntil: "networkidle" });
+// Pages has no server routing: each static route has its own copy of the SPA
+// shell (scripts/write-route-pages.mjs), so a direct visit returns 200 and the
+// client router renders the right page.
+test("deep links load the right page with a 200", async ({ page }) => {
+  const pricing = await page.goto("pricing", { waitUntil: "networkidle" });
+  expect(pricing?.status()).toBe(200);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Free while we’re in beta.");
 
-  await page.goto("contact", { waitUntil: "networkidle" });
+  const contact = await page.goto("contact", { waitUntil: "networkidle" });
+  expect(contact?.status()).toBe(200);
   await expect(page.getByRole("heading", { level: 1 })).toContainText("Write to InwardWise");
+
+  // A nested route, as in the Connect Music bug report.
+  const music = await page.goto("products/connect", { waitUntil: "networkidle" });
+  expect(music?.status()).toBe(200);
 });
 
-test("unknown pages show the app's not-found page with a working Go home link", async ({ page }) => {
+test("the site has a favicon", async ({ page }) => {
+  await page.goto("./", { waitUntil: "networkidle" });
+  const href = await page.locator('link[rel="icon"]').getAttribute("href");
+  expect(href).toBeTruthy();
+  const res = await page.request.get(href!);
+  expect(res.status()).toBe(200);
+});
+
+test("unknown pages show the app's not-found page with a working Go home link", async ({
+  page,
+}) => {
   await page.goto("this-page-does-not-exist", { waitUntil: "networkidle" });
 
   await expect(page.getByRole("heading", { name: "Page not found" })).toBeVisible();
