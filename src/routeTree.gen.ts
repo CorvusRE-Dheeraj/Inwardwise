@@ -32,9 +32,6 @@ import { Route as ProductsDecisionRouteImport } from './routes/products.decision
 import { Route as ProductsConnectRouteImport } from './routes/products.connect'
 import { Route as ProductsCalmMantraRouteImport } from './routes/products.calm-mantra'
 import { Route as AreasSlugRouteImport } from './routes/areas.$slug'
-import { Route as ApiTtsRouteImport } from './routes/api/tts'
-import { Route as ApiTranscribeRouteImport } from './routes/api/transcribe'
-import { Route as ApiChatRouteImport } from './routes/api/chat'
 import { Route as AdminTasksRouteImport } from './routes/admin.tasks'
 import { Route as AdminSettingsRouteImport } from './routes/admin.settings'
 import { Route as AdminRolesRouteImport } from './routes/admin.roles'
@@ -203,21 +200,6 @@ const AreasSlugRoute = AreasSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
   getParentRoute: () => AreasRoute,
-} as any)
-const ApiTtsRoute = ApiTtsRouteImport.update({
-  id: '/api/tts',
-  path: '/api/tts',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiTranscribeRoute = ApiTranscribeRouteImport.update({
-  id: '/api/transcribe',
-  path: '/api/transcribe',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiChatRoute = ApiChatRouteImport.update({
-  id: '/api/chat',
-  path: '/api/chat',
-  getParentRoute: () => rootRouteImport,
 } as any)
 const AdminTasksRoute = AdminTasksRouteImport.update({
   id: '/admin/tasks',
@@ -557,9 +539,6 @@ export interface FileRoutesByFullPath {
   '/admin/roles': typeof AdminRolesRoute
   '/admin/settings': typeof AdminSettingsRoute
   '/admin/tasks': typeof AdminTasksRoute
-  '/api/chat': typeof ApiChatRoute
-  '/api/transcribe': typeof ApiTranscribeRoute
-  '/api/tts': typeof ApiTtsRoute
   '/areas/$slug': typeof AreasSlugRoute
   '/products/calm-mantra': typeof ProductsCalmMantraRoute
   '/products/connect': typeof ProductsConnectRoute
@@ -636,9 +615,6 @@ export interface FileRoutesByTo {
   '/admin/roles': typeof AdminRolesRoute
   '/admin/settings': typeof AdminSettingsRoute
   '/admin/tasks': typeof AdminTasksRoute
-  '/api/chat': typeof ApiChatRoute
-  '/api/transcribe': typeof ApiTranscribeRoute
-  '/api/tts': typeof ApiTtsRoute
   '/areas/$slug': typeof AreasSlugRoute
   '/products/calm-mantra': typeof ProductsCalmMantraRoute
   '/products/connect': typeof ProductsConnectRoute
@@ -718,9 +694,6 @@ export interface FileRoutesById {
   '/admin/roles': typeof AdminRolesRoute
   '/admin/settings': typeof AdminSettingsRoute
   '/admin/tasks': typeof AdminTasksRoute
-  '/api/chat': typeof ApiChatRoute
-  '/api/transcribe': typeof ApiTranscribeRoute
-  '/api/tts': typeof ApiTtsRoute
   '/areas/$slug': typeof AreasSlugRoute
   '/products/calm-mantra': typeof ProductsCalmMantraRoute
   '/products/connect': typeof ProductsConnectRoute
@@ -801,9 +774,6 @@ export interface FileRouteTypes {
     | '/admin/roles'
     | '/admin/settings'
     | '/admin/tasks'
-    | '/api/chat'
-    | '/api/transcribe'
-    | '/api/tts'
     | '/areas/$slug'
     | '/products/calm-mantra'
     | '/products/connect'
@@ -880,9 +850,6 @@ export interface FileRouteTypes {
     | '/admin/roles'
     | '/admin/settings'
     | '/admin/tasks'
-    | '/api/chat'
-    | '/api/transcribe'
-    | '/api/tts'
     | '/areas/$slug'
     | '/products/calm-mantra'
     | '/products/connect'
@@ -961,9 +928,6 @@ export interface FileRouteTypes {
     | '/admin/roles'
     | '/admin/settings'
     | '/admin/tasks'
-    | '/api/chat'
-    | '/api/transcribe'
-    | '/api/tts'
     | '/areas/$slug'
     | '/products/calm-mantra'
     | '/products/connect'
@@ -1039,9 +1003,6 @@ export interface RootRouteChildren {
   AdminRolesRoute: typeof AdminRolesRoute
   AdminSettingsRoute: typeof AdminSettingsRoute
   AdminTasksRoute: typeof AdminTasksRoute
-  ApiChatRoute: typeof ApiChatRoute
-  ApiTranscribeRoute: typeof ApiTranscribeRoute
-  ApiTtsRoute: typeof ApiTtsRoute
   ProductsCalmMantraRoute: typeof ProductsCalmMantraRoute
   ProductsConnectRoute: typeof ProductsConnectRoute
   ProductsDecisionRoute: typeof ProductsDecisionRoute
@@ -1218,27 +1179,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/areas/$slug'
       preLoaderRoute: typeof AreasSlugRouteImport
       parentRoute: typeof AreasRoute
-    }
-    '/api/tts': {
-      id: '/api/tts'
-      path: '/api/tts'
-      fullPath: '/api/tts'
-      preLoaderRoute: typeof ApiTtsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/transcribe': {
-      id: '/api/transcribe'
-      path: '/api/transcribe'
-      fullPath: '/api/transcribe'
-      preLoaderRoute: typeof ApiTranscribeRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/chat': {
-      id: '/api/chat'
-      path: '/api/chat'
-      fullPath: '/api/chat'
-      preLoaderRoute: typeof ApiChatRouteImport
-      parentRoute: typeof rootRouteImport
     }
     '/admin/tasks': {
       id: '/admin/tasks'
@@ -1747,9 +1687,6 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRolesRoute: AdminRolesRoute,
   AdminSettingsRoute: AdminSettingsRoute,
   AdminTasksRoute: AdminTasksRoute,
-  ApiChatRoute: ApiChatRoute,
-  ApiTranscribeRoute: ApiTranscribeRoute,
-  ApiTtsRoute: ApiTtsRoute,
   ProductsCalmMantraRoute: ProductsCalmMantraRoute,
   ProductsConnectRoute: ProductsConnectRoute,
   ProductsDecisionRoute: ProductsDecisionRoute,
