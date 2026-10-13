@@ -35,6 +35,7 @@ import {
   type DecisionSession,
 } from "@/lib/ooi-storage";
 import { startRecording, synthesizeSpeech, transcribe, type Recorder } from "@/lib/voice";
+import { edgeFunctionHeaders, edgeFunctionUrl } from "@/lib/edge-functions";
 
 const searchSchema = z.object({ id: z.string().optional() });
 
@@ -88,7 +89,14 @@ function DecisionChat() {
   const { messages, sendMessage, status, stop, regenerate, setMessages } = useChat({
     id: session.id,
     messages: session.messages,
-    transport: useMemo(() => new DefaultChatTransport({ api: "/api/chat" }), []),
+    transport: useMemo(
+      () =>
+        new DefaultChatTransport({
+          api: edgeFunctionUrl("decision-chat"),
+          headers: edgeFunctionHeaders,
+        }),
+      [],
+    ),
   });
 
   // Restore exactly where the person left off. Runs once on the client, after

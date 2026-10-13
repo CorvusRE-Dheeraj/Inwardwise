@@ -1,4 +1,5 @@
 // Minimal browser recorder + playback helpers for conversational voice I/O.
+import { edgeFunctionHeaders, edgeFunctionUrl } from "@/lib/edge-functions";
 
 export type Recorder = {
   stop: () => Promise<Blob>;
@@ -47,10 +48,16 @@ export async function startRecording(): Promise<Recorder> {
   };
 }
 
+// Speech-to-text and text-to-speech go through the "voice" Edge Function,
+// which holds the API key.
 export async function transcribe(blob: Blob): Promise<string> {
   const fd = new FormData();
   fd.append("audio", blob, "recording");
-  const res = await fetch("/api/transcribe", { method: "POST", body: fd });
+  const res = await fetch(edgeFunctionUrl("voice"), {
+    method: "POST",
+    headers: await edgeFunctionHeaders(),
+    body: fd,
+  });
   if (!res.ok) {
     const err = await res.json().catch(() => ({ error: "Transcription failed" }));
     throw new Error(err.error || `Transcription failed: ${res.status}`);
@@ -60,9 +67,9 @@ export async function transcribe(blob: Blob): Promise<string> {
 }
 
 export async function synthesizeSpeech(text: string): Promise<Blob> {
-  const res = await fetch("/api/tts", {
+  const res = await fetch(edgeFunctionUrl("voice"), {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: { ...(await edgeFunctionHeaders()), "Content-Type": "application/json" },
     body: JSON.stringify({ text }),
   });
   if (!res.ok) {

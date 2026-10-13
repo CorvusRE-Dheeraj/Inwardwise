@@ -2371,6 +2371,86 @@ export type Database = {
           },
         ]
       }
+      self_build_game_reflections: {
+        Row: {
+          content: Json
+          created_at: string
+          game_key: string
+          id: string
+          prompt_key: string
+          save_to_avatar: boolean
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          content?: Json
+          created_at?: string
+          game_key: string
+          id?: string
+          prompt_key: string
+          save_to_avatar?: boolean
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          content?: Json
+          created_at?: string
+          game_key?: string
+          id?: string
+          prompt_key?: string
+          save_to_avatar?: boolean
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      self_build_saved_words: {
+        Row: {
+          created_at: string
+          example: string | null
+          garden_status: string
+          id: string
+          next_review_at: string | null
+          reflection_id: string | null
+          review_count: number
+          user_definition: string | null
+          user_id: string
+          word: string
+        }
+        Insert: {
+          created_at?: string
+          example?: string | null
+          garden_status?: string
+          id?: string
+          next_review_at?: string | null
+          reflection_id?: string | null
+          review_count?: number
+          user_definition?: string | null
+          user_id: string
+          word: string
+        }
+        Update: {
+          created_at?: string
+          example?: string | null
+          garden_status?: string
+          id?: string
+          next_review_at?: string | null
+          reflection_id?: string | null
+          review_count?: number
+          user_definition?: string | null
+          user_id?: string
+          word?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "self_build_saved_words_reflection_id_fkey"
+            columns: ["reflection_id"]
+            isOneToOne: false
+            referencedRelation: "self_build_game_reflections"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       suppressed_emails: {
         Row: {
           created_at: string

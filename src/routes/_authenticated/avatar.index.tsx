@@ -98,6 +98,24 @@ function AvatarDashboard() {
           A digital representation of you, built through a guided conversation across five stages.
           There are no right or wrong answers; share only what you are comfortable sharing.
         </p>
+        {complete >= 5 && (
+        <Link
+          to="/avatar/play"
+          search={{}}
+          className="mt-6 inline-flex items-center gap-2 rounded-full border border-[color:var(--royal)]/40 px-4 py-2 text-sm text-[color:var(--royal)] transition hover:bg-[color:var(--royal)]/5"
+        >
+          Explore Yourself Through Play · short optional games →
+        </Link>
+        )}
+        {complete >= 1 && (
+        <Link
+          to="/avatar/rewards"
+          search={{}}
+          className="ml-2 mt-6 inline-flex items-center gap-2 rounded-full border border-[color:var(--royal)]/40 px-4 py-2 text-sm text-[color:var(--royal)] transition hover:bg-[color:var(--royal)]/5"
+        >
+          Game dashboard · scores →
+        </Link>
+        )}
       </header>
 
       {vault.status === "needs-setup" || vault.status === "locked" ? (
@@ -212,11 +230,11 @@ function AvatarDashboard() {
               {SELF_JOURNEY.map((s, i) => {
                 const pct = progress[s.n] ?? 0;
                 return (
+                  <div key={s.n} className="border-b border-[color:var(--rule)]">
                   <Link
-                    key={s.n}
                     to="/avatar/dimension/$n"
                     params={{ n: String(s.n) }}
-                    className="group grid gap-3 border-b border-[color:var(--rule)] py-6 transition hover:bg-[color:var(--ink)]/[0.02] sm:grid-cols-[110px_1fr_200px] sm:items-center"
+                    className="group grid gap-3 py-6 transition hover:bg-[color:var(--ink)]/[0.02] sm:grid-cols-[110px_1fr_200px] sm:items-center"
                   >
                     <span className="font-mono-cap text-[10px] text-[color:var(--muted-foreground)]">
                       Stage {i + 1} of {SELF_JOURNEY.length}
@@ -239,6 +257,14 @@ function AvatarDashboard() {
                       </div>
                     </div>
                   </Link>
+                  {pct >= 100 && (
+                    <div className="flex flex-wrap items-center gap-2 pb-5 sm:pl-[122px]">
+                      <span className="text-xs text-[color:var(--royal)]">Stage reward unlocked:</span>
+                      <Link to="/avatar/rewards" search={{ stage: i + 1, cat: "psychology" }} className="rounded-full bg-[color:var(--royal)] px-4 py-1.5 text-xs text-[color:var(--background)]">Psychology games</Link>
+                      <Link to="/avatar/rewards" search={{ stage: i + 1, cat: "language" }} className="rounded-full border border-[color:var(--royal)]/40 px-4 py-1.5 text-xs text-[color:var(--royal)]">Language games</Link>
+                    </div>
+                  )}
+                  </div>
                 );
               })}
             </div>
