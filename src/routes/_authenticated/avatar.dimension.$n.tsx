@@ -249,6 +249,24 @@ function DimensionFlow() {
                 : `Next: ${nextStage.blurb}`
               : ""}
         </p>
+        {/* Same reward links as this stage's row on the /avatar dashboard. */}
+        <div className="mt-8 flex flex-wrap items-center gap-2">
+          <span className="text-xs text-[color:var(--royal)]">Stage reward unlocked:</span>
+          <Link
+            to="/avatar/rewards"
+            search={{ stage: stageNo, cat: "psychology" }}
+            className="rounded-full bg-[color:var(--royal)] px-4 py-1.5 text-xs text-[color:var(--background)]"
+          >
+            Psychology games
+          </Link>
+          <Link
+            to="/avatar/rewards"
+            search={{ stage: stageNo, cat: "language" }}
+            className="rounded-full border border-[color:var(--royal)]/40 px-4 py-1.5 text-xs text-[color:var(--royal)]"
+          >
+            Language games
+          </Link>
+        </div>
         <div className="mt-10 flex flex-wrap gap-3">
           {finished.allDone ? (
             <button

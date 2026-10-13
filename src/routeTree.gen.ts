@@ -76,6 +76,7 @@ import { Route as AuthenticatedConnectJournalRouteImport } from './routes/_authe
 import { Route as AuthenticatedConnectEventsRouteImport } from './routes/_authenticated/connect.events'
 import { Route as AuthenticatedConnectBookRouteImport } from './routes/_authenticated/connect.book'
 import { Route as AuthenticatedConnectBelongingRouteImport } from './routes/_authenticated/connect.belonging'
+import { Route as AuthenticatedAvatarRewardsRouteImport } from './routes/_authenticated/avatar.rewards'
 import { Route as AuthenticatedAvatarLibraryRouteImport } from './routes/_authenticated/avatar.library'
 import { Route as AuthenticatedAvatarConsultScheduleRouteImport } from './routes/_authenticated/avatar.consult-schedule'
 import { Route as AuthenticatedAvatarConsultRouteImport } from './routes/_authenticated/avatar.consult'
@@ -83,8 +84,12 @@ import { Route as AuthenticatedAvatarAskRouteImport } from './routes/_authentica
 import { Route as AuthenticatedAccountSelfAvatarRouteImport } from './routes/_authenticated/account.self-avatar'
 import { Route as AuthenticatedAccountDashboardRouteImport } from './routes/_authenticated/account.dashboard'
 import { Route as AuthenticatedAccountBillingRouteImport } from './routes/_authenticated/account.billing'
+import { Route as AuthenticatedAvatarPlayIndexRouteImport } from './routes/_authenticated/avatar.play.index'
 import { Route as LovableEmailQueueProcessRouteImport } from './routes/lovable/email/queue/process'
 import { Route as AuthenticatedConnectReadingReadIdRouteImport } from './routes/_authenticated/connect.reading.$readId'
+import { Route as AuthenticatedAvatarPsychIdRouteImport } from './routes/_authenticated/avatar.psych.$id'
+import { Route as AuthenticatedAvatarPlayGardenRouteImport } from './routes/_authenticated/avatar.play.garden'
+import { Route as AuthenticatedAvatarPlayGameRouteImport } from './routes/_authenticated/avatar.play.$game'
 import { Route as AuthenticatedAvatarDimensionNRouteImport } from './routes/_authenticated/avatar.dimension.$n'
 
 const TestimonialsRoute = TestimonialsRouteImport.update({
@@ -441,6 +446,12 @@ const AuthenticatedConnectBelongingRoute =
     path: '/connect/belonging',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedAvatarRewardsRoute =
+  AuthenticatedAvatarRewardsRouteImport.update({
+    id: '/avatar/rewards',
+    path: '/avatar/rewards',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedAvatarLibraryRoute =
   AuthenticatedAvatarLibraryRouteImport.update({
     id: '/avatar/library',
@@ -482,6 +493,12 @@ const AuthenticatedAccountBillingRoute =
     path: '/billing',
     getParentRoute: () => AuthenticatedAccountRoute,
   } as any)
+const AuthenticatedAvatarPlayIndexRoute =
+  AuthenticatedAvatarPlayIndexRouteImport.update({
+    id: '/avatar/play/',
+    path: '/avatar/play/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const LovableEmailQueueProcessRoute =
   LovableEmailQueueProcessRouteImport.update({
     id: '/lovable/email/queue/process',
@@ -492,6 +509,24 @@ const AuthenticatedConnectReadingReadIdRoute =
   AuthenticatedConnectReadingReadIdRouteImport.update({
     id: '/connect/reading/$readId',
     path: '/connect/reading/$readId',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAvatarPsychIdRoute =
+  AuthenticatedAvatarPsychIdRouteImport.update({
+    id: '/avatar/psych/$id',
+    path: '/avatar/psych/$id',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAvatarPlayGardenRoute =
+  AuthenticatedAvatarPlayGardenRouteImport.update({
+    id: '/avatar/play/garden',
+    path: '/avatar/play/garden',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAvatarPlayGameRoute =
+  AuthenticatedAvatarPlayGameRouteImport.update({
+    id: '/avatar/play/$game',
+    path: '/avatar/play/$game',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedAvatarDimensionNRoute =
@@ -554,6 +589,7 @@ export interface FileRoutesByFullPath {
   '/avatar/consult': typeof AuthenticatedAvatarConsultRoute
   '/avatar/consult-schedule': typeof AuthenticatedAvatarConsultScheduleRoute
   '/avatar/library': typeof AuthenticatedAvatarLibraryRoute
+  '/avatar/rewards': typeof AuthenticatedAvatarRewardsRoute
   '/connect/belonging': typeof AuthenticatedConnectBelongingRoute
   '/connect/book': typeof AuthenticatedConnectBookRoute
   '/connect/events': typeof AuthenticatedConnectEventsRoute
@@ -576,8 +612,12 @@ export interface FileRoutesByFullPath {
   '/connect/': typeof AuthenticatedConnectIndexRoute
   '/people-like-me/': typeof AuthenticatedPeopleLikeMeIndexRoute
   '/avatar/dimension/$n': typeof AuthenticatedAvatarDimensionNRoute
+  '/avatar/play/$game': typeof AuthenticatedAvatarPlayGameRoute
+  '/avatar/play/garden': typeof AuthenticatedAvatarPlayGardenRoute
+  '/avatar/psych/$id': typeof AuthenticatedAvatarPsychIdRoute
   '/connect/reading/$readId': typeof AuthenticatedConnectReadingReadIdRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
+  '/avatar/play/': typeof AuthenticatedAvatarPlayIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -629,6 +669,7 @@ export interface FileRoutesByTo {
   '/avatar/consult': typeof AuthenticatedAvatarConsultRoute
   '/avatar/consult-schedule': typeof AuthenticatedAvatarConsultScheduleRoute
   '/avatar/library': typeof AuthenticatedAvatarLibraryRoute
+  '/avatar/rewards': typeof AuthenticatedAvatarRewardsRoute
   '/connect/belonging': typeof AuthenticatedConnectBelongingRoute
   '/connect/book': typeof AuthenticatedConnectBookRoute
   '/connect/events': typeof AuthenticatedConnectEventsRoute
@@ -651,8 +692,12 @@ export interface FileRoutesByTo {
   '/connect': typeof AuthenticatedConnectIndexRoute
   '/people-like-me': typeof AuthenticatedPeopleLikeMeIndexRoute
   '/avatar/dimension/$n': typeof AuthenticatedAvatarDimensionNRoute
+  '/avatar/play/$game': typeof AuthenticatedAvatarPlayGameRoute
+  '/avatar/play/garden': typeof AuthenticatedAvatarPlayGardenRoute
+  '/avatar/psych/$id': typeof AuthenticatedAvatarPsychIdRoute
   '/connect/reading/$readId': typeof AuthenticatedConnectReadingReadIdRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
+  '/avatar/play': typeof AuthenticatedAvatarPlayIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -709,6 +754,7 @@ export interface FileRoutesById {
   '/_authenticated/avatar/consult': typeof AuthenticatedAvatarConsultRoute
   '/_authenticated/avatar/consult-schedule': typeof AuthenticatedAvatarConsultScheduleRoute
   '/_authenticated/avatar/library': typeof AuthenticatedAvatarLibraryRoute
+  '/_authenticated/avatar/rewards': typeof AuthenticatedAvatarRewardsRoute
   '/_authenticated/connect/belonging': typeof AuthenticatedConnectBelongingRoute
   '/_authenticated/connect/book': typeof AuthenticatedConnectBookRoute
   '/_authenticated/connect/events': typeof AuthenticatedConnectEventsRoute
@@ -731,8 +777,12 @@ export interface FileRoutesById {
   '/_authenticated/connect/': typeof AuthenticatedConnectIndexRoute
   '/_authenticated/people-like-me/': typeof AuthenticatedPeopleLikeMeIndexRoute
   '/_authenticated/avatar/dimension/$n': typeof AuthenticatedAvatarDimensionNRoute
+  '/_authenticated/avatar/play/$game': typeof AuthenticatedAvatarPlayGameRoute
+  '/_authenticated/avatar/play/garden': typeof AuthenticatedAvatarPlayGardenRoute
+  '/_authenticated/avatar/psych/$id': typeof AuthenticatedAvatarPsychIdRoute
   '/_authenticated/connect/reading/$readId': typeof AuthenticatedConnectReadingReadIdRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
+  '/_authenticated/avatar/play/': typeof AuthenticatedAvatarPlayIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -789,6 +839,7 @@ export interface FileRouteTypes {
     | '/avatar/consult'
     | '/avatar/consult-schedule'
     | '/avatar/library'
+    | '/avatar/rewards'
     | '/connect/belonging'
     | '/connect/book'
     | '/connect/events'
@@ -811,8 +862,12 @@ export interface FileRouteTypes {
     | '/connect/'
     | '/people-like-me/'
     | '/avatar/dimension/$n'
+    | '/avatar/play/$game'
+    | '/avatar/play/garden'
+    | '/avatar/psych/$id'
     | '/connect/reading/$readId'
     | '/lovable/email/queue/process'
+    | '/avatar/play/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -864,6 +919,7 @@ export interface FileRouteTypes {
     | '/avatar/consult'
     | '/avatar/consult-schedule'
     | '/avatar/library'
+    | '/avatar/rewards'
     | '/connect/belonging'
     | '/connect/book'
     | '/connect/events'
@@ -886,8 +942,12 @@ export interface FileRouteTypes {
     | '/connect'
     | '/people-like-me'
     | '/avatar/dimension/$n'
+    | '/avatar/play/$game'
+    | '/avatar/play/garden'
+    | '/avatar/psych/$id'
     | '/connect/reading/$readId'
     | '/lovable/email/queue/process'
+    | '/avatar/play'
   id:
     | '__root__'
     | '/'
@@ -943,6 +1003,7 @@ export interface FileRouteTypes {
     | '/_authenticated/avatar/consult'
     | '/_authenticated/avatar/consult-schedule'
     | '/_authenticated/avatar/library'
+    | '/_authenticated/avatar/rewards'
     | '/_authenticated/connect/belonging'
     | '/_authenticated/connect/book'
     | '/_authenticated/connect/events'
@@ -965,8 +1026,12 @@ export interface FileRouteTypes {
     | '/_authenticated/connect/'
     | '/_authenticated/people-like-me/'
     | '/_authenticated/avatar/dimension/$n'
+    | '/_authenticated/avatar/play/$game'
+    | '/_authenticated/avatar/play/garden'
+    | '/_authenticated/avatar/psych/$id'
     | '/_authenticated/connect/reading/$readId'
     | '/lovable/email/queue/process'
+    | '/_authenticated/avatar/play/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -1488,6 +1553,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedConnectBelongingRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/avatar/rewards': {
+      id: '/_authenticated/avatar/rewards'
+      path: '/avatar/rewards'
+      fullPath: '/avatar/rewards'
+      preLoaderRoute: typeof AuthenticatedAvatarRewardsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/avatar/library': {
       id: '/_authenticated/avatar/library'
       path: '/avatar/library'
@@ -1537,6 +1609,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAccountBillingRouteImport
       parentRoute: typeof AuthenticatedAccountRoute
     }
+    '/_authenticated/avatar/play/': {
+      id: '/_authenticated/avatar/play/'
+      path: '/avatar/play'
+      fullPath: '/avatar/play/'
+      preLoaderRoute: typeof AuthenticatedAvatarPlayIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/lovable/email/queue/process': {
       id: '/lovable/email/queue/process'
       path: '/lovable/email/queue/process'
@@ -1549,6 +1628,27 @@ declare module '@tanstack/react-router' {
       path: '/connect/reading/$readId'
       fullPath: '/connect/reading/$readId'
       preLoaderRoute: typeof AuthenticatedConnectReadingReadIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/avatar/psych/$id': {
+      id: '/_authenticated/avatar/psych/$id'
+      path: '/avatar/psych/$id'
+      fullPath: '/avatar/psych/$id'
+      preLoaderRoute: typeof AuthenticatedAvatarPsychIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/avatar/play/garden': {
+      id: '/_authenticated/avatar/play/garden'
+      path: '/avatar/play/garden'
+      fullPath: '/avatar/play/garden'
+      preLoaderRoute: typeof AuthenticatedAvatarPlayGardenRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/avatar/play/$game': {
+      id: '/_authenticated/avatar/play/$game'
+      path: '/avatar/play/$game'
+      fullPath: '/avatar/play/$game'
+      preLoaderRoute: typeof AuthenticatedAvatarPlayGameRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/avatar/dimension/$n': {
@@ -1588,6 +1688,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAvatarConsultRoute: typeof AuthenticatedAvatarConsultRoute
   AuthenticatedAvatarConsultScheduleRoute: typeof AuthenticatedAvatarConsultScheduleRoute
   AuthenticatedAvatarLibraryRoute: typeof AuthenticatedAvatarLibraryRoute
+  AuthenticatedAvatarRewardsRoute: typeof AuthenticatedAvatarRewardsRoute
   AuthenticatedConnectBelongingRoute: typeof AuthenticatedConnectBelongingRoute
   AuthenticatedConnectBookRoute: typeof AuthenticatedConnectBookRoute
   AuthenticatedConnectEventsRoute: typeof AuthenticatedConnectEventsRoute
@@ -1604,7 +1705,11 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedConnectIndexRoute: typeof AuthenticatedConnectIndexRoute
   AuthenticatedPeopleLikeMeIndexRoute: typeof AuthenticatedPeopleLikeMeIndexRoute
   AuthenticatedAvatarDimensionNRoute: typeof AuthenticatedAvatarDimensionNRoute
+  AuthenticatedAvatarPlayGameRoute: typeof AuthenticatedAvatarPlayGameRoute
+  AuthenticatedAvatarPlayGardenRoute: typeof AuthenticatedAvatarPlayGardenRoute
+  AuthenticatedAvatarPsychIdRoute: typeof AuthenticatedAvatarPsychIdRoute
   AuthenticatedConnectReadingReadIdRoute: typeof AuthenticatedConnectReadingReadIdRoute
+  AuthenticatedAvatarPlayIndexRoute: typeof AuthenticatedAvatarPlayIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
@@ -1618,6 +1723,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAvatarConsultScheduleRoute:
     AuthenticatedAvatarConsultScheduleRoute,
   AuthenticatedAvatarLibraryRoute: AuthenticatedAvatarLibraryRoute,
+  AuthenticatedAvatarRewardsRoute: AuthenticatedAvatarRewardsRoute,
   AuthenticatedConnectBelongingRoute: AuthenticatedConnectBelongingRoute,
   AuthenticatedConnectBookRoute: AuthenticatedConnectBookRoute,
   AuthenticatedConnectEventsRoute: AuthenticatedConnectEventsRoute,
@@ -1634,8 +1740,12 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedConnectIndexRoute: AuthenticatedConnectIndexRoute,
   AuthenticatedPeopleLikeMeIndexRoute: AuthenticatedPeopleLikeMeIndexRoute,
   AuthenticatedAvatarDimensionNRoute: AuthenticatedAvatarDimensionNRoute,
+  AuthenticatedAvatarPlayGameRoute: AuthenticatedAvatarPlayGameRoute,
+  AuthenticatedAvatarPlayGardenRoute: AuthenticatedAvatarPlayGardenRoute,
+  AuthenticatedAvatarPsychIdRoute: AuthenticatedAvatarPsychIdRoute,
   AuthenticatedConnectReadingReadIdRoute:
     AuthenticatedConnectReadingReadIdRoute,
+  AuthenticatedAvatarPlayIndexRoute: AuthenticatedAvatarPlayIndexRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
